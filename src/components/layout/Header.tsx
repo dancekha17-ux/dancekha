@@ -1,0 +1,140 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const navItems = [
+  { label: "關於我們", labelEn: "About", href: "#about" },
+  { label: "課程專區", labelEn: "Courses", href: "#courses" },
+  { label: "師資陣容", labelEn: "Instructors", href: "#instructors" },
+  { label: "社群互動", labelEn: "Community", href: "#community" },
+  { label: "活動行事曆", labelEn: "Events", href: "#events" },
+];
+
+export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [lang, setLang] = useState<"zh" | "en">("zh");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleLang = () => setLang(lang === "zh" ? "en" : "zh");
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? "bg-background/90 backdrop-blur-lg shadow-soft"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container-wide mx-auto px-4 md:px-8">
+        <nav className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <motion.a
+            href="#"
+            className="flex items-center gap-2"
+            whileHover={{ scale: 1.02 }}
+          >
+            <span className="text-2xl font-display font-semibold text-gradient">
+              舞島咖
+            </span>
+            <span className={`text-sm font-body transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
+              Danceka
+            </span>
+          </motion.a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`flow-line font-body text-sm transition-colors ${
+                  isScrolled
+                    ? "text-foreground hover:text-primary"
+                    : "text-primary-foreground/90 hover:text-primary-foreground"
+                }`}
+              >
+                {lang === "zh" ? item.label : item.labelEn}
+              </a>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={toggleLang}
+              className={`flex items-center gap-1 text-sm transition-colors ${
+                isScrolled
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-primary-foreground/70 hover:text-primary-foreground"
+              }`}
+            >
+              <Globe className="w-4 h-4" />
+              {lang === "zh" ? "EN" : "中"}
+            </button>
+            <Button
+              variant={isScrolled ? "outline" : "heroOutline"}
+              size="sm"
+            >
+              {lang === "zh" ? "登入" : "Login"}
+            </Button>
+            <Button variant="hero" size="sm">
+              {lang === "zh" ? "免費體驗" : "Try Free"}
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`lg:hidden p-2 transition-colors ${
+              isScrolled ? "text-foreground" : "text-primary-foreground"
+            }`}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-background border-t border-border"
+          >
+            <div className="container-wide mx-auto px-4 py-6 space-y-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block py-2 text-foreground hover:text-primary transition-colors"
+                >
+                  {lang === "zh" ? item.label : item.labelEn}
+                </a>
+              ))}
+              <div className="flex gap-3 pt-4">
+                <Button variant="outline" className="flex-1">
+                  {lang === "zh" ? "登入" : "Login"}
+                </Button>
+                <Button variant="hero" className="flex-1">
+                  {lang === "zh" ? "免費體驗" : "Try Free"}
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
