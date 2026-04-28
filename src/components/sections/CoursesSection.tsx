@@ -31,7 +31,7 @@ const courses = [
   },
   {
     id: 2,
-    title: "Hip-Hop 基礎律動",
+    title: "中國民間舞蹈",
     category: "street",
     instructor: "陳俊宏",
     duration: "60分鐘",
