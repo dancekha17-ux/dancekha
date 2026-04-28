@@ -51,7 +51,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-primary-foreground/80 font-body max-w-xl mb-10 leading-relaxed"
           >
-            線上線下多國舞風隨心舞動，零基礎也能 FUN 心跳。
+            線上線下隨心舞動，零基礎也能 FUN 心跳。
             在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
           </motion.p>
 
