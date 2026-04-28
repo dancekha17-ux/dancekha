@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { label: "關於我們", labelEn: "About", href: "#about" },
-  { label: "課程專區", labelEn: "Courses", href: "#courses" },
-  { label: "師資陣容", labelEn: "Instructors", href: "#instructors" },
-  { label: "社群互動", labelEn: "Community", href: "#community" },
-  { label: "活動行事曆", labelEn: "Events", href: "#events" },
+  { label: "關於我們", labelEn: "About", href: "/#about" },
+  { label: "課程專區", labelEn: "Courses", href: "/#courses" },
+  { label: "師資陣容", labelEn: "Instructors", href: "/#instructors" },
+  { label: "全球舞種", labelEn: "Global Styles", href: "/styles" },
+  { label: "社群互動", labelEn: "Community", href: "/#community" },
+  { label: "活動行事曆", labelEn: "Events", href: "/#events" },
 ];
 
 export function Header() {
@@ -37,25 +39,23 @@ export function Header() {
       <div className="container-wide mx-auto px-4 md:px-8">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <motion.a
-            href="#"
-            className="flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-          >
-            <span className="text-2xl font-display font-semibold text-gradient">
-              舞島咖
-            </span>
-            <span className={`text-sm font-body transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
-              Danceka
-            </span>
-          </motion.a>
+          <motion.div whileHover={{ scale: 1.02 }}>
+            <Link to="/" className="flex items-center gap-2">
+              <span className="text-2xl font-display font-semibold text-gradient">
+                舞島咖
+              </span>
+              <span className={`text-sm font-body transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
+                Danceka
+              </span>
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                to={item.href}
                 className={`flow-line font-body text-sm transition-colors ${
                   isScrolled
                     ? "text-foreground hover:text-primary"
@@ -63,7 +63,7 @@ export function Header() {
                 }`}
               >
                 {lang === "zh" ? item.label : item.labelEn}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -114,14 +114,14 @@ export function Header() {
           >
             <div className="container-wide mx-auto px-4 py-6 space-y-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block py-2 text-foreground hover:text-primary transition-colors"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
-                </a>
+                </Link>
               ))}
               <div className="flex gap-3 pt-4">
                 <Button variant="outline" className="flex-1">
