@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import InstructorProfile from "./pages/InstructorProfile";
 import GlobalStyles from "./pages/GlobalStyles";
+import CourseDetail from "./pages/CourseDetail";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/instructors/:slug" element={<InstructorProfile />} />
           <Route path="/styles" element={<GlobalStyles />} />
+          <Route path="/course-detail/:id" element={<CourseDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
