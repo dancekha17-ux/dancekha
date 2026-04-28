@@ -11,6 +11,9 @@ const categories = [
   { id: "street", label: "街舞" },
   { id: "latin", label: "拉丁舞" },
   { id: "senior", label: "樂齡律動" },
+  { id: "eastern-europe", label: "東歐與中歐" },
+  { id: "balkans", label: "巴爾幹與南歐" },
+  { id: "mideast", label: "中東與地中海" },
 ];
 
 const courses = [
