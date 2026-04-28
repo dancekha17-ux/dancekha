@@ -28,7 +28,7 @@ export function HeroSection() {
           >
             <Heart className="w-4 h-4 text-primary" />
             <span className="text-primary-foreground text-sm font-body">
-              你我的舞蹈啟動平台
+              舞蹈啟動平台
             </span>
           </motion.div>
 
