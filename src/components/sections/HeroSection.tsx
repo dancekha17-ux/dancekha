@@ -85,7 +85,7 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
-                  5,000+
+                  2000+
                 </div>
                 <div className="text-sm text-primary-foreground/60 font-body">
                   舞島咖學員
