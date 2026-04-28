@@ -14,7 +14,7 @@ const features = [
     icon: Globe2,
     title: "跳進全世界",
     description:
-      "連結全球舞蹈脈絡，從街舞到芭蕾、從拉丁到當代，多國舞風隨你探索。",
+      "連結全球舞蹈脈絡，從中國舞到芭蕾、從拉丁到當代，多國舞風隨你探索。",
   },
   {
     icon: Heart,

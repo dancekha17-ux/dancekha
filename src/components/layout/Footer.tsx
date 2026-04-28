@@ -6,7 +6,7 @@ const footerLinks = {
     links: [
       { label: "零基礎入門", href: "#" },
       { label: "現代舞", href: "#" },
-      { label: "街舞", href: "#" },
+      { label: "中國舞", href: "#" },
       { label: "拉丁舞", href: "#" },
       { label: "樂齡律動", href: "#" },
     ],

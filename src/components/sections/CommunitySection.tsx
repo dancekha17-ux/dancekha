@@ -17,7 +17,7 @@ const testimonials = [
     content:
       "作為一個完全沒有舞蹈基礎的工程師，我本來很擔心跟不上。但這裡的氛圍讓我完全放鬆，現在每週最期待的就是舞蹈課！",
     author: "Kevin",
-    role: "街舞入門學員",
+    role: "中國舞入門學員",
     likes: 189,
   },
   {
