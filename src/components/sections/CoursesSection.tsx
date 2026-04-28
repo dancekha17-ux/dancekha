@@ -8,7 +8,7 @@ const categories = [
   { id: "all", label: "全部課程" },
   { id: "beginner", label: "零基礎入門" },
   { id: "contemporary", label: "現代舞" },
-  { id: "street", label: "街舞" },
+  { id: "street", label: "中國舞" },
   { id: "latin", label: "拉丁舞" },
   { id: "senior", label: "樂齡律動" },
   { id: "eastern-europe", label: "東歐與中歐" },
@@ -168,7 +168,7 @@ export function CoursesSection() {
             找到屬於你的<span className="text-gradient">舞動節奏</span>
           </h2>
           <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            從零基礎到專業進階，從街頭到舞台，超過 100+ 堂課程等你探索。
+            從零基礎到專業進階，從傳統到舞台，超過 100+ 堂課程等你探索。
             線上線下混合學習，隨時隨地開啟你的舞蹈旅程。
           </p>
         </motion.div>
