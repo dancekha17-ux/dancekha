@@ -78,9 +78,9 @@ export const instructors: Instructor[] = [
     bio: "國際舞蹈大賽冠軍,致力於讓中國舞文化在台灣扎根發芽。",
     rating: 4.8,
     students: 450,
-    cultureTitle: "Hip-Hop · 街角誕生的全球語言",
+    cultureTitle: "中國舞 · 筆墨山水的身體流轉",
     cultureBody:
-      "1970 年代的紐約 Bronx,DJ Kool Herc 在派對上延長鼓點 Break 段落,催生了 B-boying。Hip-Hop 不只是舞步,而是 MCing、DJing、Graffiti、Breaking 四大元素組成的文化共同體,是邊緣青年用身體爭取存在的方式。",
+      "中國舞融合了古典舞、民族舞與民間舞，強調『身韻』與『身法』。從漢唐的古樸流暢到現代的意象表達，中國舞不僅是肢體的擺動，更是一首以身體書寫、充滿東方韻味的流動詩篇。",
     videoEmbedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     credentials: [
       "2019 Red Bull BC One 台灣冠軍",
