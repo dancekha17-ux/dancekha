@@ -45,7 +45,7 @@ export function Header() {
                 舞島咖
               </span>
               <span className={`text-sm font-body transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
-                Danceka
+                DanceKha
               </span>
             </Link>
           </motion.div>

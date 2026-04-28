@@ -49,7 +49,7 @@ export function Footer() {
                 舞島咖
               </span>
               <span className="block text-sm text-primary-foreground/60 font-body">
-                Danceka
+                DanceKha
               </span>
             </a>
             <p className="text-sm text-primary-foreground/60 font-body leading-relaxed mb-6">
@@ -110,7 +110,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/60 font-body">
                 <Mail className="w-4 h-4 shrink-0" />
-                <span>hello@danceka.tw</span>
+                <span>hello@dancekha.tw</span>
               </li>
             </ul>
           </div>
@@ -119,7 +119,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/40 font-body">
-            © 2025 舞島咖 Danceka. All rights reserved.
+            © 2025 舞島咖 DanceKha. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-primary-foreground/40 font-body">
             <a href="#" className="hover:text-primary transition-colors">
