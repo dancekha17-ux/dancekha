@@ -75,7 +75,7 @@ const courses = [
   },
   {
     id: 6,
-    title: "Popping & Locking 進階",
+    title: "中國古典舞蹈",
     category: "street",
     instructor: "陳俊宏",
     duration: "90分鐘",
