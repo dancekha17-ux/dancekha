@@ -77,7 +77,7 @@ export function CTASection() {
                 </div>
               ))}
               <span className="ml-2 text-sm text-muted-foreground font-body">
-                +4,995 更多
+                +1,995 更多
               </span>
             </div>
           </motion.div>
