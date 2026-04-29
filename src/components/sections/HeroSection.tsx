@@ -59,9 +59,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl md:text-3xl"
           >
-            跳起來!&nbsp;
-            <br />
-            <span className="text-gradient">用舞步遇見世界</span>
+            跳起來用舞步遇見世界
           </motion.h1>
 
           {/* Subheadline */}
