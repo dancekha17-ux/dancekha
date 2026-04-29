@@ -1,19 +1,37 @@
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Users, Star, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-dance.jpg";
+import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
+import heroJpg1024 from "@/assets/hero/hero-dance-1024.jpg";
+import heroJpg1600 from "@/assets/hero/hero-dance-1600.jpg";
+import heroJpg1920 from "@/assets/hero/hero-dance-1920.jpg";
+import heroWebp640 from "@/assets/hero/hero-dance-640.webp";
+import heroWebp1024 from "@/assets/hero/hero-dance-1024.webp";
+import heroWebp1600 from "@/assets/hero/hero-dance-1600.webp";
+import heroWebp1920 from "@/assets/hero/hero-dance-1920.webp";
 
 export function HeroSection() {
+  const webpSrcSet = `${heroWebp640} 640w, ${heroWebp1024} 1024w, ${heroWebp1600} 1600w, ${heroWebp1920} 1920w`;
+  const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-transparent to-transparent" />
+        <picture>
+          <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
+          <source type="image/jpeg" srcSet={jpgSrcSet} sizes="100vw" />
+          <img
+            src={heroJpg1600}
+            alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "center 35%" }}
+          />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
