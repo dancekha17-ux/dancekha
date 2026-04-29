@@ -15,7 +15,7 @@ export function HeroSection() {
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-screen flex items-end overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <picture>
@@ -27,15 +27,15 @@ export function HeroSection() {
             fetchPriority="high"
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 35%" }}
+            style={{ objectPosition: "center 10%" }}
           />
         </picture>
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+        {/* Bottom-weighted overlay to keep dancer faces clear and ensure text legibility in the lower safe zone */}
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/40 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-24 pb-16">
+      {/* Content — anchored to bottom-left "safe zone" to avoid covering dancers' faces (≥200px clear of top) */}
+      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-[260px] pb-20">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
