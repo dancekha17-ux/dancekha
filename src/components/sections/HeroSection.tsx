@@ -27,18 +27,18 @@ export function HeroSection() {
             fetchPriority="high"
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 10%" }}
+            style={{ objectPosition: "center 25%" }}
           />
         </picture>
-        {/* Dark overlay (0.5) for legibility */}
-        <div className="absolute inset-0 bg-foreground/50" />
-        {/* Stronger gradient at bottom-left where text sits */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-foreground/85 via-foreground/40 to-transparent" />
+        {/* Soft top gradient — keeps dancers' faces clear, darkens only behind text */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/75 via-foreground/15 to-foreground/55" />
+        {/* Subtle bottom-left vignette for stat readability */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-foreground/60 via-transparent to-transparent" />
       </div>
 
-      {/* Content — anchored to bottom-left, well below dancer faces */}
-      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-24 pb-16 w-full">
-        <div className="max-w-2xl" style={{ marginTop: "min(60vh, 520px)" }}>
+      {/* Content — title sits in upper area (above dancers), stats stay near bottom */}
+      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-20 md:pt-28 pb-16 w-full">
+        <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-primary-foreground leading-tight mb-5 drop-shadow-lg"
+            className="text-5xl md:text-7xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl"
           >
             跳起來!
             <br />
@@ -69,7 +69,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base md:text-lg text-primary-foreground/90 font-body max-w-xl mb-8 leading-relaxed drop-shadow-md"
+            className="text-lg md:text-xl lg:text-2xl text-primary-foreground/95 font-body max-w-2xl mb-8 leading-relaxed drop-shadow-lg"
           >
             線上線下隨心舞動,零基礎也能 FUN 心跳。
             在這裡不只是學舞,還能透過社群互動舞出友誼的節奏。
