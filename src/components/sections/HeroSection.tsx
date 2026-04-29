@@ -35,8 +35,8 @@ export function HeroSection() {
       </div>
 
       {/* Content — anchored to TOP-LEFT safe zone, ≥200px clear of dancers' faces below */}
-      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-24 md:pt-28 pb-[260px]">
-        <div className="max-w-3xl">
+      <div className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-20 pb-[260px]">
+        <div className="max-w-2xl mr-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
