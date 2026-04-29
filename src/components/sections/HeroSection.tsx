@@ -15,7 +15,7 @@ export function HeroSection() {
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
   return (
-    <section className="relative min-h-screen flex items-end overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <picture>
@@ -27,28 +27,26 @@ export function HeroSection() {
             fetchPriority="high"
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 25%" }}
+            style={{ objectPosition: "center 35%" }}
           />
         </picture>
-        {/* Soft top gradient — keeps dancers' faces clear, darkens only behind text */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/75 via-foreground/15 to-foreground/55" />
-        {/* Subtle bottom-left vignette for stat readability */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-foreground/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
       </div>
 
-      {/* Content — title sits in upper area (above dancers), stats stay near bottom */}
-      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-20 md:pt-28 pb-16 w-full">
+      {/* Content */}
+      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-24 pb-16">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-6"
+            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8"
           >
             <Heart className="w-4 h-4 text-primary" />
             <span className="text-primary-foreground text-sm font-body">
-              舞 蹈 啟 動 平 台
+              舞蹈啟動平台
             </span>
           </motion.div>
 
@@ -57,9 +55,11 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl md:text-base"
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-semibold text-primary-foreground leading-tight mb-6"
           >
-            跳起來！用舞步遇見世界
+            跳起來！
+            <br />
+            <span className="text-gradient">用舞步遇見世界</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -67,10 +67,10 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg lg:text-2xl text-primary-foreground/95 font-body max-w-2xl mb-8 leading-relaxed drop-shadow-lg md:text-base"
+            className="text-lg md:text-xl text-primary-foreground/80 font-body max-w-xl mb-10 leading-relaxed"
           >
-            線上線下隨心舞動,零基礎也能 FUN 心跳。<br />
-            在這裡不只是學舞,還能透過社群互動舞出友誼的節奏。
+            線上線下隨心舞動，零基礎也能 FUN 心跳。
+            在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
           </motion.p>
 
           {/* CTA Buttons */}
@@ -78,7 +78,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-4 mb-10"
+            className="flex flex-wrap gap-4 mb-12"
           >
             <Button variant="hero" size="xl" className="group">
               開始探索
@@ -95,7 +95,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap gap-6 md:gap-10"
+            className="flex flex-wrap gap-8 md:gap-12"
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
@@ -105,7 +105,7 @@ export function HeroSection() {
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
                   2000+
                 </div>
-                <div className="text-sm text-primary-foreground/70 font-body">
+                <div className="text-sm text-primary-foreground/60 font-body">
                   舞島咖學員
                 </div>
               </div>
@@ -117,9 +117,9 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
-                  30+
+                  18+
                 </div>
-                <div className="text-sm text-primary-foreground/70 font-body">
+                <div className="text-sm text-primary-foreground/60 font-body">
                   專業師資
                 </div>
               </div>
@@ -131,9 +131,9 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
-                  22
+                  12
                 </div>
-                <div className="text-sm text-primary-foreground/70 font-body">
+                <div className="text-sm text-primary-foreground/60 font-body">
                   舞蹈風格
                 </div>
               </div>
@@ -143,7 +143,7 @@ export function HeroSection() {
       </div>
 
       {/* Decorative wave */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      <div className="absolute bottom-0 left-0 right-0 z-10">
         <svg
           viewBox="0 0 1440 120"
           fill="none"

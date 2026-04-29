@@ -65,7 +65,7 @@ export function CTASection() {
             className="mt-12 pt-8 border-t border-border"
           >
             <p className="text-sm text-muted-foreground font-body mb-4">
-              已有超過 2,000+ 人次加入舞島咖大家庭
+              已有超過 5,000+ 舞者加入舞島咖大家庭
             </p>
             <div className="flex items-center justify-center gap-2">
               {[...Array(5)].map((_, i) => (
@@ -77,7 +77,7 @@ export function CTASection() {
                 </div>
               ))}
               <span className="ml-2 text-sm text-muted-foreground font-body">
-                +1,995 更多
+                +4,995 更多
               </span>
             </div>
           </motion.div>

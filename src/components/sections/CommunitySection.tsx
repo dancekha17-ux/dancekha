@@ -31,9 +31,9 @@ const testimonials = [
 ];
 
 const communityStats = [
-  { number: "2,000+", label: "社群成員" },
+  { number: "15,000+", label: "社群成員" },
   { number: "500+", label: "學員故事" },
-  { number: "30+", label: "共學小組" },
+  { number: "50+", label: "共學小組" },
   { number: "100+", label: "線下聚會" },
 ];
 
