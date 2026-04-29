@@ -15,8 +15,8 @@ export function HeroSection() {
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
   return (
-    <section className="relative min-h-screen flex items-end overflow-hidden">
-      {/* Background */}
+    <section className="relative min-h-screen flex items-start overflow-hidden">
+      {/* Background — dancers' faces sit in the lower-middle area, so we anchor text to the TOP safe zone */}
       <div className="absolute inset-0 z-0">
         <picture>
           <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
@@ -27,15 +27,15 @@ export function HeroSection() {
             fetchPriority="high"
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 10%" }}
+            style={{ objectPosition: "center 70%" }}
           />
         </picture>
-        {/* Bottom-weighted overlay to keep dancer faces clear and ensure text legibility in the lower safe zone */}
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/40 to-transparent" />
+        {/* Top-weighted overlay to keep dancer faces clear (lower portion) and ensure text legibility in the upper safe zone */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent" />
       </div>
 
-      {/* Content — anchored to bottom-left "safe zone" to avoid covering dancers' faces (≥200px clear of top) */}
-      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-[260px] pb-20">
+      {/* Content — anchored to TOP-LEFT safe zone, ≥200px clear of dancers' faces below */}
+      <div className="relative z-10 container-wide mx-auto px-4 md:px-8 pt-24 md:pt-28 pb-[260px]">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
