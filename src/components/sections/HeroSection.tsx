@@ -57,7 +57,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl"
+            className="text-5xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl md:text-4xl"
           >
             跳起來!
             <br />
