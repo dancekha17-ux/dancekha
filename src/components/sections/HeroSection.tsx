@@ -71,7 +71,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg lg:text-2xl text-primary-foreground/95 font-body max-w-2xl mb-8 leading-relaxed drop-shadow-lg md:text-base"
           >
-            線上線下隨心舞動,零基礎也能 FUN 心跳。
+            線上線下隨心舞動,零基礎也能 FUN 心跳。<br />
             在這裡不只是學舞,還能透過社群互動舞出友誼的節奏。
           </motion.p>
 
