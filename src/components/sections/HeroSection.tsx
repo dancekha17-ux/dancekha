@@ -119,7 +119,7 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
-                  18+
+                  30+
                 </div>
                 <div className="text-sm text-primary-foreground/70 font-body">
                   專業師資
