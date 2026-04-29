@@ -133,7 +133,7 @@ export function HeroSection() {
               </div>
               <div>
                 <div className="text-2xl font-display font-semibold text-primary-foreground">
-                  12
+                  22
                 </div>
                 <div className="text-sm text-primary-foreground/70 font-body">
                   舞蹈風格
