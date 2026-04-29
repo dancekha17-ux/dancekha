@@ -73,12 +73,18 @@ export function HeroSection() {
             在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
           </motion.p>
 
+        </div>
+      </div>
+
+      {/* Bottom-centered CTA + Stats */}
+      <div className="absolute bottom-24 left-0 right-0 z-10 px-4 md:px-8">
+        <div className="container-wide mx-auto flex flex-col items-center gap-10">
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-4"
           >
             <Button variant="hero" size="xl" className="group">
               開始探索
@@ -95,7 +101,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap gap-8 md:gap-12"
+            className="flex flex-wrap justify-center gap-8 md:gap-12"
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
@@ -141,6 +147,7 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
+
 
       {/* Decorative wave */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
