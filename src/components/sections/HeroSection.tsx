@@ -57,7 +57,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-primary-foreground leading-tight mb-5 drop-shadow-lg"
+            className="text-5xl md:text-7xl lg:text-8xl font-display font-semibold text-primary-foreground leading-[1.05] mb-6 drop-shadow-2xl"
           >
             跳起來!
             <br />
@@ -69,7 +69,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base md:text-lg text-primary-foreground/90 font-body max-w-xl mb-8 leading-relaxed drop-shadow-md"
+            className="text-lg md:text-xl lg:text-2xl text-primary-foreground/95 font-body max-w-2xl mb-8 leading-relaxed drop-shadow-lg"
           >
             線上線下隨心舞動,零基礎也能 FUN 心跳。
             在這裡不只是學舞,還能透過社群互動舞出友誼的節奏。
