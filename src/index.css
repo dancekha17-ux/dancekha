@@ -28,6 +28,10 @@
     --muted: 35 25% 94%;
     --muted-foreground: 25 15% 45%;
 
+    /* Cream warm sand - hero solid background (#FFF5E6) */
+    --cream: 35 100% 95%;
+    --cream-foreground: 25 30% 18%;
+
     /* Terracotta accent */
     --accent: 20 70% 50%;
     --accent-foreground: 0 0% 100%;
