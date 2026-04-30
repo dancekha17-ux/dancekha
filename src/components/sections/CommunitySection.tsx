@@ -50,20 +50,19 @@ export function CommunitySection() {
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.9 }}
+          className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-            暖流社群
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold mb-6">
-            舞出<span className="text-primary">友誼的節奏</span>
+          <span className="eyebrow text-primary-foreground/70">Community · 暖流社群</span>
+          <div className="mx-auto h-px w-12 bg-primary-foreground/30 mt-6 mb-8" />
+          <h2 className="text-fluid-h1 font-display font-medium mb-6">
+            舞出<span className="italic font-normal text-primary">友誼的節奏</span>
           </h2>
-          <p className="text-lg text-primary-foreground/70 font-body leading-relaxed">
-            在舞島咖，你永遠不是一個人在跳舞。這裡有最真誠的分享、最溫暖的鼓勵，
-            讓我們一起用舞步編織人與人之間的連結。
+          <p className="text-base md:text-lg text-primary-foreground/70 font-body leading-relaxed">
+            在舞島咖，你永遠不是一個人在跳舞。
+            這裡有最真誠的分享、最溫暖的鼓勵——讓身體成為彼此的語言。
           </p>
         </motion.div>
 
