@@ -34,9 +34,9 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent" />
       </div>
 
-      {/* Content — anchored to TOP-LEFT safe zone, ≥200px clear of dancers' faces below */}
+      {/* Content — center-aligned for optimal readability */}
       <div className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-20 pb-[260px]">
-        <div className="max-w-2xl mr-auto">
+        <div className="max-w-3xl mx-auto text-center">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl lg:text-7xl font-display font-semibold text-primary-foreground leading-tight mb-6 md:text-4xl"
+            className="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-primary-foreground leading-[1.15] tracking-tight mb-6"
           >
             跳起來！
             <br />
@@ -67,9 +67,10 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-primary-foreground/80 font-body max-w-xl mb-10 leading-relaxed"
+            className="text-base md:text-lg lg:text-xl text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 leading-loose tracking-wide"
           >
             線上線下隨心舞動，零基礎也能 FUN 心跳。
+            <br className="hidden md:block" />
             在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
           </motion.p>
 
