@@ -35,7 +35,10 @@ export function HeroSection() {
       </div>
 
       {/* Content — center-aligned for optimal readability */}
-      <div className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-20 pb-[260px]">
+      <div
+        className="relative z-10 w-full pt-16 md:pt-20 pb-[260px]"
+        style={{ paddingLeft: "clamp(1.25rem, 4vw, 2rem)", paddingRight: "clamp(1.25rem, 4vw, 2rem)" }}
+      >
         <div className="max-w-3xl mx-auto text-center">
           {/* Badge */}
           <motion.div
@@ -50,24 +53,24 @@ export function HeroSection() {
             </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline — fluid typography prevents awkward line breaks */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-primary-foreground leading-[1.15] tracking-tight mb-6 text-left"
+            className="text-fluid-hero font-display font-semibold text-primary-foreground mb-6 text-left"
           >
-            跳起來！
+            跳起來!
             <br />
             <span className="text-gradient">用舞步遇見世界</span>
           </motion.h1>
 
-          {/* Subheadline */}
+          {/* Subheadline — fluid lead with mobile-optimized line-height */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base md:text-lg lg:text-xl text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 leading-loose tracking-wide text-left"
+            className="text-fluid-lead text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 text-left"
           >
             線上線下隨心舞動，零基礎也能 FUN 心跳。
             <br className="hidden md:block" />
