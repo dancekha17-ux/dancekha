@@ -15,8 +15,8 @@ export function HeroSection() {
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
   return (
-    <section className="relative min-h-screen flex items-start overflow-hidden">
-      {/* Background — on mobile we shift dancers to the right so left-aligned text has a clean canvas */}
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background — shift focal point right so left side stays clean for text */}
       <div className="absolute inset-0 z-0">
         <picture>
           <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
@@ -26,19 +26,22 @@ export function HeroSection() {
             alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-[85%_60%] md:object-[center_70%]"
+            className="absolute inset-0 w-full h-full object-cover object-[85%_60%] md:object-[70%_center]"
           />
         </picture>
-        {/* Left-weighted overlay on desktop to protect left-aligned headline; top-weighted on mobile */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent md:bg-gradient-to-r md:from-foreground/85 md:via-foreground/55 md:to-transparent" />
+        {/* Cinematic left-side dark gradient — deeper on desktop to anchor headline */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent md:bg-gradient-to-r md:from-foreground/90 md:via-foreground/60 md:via-40% md:to-transparent" />
       </div>
 
-      {/* Content — left-aligned, constrained to the left third on desktop */}
+      {/* Content — vertically centered, comfortably inset from the left edge */}
       <div
-        className="relative z-10 w-full pt-20 md:pt-28 lg:pt-32 pb-[260px]"
-        style={{ paddingLeft: "clamp(1.25rem, 4vw, 2rem)", paddingRight: "clamp(1.25rem, 4vw, 2rem)" }}
+        className="relative z-10 w-full pb-[260px] md:pb-[220px]"
+        style={{
+          paddingLeft: "clamp(1.5rem, 8vw, 6rem)",
+          paddingRight: "clamp(1.25rem, 4vw, 2rem)",
+        }}
       >
-        <div className="max-w-xl md:max-w-lg lg:max-w-xl md:mr-auto text-left">
+        <div className="max-w-[520px] text-left">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
