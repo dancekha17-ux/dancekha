@@ -51,7 +51,7 @@ export function HeroSection() {
           >
             <Heart className="w-4 h-4 text-primary" />
             <span className="text-primary-foreground text-sm font-body">
-              啟 動 你 的 舞 蹈 冒 險
+              連結你我的​舞蹈平台
             </span>
           </motion.div>
 
