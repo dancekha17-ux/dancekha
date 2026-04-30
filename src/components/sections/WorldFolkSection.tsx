@@ -140,19 +140,18 @@ export function WorldFolkSection() {
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          transition={{ duration: 0.9 }}
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-            World Folk · 世界民俗
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-6">
-            用舞步走遍<span className="text-gradient">大地的記憶</span>
+          <span className="eyebrow">World Folk · 世界民俗</span>
+          <div className="hairline mt-6 mb-8" />
+          <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
+            用舞步走遍<span className="text-accent-italic">大地的記憶</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            從烏克蘭草原到安達魯西亞夜晚，從巴爾幹的不對稱節拍到地中海岸邊的圓圈，
+          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+            從烏克蘭草原到安達魯西亞夜晚，從巴爾幹的不對稱節拍到地中海岸邊的圓圈——
             我們收藏每個民族用身體寫下的歷史。
           </p>
         </motion.div>
