@@ -16,7 +16,7 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-start overflow-hidden">
-      {/* Background — dancers' faces sit in the lower-middle area, so we anchor text to the TOP safe zone */}
+      {/* Background — on mobile we shift dancers to the right so left-aligned text has a clean canvas */}
       <div className="absolute inset-0 z-0">
         <picture>
           <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
@@ -26,20 +26,19 @@ export function HeroSection() {
             alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 70%" }}
+            className="absolute inset-0 w-full h-full object-cover object-[85%_60%] md:object-[center_70%]"
           />
         </picture>
-        {/* Top-weighted overlay to keep dancer faces clear (lower portion) and ensure text legibility in the upper safe zone */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent" />
+        {/* Left-weighted overlay on desktop to protect left-aligned headline; top-weighted on mobile */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent md:bg-gradient-to-r md:from-foreground/85 md:via-foreground/55 md:to-transparent" />
       </div>
 
-      {/* Content — center-aligned for optimal readability */}
+      {/* Content — left-aligned, constrained to the left third on desktop */}
       <div
-        className="relative z-10 w-full pt-16 md:pt-20 pb-[260px]"
+        className="relative z-10 w-full pt-20 md:pt-28 lg:pt-32 pb-[260px]"
         style={{ paddingLeft: "clamp(1.25rem, 4vw, 2rem)", paddingRight: "clamp(1.25rem, 4vw, 2rem)" }}
       >
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-xl md:max-w-lg lg:max-w-xl md:mr-auto text-left">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
