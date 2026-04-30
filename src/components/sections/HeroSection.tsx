@@ -42,7 +42,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8"
+            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8 text-center"
           >
             <Heart className="w-4 h-4 text-primary" />
             <span className="text-primary-foreground text-sm font-body">
@@ -55,7 +55,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-primary-foreground leading-[1.15] tracking-tight mb-6"
+            className="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-primary-foreground leading-[1.15] tracking-tight mb-6 text-left"
           >
             跳起來！
             <br />
@@ -67,7 +67,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base md:text-lg lg:text-xl text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 leading-loose tracking-wide"
+            className="text-base md:text-lg lg:text-xl text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 leading-loose tracking-wide text-left"
           >
             線上線下隨心舞動，零基礎也能 FUN 心跳。
             <br className="hidden md:block" />
