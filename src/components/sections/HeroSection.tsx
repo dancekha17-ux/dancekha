@@ -1,51 +1,22 @@
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Users, Star, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
-import heroJpg1024 from "@/assets/hero/hero-dance-1024.jpg";
-import heroJpg1600 from "@/assets/hero/hero-dance-1600.jpg";
-import heroJpg1920 from "@/assets/hero/hero-dance-1920.jpg";
-import heroWebp640 from "@/assets/hero/hero-dance-640.webp";
-import heroWebp1024 from "@/assets/hero/hero-dance-1024.webp";
-import heroWebp1600 from "@/assets/hero/hero-dance-1600.webp";
-import heroWebp1920 from "@/assets/hero/hero-dance-1920.webp";
 
 export function HeroSection() {
-  const webpSrcSet = `${heroWebp640} 640w, ${heroWebp1024} 1024w, ${heroWebp1600} 1600w, ${heroWebp1920} 1920w`;
-  const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
-
   return (
-    <section className="relative min-h-screen flex items-start overflow-hidden">
-      {/* Background — dancers' faces sit in the lower-middle area, so we anchor text to the TOP safe zone */}
-      <div className="absolute inset-0 z-0">
-        <picture>
-          <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
-          <source type="image/jpeg" srcSet={jpgSrcSet} sizes="100vw" />
-          <img
-            src={heroJpg1600}
-            alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 70%" }}
-          />
-        </picture>
-        {/* Top-weighted overlay to keep dancer faces clear (lower portion) and ensure text legibility in the upper safe zone */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent" />
-      </div>
-
-      {/* Content — anchored to TOP-LEFT safe zone, ≥200px clear of dancers' faces below */}
-      <div className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-20 pb-[260px]">
-        <div className="max-w-2xl mr-auto">
+    <section className="relative min-h-screen flex items-start overflow-hidden bg-cream">
+      {/* Content — left-aligned, ~50% right whitespace */}
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 pt-24 md:pt-32 pb-[260px]">
+        <div className="w-full md:w-1/2 max-w-2xl">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8"
+            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-8"
           >
             <Heart className="w-4 h-4 text-primary" />
-            <span className="text-primary-foreground text-sm font-body">
+            <span className="text-cream-foreground text-sm font-body tracking-wide">
               舞 蹈 啟 動 平 台
             </span>
           </motion.div>
@@ -55,7 +26,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl lg:text-7xl font-display font-semibold text-primary-foreground leading-tight mb-6 md:text-4xl"
+            className="text-left text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-cream-foreground leading-[1.15] mb-6"
           >
             跳起來！
             <br />
@@ -67,12 +38,11 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-primary-foreground/80 font-body max-w-xl mb-10 leading-relaxed"
+            className="text-left text-lg md:text-xl text-cream-foreground/75 font-body max-w-xl mb-10 leading-relaxed"
           >
             線上線下隨心舞動，零基礎也能 FUN 心跳。
             在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
           </motion.p>
-
         </div>
       </div>
 
@@ -90,7 +60,7 @@ export function HeroSection() {
               開始探索
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="heroOutline" size="xl" className="group">
+            <Button variant="outline" size="xl" className="group">
               <Play className="w-5 h-5" />
               觀看介紹
             </Button>
@@ -104,42 +74,42 @@ export function HeroSection() {
             className="flex flex-wrap justify-center gap-8 md:gap-12"
           >
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center">
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                <div className="text-2xl font-display font-semibold text-cream-foreground">
                   2000+
                 </div>
-                <div className="text-sm text-primary-foreground/60 font-body">
+                <div className="text-sm text-cream-foreground/60 font-body">
                   舞島咖學員
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center">
                 <Star className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                <div className="text-2xl font-display font-semibold text-cream-foreground">
                   18+
                 </div>
-                <div className="text-sm text-primary-foreground/60 font-body">
+                <div className="text-sm text-cream-foreground/60 font-body">
                   專業師資
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center">
                 <Heart className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                <div className="text-2xl font-display font-semibold text-cream-foreground">
                   36
                 </div>
-                <div className="text-sm text-primary-foreground/60 font-body">
+                <div className="text-sm text-cream-foreground/60 font-body">
                   舞蹈風格
                 </div>
               </div>
@@ -147,7 +117,6 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
-
 
       {/* Decorative wave */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
