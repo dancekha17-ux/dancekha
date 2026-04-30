@@ -15,167 +15,150 @@ export function HeroSection() {
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
   return (
-    <section className="relative overflow-hidden bg-foreground">
-      {/* ============================================================
-          DESKTOP (≥1024px): Side-by-side — text left 45%, image right
-          MOBILE/TABLET (<1024px): Vertical stack — text on top, image below
-          No absolute overlap of text and faces.
-         ============================================================ */}
-      <div className="flex flex-col lg:flex-row lg:min-h-screen">
-        {/* TEXT COLUMN */}
-        <div
-          className="relative w-full lg:w-[45%] flex items-center bg-foreground"
-          style={{
-            paddingTop: "clamp(5rem, 10vw, 8rem)",
-            paddingBottom: "clamp(3rem, 6vw, 5rem)",
-            paddingLeft: "clamp(1.25rem, 10vw, 8rem)",
-            paddingRight: "clamp(1.25rem, 4vw, 3rem)",
-          }}
-        >
-          <div className="w-full max-w-xl text-left">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8"
-            >
-              <Heart className="w-4 h-4 text-primary" />
-              <span className="text-primary-foreground text-sm font-body">
-                啟 動 你 的 舞 蹈 冒 險
-              </span>
-            </motion.div>
+    <section className="relative min-h-screen flex items-start overflow-hidden">
+      {/* Background — on mobile we shift dancers to the right so left-aligned text has a clean canvas */}
+      <div className="absolute inset-0 z-0">
+        <picture>
+          <source type="image/webp" srcSet={webpSrcSet} sizes="100vw" />
+          <source type="image/jpeg" srcSet={jpgSrcSet} sizes="100vw" />
+          <img
+            src={heroJpg1600}
+            alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-[85%_60%] md:object-[center_70%]"
+          />
+        </picture>
+        {/* Left-weighted overlay on desktop to protect left-aligned headline; top-weighted on mobile */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/45 to-transparent md:bg-gradient-to-r md:from-foreground/85 md:via-foreground/55 md:to-transparent" />
+      </div>
 
-            {/* Headline — rem-based, mobile 2.2rem auto-scaling up */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="font-body font-bold text-primary-foreground mb-6"
-              style={{
-                fontSize: "clamp(2.2rem, 4vw + 0.5rem, 4.25rem)",
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              跳起來!
-              <br />
-              <span className="text-gradient">用舞步遇見世界</span>
-            </motion.h1>
+      {/* Content — left-aligned, constrained to the left third on desktop */}
+      <div
+        className="relative z-10 w-full pt-20 md:pt-28 lg:pt-32 pb-[260px]"
+        style={{ paddingLeft: "clamp(1.25rem, 4vw, 2rem)", paddingRight: "clamp(1.25rem, 4vw, 2rem)" }}
+      >
+        <div className="max-w-xl md:max-w-lg lg:max-w-xl md:mr-auto text-left">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 mb-8 text-left"
+          >
+            <Heart className="w-4 h-4 text-primary" />
+            <span className="text-primary-foreground text-sm font-body">
+              啟 動 你 的 舞 蹈 冒 險
+            </span>
+          </motion.div>
 
-            {/* Subheadline — rem-based, mobile 1.1rem */}
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-primary-foreground/85 font-body mb-10"
-              style={{
-                fontSize: "clamp(1.1rem, 0.6vw + 1rem, 1.25rem)",
-                lineHeight: 1.7,
-                letterSpacing: "0.015em",
-              }}
-            >
-              DanceKha 舞島咖 — 線上線下隨心舞動，零基礎也能 FUN 心跳。
-              在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
-            </motion.p>
+          {/* Headline — fluid typography prevents awkward line breaks */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-fluid-hero font-display font-semibold text-primary-foreground mb-6 text-left"
+          >
+            跳起來!
+            <br />
+            <span className="text-gradient">用舞步遇見世界</span>
+          </motion.h1>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-wrap gap-4 mb-12"
-            >
-              <Button variant="hero" size="xl" className="group">
-                開始探索
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button variant="heroOutline" size="xl" className="group">
-                <Play className="w-5 h-5" />
-                觀看介紹
-              </Button>
-            </motion.div>
+          {/* Subheadline — fluid lead with mobile-optimized line-height */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-fluid-lead text-primary-foreground/85 font-body max-w-xl mb-10 text-left"
+          >
+            線上線下隨心舞動，零基礎也能 FUN 心跳。
+            <br className="hidden md:block" />
+            在這裡不只是學舞，還能透過社群互動舞出友誼的節奏。
+          </motion.p>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap gap-6 md:gap-8"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="text-2xl font-display font-semibold text-primary-foreground">
-                    2000+
-                  </div>
-                  <div className="text-sm text-primary-foreground/60 font-body">
-                    舞島咖學員
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
-                  <Star className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="text-2xl font-display font-semibold text-primary-foreground">
-                    18+
-                  </div>
-                  <div className="text-sm text-primary-foreground/60 font-body">
-                    專業師資
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="text-2xl font-display font-semibold text-primary-foreground">
-                    36
-                  </div>
-                  <div className="text-sm text-primary-foreground/60 font-body">
-                    舞蹈風格
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Subtle gradient mask at the bottom of text column on desktop, blending into image */}
-          <div className="hidden lg:block absolute top-0 right-0 h-full w-24 bg-gradient-to-r from-foreground to-transparent pointer-events-none" />
-        </div>
-
-        {/* IMAGE COLUMN — standard flow, no overlap with text */}
-        <div className="relative w-full lg:w-[55%] h-[50vh] sm:h-[60vh] lg:h-auto lg:min-h-screen">
-          <picture>
-            <source type="image/webp" srcSet={webpSrcSet} sizes="(min-width: 1024px) 55vw, 100vw" />
-            <source type="image/jpeg" srcSet={jpgSrcSet} sizes="(min-width: 1024px) 55vw, 100vw" />
-            <img
-              src={heroJpg1600}
-              alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
-              fetchPriority="high"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover object-center"
-            />
-          </picture>
-          {/* Soft left-edge gradient on desktop only — keeps faces clear, blends with text column */}
-          <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-foreground/60 to-transparent pointer-events-none" />
         </div>
       </div>
 
-      {/* Decorative wave — preserved */}
-      <div className="relative left-0 right-0 -mt-px">
+      {/* Bottom-centered CTA + Stats */}
+      <div className="absolute bottom-24 left-0 right-0 z-10 px-4 md:px-8">
+        <div className="container-wide mx-auto flex flex-col items-center gap-10">
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-wrap justify-center gap-4"
+          >
+            <Button variant="hero" size="xl" className="group">
+              開始探索
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button variant="heroOutline" size="xl" className="group">
+              <Play className="w-5 h-5" />
+              觀看介紹
+            </Button>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-wrap justify-center gap-8 md:gap-12"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+                <Users className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                  2000+
+                </div>
+                <div className="text-sm text-primary-foreground/60 font-body">
+                  舞島咖學員
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+                <Star className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                  18+
+                </div>
+                <div className="text-sm text-primary-foreground/60 font-body">
+                  專業師資
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center">
+                <Heart className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <div className="text-2xl font-display font-semibold text-primary-foreground">
+                  36
+                </div>
+                <div className="text-sm text-primary-foreground/60 font-body">
+                  舞蹈風格
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+
+      {/* Decorative wave */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
         <svg
           viewBox="0 0 1440 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full block"
+          className="w-full"
           preserveAspectRatio="none"
         >
           <path
