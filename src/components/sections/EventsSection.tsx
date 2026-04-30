@@ -54,25 +54,23 @@ export function EventsSection() {
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
+          transition={{ duration: 0.9 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 pb-8 border-b border-border"
         >
           <div>
-            <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-              活動行事曆
-            </span>
-            <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground">
-              即將到來的<span className="text-gradient">精彩活動</span>
+            <span className="eyebrow">Events · 活動行事曆</span>
+            <h2 className="text-fluid-h1 font-display font-medium text-foreground mt-6">
+              即將到來的<span className="text-accent-italic">精彩時刻</span>
             </h2>
           </div>
           <a
             href="#"
-            className="inline-flex items-center gap-2 text-primary font-medium flow-line"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary font-body transition-colors"
           >
             查看完整行事曆
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </motion.div>
 

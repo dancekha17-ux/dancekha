@@ -39,43 +39,41 @@ export function AboutSection() {
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.9 }}
+          className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-            關於舞島咖
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-6">
-            這座島，為<span className="text-gradient">舞動的靈魂</span>而生
+          <span className="eyebrow">About · 關於舞島咖</span>
+          <div className="hairline mt-6 mb-8" />
+          <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-8">
+            這座島，為<span className="text-accent-italic">舞動的靈魂</span>而生
           </h2>
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            舞島咖是一個溫暖的舞蹈生態系，我們串起舞蹈藝術家與愛舞者，
-            創造一個讓每個人都能自在起舞的空間。在這裡，舞蹈不只是技巧，
-            更是連結、是療癒、是發現自己的旅程。
+          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+            舞島咖是一個溫暖的舞蹈生態系。我們串起世界的舞蹈藝術家與愛舞者，
+            創造一個讓每個人都能自在起舞、用身體與世界對話的空間。
           </p>
         </motion.div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Features Grid — quieter editorial layout */}
+        <div className="grid md:grid-cols-2 gap-x-12 gap-y-14 max-w-5xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.1 * (index + 1) }}
-              className="group card-elevated p-8 hover:shadow-elevated transition-all duration-500"
+              className="group"
             >
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <feature.icon className="w-7 h-7 text-primary" />
+                <div className="w-11 h-11 rounded-full border border-border flex items-center justify-center shrink-0 group-hover:border-primary/50 transition-colors">
+                  <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <h3 className="text-xl font-display font-semibold text-foreground mb-3">
+                <div className="flex-1">
+                  <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground font-body leading-relaxed">
+                  <p className="text-muted-foreground font-body leading-relaxed text-[15px]">
                     {feature.description}
                   </p>
                 </div>

@@ -17,20 +17,19 @@ export function InstructorsSection() {
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.9 }}
+          className="text-center max-w-2xl mx-auto mb-20"
         >
-          <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-            創生軸心
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-6">
-            用生命跳舞的<span className="text-gradient">舞蹈家們</span>
+          <span className="eyebrow">Instructors · 創生軸心</span>
+          <div className="hairline mt-6 mb-8" />
+          <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
+            用生命跳舞的<span className="text-accent-italic">舞蹈家們</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            我們的師資不只是技術精湛的專業者,更是懂得傾聽、願意陪伴的引路人。
-            每一位老師都帶著獨特的故事與風格,等待與你相遇。
+          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+            每一位老師都是一位文化傳遞者，
+            帶著獨特的故事、節奏與風土，等待與你相遇。
           </p>
         </motion.div>
 

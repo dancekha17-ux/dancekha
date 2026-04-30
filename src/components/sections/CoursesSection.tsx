@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Clock, Users, Play, Sparkles, MapPin, Tag } from "lucide-react";
+import { Clock, Users, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { courses, FUNCTION_TAGS } from "@/data/courses";
+import { courses } from "@/data/courses";
 
 const categories = [
   { id: "all", label: "全部課程" },
@@ -22,180 +22,118 @@ export function CoursesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
-  const [activeFunction, setActiveFunction] = useState<string | null>(null);
 
-  const filteredCourses = courses.filter((c) => {
-    const byCategory = activeCategory === "all" || c.category === activeCategory;
-    const byFunction =
-      !activeFunction || c.functionTags.includes(activeFunction);
-    return byCategory && byFunction;
-  });
+  const filteredCourses = courses.filter(
+    (c) => activeCategory === "all" || c.category === activeCategory,
+  );
 
   return (
     <section id="courses" className="section-padding bg-background" ref={ref}>
       <div className="container-wide mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          transition={{ duration: 0.9 }}
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="inline-block text-primary font-body text-sm tracking-widest uppercase mb-4">
-            課程專區
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-6">
-            找到屬於你的<span className="text-gradient">舞動節奏</span>
+          <span className="eyebrow">Courses · 課程專區</span>
+          <div className="hairline mt-6 mb-8" />
+          <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
+            找到屬於你的<span className="text-accent-italic">舞動節奏</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            從零基礎到專業進階，從傳統到舞台，超過 100+ 堂課程等你探索。
-            線上線下混合學習，隨時隨地開啟你的舞蹈旅程。
+          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+            從零基礎到深度文化探索，線上線下隨心切換。
+            每一堂課，都是一次與世界相遇的旅程。
           </p>
         </motion.div>
 
-        {/* Region / Category Tabs */}
+        {/* Single, refined filter bar */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-6"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-16 pb-6 border-b border-border"
         >
-          <p className="flex items-center justify-center gap-1.5 text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
-            <MapPin className="w-3.5 h-3.5" /> 依地域 / 類型
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === cat.id
-                    ? "bg-primary text-primary-foreground shadow-glow"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Function Tag Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mb-12"
-        >
-          <p className="flex items-center justify-center gap-1.5 text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
-            <Tag className="w-3.5 h-3.5" /> 依功能標籤
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
+          {categories.map((cat) => (
             <button
-              onClick={() => setActiveFunction(null)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                !activeFunction
-                  ? "bg-soul text-soul-foreground shadow-glow"
-                  : "bg-secondary/60 text-secondary-foreground hover:bg-secondary"
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`text-sm font-body transition-colors duration-300 pb-1 border-b ${
+                activeCategory === cat.id
+                  ? "text-foreground border-primary"
+                  : "text-muted-foreground border-transparent hover:text-foreground"
               }`}
             >
-              全部功能
+              {cat.label}
             </button>
-            {FUNCTION_TAGS.map((tag) => (
-              <button
-                key={tag}
-                onClick={() =>
-                  setActiveFunction(activeFunction === tag ? null : tag)
-                }
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                  activeFunction === tag
-                    ? "bg-soul text-soul-foreground shadow-glow"
-                    : "bg-secondary/60 text-secondary-foreground hover:bg-secondary"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
+          ))}
         </motion.div>
 
-        {/* Courses Grid */}
+        {/* Courses Grid — quieter editorial cards */}
         {filteredCourses.length === 0 ? (
           <p className="text-center text-muted-foreground py-16">
             目前沒有符合篩選條件的課程，試試其他組合。
           </p>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
             {filteredCourses.map((course, index) => (
               <motion.div
                 key={course.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.05 * (index + 1) }}
+                transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
                 className="group"
               >
                 <Link
                   to={`/course-detail/${course.id}`}
                   className="block h-full"
                 >
-                  <div className="card-elevated overflow-hidden hover:shadow-elevated transition-all duration-500 h-full flex flex-col group-hover:-translate-y-1">
-                    {/* Header with gradient */}
+                  <div className="h-full flex flex-col">
+                    {/* Image plate — taller, cinematic ratio */}
                     <div
-                      className={`relative h-40 bg-gradient-to-br ${course.gradient} p-6 flex flex-col justify-between`}
+                      className={`relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br ${course.gradient} mb-5`}
                     >
-                      <div className="flex justify-between items-start">
-                        {course.isOnline && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/80 backdrop-blur-sm rounded-full text-xs font-medium text-foreground">
-                            <Play className="w-3 h-3" />
-                            線上課程
-                          </span>
-                        )}
-                        {course.isFeatured && (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary text-primary-foreground rounded-full text-xs font-medium ml-auto">
-                            <Sparkles className="w-3 h-3" />
-                            推薦
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="text-2xl font-display font-semibold text-foreground">
-                        {course.price}
+                      <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                        <div className="flex justify-between items-start">
+                          {course.isOnline && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
+                              <Play className="w-2.5 h-2.5" />
+                              線上
+                            </span>
+                          )}
+                          {course.isFeatured && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-foreground/85 text-primary-foreground rounded-full text-[11px] font-body ml-auto">
+                              <Sparkles className="w-2.5 h-2.5" />
+                              精選
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xl font-display font-medium text-foreground/90">
+                          {course.price}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-lg font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {/* Text — editorial, quiet */}
+                    <div className="flex-1 flex flex-col">
+                      <p className="text-[11px] uppercase font-body text-muted-foreground mb-2" style={{ letterSpacing: "0.18em" }}>
+                        {course.instructor}
+                      </p>
+                      <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
                         {course.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground font-body mb-3">
-                        講師：{course.instructor}
-                      </p>
 
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {course.functionTags.slice(0, 2).map((t) => (
-                          <span
-                            key={t}
-                            className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-medium"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mt-auto mb-4">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
+                          <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {course.duration}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Users className="w-4 h-4" />
+                          <Users className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {course.students}
                         </span>
                       </div>
-
-                      <Button variant="outline" className="w-full">
-                        查看課程
-                      </Button>
                     </div>
                   </div>
                 </Link>
@@ -204,14 +142,14 @@ export function CoursesSection() {
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA — single quiet link */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-20"
         >
-          <Button variant="hero" size="lg">
+          <Button variant="outline" size="lg">
             瀏覽所有課程
           </Button>
         </motion.div>
