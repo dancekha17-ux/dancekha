@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Clock, Users, Play, Sparkles, MapPin, Tag } from "lucide-react";
+import { Clock, Users, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { courses, FUNCTION_TAGS } from "@/data/courses";
+import { courses } from "@/data/courses";
 
 const categories = [
   { id: "all", label: "全部課程" },
