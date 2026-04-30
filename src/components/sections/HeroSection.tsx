@@ -69,7 +69,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-fluid-lead text-primary-foreground/85 font-body max-w-2xl mx-auto mb-10 text-left"
+            className="text-fluid-lead text-primary-foreground/85 font-body max-w-xl mb-10 text-left"
           >
             線上線下隨心舞動，零基礎也能 FUN 心跳。
             <br className="hidden md:block" />
