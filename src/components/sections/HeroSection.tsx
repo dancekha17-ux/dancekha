@@ -46,7 +46,7 @@ export function HeroSection() {
           >
             <Heart className="w-4 h-4 text-primary" />
             <span className="text-primary-foreground text-sm font-body">
-              舞 蹈 啟 動 平 台
+              啟動你的舞蹈冒險吧！
             </span>
           </motion.div>
 
