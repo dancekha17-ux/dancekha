@@ -143,85 +143,91 @@ export default function InstructorProfile() {
               </motion.div>
 
               {/* 舞種淵源 / 文化故事 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="w-5 h-5 text-primary" />
-                  <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                    舞種淵源 · Cultural Roots
-                  </span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-5">
-                  {instructor.cultureTitle}
-                </h2>
-                <div className="card-elevated p-7 md:p-9 border-l-4 border-primary/40">
-                  <p className="text-base md:text-lg font-body leading-loose text-foreground/85">
-                    {instructor.cultureBody}
-                  </p>
-                </div>
-              </motion.div>
+              {instructor.cultureBody && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                    <span className="text-xs uppercase tracking-widest text-primary font-medium">
+                      舞種淵源 · Cultural Roots
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-5">
+                    {instructor.cultureTitle}
+                  </h2>
+                  <div className="card-elevated p-7 md:p-9 border-l-4 border-primary/40">
+                    <p className="text-base md:text-lg font-body leading-loose text-foreground/85">
+                      {instructor.cultureBody}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
               {/* 多媒體影片 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Play className="w-5 h-5 text-primary" />
-                  <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                    舞姿展示 · Watch in Motion
-                  </span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-5">
-                  看見老師的呼吸
-                </h2>
-                <div className="relative rounded-2xl overflow-hidden shadow-elevated aspect-video bg-foreground/5">
-                  <iframe
-                    src={instructor.videoEmbedUrl}
-                    title={`${instructor.name} 舞蹈展示`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                  />
-                </div>
-              </motion.div>
+              {instructor.videoEmbedUrl && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <Play className="w-5 h-5 text-primary" />
+                    <span className="text-xs uppercase tracking-widest text-primary font-medium">
+                      舞姿展示 · Watch in Motion
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-5">
+                    看見老師的呼吸
+                  </h2>
+                  <div className="relative rounded-2xl overflow-hidden shadow-elevated aspect-video bg-foreground/5">
+                    <iframe
+                      src={instructor.videoEmbedUrl}
+                      title={`${instructor.name} 舞蹈展示`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  </div>
+                </motion.div>
+              )}
 
               {/* 經歷與獎項 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Award className="w-5 h-5 text-primary" />
-                  <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                    經歷與獎項 · Credentials
-                  </span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
-                  田野與舞台的足跡
-                </h2>
-                <ul className="grid sm:grid-cols-2 gap-3">
-                  {instructor.credentials.map((c) => (
-                    <li
-                      key={c}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-secondary/60 border border-border/50"
-                    >
-                      <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
-                      <span className="text-sm font-body text-foreground/85 leading-relaxed">
-                        {c}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+              {instructor.credentials.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <Award className="w-5 h-5 text-primary" />
+                    <span className="text-xs uppercase tracking-widest text-primary font-medium">
+                      經歷與獎項 · Credentials
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
+                    田野與舞台的足跡
+                  </h2>
+                  <ul className="grid sm:grid-cols-2 gap-3">
+                    {instructor.credentials.map((c) => (
+                      <li
+                        key={c}
+                        className="flex items-start gap-3 p-4 rounded-xl bg-secondary/60 border border-border/50"
+                      >
+                        <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
+                        <span className="text-sm font-body text-foreground/85 leading-relaxed">
+                          {c}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )}
             </div>
 
             {/* Right sticky booking */}
