@@ -80,14 +80,11 @@ export function Header() {
               <Globe className="w-4 h-4" />
               {lang === "zh" ? "EN" : "中"}
             </button>
-            <Button
-              variant={isScrolled ? "outline" : "heroOutline"}
-              size="sm"
-            >
-              {lang === "zh" ? "登入" : "Login"}
+            <Button asChild variant={isScrolled ? "outline" : "heroOutline"} size="sm">
+              <Link to="/teacher/login">{lang === "zh" ? "老師登入" : "Teacher Login"}</Link>
             </Button>
-            <Button variant="hero" size="sm">
-              {lang === "zh" ? "免費體驗" : "Try Free"}
+            <Button asChild variant="hero" size="sm">
+              <Link to="/teacher/login">{lang === "zh" ? "成為老師" : "Become a Teacher"}</Link>
             </Button>
           </div>
 
@@ -124,11 +121,15 @@ export function Header() {
                 </Link>
               ))}
               <div className="flex gap-3 pt-4">
-                <Button variant="outline" className="flex-1">
-                  {lang === "zh" ? "登入" : "Login"}
+                <Button asChild variant="outline" className="flex-1">
+                  <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    {lang === "zh" ? "老師登入" : "Teacher Login"}
+                  </Link>
                 </Button>
-                <Button variant="hero" className="flex-1">
-                  {lang === "zh" ? "免費體驗" : "Try Free"}
+                <Button asChild variant="hero" className="flex-1">
+                  <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    {lang === "zh" ? "成為老師" : "Become a Teacher"}
+                  </Link>
                 </Button>
               </div>
             </div>
