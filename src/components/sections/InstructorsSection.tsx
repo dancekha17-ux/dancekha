@@ -2,11 +2,12 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Youtube, Star } from "lucide-react";
-import { instructors } from "@/data/instructors";
+import { usePublicInstructors } from "@/hooks/usePublicInstructors";
 
 export function InstructorsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { items: instructors } = usePublicInstructors();
 
   return (
     <section
