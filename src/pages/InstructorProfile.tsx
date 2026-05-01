@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -15,12 +16,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { getInstructorBySlug } from "@/data/instructors";
+import { fetchInstructorBySlug, PublicInstructor } from "@/hooks/usePublicInstructors";
 
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const instructor = slug ? getInstructorBySlug(slug) : undefined;
+  const [instructor, setInstructor] = useState<PublicInstructor | null | undefined>(undefined);
+
+  useEffect(() => {
+    if (!slug) return;
+    fetchInstructorBySlug(slug).then((res) => setInstructor(res ?? null));
+  }, [slug]);
+
+  if (instructor === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p className="text-muted-foreground">載入中…</p>
+      </div>
+    );
+  }
 
   if (!instructor) {
     return (
