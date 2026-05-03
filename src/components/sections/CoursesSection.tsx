@@ -42,7 +42,7 @@ export function CoursesSection() {
           <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
             找到屬於你的<span className="text-accent-italic">舞動節奏</span>
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+          <p className="text-fluid-lead text-muted-foreground font-body">
             從零基礎到深度文化探索，線上線下隨心切換。
             每一堂課，都是一次與世界相遇的旅程。
           </p>
