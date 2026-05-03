@@ -42,7 +42,7 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="text-center max-w-2xl mx-auto mb-20"
+          className="text-center max-w-2xl mx-auto section-header"
         >
           <span className="eyebrow">About · 關於舞島咖</span>
           <div className="hairline mt-6 mb-8" />
@@ -56,7 +56,7 @@ export function AboutSection() {
         </motion.div>
 
         {/* Features Grid — quieter editorial layout */}
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-14 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-x-10 md:gap-x-12 gap-y-10 md:gap-y-14 max-w-5xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}

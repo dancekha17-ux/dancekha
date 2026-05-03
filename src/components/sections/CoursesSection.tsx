@@ -35,7 +35,7 @@ export function CoursesSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto section-header"
         >
           <span className="eyebrow">Courses · 課程專區</span>
           <div className="hairline mt-6 mb-8" />
@@ -53,13 +53,13 @@ export function CoursesSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-16 pb-6 border-b border-border"
+          className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-visible justify-start md:justify-center gap-x-5 md:gap-x-6 gap-y-3 mb-12 md:mb-16 pb-4 md:pb-6 border-b border-border scrollbar-none"
         >
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`text-sm font-body transition-colors duration-300 pb-1 border-b ${
+              className={`shrink-0 whitespace-nowrap text-sm font-body transition-colors duration-300 pb-1 border-b ${
                 activeCategory === cat.id
                   ? "text-foreground border-primary"
                   : "text-muted-foreground border-transparent hover:text-foreground"
@@ -76,7 +76,7 @@ export function CoursesSection() {
             目前沒有符合篩選條件的課程，試試其他組合。
           </p>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
             {filteredCourses.map((course, index) => (
               <motion.div
                 key={course.id}
@@ -147,7 +147,7 @@ export function CoursesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center mt-20"
+          className="text-center mt-14 md:mt-20"
         >
           <Button variant="outline" size="lg">
             瀏覽所有課程

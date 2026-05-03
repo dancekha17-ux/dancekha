@@ -143,7 +143,7 @@ export function WorldFolkSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto section-header"
         >
           <span className="eyebrow">World Folk · 世界民俗</span>
           <div className="hairline mt-6 mb-8" />
@@ -207,7 +207,7 @@ export function WorldFolkSection() {
         </motion.div>
 
         {/* Dances Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {filtered.map((dance, index) => {
             const isOpen = openOrigin === dance.id;
             return (

@@ -57,7 +57,7 @@ export function EventsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 pb-8 border-b border-border"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-8 mb-12 md:mb-16 pb-6 md:pb-8 border-b border-border"
         >
           <div>
             <span className="eyebrow">Events · 活動行事曆</span>
@@ -118,7 +118,7 @@ export function EventsSection() {
                     )}
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-fluid-h3 font-display font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                     {event.title}
                   </h3>
 
