@@ -84,8 +84,8 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.55 }}
             className="text-base md:text-lg text-primary-foreground/80 font-body leading-relaxed mb-10 max-w-md"
           >
-            連結世界舞蹈、人與旅程的文化平台。<br className="hidden sm:block" />
-            從零基礎到深度文化探索,讓身體成為你的語言。
+            線上線下隨心舞動，零基礎也能 FUN 心跳。<br className="hidden sm:block" />
+            在這裡不只是學舞，還能透過社群舞出友誼的節奏。
           </motion.p>
 
           {/* Single primary CTA — premium restraint */}
