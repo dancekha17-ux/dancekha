@@ -52,7 +52,7 @@ export function HeroSection() {
             className="text-[10px] sm:text-xs uppercase font-body text-primary-foreground/70 mb-6 sm:mb-8"
             style={{ letterSpacing: "0.28em" }}
           >
-            啟動你的跳舞冒險
+            ▁▂▃啟動你的跳舞冒險
           </motion.p>
 
           {/* Headline — italic accent instead of orange gradient */}
