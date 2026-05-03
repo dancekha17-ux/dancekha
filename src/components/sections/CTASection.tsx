@@ -25,13 +25,13 @@ export function CTASection() {
           <span className="eyebrow">Begin · 啟程</span>
           <div className="hairline mt-6 mb-10" />
 
-          <h2 className="text-fluid-hero font-display font-medium text-foreground mb-8 leading-[1.1]">
+          <h2 className="text-fluid-hero font-display font-medium text-foreground mb-8">
             讓身體
             <br />
             <span className="italic font-normal text-primary">成為你的語言。</span>
           </h2>
 
-          <p className="text-base md:text-lg text-muted-foreground font-body max-w-xl mx-auto mb-12 leading-relaxed">
+          <p className="text-fluid-lead text-muted-foreground font-body max-w-xl mx-auto mb-12">
             無論你是初次起舞，還是想走得更遠——
             舞島咖陪你走進世界、走進自己。
           </p>

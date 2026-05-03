@@ -60,7 +60,7 @@ export function CommunitySection() {
           <h2 className="text-fluid-h1 font-display font-medium mb-6">
             舞出<span className="italic font-normal text-primary">友誼的節奏</span>
           </h2>
-          <p className="text-base md:text-lg text-primary-foreground/70 font-body leading-relaxed">
+          <p className="text-fluid-lead text-primary-foreground/70 font-body">
             在舞島咖，你永遠不是一個人在跳舞。
             這裡有最真誠的分享、最溫暖的鼓勵——讓身體成為彼此的語言。
           </p>
@@ -78,7 +78,7 @@ export function CommunitySection() {
               key={stat.label}
               className="text-center p-5 md:p-6 rounded-2xl bg-primary-foreground/5 border border-primary-foreground/10"
             >
-              <div className="text-2xl md:text-4xl font-display font-semibold text-primary mb-2">
+              <div className="text-fluid-h2 font-display font-semibold text-primary mb-2">
                 {stat.number}
               </div>
               <div className="text-sm text-primary-foreground/60 font-body">

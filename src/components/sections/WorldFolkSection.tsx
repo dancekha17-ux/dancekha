@@ -150,7 +150,7 @@ export function WorldFolkSection() {
           <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
             用舞步走遍<span className="text-accent-italic">大地的記憶</span>
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+          <p className="text-fluid-lead text-muted-foreground font-body">
             從烏克蘭草原到安達魯西亞夜晚，從巴爾幹的不對稱節拍到地中海岸邊的圓圈——
             我們收藏每個民族用身體寫下的歷史。
           </p>
