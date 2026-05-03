@@ -36,8 +36,8 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container-wide mx-auto px-4 md:px-8">
-        <nav className="flex items-center justify-between h-20">
+      <div className="container-wide mx-auto">
+        <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <motion.div whileHover={{ scale: 1.02 }}>
             <Link to="/" className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-background border-t border-border"
           >
-            <div className="container-wide mx-auto px-4 py-6 space-y-4">
+            <div className="container-wide mx-auto py-6 space-y-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}

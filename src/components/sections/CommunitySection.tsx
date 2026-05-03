@@ -53,7 +53,7 @@ export function CommunitySection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="text-center max-w-2xl mx-auto mb-20"
+          className="text-center max-w-2xl mx-auto section-header"
         >
           <span className="eyebrow text-primary-foreground/70">Community · 暖流社群</span>
           <div className="mx-auto h-px w-12 bg-primary-foreground/30 mt-6 mb-8" />
@@ -71,14 +71,14 @@ export function CommunitySection() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16"
         >
           {communityStats.map((stat, index) => (
             <div
               key={stat.label}
-              className="text-center p-6 rounded-2xl bg-primary-foreground/5 border border-primary-foreground/10"
+              className="text-center p-5 md:p-6 rounded-2xl bg-primary-foreground/5 border border-primary-foreground/10"
             >
-              <div className="text-3xl md:text-4xl font-display font-semibold text-primary mb-2">
+              <div className="text-2xl md:text-4xl font-display font-semibold text-primary mb-2">
                 {stat.number}
               </div>
               <div className="text-sm text-primary-foreground/60 font-body">
@@ -89,7 +89,7 @@ export function CommunitySection() {
         </motion.div>
 
         {/* Testimonials */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -98,7 +98,7 @@ export function CommunitySection() {
               transition={{ duration: 0.8, delay: 0.3 + 0.1 * index }}
               className="group"
             >
-              <div className="h-full p-8 rounded-2xl bg-primary-foreground/5 border border-primary-foreground/10 hover:border-primary/30 transition-all duration-500">
+              <div className="h-full p-6 md:p-8 rounded-2xl bg-primary-foreground/5 border border-primary-foreground/10 hover:border-primary/30 transition-all duration-500">
                 {/* Quote icon */}
                 <Quote className="w-10 h-10 text-primary/40 mb-4" />
 

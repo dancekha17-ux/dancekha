@@ -26,21 +26,21 @@ export function HeroSection() {
             alt="一群身穿傳統服飾的舞者在地中海風景中手牽手歡舞"
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-[80%_60%] md:object-[72%_center]"
+            className="absolute inset-0 w-full h-full object-cover object-[68%_center] md:object-[72%_center]"
           />
         </picture>
-        {/* Cinematic gradient — softer, more editorial */}
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/80 via-foreground/40 to-foreground/20 md:bg-gradient-to-r md:from-foreground/85 md:via-foreground/50 md:via-35% md:to-transparent" />
+        {/* Cinematic gradient — stronger on mobile (vertical) for legibility, soft horizontal on desktop */}
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/55 to-foreground/30 md:bg-gradient-to-r md:from-foreground/85 md:via-foreground/45 md:via-35% md:to-transparent" />
       </div>
 
       {/* Content */}
       <div
         className="relative z-10 w-full"
         style={{
-          paddingLeft: "clamp(1.5rem, 8vw, 6rem)",
+          paddingLeft: "clamp(1.25rem, 7vw, 6rem)",
           paddingRight: "clamp(1.25rem, 4vw, 2rem)",
-          paddingTop: "clamp(7rem, 12vh, 9rem)",
-          paddingBottom: "clamp(6rem, 12vh, 8rem)",
+          paddingTop: "clamp(6rem, 12vh, 9rem)",
+          paddingBottom: "clamp(4rem, 10vh, 8rem)",
         }}
       >
         <div className="max-w-[540px] text-left">
@@ -49,8 +49,8 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-xs uppercase font-body text-primary-foreground/70 mb-8"
-            style={{ letterSpacing: "0.32em" }}
+            className="text-[10px] sm:text-xs uppercase font-body text-primary-foreground/70 mb-6 sm:mb-8"
+            style={{ letterSpacing: "0.28em" }}
           >
             DanceKha · 舞蹈探索平台
           </motion.p>

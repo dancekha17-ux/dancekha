@@ -21,7 +21,7 @@ export function InstructorsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}
-          className="text-center max-w-2xl mx-auto mb-20"
+          className="text-center max-w-2xl mx-auto section-header"
         >
           <span className="eyebrow">Instructors · 創生軸心</span>
           <div className="hairline mt-6 mb-8" />
@@ -35,7 +35,7 @@ export function InstructorsSection() {
         </motion.div>
 
         {/* Instructors Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {instructors.map((instructor, index) => (
             <motion.div
               key={instructor.slug}
