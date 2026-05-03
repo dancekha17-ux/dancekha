@@ -222,6 +222,15 @@
     margin-bottom: clamp(3rem, 6vw, 5rem);
   }
 
+  /* Hide scrollbar utility — for horizontal scroll filter rows on mobile */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   /* ------------------------------------------------------------------
      Fluid typography — Mobile-first responsive scaling
      Sizes interpolate smoothly between mobile and desktop viewports,
