@@ -96,14 +96,14 @@ export function HeroSection() {
             className="flex items-center gap-6"
           >
             <Button variant="hero" size="lg" className="group">
-              開始探索
+              準備一起跳
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
             <a
               href="#about"
               className="text-sm font-body text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              了解品牌故事
+              舞島咖故事
             </a>
           </motion.div>
         </div>
