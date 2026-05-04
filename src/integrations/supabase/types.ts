@@ -14,59 +14,177 @@ export type Database = {
   }
   public: {
     Tables: {
+      instructor_courses: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          description: string
+          id: string
+          level: string
+          price: string
+          schedule: string
+          sort_order: number
+          teacher_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          level?: string
+          price?: string
+          schedule?: string
+          sort_order?: number
+          teacher_id: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          level?: string
+          price?: string
+          schedule?: string
+          sort_order?: number
+          teacher_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "instructor_courses_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      instructor_media: {
+        Row: {
+          caption: string
+          created_at: string
+          id: string
+          kind: string
+          sort_order: number
+          teacher_id: string
+          url: string
+        }
+        Insert: {
+          caption?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          sort_order?: number
+          teacher_id: string
+          url: string
+        }
+        Update: {
+          caption?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          sort_order?: number
+          teacher_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "instructor_media_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       teacher_profiles: {
         Row: {
           avatar_url: string | null
           bio: string
           created_at: string
+          credentials: string[]
+          culture_body: string
+          culture_title: string
           dance_styles: string[]
+          hero_image_url: string | null
           id: string
           instagram_url: string | null
           is_approved: boolean
+          journey_timeline: Json
+          languages: string[]
           name: string
           name_en: string
+          next_session: string
+          price_from: string
           region: string
           slug: string | null
           specialty: string
+          tagline: string
           updated_at: string
           user_id: string
           website_url: string | null
+          years_experience: number | null
           youtube_url: string | null
         }
         Insert: {
           avatar_url?: string | null
           bio?: string
           created_at?: string
+          credentials?: string[]
+          culture_body?: string
+          culture_title?: string
           dance_styles?: string[]
+          hero_image_url?: string | null
           id?: string
           instagram_url?: string | null
           is_approved?: boolean
+          journey_timeline?: Json
+          languages?: string[]
           name?: string
           name_en?: string
+          next_session?: string
+          price_from?: string
           region?: string
           slug?: string | null
           specialty?: string
+          tagline?: string
           updated_at?: string
           user_id: string
           website_url?: string | null
+          years_experience?: number | null
           youtube_url?: string | null
         }
         Update: {
           avatar_url?: string | null
           bio?: string
           created_at?: string
+          credentials?: string[]
+          culture_body?: string
+          culture_title?: string
           dance_styles?: string[]
+          hero_image_url?: string | null
           id?: string
           instagram_url?: string | null
           is_approved?: boolean
+          journey_timeline?: Json
+          languages?: string[]
           name?: string
           name_en?: string
+          next_session?: string
+          price_from?: string
           region?: string
           slug?: string | null
           specialty?: string
+          tagline?: string
           updated_at?: string
           user_id?: string
           website_url?: string | null
+          years_experience?: number | null
           youtube_url?: string | null
         }
         Relationships: []
