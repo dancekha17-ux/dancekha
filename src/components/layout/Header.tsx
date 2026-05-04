@@ -10,7 +10,7 @@ const navItems = [
   { label: "社群活動", labelEn: "Instructors", href: "/#instructors" },
   { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
   { label: "社群互動", labelEn: "Community", href: "/#community" },
-  { label: "行事曆總攬", labelEn: "Events", href: "/#events" },
+  { label: "行事曆總覽", labelEn: "Events", href: "/#events" },
 ];
 
 export function Header() {
