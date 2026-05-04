@@ -2,7 +2,7 @@ import { Facebook, Instagram, Youtube, Mail, MapPin, Phone } from "lucide-react"
 
 const footerLinks = {
   courses: {
-    title: "課程探索",
+    title: "大師專區",
     links: [
       { label: "零基礎入門", href: "#" },
       { label: "現代舞", href: "#" },
