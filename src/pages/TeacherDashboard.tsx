@@ -9,6 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { SectionCard } from "@/components/teacher/SectionCard";
+import { HeroImageEditor } from "@/components/teacher/HeroImageEditor";
+import { CoursesEditor } from "@/components/teacher/CoursesEditor";
+import { MediaEditor } from "@/components/teacher/MediaEditor";
+import { TagListEditor } from "@/components/teacher/TagListEditor";
 
 const profileSchema = z.object({
   name: z.string().trim().min(1, "請輸入姓名").max(100),
@@ -22,8 +27,12 @@ const profileSchema = z.object({
     .or(z.literal("")),
   specialty: z.string().trim().max(120).optional().or(z.literal("")),
   region: z.string().trim().max(80).optional().or(z.literal("")),
+  tagline: z.string().trim().max(160).optional().or(z.literal("")),
   bio: z.string().trim().max(2000).optional().or(z.literal("")),
-  dance_styles: z.string().max(500).optional().or(z.literal("")),
+  culture_title: z.string().trim().max(120).optional().or(z.literal("")),
+  culture_body: z.string().trim().max(3000).optional().or(z.literal("")),
+  next_session: z.string().trim().max(120).optional().or(z.literal("")),
+  price_from: z.string().trim().max(80).optional().or(z.literal("")),
   instagram_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   youtube_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   website_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
@@ -39,6 +48,14 @@ interface Profile {
   region: string;
   bio: string;
   avatar_url: string | null;
+  hero_image_url: string | null;
+  tagline: string;
+  culture_title: string;
+  culture_body: string;
+  credentials: string[];
+  languages: string[];
+  next_session: string;
+  price_from: string;
   dance_styles: string[];
   instagram_url: string | null;
   youtube_url: string | null;
@@ -69,14 +86,26 @@ export default function TeacherDashboard() {
         .maybeSingle();
       if (error) {
         toast({ title: "讀取失敗", description: error.message, variant: "destructive" });
-      } else {
-        setProfile(data as Profile);
+      } else if (data) {
+        const d = data as any;
+        setProfile({
+          ...d,
+          tagline: d.tagline ?? "",
+          culture_title: d.culture_title ?? "",
+          culture_body: d.culture_body ?? "",
+          credentials: d.credentials ?? [],
+          languages: d.languages ?? [],
+          next_session: d.next_session ?? "",
+          price_from: d.price_from ?? "",
+          hero_image_url: d.hero_image_url ?? null,
+        });
       }
       setLoading(false);
     })();
   }, [user, toast]);
 
-  const update = (patch: Partial<Profile>) => setProfile((p) => (p ? { ...p, ...patch } : p));
+  const update = (patch: Partial<Profile>) =>
+    setProfile((p) => (p ? { ...p, ...patch } : p));
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -89,14 +118,12 @@ export default function TeacherDashboard() {
     try {
       const ext = file.name.split(".").pop();
       const path = `${user.id}/avatar-${Date.now()}.${ext}`;
-      const { error: upErr } = await supabase.storage.from("avatars").upload(path, file, {
-        upsert: true,
-        contentType: file.type,
-      });
+      const { error: upErr } = await supabase.storage
+        .from("avatars")
+        .upload(path, file, { upsert: true, contentType: file.type });
       if (upErr) throw upErr;
       const { data } = supabase.storage.from("avatars").getPublicUrl(path);
       update({ avatar_url: data.publicUrl });
-      // also persist immediately
       await supabase
         .from("teacher_profiles")
         .update({ avatar_url: data.publicUrl })
@@ -109,18 +136,29 @@ export default function TeacherDashboard() {
     }
   };
 
+  const handleHeroSave = async (url: string) => {
+    if (!user) return;
+    update({ hero_image_url: url });
+    await (supabase as any)
+      .from("teacher_profiles")
+      .update({ hero_image_url: url })
+      .eq("user_id", user.id);
+  };
+
   const handleSave = async () => {
     if (!profile || !user) return;
-
-    const stylesString = profile.dance_styles.join(", ");
     const parsed = profileSchema.safeParse({
       name: profile.name,
       name_en: profile.name_en,
       slug: profile.slug ?? "",
       specialty: profile.specialty,
       region: profile.region,
+      tagline: profile.tagline,
       bio: profile.bio,
-      dance_styles: stylesString,
+      culture_title: profile.culture_title,
+      culture_body: profile.culture_body,
+      next_session: profile.next_session,
+      price_from: profile.price_from,
       instagram_url: profile.instagram_url ?? "",
       youtube_url: profile.youtube_url ?? "",
       website_url: profile.website_url ?? "",
@@ -135,7 +173,7 @@ export default function TeacherDashboard() {
     }
 
     setSaving(true);
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from("teacher_profiles")
       .update({
         name: profile.name.trim(),
@@ -143,7 +181,14 @@ export default function TeacherDashboard() {
         slug: profile.slug?.trim() || null,
         specialty: profile.specialty.trim(),
         region: profile.region.trim(),
+        tagline: profile.tagline.trim(),
         bio: profile.bio.trim(),
+        culture_title: profile.culture_title.trim(),
+        culture_body: profile.culture_body.trim(),
+        next_session: profile.next_session.trim(),
+        price_from: profile.price_from.trim(),
+        credentials: profile.credentials,
+        languages: profile.languages,
         dance_styles: profile.dance_styles,
         instagram_url: profile.instagram_url?.trim() || null,
         youtube_url: profile.youtube_url?.trim() || null,
@@ -156,7 +201,7 @@ export default function TeacherDashboard() {
       const msg = error.message.includes("duplicate") ? "這個網址代稱已被使用" : error.message;
       toast({ title: "儲存失敗", description: msg, variant: "destructive" });
     } else {
-      toast({ title: "已儲存", description: "你的檔案已更新" });
+      toast({ title: "已儲存", description: "你的舞蹈故事已更新" });
     }
   };
 
@@ -168,11 +213,8 @@ export default function TeacherDashboard() {
     );
   }
 
-  const stylesText = profile.dance_styles.join(", ");
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Top bar */}
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/30">
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-40">
         <div className="container-wide mx-auto h-16 flex items-center justify-between">
           <Link to="/" className="flex items-baseline gap-2">
@@ -185,17 +227,24 @@ export default function TeacherDashboard() {
                 <Eye className="w-4 h-4" /> 預覽
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" onClick={async () => { await signOut(); navigate("/"); }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={async () => {
+                await signOut();
+                navigate("/");
+              }}
+            >
               <LogOut className="w-4 h-4" /> 登出
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container-wide mx-auto py-10 md:py-16 max-w-3xl">
+      <main className="container-wide mx-auto py-10 md:py-14 max-w-3xl">
         {/* Status banner */}
         <div
-          className={`flex items-start gap-3 p-4 rounded-2xl mb-10 border ${
+          className={`flex items-start gap-3 p-4 rounded-2xl mb-8 border ${
             profile.is_approved
               ? "bg-success/5 border-success/30 text-success"
               : "bg-secondary/60 border-border text-muted-foreground"
@@ -209,163 +258,312 @@ export default function TeacherDashboard() {
           <div className="text-sm leading-relaxed">
             {profile.is_approved ? (
               <>
-                <p className="font-medium">你的檔案已上線</p>
-                <p className="text-foreground/70 mt-0.5">學員可以在公開頁面上找到你。</p>
+                <p className="font-medium">你的故事已上線</p>
+                <p className="text-foreground/70 mt-0.5">學員可以在公開頁面與你相遇。</p>
               </>
             ) : (
               <>
                 <p className="font-medium text-foreground">待審核中</p>
-                <p className="mt-0.5">完善資料後，團隊會盡快為你上線公開頁面。</p>
+                <p className="mt-0.5">把故事寫得更完整，團隊會盡快為你上線。</p>
               </>
             )}
           </div>
         </div>
 
         <div className="mb-10">
-          <span className="eyebrow">Your Profile</span>
+          <span className="eyebrow">Your Story</span>
           <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3">
-            編輯<span className="text-accent-italic">個人檔案</span>
+            編輯<span className="text-accent-italic">舞蹈旅程</span>
           </h1>
+          <p className="text-muted-foreground mt-3 leading-relaxed">
+            這不是履歷，是邀請函。讓人從這裡開始,願意走進你的舞蹈世界。
+          </p>
         </div>
 
-        {/* Avatar */}
-        <section className="mb-12">
-          <div className="flex items-center gap-6">
-            <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-secondary ring-2 ring-border">
+        {/* Hero & identity */}
+        <SectionCard
+          eyebrow="Cover"
+          title="封面影像"
+          description="第一眼會被記住的畫面。"
+        >
+          <HeroImageEditor
+            userId={user!.id}
+            value={profile.hero_image_url}
+            onChange={handleHeroSave}
+          />
+        </SectionCard>
+
+        <SectionCard
+          eyebrow="Identity"
+          title="基本身份"
+          description="姓名、暱稱、網址代稱。"
+        >
+          <div className="flex items-center gap-6 mb-6">
+            <div className="relative w-20 h-20 rounded-full overflow-hidden bg-secondary ring-2 ring-border">
               {profile.avatar_url ? (
                 <img src={profile.avatar_url} alt="avatar" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-2xl text-muted-foreground font-display">
+                <div className="w-full h-full flex items-center justify-center text-xl text-muted-foreground font-display">
                   {profile.name?.[0] ?? "?"}
                 </div>
               )}
             </div>
-            <div>
-              <Label htmlFor="avatar" className="cursor-pointer">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:bg-secondary transition text-sm">
-                  <Camera className="w-4 h-4" />
-                  {uploading ? "上傳中…" : "更換頭像"}
-                </span>
-                <input
-                  id="avatar"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAvatarUpload}
-                  disabled={uploading}
+            <Label htmlFor="avatar" className="cursor-pointer">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:bg-secondary transition text-sm">
+                <Camera className="w-4 h-4" />
+                {uploading ? "上傳中…" : "更換頭像"}
+              </span>
+              <input
+                id="avatar"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarUpload}
+                disabled={uploading}
+              />
+            </Label>
+          </div>
+          <div className="space-y-5">
+            <div className="grid sm:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="name">姓名 *</Label>
+                <Input
+                  id="name"
+                  value={profile.name}
+                  maxLength={100}
+                  onChange={(e) => update({ name: e.target.value })}
                 />
-              </Label>
-              <p className="text-xs text-muted-foreground mt-2">建議方形圖片，5MB 以內</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="name_en">英文名</Label>
+                <Input
+                  id="name_en"
+                  value={profile.name_en}
+                  maxLength={100}
+                  onChange={(e) => update({ name_en: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="slug">網址代稱</Label>
+              <Input
+                id="slug"
+                value={profile.slug ?? ""}
+                maxLength={60}
+                placeholder="yachi-lin"
+                onChange={(e) => update({ slug: e.target.value.toLowerCase() })}
+              />
+              <p className="text-xs text-muted-foreground">
+                /instructors/{profile.slug || "your-name"}
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="specialty">專長</Label>
+                <Input
+                  id="specialty"
+                  value={profile.specialty}
+                  maxLength={120}
+                  placeholder="現代舞 / 即興"
+                  onChange={(e) => update({ specialty: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="region">地區</Label>
+                <Input
+                  id="region"
+                  value={profile.region}
+                  maxLength={80}
+                  placeholder="亞洲・台灣"
+                  onChange={(e) => update({ region: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tagline">一句話介紹</Label>
+              <Input
+                id="tagline"
+                value={profile.tagline}
+                maxLength={160}
+                placeholder="用一句話讓人記住你跳舞的樣子。"
+                onChange={(e) => update({ tagline: e.target.value })}
+              />
             </div>
           </div>
-        </section>
+        </SectionCard>
 
-        {/* Basic info */}
-        <section className="space-y-6 mb-12">
-          <div className="grid sm:grid-cols-2 gap-5">
-            <div className="space-y-2">
-              <Label htmlFor="name">姓名 *</Label>
-              <Input id="name" value={profile.name} maxLength={100}
-                onChange={(e) => update({ name: e.target.value })} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="name_en">英文名</Label>
-              <Input id="name_en" value={profile.name_en} maxLength={100}
-                onChange={(e) => update({ name_en: e.target.value })} />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="slug">網址代稱</Label>
-            <Input
-              id="slug"
-              value={profile.slug ?? ""}
-              maxLength={60}
-              placeholder="yachi-lin"
-              onChange={(e) => update({ slug: e.target.value.toLowerCase() })}
+        {/* Story */}
+        <SectionCard
+          eyebrow="Story"
+          title="關於我"
+          description="像跟新朋友聊天一樣，分享你怎麼開始跳舞。"
+        >
+          <div className="space-y-3">
+            <Textarea
+              value={profile.bio}
+              maxLength={2000}
+              rows={6}
+              placeholder="我叫 ___,跳的是 ___。讓我帶你走進這個世界。"
+              onChange={(e) => update({ bio: e.target.value })}
             />
-            <p className="text-xs text-muted-foreground">
-              將出現在 /instructors/{profile.slug || "your-name"}
+            <p className="text-xs text-muted-foreground text-right">
+              {profile.bio.length} / 2000
             </p>
           </div>
+        </SectionCard>
+
+        {/* Cultural story */}
+        <SectionCard
+          eyebrow="Culture"
+          title="文化故事"
+          description="這支舞從哪裡來？為什麼值得被認識。"
+        >
+          <div className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="culture_title">故事標題</Label>
+              <Input
+                id="culture_title"
+                value={profile.culture_title}
+                maxLength={120}
+                placeholder="例：Horo · 用 7/8 拍把村子串成一條鏈"
+                onChange={(e) => update({ culture_title: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="culture_body">故事內容</Label>
+              <Textarea
+                id="culture_body"
+                value={profile.culture_body}
+                maxLength={3000}
+                rows={6}
+                placeholder="說一段這個舞種的歷史、它在你心中的意義。"
+                onChange={(e) => update({ culture_body: e.target.value })}
+              />
+            </div>
+          </div>
+        </SectionCard>
+
+        {/* Tags */}
+        <SectionCard
+          eyebrow="Tags"
+          title="舞蹈風格與背景"
+          description="幫助學員找到你的關鍵字。"
+        >
+          <div className="space-y-5">
+            <TagListEditor
+              id="styles"
+              label="舞蹈風格"
+              values={profile.dance_styles}
+              placeholder="現代舞, 即興, Contact Improv"
+              hint="以逗號分隔"
+              onChange={(v) => update({ dance_styles: v })}
+            />
+            <TagListEditor
+              id="creds"
+              label="經歷與獎項"
+              values={profile.credentials}
+              placeholder="雲門舞集巡演編舞助理, 2021 台新藝術獎入圍"
+              hint="一條一條的小故事，比履歷更動人"
+              pillTone="soul"
+              onChange={(v) => update({ credentials: v })}
+            />
+            <TagListEditor
+              id="langs"
+              label="教學語言"
+              values={profile.languages}
+              placeholder="中文, English, 日本語"
+              pillTone="accent"
+              onChange={(v) => update({ languages: v })}
+            />
+          </div>
+        </SectionCard>
+
+        {/* Booking hints */}
+        <SectionCard
+          eyebrow="Booking"
+          title="預約資訊"
+          description="讓有興趣的學員知道下一步怎麼走。"
+        >
           <div className="grid sm:grid-cols-2 gap-5">
             <div className="space-y-2">
-              <Label htmlFor="specialty">專長</Label>
-              <Input id="specialty" value={profile.specialty} maxLength={120}
-                placeholder="現代舞 / 即興"
-                onChange={(e) => update({ specialty: e.target.value })} />
+              <Label htmlFor="next_session">最近開課</Label>
+              <Input
+                id="next_session"
+                value={profile.next_session}
+                maxLength={120}
+                placeholder="週三 19:30 · 週六 14:00"
+                onChange={(e) => update({ next_session: e.target.value })}
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="region">地區</Label>
-              <Input id="region" value={profile.region} maxLength={80}
-                placeholder="亞洲・台灣"
-                onChange={(e) => update({ region: e.target.value })} />
+              <Label htmlFor="price_from">起跳價格</Label>
+              <Input
+                id="price_from"
+                value={profile.price_from}
+                maxLength={80}
+                placeholder="NT$ 1,200 / 堂"
+                onChange={(e) => update({ price_from: e.target.value })}
+              />
             </div>
           </div>
-        </section>
+        </SectionCard>
 
-        {/* Bio */}
-        <section className="space-y-3 mb-12">
-          <Label htmlFor="bio">個人簡介</Label>
-          <Textarea
-            id="bio"
-            value={profile.bio}
-            maxLength={2000}
-            rows={6}
-            placeholder="分享你的舞蹈旅程、教學理念與最想傳遞的文化。"
-            onChange={(e) => update({ bio: e.target.value })}
-          />
-          <p className="text-xs text-muted-foreground text-right">{profile.bio.length} / 2000</p>
-        </section>
+        {/* Courses */}
+        <SectionCard
+          eyebrow="Courses"
+          title="課程"
+          description="每一堂課都是一個邀請。"
+        >
+          <CoursesEditor teacherId={profile.id} />
+        </SectionCard>
 
-        {/* Styles */}
-        <section className="space-y-3 mb-12">
-          <Label htmlFor="styles">舞蹈風格（以逗號分隔）</Label>
-          <Input
-            id="styles"
-            value={stylesText}
-            placeholder="現代舞, 即興, Contact Improv"
-            onChange={(e) =>
-              update({
-                dance_styles: e.target.value
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean),
-              })
-            }
-          />
-          {profile.dance_styles.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-1">
-              {profile.dance_styles.map((s) => (
-                <span key={s} className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs">
-                  {s}
-                </span>
-              ))}
-            </div>
-          )}
-        </section>
+        {/* Media */}
+        <SectionCard
+          eyebrow="Media"
+          title="影像作品集"
+          description="照片、影片，能勝過千字介紹。"
+        >
+          <MediaEditor teacherId={profile.id} userId={user!.id} />
+        </SectionCard>
 
         {/* Social */}
-        <section className="space-y-5 mb-12">
-          <h2 className="font-display text-lg text-foreground">社群連結</h2>
-          <div className="space-y-2">
-            <Label htmlFor="ig">Instagram</Label>
-            <Input id="ig" type="url" value={profile.instagram_url ?? ""} maxLength={255}
-              placeholder="https://instagram.com/your-handle"
-              onChange={(e) => update({ instagram_url: e.target.value })} />
+        <SectionCard eyebrow="Connect" title="社群連結">
+          <div className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="ig">Instagram</Label>
+              <Input
+                id="ig"
+                type="url"
+                value={profile.instagram_url ?? ""}
+                maxLength={255}
+                placeholder="https://instagram.com/your-handle"
+                onChange={(e) => update({ instagram_url: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="yt">YouTube</Label>
+              <Input
+                id="yt"
+                type="url"
+                value={profile.youtube_url ?? ""}
+                maxLength={255}
+                placeholder="https://youtube.com/@your-channel"
+                onChange={(e) => update({ youtube_url: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="web">個人網站</Label>
+              <Input
+                id="web"
+                type="url"
+                value={profile.website_url ?? ""}
+                maxLength={255}
+                placeholder="https://your-site.com"
+                onChange={(e) => update({ website_url: e.target.value })}
+              />
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="yt">YouTube</Label>
-            <Input id="yt" type="url" value={profile.youtube_url ?? ""} maxLength={255}
-              placeholder="https://youtube.com/@your-channel"
-              onChange={(e) => update({ youtube_url: e.target.value })} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="web">個人網站</Label>
-            <Input id="web" type="url" value={profile.website_url ?? ""} maxLength={255}
-              placeholder="https://your-site.com"
-              onChange={(e) => update({ website_url: e.target.value })} />
-          </div>
-        </section>
+        </SectionCard>
 
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-16">
           <Button asChild variant="outline" size="lg">
