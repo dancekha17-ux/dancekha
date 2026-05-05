@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "關於我們", labelEn: "About", href: "/#about" },
-  { label: "課程探索", labelEn: "Courses", href: "/#courses" },
+  { label: "社群日常", labelEn: "Community", href: "/#courses" },
   { label: "舞島引領者", labelEn: "Instructors", href: "/#instructors" },
   { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
   { label: "社群活動", labelEn: "Community", href: "/#community" },

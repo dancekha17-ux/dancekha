@@ -37,7 +37,7 @@ export function CoursesSection() {
           transition={{ duration: 0.9 }}
           className="text-center max-w-2xl mx-auto section-header"
         >
-          <span className="eyebrow">Courses · 課程探索</span>
+          <span className="eyebrow">Community · 社群日常</span>
           <div className="hairline mt-6 mb-8" />
           <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
             找到屬於你的<span className="text-accent-italic">舞動節奏</span>
