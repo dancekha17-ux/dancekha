@@ -32,7 +32,7 @@ export function CTASection() {
           </h2>
 
           <p className="text-fluid-lead text-muted-foreground font-body max-w-xl mx-auto mb-12">
-            無論你是初次起舞，還是想走得更遠——
+            無論你是初次起舞，還是想走得更遠，
             舞島咖陪你走進世界、走進自己。
           </p>
 
