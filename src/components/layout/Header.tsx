@@ -81,10 +81,10 @@ export function Header() {
               {lang === "zh" ? "EN" : "中"}
             </button>
             <Button asChild variant={isScrolled ? "outline" : "heroOutline"} size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "老師登入" : "Teacher Login"}</Link>
+              <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "成為老師" : "Become a Teacher"}</Link>
+              <Link to="/teacher/login">{lang === "zh" ? "引領者登入" : "Master Login"}</Link>
             </Button>
           </div>
 
@@ -122,13 +122,13 @@ export function Header() {
               ))}
               <div className="flex gap-3 pt-4">
                 <Button asChild variant="outline" className="flex-1">
-                  <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    {lang === "zh" ? "老師登入" : "Teacher Login"}
+                  <Link to="/dashboard?role=student" onClick={() => setIsMobileMenuOpen(false)}>
+                    {lang === "zh" ? "學員登入" : "Student Login"}
                   </Link>
                 </Button>
                 <Button asChild variant="hero" className="flex-1">
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    {lang === "zh" ? "成為老師" : "Become a Teacher"}
+                    {lang === "zh" ? "引領者登入" : "Master Login"}
                   </Link>
                 </Button>
               </div>
