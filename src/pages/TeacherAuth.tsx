@@ -79,7 +79,7 @@ export default function TeacherAuth() {
             </h1>
             <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
               {mode === "signin"
-                ? "繼續分享你的舞蹈故事。"
+                ? "謝謝您的進駐！願舞島咖能成為您自由天地，盡情揮灑創作與專注教學的樂土。"
                 : "註冊後即可建立個人頁面，由團隊審核上線。"}
             </p>
 
