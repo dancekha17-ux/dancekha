@@ -103,7 +103,7 @@ export function HeroSection() {
               href="#about"
               className="text-sm font-body text-primary-foreground/70 hover:text-primary-foreground transition-colors"
             >
-              每個人在舞蹈裡的故事
+              每個人的跳舞日常
             </a>
           </motion.div>
         </div>
