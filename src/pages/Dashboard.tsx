@@ -114,24 +114,28 @@ function StudentDashboard() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="overflow-hidden border-0 shadow-elevated rounded-3xl bg-gradient-to-br from-[hsl(28_55%_92%)] via-[hsl(18_60%_88%)] to-[hsl(12_55%_82%)]">
-          <CardContent className="p-6 md:p-10">
+        <Card className="relative overflow-hidden border-0 shadow-elevated rounded-[2rem] bg-gradient-to-br from-[hsl(32_70%_94%)] via-[hsl(20_65%_90%)] to-[hsl(350_45%_86%)]">
+          {/* Glassmorphism orbs */}
+          <div className="absolute -top-20 -right-16 w-72 h-72 rounded-full bg-[hsl(15_70%_75%)]/40 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-10 w-80 h-80 rounded-full bg-[hsl(35_75%_82%)]/50 blur-3xl pointer-events-none" />
+          <CardContent className="relative p-6 md:p-10">
             <div className="grid md:grid-cols-[1.1fr_1fr] gap-8 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/60 backdrop-blur text-xs font-medium text-foreground/80">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/40 backdrop-blur-md border border-background/40 text-xs font-medium text-foreground/80 shadow-sm">
                   <Sparkles className="w-3.5 h-3.5" />
                   我的舞蹈 DNA
                 </div>
-                <h2 className="font-display text-3xl md:text-4xl text-foreground mt-4 leading-tight">
-                  你是「火光型」舞者
+                <h2 className="font-display italic text-4xl md:text-5xl text-foreground mt-4 leading-[1.05]">
+                  曠野靈魂
                 </h2>
-                <p className="text-foreground/75 mt-3 leading-relaxed">
+                <p className="font-display italic text-base text-foreground/60 mt-1">Wildland Soul · 火光型舞者</p>
+                <p className="text-foreground/75 mt-4 leading-relaxed">
                   熱愛節奏與即興，在群體裡自然成為氣氛中心。下一步，試著走進更靜的身體語言。
                 </p>
                 <div className="flex flex-wrap gap-2 mt-5">
-                  <Badge variant="secondary" className="bg-background/70">熱情 Passionate</Badge>
-                  <Badge variant="secondary" className="bg-background/70">直覺 Intuitive</Badge>
-                  <Badge variant="secondary" className="bg-background/70">社交 Social</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">熱情 Passionate</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">直覺 Intuitive</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">社交 Social</Badge>
                 </div>
               </div>
 
