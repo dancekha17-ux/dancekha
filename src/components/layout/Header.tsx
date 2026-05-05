@@ -9,7 +9,7 @@ const navItems = [
   { label: "課程探索", labelEn: "Courses", href: "/#courses" },
   { label: "舞島引領者", labelEn: "Instructors", href: "/#instructors" },
   { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
-  { label: "社群活動", labelEn: "Community", href: "/#community" },
+  { label: "社群日常", labelEn: "Community", href: "/#community" },
   { label: "行事曆總覽", labelEn: "Events", href: "/#events" },
 ];
 
