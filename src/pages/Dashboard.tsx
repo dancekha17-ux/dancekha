@@ -1,0 +1,446 @@
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  Heart,
+  Sparkles,
+  Globe2,
+  Compass,
+  Bookmark,
+  ChevronRight,
+  Eye,
+  PenLine,
+  BookOpen,
+  Users,
+  TrendingUp,
+  Calendar,
+  MessageCircle,
+  Repeat,
+} from "lucide-react";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
+type Role = "student" | "master";
+
+export default function Dashboard() {
+  const [params, setParams] = useSearchParams();
+  const initial = (params.get("role") as Role) || "student";
+  const [role, setRole] = useState<Role>(initial);
+
+  useEffect(() => {
+    const r = (params.get("role") as Role) || "student";
+    setRole(r);
+  }, [params]);
+
+  const toggleRole = () => {
+    const next: Role = role === "student" ? "master" : "student";
+    setRole(next);
+    setParams({ role: next }, { replace: true });
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      {/* Hidden role-switcher (preview only) */}
+      <button
+        onClick={toggleRole}
+        aria-label="Switch dashboard role"
+        title={`切換至 ${role === "student" ? "Master" : "Student"} 視角`}
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/90 text-background text-xs shadow-elevated hover:bg-foreground transition opacity-30 hover:opacity-100"
+      >
+        <Repeat className="w-3.5 h-3.5" />
+        {role === "student" ? "Student" : "Master"}
+      </button>
+
+      <main className="pt-24 md:pt-28 pb-16">
+        {role === "student" ? <StudentDashboard /> : <MasterDashboard />}
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+/* ---------------- Student Dashboard ---------------- */
+
+function StudentDashboard() {
+  const dnaTraits = [
+    { label: "節奏感", value: 82 },
+    { label: "即興力", value: 64 },
+    { label: "文化共鳴", value: 91 },
+  ];
+
+  const exploration = [
+    { region: "拉丁美洲", progress: 70, styles: "Salsa · Bachata" },
+    { region: "西非", progress: 35, styles: "Afrobeat · Sabar" },
+    { region: "東南亞", progress: 55, styles: "Bharatanatyam" },
+    { region: "歐陸", progress: 20, styles: "Flamenco · Waltz" },
+  ];
+
+  const favorites = [
+    { name: "Maya Lin", style: "Contemporary", img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600" },
+    { name: "Carlos Vega", style: "Salsa", img: "https://images.unsplash.com/photo-1547153760-18fc86324498?w=600" },
+    { name: "Ayaka Tanaka", style: "Butoh", img: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=600" },
+    { name: "Diego Pérez", style: "Tango", img: "https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=600" },
+  ];
+
+  return (
+    <div className="container-wide mx-auto px-4 md:px-6 space-y-10">
+      {/* Greeting */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="eyebrow">Hej · 歡迎回來</span>
+        <h1 className="font-display text-3xl md:text-5xl text-foreground mt-2">
+          今天，想跟著哪段節奏走？
+        </h1>
+        <p className="text-muted-foreground mt-2 max-w-xl">
+          一杯咖啡的時間，看看你的舞蹈足跡與下一段旅程。
+        </p>
+      </motion.div>
+
+      {/* My Dance DNA */}
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <Card className="overflow-hidden border-0 shadow-elevated rounded-3xl bg-gradient-to-br from-[hsl(28_55%_92%)] via-[hsl(18_60%_88%)] to-[hsl(12_55%_82%)]">
+          <CardContent className="p-6 md:p-10">
+            <div className="grid md:grid-cols-[1.1fr_1fr] gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/60 backdrop-blur text-xs font-medium text-foreground/80">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  我的舞蹈 DNA
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl text-foreground mt-4 leading-tight">
+                  你是「火光型」舞者
+                </h2>
+                <p className="text-foreground/75 mt-3 leading-relaxed">
+                  熱愛節奏與即興，在群體裡自然成為氣氛中心。下一步，試著走進更靜的身體語言。
+                </p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  <Badge variant="secondary" className="bg-background/70">熱情 Passionate</Badge>
+                  <Badge variant="secondary" className="bg-background/70">直覺 Intuitive</Badge>
+                  <Badge variant="secondary" className="bg-background/70">社交 Social</Badge>
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                {dnaTraits.map((t) => (
+                  <div key={t.label}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-foreground/80">{t.label}</span>
+                      <span className="text-sm font-medium text-foreground">{t.value}</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-background/50 overflow-hidden">
+                      <div
+                        className="h-full bg-foreground/70 rounded-full"
+                        style={{ width: `${t.value}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 text-foreground hover:bg-foreground hover:text-background">
+                  查看完整分析
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.section>
+
+      {/* Exploration progress */}
+      <section>
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <span className="eyebrow">Explore · 舞遍世界</span>
+            <h2 className="font-display text-2xl md:text-3xl text-foreground mt-1">
+              我的探索進度
+            </h2>
+          </div>
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/styles">
+              <Globe2 className="w-4 h-4" /> 全球地圖
+            </Link>
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {exploration.map((e) => (
+            <Card key={e.region} className="rounded-2xl border-border/60 hover:shadow-elevated transition">
+              <CardContent className="p-5 flex flex-col items-center text-center">
+                <RingProgress value={e.progress} />
+                <h3 className="font-display text-base mt-3 text-foreground">{e.region}</h3>
+                <p className="text-xs text-muted-foreground mt-1">{e.styles}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Favorites scroll */}
+      <section>
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <span className="eyebrow">Saved · 收藏</span>
+            <h2 className="font-display text-2xl md:text-3xl text-foreground mt-1">
+              收藏的導師與課程
+            </h2>
+          </div>
+          <Button variant="ghost" size="sm">
+            <Bookmark className="w-4 h-4" /> 全部
+          </Button>
+        </div>
+
+        <ScrollArea className="w-full whitespace-nowrap pb-3">
+          <div className="flex gap-4">
+            {favorites.map((f) => (
+              <Card
+                key={f.name}
+                className="inline-block w-[260px] shrink-0 overflow-hidden rounded-2xl border-border/60 hover:shadow-elevated transition"
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-secondary">
+                  <img src={f.img} alt={f.name} className="w-full h-full object-cover hover:scale-105 transition duration-700" />
+                </div>
+                <CardContent className="p-4">
+                  <h3 className="font-display text-lg text-foreground">{f.name}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{f.style}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="inline-flex items-center gap-1 text-xs text-primary">
+                      <Heart className="w-3.5 h-3.5 fill-primary" /> 已收藏
+                    </span>
+                    <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
+                      查看 <ChevronRight className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </section>
+
+      {/* Next step CTA */}
+      <Card className="rounded-3xl border-border/60 bg-secondary/40">
+        <CardContent className="p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4 justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <Compass className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-display text-lg text-foreground">下一段旅程</h3>
+              <p className="text-sm text-muted-foreground">根據你的 DNA，推薦：西非 Sabar 入門工作坊</p>
+            </div>
+          </div>
+          <Button variant="hero">查看推薦</Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function RingProgress({ value }: { value: number }) {
+  const r = 28;
+  const c = 2 * Math.PI * r;
+  const offset = c - (value / 100) * c;
+  return (
+    <div className="relative w-20 h-20">
+      <svg viewBox="0 0 70 70" className="w-full h-full -rotate-90">
+        <circle cx="35" cy="35" r={r} stroke="hsl(var(--border))" strokeWidth="6" fill="none" />
+        <circle
+          cx="35"
+          cy="35"
+          r={r}
+          stroke="hsl(var(--primary))"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={offset}
+          className="transition-all duration-1000"
+        />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center font-display text-sm text-foreground">
+        {value}%
+      </span>
+    </div>
+  );
+}
+
+/* ---------------- Master Dashboard ---------------- */
+
+function MasterDashboard() {
+  const courses = [
+    { title: "Salsa 身體節奏入門", students: 42, status: "進行中" },
+    { title: "古巴 Rumba 文化工作坊", students: 18, status: "招生中" },
+    { title: "Afro-Cuban 即興夜", students: 0, status: "草稿" },
+  ];
+
+  const stats = [
+    { icon: Users, label: "島民追蹤", value: "1,284", trend: "+12%" },
+    { icon: Eye, label: "本月瀏覽", value: "8,932", trend: "+23%" },
+    { icon: MessageCircle, label: "互動訊息", value: "47", trend: "+5" },
+    { icon: Calendar, label: "預約場次", value: "9", trend: "本週" },
+  ];
+
+  return (
+    <div className="container-wide mx-auto px-4 md:px-6 space-y-12">
+      {/* Editorial header */}
+      <header className="border-b border-border pb-8">
+        <span className="eyebrow tracking-[0.3em]">Master · 引領者</span>
+        <h1 className="font-display italic text-4xl md:text-6xl text-foreground mt-3 leading-[1.05]">
+          你的舞台，<br className="hidden md:block" />
+          由你親手策展。
+        </h1>
+        <div className="flex flex-wrap items-center gap-3 mt-6">
+          <Button asChild variant="hero">
+            <Link to="/teacher/dashboard">
+              <PenLine className="w-4 h-4" /> 編輯個人形象
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link to="/teacher/preview">
+              <Eye className="w-4 h-4" /> 預覽公開頁面
+            </Link>
+          </Button>
+        </div>
+      </header>
+
+      {/* Stats cards */}
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {stats.map((s) => (
+          <Card key={s.label} className="rounded-2xl border-border/60">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <s.icon className="w-5 h-5 text-primary" />
+                <span className="text-xs text-muted-foreground">{s.trend}</span>
+              </div>
+              <div className="mt-3">
+                <div className="font-display text-2xl text-foreground">{s.value}</div>
+                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
+
+      {/* Profile editor preview */}
+      <section className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
+        <Card className="rounded-3xl overflow-hidden border-border/60">
+          <div className="aspect-[16/7] bg-gradient-to-br from-foreground/80 via-primary/40 to-accent/40 relative">
+            <img
+              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1400"
+              alt="hero"
+              className="w-full h-full object-cover opacity-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+            <div className="absolute bottom-5 left-6 right-6 text-background">
+              <span className="text-xs uppercase tracking-widest opacity-80">個人形象專區</span>
+              <h3 className="font-display italic text-2xl md:text-3xl mt-1">在身體裡寫下文化</h3>
+            </div>
+          </div>
+          <CardContent className="p-6 flex items-center justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground">封面、簡介、文化故事、時間軸</p>
+              <p className="text-xs text-muted-foreground mt-1">完成度 78%</p>
+            </div>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/teacher/dashboard">
+                編輯 <ChevronRight className="w-4 h-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Interaction insights */}
+        <Card className="rounded-3xl border-border/60">
+          <CardHeader>
+            <CardTitle className="font-display text-xl flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              島民互動
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">頁面互動率</span>
+                <span className="text-foreground font-medium">68%</span>
+              </div>
+              <Progress value={68} />
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">課程轉換率</span>
+                <span className="text-foreground font-medium">42%</span>
+              </div>
+              <Progress value={42} />
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">回訪島民</span>
+                <span className="text-foreground font-medium">55%</span>
+              </div>
+              <Progress value={55} />
+            </div>
+            <p className="text-xs text-muted-foreground pt-2 border-t border-border">
+              本週新增 28 位島民收藏你的專區。
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Course / culture content management */}
+      <section>
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <span className="eyebrow tracking-[0.3em]">Content · 課程與文化</span>
+            <h2 className="font-display italic text-2xl md:text-3xl text-foreground mt-1">
+              內容管理
+            </h2>
+          </div>
+          <Button variant="hero" size="sm">
+            <BookOpen className="w-4 h-4" /> 新增內容
+          </Button>
+        </div>
+
+        <Card className="rounded-2xl border-border/60 overflow-hidden">
+          <div className="divide-y divide-border">
+            {courses.map((c) => (
+              <div
+                key={c.title}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 hover:bg-secondary/40 transition"
+              >
+                <div>
+                  <h3 className="font-display text-lg text-foreground">{c.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {c.students} 位島民 · {c.status}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="ghost" size="sm">
+                    <Eye className="w-4 h-4" /> 預覽
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <PenLine className="w-4 h-4" /> 編輯
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </section>
+    </div>
+  );
+}
