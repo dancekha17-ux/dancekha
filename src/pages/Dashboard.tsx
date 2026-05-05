@@ -369,23 +369,51 @@ function MasterDashboard() {
 
       {/* Profile editor preview */}
       <section className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
-        <Card className="rounded-3xl overflow-hidden border-border/60">
-          <div className="aspect-[16/7] bg-gradient-to-br from-foreground/80 via-primary/40 to-accent/40 relative">
-            <img
-              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1400"
-              alt="hero"
-              className="w-full h-full object-cover opacity-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-            <div className="absolute bottom-5 left-6 right-6 text-background">
-              <span className="text-xs uppercase tracking-widest opacity-80">個人形象專區</span>
-              <h3 className="font-display italic text-2xl md:text-3xl mt-1">在身體裡寫下文化</h3>
+        <Card className="rounded-[2rem] overflow-hidden border border-border/60 bg-background shadow-elevated">
+          {/* Gallery frame */}
+          <div className="p-4 md:p-6 bg-secondary/30">
+            <div className="flex items-center justify-between mb-4 px-1">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+              </div>
+              <span className="eyebrow tracking-[0.3em] text-[10px] text-muted-foreground">Gallery Preview</span>
+            </div>
+            <div className="aspect-[16/8] relative overflow-hidden rounded-2xl ring-1 ring-foreground/10 shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1400"
+                alt="hero"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+              <div className="absolute top-5 left-6">
+                <span className="inline-block px-3 py-1 rounded-full bg-background/20 backdrop-blur-md border border-background/30 text-[10px] tracking-[0.25em] text-background uppercase">
+                  Featured Master
+                </span>
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 text-background">
+                <span className="text-[11px] uppercase tracking-[0.3em] opacity-70">個人形象專區</span>
+                <h3 className="font-display italic text-3xl md:text-4xl mt-2 leading-tight">在身體裡寫下文化</h3>
+                <div className="flex items-center gap-3 mt-3 text-xs opacity-80">
+                  <span>Salsa</span>
+                  <span className="w-1 h-1 rounded-full bg-background/60" />
+                  <span>Afro-Cuban</span>
+                  <span className="w-1 h-1 rounded-full bg-background/60" />
+                  <span>15 yrs</span>
+                </div>
+              </div>
             </div>
           </div>
-          <CardContent className="p-6 flex items-center justify-between">
+          <CardContent className="p-6 flex items-center justify-between border-t border-border/60">
             <div>
-              <p className="text-sm text-muted-foreground">封面、簡介、文化故事、時間軸</p>
-              <p className="text-xs text-muted-foreground mt-1">完成度 78%</p>
+              <p className="font-display italic text-base text-foreground">封面 · 簡介 · 文化故事 · 時間軸</p>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="h-1 w-32 rounded-full bg-secondary overflow-hidden">
+                  <div className="h-full bg-foreground rounded-full" style={{ width: "78%" }} />
+                </div>
+                <span className="text-xs text-muted-foreground">完成度 78%</span>
+              </div>
             </div>
             <Button asChild variant="outline" size="sm">
               <Link to="/teacher/dashboard">
