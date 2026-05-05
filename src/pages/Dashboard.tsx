@@ -322,19 +322,46 @@ function MasterDashboard() {
         </div>
       </header>
 
-      {/* Stats cards */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Influence index — featured */}
+      <section className="grid md:grid-cols-[1.3fr_1fr_1fr_1fr] gap-4">
+        <Card className="md:row-span-1 rounded-3xl border-0 overflow-hidden bg-gradient-to-br from-foreground via-foreground to-primary/80 text-background relative">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary-foreground))_0%,transparent_50%)]" />
+          <CardContent className="relative p-6 md:p-7">
+            <div className="flex items-center justify-between">
+              <span className="eyebrow tracking-[0.3em] text-background/70">Influence Index</span>
+              <TrendingUp className="w-4 h-4 text-background/70" />
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="font-display italic text-5xl md:text-6xl">87</span>
+              <span className="text-xs text-background/60">/ 100</span>
+            </div>
+            <div className="text-sm text-background/80 mt-2 font-display italic">島民影響力指數</div>
+            <div className="mt-4 h-1 rounded-full bg-background/20 overflow-hidden">
+              <div className="h-full bg-background/90 rounded-full" style={{ width: "87%" }} />
+            </div>
+            <p className="text-xs text-background/60 mt-3">高於 92% 的引領者 · +6 本月</p>
+          </CardContent>
+        </Card>
         {stats.map((s) => (
-          <Card key={s.label} className="rounded-2xl border-border/60">
+          <Card key={s.label} className="rounded-2xl border-border/60 shadow-none">
             <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <s.icon className="w-5 h-5 text-primary" />
-                <span className="text-xs text-muted-foreground">{s.trend}</span>
+              <s.icon className="w-4 h-4 text-foreground/50" strokeWidth={1.5} />
+              <div className="mt-6">
+                <div className="font-display text-3xl text-foreground tracking-tight">{s.value}</div>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-xs text-muted-foreground">{s.label}</span>
+                  <span className="text-[10px] text-foreground/50">{s.trend}</span>
+                </div>
               </div>
-              <div className="mt-3">
-                <div className="font-display text-2xl text-foreground">{s.value}</div>
-                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
-              </div>
+              {/* minimal sparkline */}
+              <svg viewBox="0 0 100 20" className="w-full h-5 mt-3 text-foreground/30">
+                <polyline
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  points="0,15 15,12 30,14 45,8 60,10 75,5 90,7 100,3"
+                />
+              </svg>
             </CardContent>
           </Card>
         ))}
