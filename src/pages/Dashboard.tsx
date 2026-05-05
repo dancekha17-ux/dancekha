@@ -114,43 +114,47 @@ function StudentDashboard() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="overflow-hidden border-0 shadow-elevated rounded-3xl bg-gradient-to-br from-[hsl(28_55%_92%)] via-[hsl(18_60%_88%)] to-[hsl(12_55%_82%)]">
-          <CardContent className="p-6 md:p-10">
+        <Card className="relative overflow-hidden border-0 shadow-elevated rounded-[2rem] bg-gradient-to-br from-[hsl(32_70%_94%)] via-[hsl(20_65%_90%)] to-[hsl(350_45%_86%)]">
+          {/* Glassmorphism orbs */}
+          <div className="absolute -top-20 -right-16 w-72 h-72 rounded-full bg-[hsl(15_70%_75%)]/40 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-10 w-80 h-80 rounded-full bg-[hsl(35_75%_82%)]/50 blur-3xl pointer-events-none" />
+          <CardContent className="relative p-6 md:p-10">
             <div className="grid md:grid-cols-[1.1fr_1fr] gap-8 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/60 backdrop-blur text-xs font-medium text-foreground/80">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/40 backdrop-blur-md border border-background/40 text-xs font-medium text-foreground/80 shadow-sm">
                   <Sparkles className="w-3.5 h-3.5" />
                   我的舞蹈 DNA
                 </div>
-                <h2 className="font-display text-3xl md:text-4xl text-foreground mt-4 leading-tight">
-                  你是「火光型」舞者
+                <h2 className="font-display italic text-4xl md:text-5xl text-foreground mt-4 leading-[1.05]">
+                  曠野靈魂
                 </h2>
-                <p className="text-foreground/75 mt-3 leading-relaxed">
+                <p className="font-display italic text-base text-foreground/60 mt-1">Wildland Soul · 火光型舞者</p>
+                <p className="text-foreground/75 mt-4 leading-relaxed">
                   熱愛節奏與即興，在群體裡自然成為氣氛中心。下一步，試著走進更靜的身體語言。
                 </p>
                 <div className="flex flex-wrap gap-2 mt-5">
-                  <Badge variant="secondary" className="bg-background/70">熱情 Passionate</Badge>
-                  <Badge variant="secondary" className="bg-background/70">直覺 Intuitive</Badge>
-                  <Badge variant="secondary" className="bg-background/70">社交 Social</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">熱情 Passionate</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">直覺 Intuitive</Badge>
+                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">社交 Social</Badge>
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-5 rounded-2xl bg-background/30 backdrop-blur-xl border border-background/40 p-5 shadow-sm">
                 {dnaTraits.map((t) => (
                   <div key={t.label}>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-foreground/80">{t.label}</span>
-                      <span className="text-sm font-medium text-foreground">{t.value}</span>
+                      <span className="font-display italic text-sm text-foreground/85">{t.label}</span>
+                      <span className="font-display text-sm font-medium text-foreground">{t.value}</span>
                     </div>
-                    <div className="h-2 rounded-full bg-background/50 overflow-hidden">
+                    <div className="h-1.5 rounded-full bg-background/40 overflow-hidden">
                       <div
-                        className="h-full bg-foreground/70 rounded-full"
+                        className="h-full bg-gradient-to-r from-foreground/60 to-foreground/90 rounded-full"
                         style={{ width: `${t.value}%` }}
                       />
                     </div>
                   </div>
                 ))}
-                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 text-foreground hover:bg-foreground hover:text-background">
+                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 bg-background/40 backdrop-blur text-foreground hover:bg-foreground hover:text-background">
                   查看完整分析
                   <ChevronRight className="w-4 h-4" />
                 </Button>
@@ -318,19 +322,46 @@ function MasterDashboard() {
         </div>
       </header>
 
-      {/* Stats cards */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Influence index — featured */}
+      <section className="grid md:grid-cols-[1.3fr_1fr_1fr_1fr] gap-4">
+        <Card className="md:row-span-1 rounded-3xl border-0 overflow-hidden bg-gradient-to-br from-foreground via-foreground to-primary/80 text-background relative">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary-foreground))_0%,transparent_50%)]" />
+          <CardContent className="relative p-6 md:p-7">
+            <div className="flex items-center justify-between">
+              <span className="eyebrow tracking-[0.3em] text-background/70">Influence Index</span>
+              <TrendingUp className="w-4 h-4 text-background/70" />
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="font-display italic text-5xl md:text-6xl">87</span>
+              <span className="text-xs text-background/60">/ 100</span>
+            </div>
+            <div className="text-sm text-background/80 mt-2 font-display italic">島民影響力指數</div>
+            <div className="mt-4 h-1 rounded-full bg-background/20 overflow-hidden">
+              <div className="h-full bg-background/90 rounded-full" style={{ width: "87%" }} />
+            </div>
+            <p className="text-xs text-background/60 mt-3">高於 92% 的引領者 · +6 本月</p>
+          </CardContent>
+        </Card>
         {stats.map((s) => (
-          <Card key={s.label} className="rounded-2xl border-border/60">
+          <Card key={s.label} className="rounded-2xl border-border/60 shadow-none">
             <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <s.icon className="w-5 h-5 text-primary" />
-                <span className="text-xs text-muted-foreground">{s.trend}</span>
+              <s.icon className="w-4 h-4 text-foreground/50" strokeWidth={1.5} />
+              <div className="mt-6">
+                <div className="font-display text-3xl text-foreground tracking-tight">{s.value}</div>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-xs text-muted-foreground">{s.label}</span>
+                  <span className="text-[10px] text-foreground/50">{s.trend}</span>
+                </div>
               </div>
-              <div className="mt-3">
-                <div className="font-display text-2xl text-foreground">{s.value}</div>
-                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
-              </div>
+              {/* minimal sparkline */}
+              <svg viewBox="0 0 100 20" className="w-full h-5 mt-3 text-foreground/30">
+                <polyline
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  points="0,15 15,12 30,14 45,8 60,10 75,5 90,7 100,3"
+                />
+              </svg>
             </CardContent>
           </Card>
         ))}
@@ -338,23 +369,51 @@ function MasterDashboard() {
 
       {/* Profile editor preview */}
       <section className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
-        <Card className="rounded-3xl overflow-hidden border-border/60">
-          <div className="aspect-[16/7] bg-gradient-to-br from-foreground/80 via-primary/40 to-accent/40 relative">
-            <img
-              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1400"
-              alt="hero"
-              className="w-full h-full object-cover opacity-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-            <div className="absolute bottom-5 left-6 right-6 text-background">
-              <span className="text-xs uppercase tracking-widest opacity-80">個人形象專區</span>
-              <h3 className="font-display italic text-2xl md:text-3xl mt-1">在身體裡寫下文化</h3>
+        <Card className="rounded-[2rem] overflow-hidden border border-border/60 bg-background shadow-elevated">
+          {/* Gallery frame */}
+          <div className="p-4 md:p-6 bg-secondary/30">
+            <div className="flex items-center justify-between mb-4 px-1">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+                <span className="w-2 h-2 rounded-full bg-foreground/20" />
+              </div>
+              <span className="eyebrow tracking-[0.3em] text-[10px] text-muted-foreground">Gallery Preview</span>
+            </div>
+            <div className="aspect-[16/8] relative overflow-hidden rounded-2xl ring-1 ring-foreground/10 shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1400"
+                alt="hero"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+              <div className="absolute top-5 left-6">
+                <span className="inline-block px-3 py-1 rounded-full bg-background/20 backdrop-blur-md border border-background/30 text-[10px] tracking-[0.25em] text-background uppercase">
+                  Featured Master
+                </span>
+              </div>
+              <div className="absolute bottom-6 left-6 right-6 text-background">
+                <span className="text-[11px] uppercase tracking-[0.3em] opacity-70">個人形象專區</span>
+                <h3 className="font-display italic text-3xl md:text-4xl mt-2 leading-tight">在身體裡寫下文化</h3>
+                <div className="flex items-center gap-3 mt-3 text-xs opacity-80">
+                  <span>Salsa</span>
+                  <span className="w-1 h-1 rounded-full bg-background/60" />
+                  <span>Afro-Cuban</span>
+                  <span className="w-1 h-1 rounded-full bg-background/60" />
+                  <span>15 yrs</span>
+                </div>
+              </div>
             </div>
           </div>
-          <CardContent className="p-6 flex items-center justify-between">
+          <CardContent className="p-6 flex items-center justify-between border-t border-border/60">
             <div>
-              <p className="text-sm text-muted-foreground">封面、簡介、文化故事、時間軸</p>
-              <p className="text-xs text-muted-foreground mt-1">完成度 78%</p>
+              <p className="font-display italic text-base text-foreground">封面 · 簡介 · 文化故事 · 時間軸</p>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="h-1 w-32 rounded-full bg-secondary overflow-hidden">
+                  <div className="h-full bg-foreground rounded-full" style={{ width: "78%" }} />
+                </div>
+                <span className="text-xs text-muted-foreground">完成度 78%</span>
+              </div>
             </div>
             <Button asChild variant="outline" size="sm">
               <Link to="/teacher/dashboard">
