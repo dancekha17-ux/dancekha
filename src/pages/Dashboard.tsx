@@ -139,22 +139,22 @@ function StudentDashboard() {
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-5 rounded-2xl bg-background/30 backdrop-blur-xl border border-background/40 p-5 shadow-sm">
                 {dnaTraits.map((t) => (
                   <div key={t.label}>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-foreground/80">{t.label}</span>
-                      <span className="text-sm font-medium text-foreground">{t.value}</span>
+                      <span className="font-display italic text-sm text-foreground/85">{t.label}</span>
+                      <span className="font-display text-sm font-medium text-foreground">{t.value}</span>
                     </div>
-                    <div className="h-2 rounded-full bg-background/50 overflow-hidden">
+                    <div className="h-1.5 rounded-full bg-background/40 overflow-hidden">
                       <div
-                        className="h-full bg-foreground/70 rounded-full"
+                        className="h-full bg-gradient-to-r from-foreground/60 to-foreground/90 rounded-full"
                         style={{ width: `${t.value}%` }}
                       />
                     </div>
                   </div>
                 ))}
-                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 text-foreground hover:bg-foreground hover:text-background">
+                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 bg-background/40 backdrop-blur text-foreground hover:bg-foreground hover:text-background">
                   查看完整分析
                   <ChevronRight className="w-4 h-4" />
                 </Button>
