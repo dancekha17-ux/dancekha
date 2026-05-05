@@ -81,10 +81,10 @@ export function Header() {
               {lang === "zh" ? "EN" : "中"}
             </button>
             <Button asChild variant={isScrolled ? "outline" : "heroOutline"} size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "老師登入" : "Teacher Login"}</Link>
+              <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "成為老師" : "Become a Teacher"}</Link>
+              <Link to="/teacher/login">{lang === "zh" ? "引領者登入" : "Master Login"}</Link>
             </Button>
           </div>
 
