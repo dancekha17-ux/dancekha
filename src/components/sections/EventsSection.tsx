@@ -34,7 +34,7 @@ const events = [
     date: "2025年4月5日",
     time: "14:00 - 20:00",
     location: "舞島咖總部",
-    type: "社群活動",
+    type: "社群日常",
     isOnline: false,
     spots: 80,
     spotsLeft: 28,
