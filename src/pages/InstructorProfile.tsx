@@ -261,16 +261,44 @@ export default function InstructorProfile() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="card-elevated p-6 shadow-elevated border border-border/60"
                   >
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">
-                      課程價格起
-                    </p>
-                    <p className="text-3xl font-display font-semibold text-foreground mb-1">
-                      {instructor.priceFrom}
-                    </p>
-                    <p className="text-sm text-muted-foreground mb-5 inline-flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
-                      {instructor.nextSession}
-                    </p>
+                    <AnimatePresence mode="wait" initial={false}>
+                      {priceRevealed ? (
+                        <motion.div
+                          key="revealed"
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                        >
+                          <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">
+                            課程價格起
+                          </p>
+                          <p className="text-3xl font-display font-semibold text-foreground mb-1">
+                            {instructor.priceFrom}
+                          </p>
+                          <p className="text-sm text-muted-foreground mb-5 inline-flex items-center gap-1.5">
+                            <Calendar className="w-4 h-4" />
+                            {instructor.nextSession}
+                          </p>
+                        </motion.div>
+                      ) : (
+                        <motion.button
+                          key="hidden"
+                          type="button"
+                          onClick={() => setPriceRevealed(true)}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="w-full text-left p-4 mb-5 rounded-2xl border border-dashed border-primary/40 bg-primary/5 hover:bg-primary/10 transition group"
+                        >
+                          <p className="text-xs uppercase tracking-widest text-primary/80 font-medium mb-1">
+                            Experience details
+                          </p>
+                          <p className="font-display text-lg text-foreground group-hover:translate-x-0.5 transition-transform">
+                            點擊了解體驗細節 →
+                          </p>
+                        </motion.button>
+                      )}
+                    </AnimatePresence>
 
                     <div className="space-y-3 mb-6">
                       {instructor.courses.map((c) => (
@@ -290,7 +318,11 @@ export default function InstructorProfile() {
                             <span className="inline-flex items-center gap-1">
                               <Clock className="w-3 h-3" /> {c.schedule}
                             </span>
-                            <span className="font-medium text-foreground/80">
+                            <span
+                              className={`font-medium text-foreground/80 transition-opacity duration-500 ${
+                                priceRevealed ? "opacity-100" : "opacity-0"
+                              }`}
+                            >
                               {c.price}
                             </span>
                           </div>
@@ -298,12 +330,23 @@ export default function InstructorProfile() {
                       ))}
                     </div>
 
-                    <Button variant="hero" size="lg" className="w-full">
-                      立即預約
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full mt-2">
-                      傳訊息給老師
-                    </Button>
+                    <AnimatePresence>
+                      {priceRevealed && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <Button variant="hero" size="lg" className="w-full">
+                            加入這段舞蹈旅程
+                          </Button>
+                          <Button variant="outline" size="sm" className="w-full mt-2">
+                            傳訊息給老師
+                          </Button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     <div className="mt-5 pt-5 border-t border-border/50 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                       <Globe2 className="w-3.5 h-3.5" />
