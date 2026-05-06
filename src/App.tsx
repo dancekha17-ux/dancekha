@@ -13,6 +13,7 @@ import TeacherAuth from "./pages/TeacherAuth";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import TeacherPreview from "./pages/TeacherPreview";
 import Dashboard from "./pages/Dashboard";
+import MasterDashboard from "./pages/MasterDashboard";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
             <Route path="/teacher/preview" element={<TeacherPreview />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/master-dashboard" element={<MasterDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
