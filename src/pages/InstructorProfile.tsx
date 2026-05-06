@@ -22,11 +22,31 @@ export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [instructor, setInstructor] = useState<PublicInstructor | null | undefined>(undefined);
+  const [priceRevealed, setPriceRevealed] = useState(false);
+  const coursesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!slug) return;
     fetchInstructorBySlug(slug).then((res) => setInstructor(res ?? null));
   }, [slug]);
+
+  useEffect(() => {
+    const node = coursesRef.current;
+    if (!node || priceRevealed) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setPriceRevealed(true);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [instructor, priceRevealed]);
 
   if (instructor === undefined) {
     return (
