@@ -219,6 +219,7 @@ export default function InstructorProfile() {
               {/* 經歷與獎項 */}
               {instructor.credentials.length > 0 && (
                 <motion.div
+                  ref={coursesRef}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
