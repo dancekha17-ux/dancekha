@@ -102,6 +102,60 @@ export type Database = {
           },
         ]
       }
+      master_profiles: {
+        Row: {
+          bio: string
+          created_at: string
+          cultural_tags: string[]
+          dance_dna_type: string
+          dance_intro: string
+          id: string
+          is_draft: boolean
+          is_published: boolean
+          logo_url: string | null
+          motto: string
+          profile_images: string[]
+          studio_images: string[]
+          updated_at: string
+          user_id: string
+          video_links: string[]
+        }
+        Insert: {
+          bio?: string
+          created_at?: string
+          cultural_tags?: string[]
+          dance_dna_type?: string
+          dance_intro?: string
+          id?: string
+          is_draft?: boolean
+          is_published?: boolean
+          logo_url?: string | null
+          motto?: string
+          profile_images?: string[]
+          studio_images?: string[]
+          updated_at?: string
+          user_id: string
+          video_links?: string[]
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          cultural_tags?: string[]
+          dance_dna_type?: string
+          dance_intro?: string
+          id?: string
+          is_draft?: boolean
+          is_published?: boolean
+          logo_url?: string | null
+          motto?: string
+          profile_images?: string[]
+          studio_images?: string[]
+          updated_at?: string
+          user_id?: string
+          video_links?: string[]
+        }
+        Relationships: []
+      }
       teacher_profiles: {
         Row: {
           avatar_url: string | null
