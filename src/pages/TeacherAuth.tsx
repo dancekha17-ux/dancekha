@@ -65,21 +65,21 @@ export default function TeacherAuth() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen flex flex-col font-body" style={{ backgroundColor: "#FFF5E6" }}>
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md">
           <Link to="/" className="block text-center mb-10">
-            <span className="font-display text-3xl text-gradient">舞島咖</span>
-            <p className="eyebrow mt-2">Creator Studio</p>
+            <span className="font-display text-3xl text-gradient">舞島咖 DanceKha</span>
+            <p className="eyebrow mt-2">Leaders' Studio</p>
           </Link>
 
-          <div className="card-elevated p-8 md:p-10 border border-border/50">
+          <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl shadow-[#E63946]/5 p-8 md:p-10 border border-[#E63946]/10">
             <h1 className="font-display text-2xl text-foreground mb-2">
-              {mode === "signin" ? "歡迎回來" : "建立你的舞蹈家檔案"}
+              {mode === "signin" ? "歡迎回來，引領者" : "建立你的引領者檔案"}
             </h1>
             <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
               {mode === "signin"
-                ? "謝謝您的進駐！願舞島咖能成為您自由天地，盡情揮灑創作與專注教學的樂土。"
+                ? "謝謝您的進駐！願舞島咖能成為您自由揮灑創作、專注教學的溫暖樂土。"
                 : "註冊後即可建立引領者頁面，由團隊檢視完整度後上線。"}
             </p>
 
