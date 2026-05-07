@@ -85,6 +85,23 @@ export default function MasterDashboard() {
   useEffect(() => {
     if (!user) return;
     (async () => {
+      // Route protection: only teachers/masters/admins may access this dashboard
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id);
+      const allowed = (roles ?? []).some((r: any) =>
+        ["teacher", "master", "admin"].includes(r.role),
+      );
+      if (!allowed) {
+        toast({
+          title: "此頁僅供引領者使用",
+          description: "已為你導向學員主控台。",
+        });
+        navigate("/dashboard?role=student", { replace: true });
+        return;
+      }
+
       const { data } = await (supabase as any)
         .from("master_profiles")
         .select("*")
@@ -537,19 +554,23 @@ function ImageGrid({ title, hint, images, field, onUpload, onRemove, busy }: Ima
       {images.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {images.map((url, idx) => (
-            <div
+            <figure
               key={url + idx}
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-secondary border border-border group"
+              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-secondary border border-border group shadow-sm"
             >
-              <img src={url} alt="" className="w-full h-full object-cover" />
+              <img src={url} alt="預覽圖片" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+              <figcaption className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full bg-background/85 backdrop-blur text-[10px] text-foreground/80 tracking-wide">
+                4:3 預覽
+              </figcaption>
               <button
                 type="button"
                 onClick={() => onRemove(field, idx)}
                 className="absolute top-2 right-2 w-8 h-8 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:text-destructive"
+                aria-label="移除圖片"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
-            </div>
+            </figure>
           ))}
         </div>
       )}
