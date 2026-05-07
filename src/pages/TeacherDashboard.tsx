@@ -628,17 +628,48 @@ export default function TeacherDashboard() {
           </div>
         </SectionCard>
 
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-16">
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-12">
           <Button asChild variant="outline" size="lg">
             <Link to="/teacher/preview">
               <Eye className="w-4 h-4" /> 預覽頁面
             </Link>
           </Button>
-          <Button onClick={handleSave} disabled={saving} variant="hero" size="lg">
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            size="lg"
+            className="text-white hover:opacity-90"
+            style={{ backgroundColor: "#E63946" }}
+          >
             <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
           </Button>
         </div>
       </main>
+
+      {/* Wave decoration footer */}
+      <div className="relative h-24 overflow-hidden" aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full"
+        >
+          <path
+            d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z"
+            fill="#E63946"
+            fillOpacity="0.08"
+          />
+          <path
+            d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60"
+            stroke="#E63946"
+            strokeOpacity="0.35"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        </svg>
+        <p className="absolute bottom-2 left-0 right-0 text-center text-xs text-muted-foreground font-body">
+          舞島咖 DanceKha · 引領者專區
+        </p>
+      </div>
     </div>
   );
 }
