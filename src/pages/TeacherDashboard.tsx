@@ -536,9 +536,10 @@ export default function TeacherDashboard() {
         </SectionCard>
 
         {/* Booking hints */}
+        <div id="booking" className="scroll-mt-24">
         <SectionCard
           eyebrow="Booking"
-          title="預約資訊"
+          title="活動行事曆"
           description="讓有興趣的學員知道下一步怎麼走。"
         >
           <div className="grid sm:grid-cols-2 gap-5">
@@ -564,24 +565,29 @@ export default function TeacherDashboard() {
             </div>
           </div>
         </SectionCard>
+        </div>
 
         {/* Courses */}
+        <div id="courses" className="scroll-mt-24">
         <SectionCard
           eyebrow="Courses"
-          title="課程"
+          title="課程管理"
           description="每一堂課都是一個邀請。"
         >
           <CoursesEditor teacherId={profile.id} />
         </SectionCard>
+        </div>
 
         {/* Media */}
+        <div id="media" className="scroll-mt-24">
         <SectionCard
           eyebrow="Media"
-          title="影像作品集"
+          title="學員互動 · 影像作品集"
           description="照片、影片，能勝過千字介紹。"
         >
           <MediaEditor teacherId={profile.id} userId={user!.id} />
         </SectionCard>
+        </div>
 
         {/* Social */}
         <SectionCard eyebrow="Connect" title="社群連結">
