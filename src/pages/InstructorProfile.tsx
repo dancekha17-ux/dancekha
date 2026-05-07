@@ -10,6 +10,7 @@ import {
   Globe2,
   MapPin,
   Play,
+  Sparkles,
   Star,
   Users2,
 } from "lucide-react";
@@ -275,10 +276,19 @@ export default function InstructorProfile() {
                           <p className="text-3xl font-display font-semibold text-foreground mb-1">
                             {instructor.priceFrom}
                           </p>
-                          <p className="text-sm text-muted-foreground mb-5 inline-flex items-center gap-1.5">
+                          <p className="text-sm text-muted-foreground mb-3 inline-flex items-center gap-1.5">
                             <Calendar className="w-4 h-4" />
                             {instructor.nextSession}
                           </p>
+                          <motion.p
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.25, duration: 0.5 }}
+                            className="text-xs text-primary/90 font-medium mb-5 inline-flex items-center gap-1.5"
+                          >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            恭喜！您已解鎖這段文化旅程的門票。
+                          </motion.p>
                         </motion.div>
                       ) : (
                         <motion.button
