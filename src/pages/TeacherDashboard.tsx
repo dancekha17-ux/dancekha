@@ -214,17 +214,36 @@ export default function TeacherDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/30">
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-40">
-        <div className="container-wide mx-auto h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-baseline gap-2">
-            <span className="font-display text-xl text-gradient">舞島咖</span>
-            <span className="eyebrow">Creator Studio</span>
+    <div className="min-h-screen" style={{ backgroundColor: "#FFF5E6" }}>
+      <header className="border-b border-[#E63946]/10 bg-[#FFF5E6]/90 backdrop-blur sticky top-0 z-40">
+        <div className="container-wide mx-auto h-16 flex items-center justify-between gap-3">
+          <Link to="/" className="flex items-baseline gap-2 min-w-0">
+            <span className="font-display text-xl text-gradient truncate">舞島咖 DanceKha</span>
+            <span className="eyebrow hidden sm:inline">Leaders' Studio</span>
           </Link>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {[
+              { href: "#identity", label: "個人檔案" },
+              { href: "#courses", label: "課程管理" },
+              { href: "#media", label: "學員互動" },
+              { href: "#booking", label: "活動行事曆" },
+            ].map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="px-3 py-1.5 rounded-full text-sm text-foreground/70 hover:text-[#E63946] hover:bg-white transition-colors"
+              >
+                {n.label}
+              </a>
+            ))}
+          </nav>
+
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm">
               <Link to="/teacher/preview">
-                <Eye className="w-4 h-4" /> 預覽
+                <Eye className="w-4 h-4" /> <span className="hidden sm:inline">預覽</span>
               </Link>
             </Button>
             <Button
@@ -235,19 +254,36 @@ export default function TeacherDashboard() {
                 navigate("/");
               }}
             >
-              <LogOut className="w-4 h-4" /> 登出
+              <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">登出</span>
             </Button>
           </div>
         </div>
+        {/* Mobile module quick-nav */}
+        <div className="md:hidden border-t border-[#E63946]/10 px-4 py-2 flex gap-2 overflow-x-auto">
+          {[
+            { href: "#identity", label: "個人檔案" },
+            { href: "#courses", label: "課程管理" },
+            { href: "#media", label: "學員互動" },
+            { href: "#booking", label: "活動行事曆" },
+          ].map((n) => (
+            <a
+              key={n.href}
+              href={n.href}
+              className="shrink-0 px-3 py-1.5 rounded-full text-xs bg-white text-foreground/70 border border-[#E63946]/15"
+            >
+              {n.label}
+            </a>
+          ))}
+        </div>
       </header>
 
-      <main className="container-wide mx-auto py-10 md:py-14 max-w-3xl">
+      <main className="container-wide mx-auto py-10 md:py-16 max-w-3xl px-4">
         {/* Status banner */}
         <div
-          className={`flex items-start gap-3 p-4 rounded-2xl mb-8 border ${
+          className={`flex items-start gap-3 p-4 rounded-2xl mb-10 border shadow-sm ${
             profile.is_approved
               ? "bg-success/5 border-success/30 text-success"
-              : "bg-secondary/60 border-border text-muted-foreground"
+              : "bg-white border-[#E63946]/15 text-muted-foreground"
           }`}
         >
           {profile.is_approved ? (
@@ -270,8 +306,29 @@ export default function TeacherDashboard() {
           </div>
         </div>
 
-        <div className="mb-10">
-          <span className="eyebrow">Your Story</span>
+        {/* Module cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+          {[
+            { href: "#identity", label: "個人檔案", desc: "你的舞蹈名片" },
+            { href: "#courses", label: "課程管理", desc: "編排與排期" },
+            { href: "#media", label: "學員互動", desc: "影像與訊息" },
+            { href: "#booking", label: "活動行事曆", desc: "下一次相遇" },
+          ].map((m) => (
+            <a
+              key={m.href}
+              href={m.href}
+              className="group rounded-2xl bg-white border border-[#E63946]/10 p-4 shadow-sm hover:shadow-md hover:border-[#E63946]/30 transition-all"
+            >
+              <p className="font-display text-base text-foreground group-hover:text-[#E63946] transition-colors">
+                {m.label}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">{m.desc}</p>
+            </a>
+          ))}
+        </div>
+
+        <div id="identity" className="mb-10">
+          <span className="eyebrow" style={{ color: "#E63946" }}>Your Story</span>
           <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3">
             編輯<span className="text-accent-italic">舞蹈旅程</span>
           </h1>
@@ -479,9 +536,10 @@ export default function TeacherDashboard() {
         </SectionCard>
 
         {/* Booking hints */}
+        <div id="booking" className="scroll-mt-24">
         <SectionCard
           eyebrow="Booking"
-          title="預約資訊"
+          title="活動行事曆"
           description="讓有興趣的學員知道下一步怎麼走。"
         >
           <div className="grid sm:grid-cols-2 gap-5">
@@ -507,24 +565,29 @@ export default function TeacherDashboard() {
             </div>
           </div>
         </SectionCard>
+        </div>
 
         {/* Courses */}
+        <div id="courses" className="scroll-mt-24">
         <SectionCard
           eyebrow="Courses"
-          title="課程"
+          title="課程管理"
           description="每一堂課都是一個邀請。"
         >
           <CoursesEditor teacherId={profile.id} />
         </SectionCard>
+        </div>
 
         {/* Media */}
+        <div id="media" className="scroll-mt-24">
         <SectionCard
           eyebrow="Media"
-          title="影像作品集"
+          title="學員互動 · 影像作品集"
           description="照片、影片，能勝過千字介紹。"
         >
           <MediaEditor teacherId={profile.id} userId={user!.id} />
         </SectionCard>
+        </div>
 
         {/* Social */}
         <SectionCard eyebrow="Connect" title="社群連結">
@@ -565,17 +628,48 @@ export default function TeacherDashboard() {
           </div>
         </SectionCard>
 
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-16">
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pb-12">
           <Button asChild variant="outline" size="lg">
             <Link to="/teacher/preview">
               <Eye className="w-4 h-4" /> 預覽頁面
             </Link>
           </Button>
-          <Button onClick={handleSave} disabled={saving} variant="hero" size="lg">
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            size="lg"
+            className="text-white hover:opacity-90"
+            style={{ backgroundColor: "#E63946" }}
+          >
             <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
           </Button>
         </div>
       </main>
+
+      {/* Wave decoration footer */}
+      <div className="relative h-24 overflow-hidden" aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full"
+        >
+          <path
+            d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 L1440,100 L0,100 Z"
+            fill="#E63946"
+            fillOpacity="0.08"
+          />
+          <path
+            d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60"
+            stroke="#E63946"
+            strokeOpacity="0.35"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        </svg>
+        <p className="absolute bottom-2 left-0 right-0 text-center text-xs text-muted-foreground font-body">
+          舞島咖 DanceKha · 引領者專區
+        </p>
+      </div>
     </div>
   );
 }

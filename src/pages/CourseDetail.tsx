@@ -200,7 +200,7 @@ export default function CourseDetail() {
                     {course.instructorSlug ? (
                       <Link to={`/instructors/${course.instructorSlug}`}>
                         <Button variant="outline" size="sm">
-                          查看老師完整資料 →
+                          查看引領者完整資料 →
                         </Button>
                       </Link>
                     ) : (

@@ -203,7 +203,7 @@ export default function InstructorProfile() {
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-5">
-                    看見老師的呼吸
+                    看見引領者的呼吸
                   </h2>
                   <div className="relative rounded-2xl overflow-hidden shadow-elevated aspect-video bg-foreground/5">
                     <iframe
@@ -352,7 +352,7 @@ export default function InstructorProfile() {
                             加入這段舞蹈旅程
                           </Button>
                           <Button variant="outline" size="sm" className="w-full mt-2">
-                            傳訊息給老師
+                            傳訊息給引領者
                           </Button>
                         </motion.div>
                       )}
@@ -393,7 +393,7 @@ export default function InstructorProfile() {
                         </a>
                       )}
                       {!instructor.instagramUrl && !instructor.youtubeUrl && !instructor.websiteUrl && (
-                        <p className="text-muted-foreground">老師尚未提供聯絡方式</p>
+                        <p className="text-muted-foreground">引領者尚未提供聯絡方式</p>
                       )}
                     </div>
                   </motion.div>
