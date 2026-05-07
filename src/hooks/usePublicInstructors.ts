@@ -30,25 +30,35 @@ export interface PublicInstructor {
 const fallbackCover =
   "https://images.unsplash.com/photo-1535525153412-5a092d46b3a5?auto=format&fit=crop&w=2000&q=80";
 
-function dbToPublic(row: any): PublicInstructor {
+function dbToPublic(row: any, master?: any): PublicInstructor {
+  const profileImg = master?.profile_images?.[0];
+  const videoLink = master?.video_links?.[0] || "";
+  const embed = videoLink
+    ? videoLink.includes("youtube.com/watch")
+      ? videoLink.replace("watch?v=", "embed/")
+      : videoLink.includes("youtu.be/")
+        ? videoLink.replace("youtu.be/", "youtube.com/embed/")
+        : videoLink
+    : "";
+
   return {
     slug: row.slug || row.id,
     name: row.name || "未命名",
     nameEn: row.name_en || "",
     specialty: row.specialty || "",
     region: row.region || "",
-    functionTags: row.dance_styles || [],
-    cover: row.avatar_url || fallbackCover,
-    avatar: row.avatar_url || "/placeholder.svg",
-    bio: row.bio || "",
+    functionTags: master?.cultural_tags?.length ? master.cultural_tags : (row.dance_styles || []),
+    cover: profileImg || row.hero_image_url || row.avatar_url || fallbackCover,
+    avatar: master?.logo_url || row.avatar_url || "/placeholder.svg",
+    bio: master?.bio || row.bio || "",
     rating: 5,
     students: 0,
-    cultureTitle: "",
-    cultureBody: "",
-    videoEmbedUrl: "",
-    credentials: [],
-    priceFrom: "",
-    nextSession: "",
+    cultureTitle: master?.motto || row.culture_title || "",
+    cultureBody: master?.dance_intro || row.culture_body || "",
+    videoEmbedUrl: embed,
+    credentials: row.credentials || [],
+    priceFrom: row.price_from || "",
+    nextSession: row.next_session || "",
     courses: [],
     instagramUrl: row.instagram_url,
     youtubeUrl: row.youtube_url,
@@ -74,8 +84,7 @@ export function usePublicInstructors() {
       .eq("is_approved", true)
       .order("updated_at", { ascending: false })
       .then(({ data }) => {
-        const dbItems = (data ?? []).map(dbToPublic);
-        // DB profiles first, then curated static demos
+        const dbItems = (data ?? []).map((r) => dbToPublic(r));
         setItems([...dbItems, ...staticInstructors.map(staticToPublic)]);
         setLoading(false);
       });
@@ -91,7 +100,15 @@ export async function fetchInstructorBySlug(slug: string): Promise<PublicInstruc
     .eq("slug", slug)
     .eq("is_approved", true)
     .maybeSingle();
-  if (data) return dbToPublic(data);
+  if (data) {
+    const { data: master } = await (supabase as any)
+      .from("master_profiles")
+      .select("*")
+      .eq("user_id", (data as any).user_id)
+      .eq("is_published", true)
+      .maybeSingle();
+    return dbToPublic(data, master);
+  }
   const fromStatic = staticInstructors.find((i) => i.slug === slug);
   return fromStatic ? staticToPublic(fromStatic) : undefined;
 }
