@@ -118,8 +118,14 @@ export default function TeacherAuth() {
                   placeholder="至少 8 個字元"
                 />
               </div>
-              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={busy}>
-                {busy ? "處理中…" : mode === "signin" ? "登入" : "建立帳號"}
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full text-white hover:opacity-90"
+                style={{ backgroundColor: "#E63946" }}
+                disabled={busy}
+              >
+                {busy ? "處理中…" : mode === "signin" ? "登入引領者專區" : "成為引領者，啟動舞蹈冒險"}
               </Button>
             </form>
 
