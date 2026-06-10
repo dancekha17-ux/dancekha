@@ -11,7 +11,8 @@ interface InstructorMini {
   name: string;
   slug: string | null;
   avatar_url: string | null;
-  short_bio: string | null;
+  bio: string | null;
+  tagline: string | null;
 }
 
 function formatDateTime(iso: string | null) {
