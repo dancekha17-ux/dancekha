@@ -85,7 +85,7 @@ export function CoursesSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
                 className="group cursor-pointer"
-                onClick={() => setSelected({ id: course.id, title: course.title })}
+                onClick={() => navigate(`/events/${course.id}`)}
               >
                 <div className="h-full flex flex-col">
                   <div className={`relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br ${course.gradient || "from-sand/30 to-coral/20"} mb-5`}>
