@@ -71,7 +71,7 @@ export default function EventDetail() {
       if (data.instructor) {
         const { data: t } = await supabase
           .from("teacher_profiles")
-          .select("name, slug, avatar_url, short_bio")
+          .select("name, slug, avatar_url, bio, tagline")
           .ilike("name", data.instructor)
           .maybeSingle();
         if (alive && t) setInstructor(t as InstructorMini);
