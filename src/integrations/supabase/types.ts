@@ -70,6 +70,7 @@ export type Database = {
           is_published: boolean
           kind: string
           location: string | null
+          region: string | null
           spots_left: number | null
           starts_at: string | null
           tags: string[]
@@ -94,6 +95,7 @@ export type Database = {
           is_published?: boolean
           kind?: string
           location?: string | null
+          region?: string | null
           spots_left?: number | null
           starts_at?: string | null
           tags?: string[]
@@ -118,6 +120,7 @@ export type Database = {
           is_published?: boolean
           kind?: string
           location?: string | null
+          region?: string | null
           spots_left?: number | null
           starts_at?: string | null
           tags?: string[]
