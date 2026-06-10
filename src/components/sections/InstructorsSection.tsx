@@ -29,7 +29,7 @@ export function InstructorsSection() {
             用生命跳舞的<span className="text-accent-italic">舞蹈家們</span>
           </h2>
           <p className="text-fluid-lead text-muted-foreground font-body">
-            每一位引領者都是一位文化傳遞者，
+            每一位老師都是文化傳遞者，
             帶著獨特的故事、節奏與風土，等待與你相遇。
           </p>
         </motion.div>
