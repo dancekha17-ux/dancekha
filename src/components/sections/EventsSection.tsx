@@ -125,9 +125,9 @@ export function EventsSection() {
                         variant={event.is_featured ? "hero" : "outline"}
                         size="lg"
                         className="w-full lg:w-auto"
-                        onClick={() => setSelected({ id: event.id, title: event.title })}
+                        onClick={(e) => { e.stopPropagation(); navigate(`/events/${event.id}`); }}
                       >
-                        立即報名
+                        了解詳情
                       </Button>
                     </div>
                   </div>
@@ -137,15 +137,6 @@ export function EventsSection() {
           </div>
         )}
       </div>
-
-      {selected && (
-        <RegistrationDialog
-          open={!!selected}
-          onOpenChange={(o) => !o && setSelected(null)}
-          eventId={selected.id}
-          eventTitle={selected.title}
-        />
-      )}
     </section>
   );
 }
