@@ -1,9 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Clock, Users, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
-import { RegistrationDialog } from "@/components/RegistrationDialog";
 
 const categories = [
   { id: "all", label: "全部課程" },
@@ -22,7 +22,7 @@ export function CoursesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
   const { data: courses, loading } = useEvents("course");
-  const [selected, setSelected] = useState<{ id: string; title: string } | null>(null);
+  const navigate = useNavigate();
 
   const filtered = useMemo(
     () => courses.filter((c) => activeCategory === "all" || c.category === activeCategory),
@@ -85,7 +85,7 @@ export function CoursesSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
                 className="group cursor-pointer"
-                onClick={() => setSelected({ id: course.id, title: course.title })}
+                onClick={() => navigate(`/events/${course.id}`)}
               >
                 <div className="h-full flex flex-col">
                   <div className={`relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br ${course.gradient || "from-sand/30 to-coral/20"} mb-5`}>
@@ -139,9 +139,9 @@ export function CoursesSection() {
                       variant="outline"
                       size="sm"
                       className="mt-4 self-start"
-                      onClick={(e) => { e.stopPropagation(); setSelected({ id: course.id, title: course.title }); }}
+                      onClick={(e) => { e.stopPropagation(); navigate(`/events/${course.id}`); }}
                     >
-                      立即報名
+                      了解詳情
                     </Button>
                   </div>
                 </div>
@@ -159,15 +159,6 @@ export function CoursesSection() {
           <Button variant="outline" size="lg">瀏覽所有課程</Button>
         </motion.div>
       </div>
-
-      {selected && (
-        <RegistrationDialog
-          open={!!selected}
-          onOpenChange={(o) => !o && setSelected(null)}
-          eventId={selected.id}
-          eventTitle={selected.title}
-        />
-      )}
     </section>
   );
 }

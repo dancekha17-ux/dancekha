@@ -1,9 +1,9 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { MapPin, Clock, Users, ExternalLink, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
-import { RegistrationDialog } from "@/components/RegistrationDialog";
 
 function formatDate(iso: string | null) {
   if (!iso) return { day: "—", month: "—", time: "" };
@@ -20,7 +20,7 @@ export function EventsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { data: events, loading } = useEvents("event");
-  const [selected, setSelected] = useState<{ id: string; title: string } | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section id="events" className="section-padding bg-secondary/30" ref={ref}>
@@ -57,7 +57,8 @@ export function EventsSection() {
                   initial={{ opacity: 0, x: -40 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.8, delay: 0.1 * (index + 1) }}
-                  className={`group card-elevated p-6 md:p-8 hover:shadow-elevated transition-all duration-500 ${
+                  onClick={() => navigate(`/events/${event.id}`)}
+                  className={`group card-elevated p-6 md:p-8 hover:shadow-elevated transition-all duration-500 cursor-pointer ${
                     event.is_featured ? "ring-2 ring-primary/20" : ""
                   }`}
                 >
@@ -124,9 +125,9 @@ export function EventsSection() {
                         variant={event.is_featured ? "hero" : "outline"}
                         size="lg"
                         className="w-full lg:w-auto"
-                        onClick={() => setSelected({ id: event.id, title: event.title })}
+                        onClick={(e) => { e.stopPropagation(); navigate(`/events/${event.id}`); }}
                       >
-                        立即報名
+                        了解詳情
                       </Button>
                     </div>
                   </div>
@@ -136,15 +137,6 @@ export function EventsSection() {
           </div>
         )}
       </div>
-
-      {selected && (
-        <RegistrationDialog
-          open={!!selected}
-          onOpenChange={(o) => !o && setSelected(null)}
-          eventId={selected.id}
-          eventTitle={selected.title}
-        />
-      )}
     </section>
   );
 }
