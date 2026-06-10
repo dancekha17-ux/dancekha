@@ -20,7 +20,7 @@ export function EventsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { data: events, loading } = useEvents("event");
-  const [selected, setSelected] = useState<{ id: string; title: string } | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section id="events" className="section-padding bg-secondary/30" ref={ref}>
