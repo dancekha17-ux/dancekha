@@ -1,10 +1,9 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState, useMemo } from "react";
 import { Clock, Users, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { courses } from "@/data/courses";
+import { useEvents } from "@/hooks/useEvents";
+import { RegistrationDialog } from "@/components/RegistrationDialog";
 
 const categories = [
   { id: "all", label: "全部課程" },
@@ -22,15 +21,17 @@ export function CoursesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
+  const { data: courses, loading } = useEvents("course");
+  const [selected, setSelected] = useState<{ id: string; title: string } | null>(null);
 
-  const filteredCourses = courses.filter(
-    (c) => activeCategory === "all" || c.category === activeCategory,
+  const filtered = useMemo(
+    () => courses.filter((c) => activeCategory === "all" || c.category === activeCategory),
+    [courses, activeCategory]
   );
 
   return (
     <section id="courses" className="section-padding bg-background" ref={ref}>
       <div className="container-wide mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -48,7 +49,6 @@ export function CoursesSection() {
           </p>
         </motion.div>
 
-        {/* Single, refined filter bar */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -70,90 +70,104 @@ export function CoursesSection() {
           ))}
         </motion.div>
 
-        {/* Courses Grid — quieter editorial cards */}
-        {filteredCourses.length === 0 ? (
+        {loading ? (
+          <p className="text-center text-muted-foreground py-16">載入課程中…</p>
+        ) : filtered.length === 0 ? (
           <p className="text-center text-muted-foreground py-16">
             目前沒有符合篩選條件的課程，試試其他組合。
           </p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
-            {filteredCourses.map((course, index) => (
+            {filtered.map((course, index) => (
               <motion.div
                 key={course.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
-                className="group"
+                className="group cursor-pointer"
+                onClick={() => setSelected({ id: course.id, title: course.title })}
               >
-                <Link
-                  to={`/course-detail/${course.id}`}
-                  className="block h-full"
-                >
-                  <div className="h-full flex flex-col">
-                    {/* Image plate — taller, cinematic ratio */}
-                    <div
-                      className={`relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br ${course.gradient} mb-5`}
-                    >
-                      <div className="absolute inset-0 p-5 flex flex-col justify-between">
-                        <div className="flex justify-between items-start">
-                          {course.isOnline && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
-                              <Play className="w-2.5 h-2.5" />
-                              線上
-                            </span>
-                          )}
-                          {course.isFeatured && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-foreground/85 text-primary-foreground rounded-full text-[11px] font-body ml-auto">
-                              <Sparkles className="w-2.5 h-2.5" />
-                              精選
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-xl font-display font-medium text-foreground/90">
-                          {course.price}
-                        </div>
+                <div className="h-full flex flex-col">
+                  <div className={`relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br ${course.gradient || "from-sand/30 to-coral/20"} mb-5`}>
+                    <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                      <div className="flex justify-between items-start">
+                        {course.is_online && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
+                            <Play className="w-2.5 h-2.5" />
+                            線上
+                          </span>
+                        )}
+                        {course.is_featured && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-foreground/85 text-primary-foreground rounded-full text-[11px] font-body ml-auto">
+                            <Sparkles className="w-2.5 h-2.5" />
+                            精選
+                          </span>
+                        )}
                       </div>
+                      {course.fee && (
+                        <div className="text-xl font-display font-medium text-foreground/90">{course.fee}</div>
+                      )}
                     </div>
+                  </div>
 
-                    {/* Text — editorial, quiet */}
-                    <div className="flex-1 flex flex-col">
+                  <div className="flex-1 flex flex-col">
+                    {course.instructor && (
                       <p className="text-[11px] uppercase font-body text-muted-foreground mb-2" style={{ letterSpacing: "0.18em" }}>
                         {course.instructor}
                       </p>
-                      <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
-                        {course.title}
-                      </h3>
+                    )}
+                    <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {course.title}
+                    </h3>
 
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto">
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto">
+                      {course.duration && (
                         <span className="flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {course.duration}
                         </span>
+                      )}
+                      {course.total_spots !== null && (
                         <span className="flex items-center gap-1">
                           <Users className="w-3.5 h-3.5" strokeWidth={1.5} />
-                          {course.students}
+                          {course.spots_left ?? "—"} / {course.total_spots}
                         </span>
-                      </div>
+                      )}
                     </div>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-4 self-start"
+                      onClick={(e) => { e.stopPropagation(); setSelected({ id: course.id, title: course.title }); }}
+                    >
+                      立即報名
+                    </Button>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>
         )}
 
-        {/* CTA — single quiet link */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-14 md:mt-20"
         >
-          <Button variant="outline" size="lg">
-            瀏覽所有課程
-          </Button>
+          <Button variant="outline" size="lg">瀏覽所有課程</Button>
         </motion.div>
       </div>
+
+      {selected && (
+        <RegistrationDialog
+          open={!!selected}
+          onOpenChange={(o) => !o && setSelected(null)}
+          eventId={selected.id}
+          eventTitle={selected.title}
+        />
+      )}
     </section>
   );
 }
