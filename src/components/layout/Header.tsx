@@ -84,7 +84,7 @@ export function Header() {
               <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "引領者登入" : "Master Login"}</Link>
+              <Link to="/teacher/login">{lang === "zh" ? "舞島師資登入" : "Master Login"}</Link>
             </Button>
           </div>
 
@@ -128,7 +128,7 @@ export function Header() {
                 </Button>
                 <Button asChild variant="hero" className="flex-1">
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    {lang === "zh" ? "引領者登入" : "Master Login"}
+                    {lang === "zh" ? "舞島師資登入" : "Master Login"}
                   </Link>
                 </Button>
               </div>
