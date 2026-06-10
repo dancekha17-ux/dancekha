@@ -1,9 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { Clock, Users, Play, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
-import { RegistrationDialog } from "@/components/RegistrationDialog";
 
 const categories = [
   { id: "all", label: "全部課程" },
