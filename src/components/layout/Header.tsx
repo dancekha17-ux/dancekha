@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-   { label: "關於我們", labelEn: "About", href: "/#about" },
-   { label: "課程探索", labelEn: "Courses", href: "/#courses" },
-   { label: "師資介紹", labelEn: "Instructors", href: "/#instructors" },
-   { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
-   { label: "社群日常", labelEn: "Community", href: "/#community" },
-  { label: "行事曆總覽", labelEn: "Events", href: "/#events" },
+   { label: "關於我們", labelEn: "About", href: "#about" },
+   { label: "課程探索", labelEn: "Courses", href: "#courses" },
+   { label: "師資介紹", labelEn: "Instructors", href: "#instructors" },
+   { label: "舞遍世界", labelEn: "Global Styles", href: "#world-folk" },
+   { label: "社群日常", labelEn: "Community", href: "#community" },
+   { label: "行事曆總覽", labelEn: "Events", href: "#events" },
 ];
 
 export function Header() {
@@ -53,9 +53,16 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.href}
-                to={item.href}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(item.href);
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
                 className={`flow-line font-body text-sm transition-colors ${
                   isScrolled
                     ? "text-foreground hover:text-primary"
@@ -63,7 +70,7 @@ export function Header() {
                 }`}
               >
                 {lang === "zh" ? item.label : item.labelEn}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -111,14 +118,21 @@ export function Header() {
           >
             <div className="container-wide mx-auto py-6 space-y-4">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.href}
-                  to={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    const target = document.querySelector(item.href);
+                    if (target) {
+                      target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
                   className="block py-2 text-foreground hover:text-primary transition-colors"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
-                </Link>
+                </a>
               ))}
               <div className="flex gap-3 pt-4">
                 <Button asChild variant="outline" className="flex-1">
