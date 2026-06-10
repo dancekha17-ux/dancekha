@@ -22,7 +22,7 @@ export function CoursesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
   const { data: courses, loading } = useEvents("course");
-  const [selected, setSelected] = useState<{ id: string; title: string } | null>(null);
+  const navigate = useNavigate();
 
   const filtered = useMemo(
     () => courses.filter((c) => activeCategory === "all" || c.category === activeCategory),
