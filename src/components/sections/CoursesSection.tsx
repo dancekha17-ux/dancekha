@@ -139,9 +139,9 @@ export function CoursesSection() {
                       variant="outline"
                       size="sm"
                       className="mt-4 self-start"
-                      onClick={(e) => { e.stopPropagation(); setSelected({ id: course.id, title: course.title }); }}
+                      onClick={(e) => { e.stopPropagation(); navigate(`/events/${course.id}`); }}
                     >
-                      立即報名
+                      了解詳情
                     </Button>
                   </div>
                 </div>
@@ -159,15 +159,6 @@ export function CoursesSection() {
           <Button variant="outline" size="lg">瀏覽所有課程</Button>
         </motion.div>
       </div>
-
-      {selected && (
-        <RegistrationDialog
-          open={!!selected}
-          onOpenChange={(o) => !o && setSelected(null)}
-          eventId={selected.id}
-          eventTitle={selected.title}
-        />
-      )}
     </section>
   );
 }
