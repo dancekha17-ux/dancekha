@@ -157,6 +157,16 @@ export function WorldFolkSection() {
           </p>
         </motion.div>
 
+        {/* 互動式世界舞蹈地圖 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.1 }}
+          className="mb-16 md:mb-20"
+        >
+          <WorldMap />
+        </motion.div>
+
         {/* 熱門民俗探索 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
