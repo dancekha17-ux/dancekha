@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Clock, Users, Play, Sparkles } from "lucide-react";
+import { Clock, Users, Play, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
 
@@ -17,16 +17,39 @@ const categories = [
   { id: "mideast", label: "中東與地中海" },
 ];
 
+const REGION_LABELS: Record<string, string> = {
+  india: "印度", scotland: "蘇格蘭", ireland: "愛爾蘭", israel: "以色列",
+  mideast: "中東與地中海", hawaii: "夏威夷", china: "中國", japan: "日本",
+  bulgaria: "保加利亞", ukraine: "烏克蘭", hungary: "匈牙利", russia: "俄羅斯",
+  spain: "西班牙", "eastern-europe": "東歐與中歐", balkans: "巴爾幹半島",
+  taiwan: "台灣", brazil: "巴西", mexico: "墨西哥", morocco: "摩洛哥",
+};
+
 export function CoursesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
+  const [regionFilter, setRegionFilter] = useState<string | null>(null);
   const { data: courses, loading } = useEvents("course");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const region = (e as CustomEvent<string>).detail;
+      setRegionFilter(region);
+      setActiveCategory("all");
+    };
+    window.addEventListener("danceka:filter-region", handler);
+    return () => window.removeEventListener("danceka:filter-region", handler);
+  }, []);
+
   const filtered = useMemo(
-    () => courses.filter((c) => activeCategory === "all" || c.category === activeCategory),
-    [courses, activeCategory]
+    () => courses.filter((c) => {
+      const catOk = activeCategory === "all" || c.category === activeCategory;
+      const regOk = !regionFilter || (c as unknown as { region?: string }).region === regionFilter;
+      return catOk && regOk;
+    }),
+    [courses, activeCategory, regionFilter]
   );
 
   return (
