@@ -57,7 +57,8 @@ export function EventsSection() {
                   initial={{ opacity: 0, x: -40 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.8, delay: 0.1 * (index + 1) }}
-                  className={`group card-elevated p-6 md:p-8 hover:shadow-elevated transition-all duration-500 ${
+                  onClick={() => navigate(`/events/${event.id}`)}
+                  className={`group card-elevated p-6 md:p-8 hover:shadow-elevated transition-all duration-500 cursor-pointer ${
                     event.is_featured ? "ring-2 ring-primary/20" : ""
                   }`}
                 >
