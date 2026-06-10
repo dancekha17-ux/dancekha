@@ -287,7 +287,7 @@ export default function EventDetail() {
                       {instructor?.name || event.instructor}
                     </h3>
                     <p className="text-sm text-foreground/75 font-body leading-relaxed">
-                      {instructor?.short_bio ||
+                      {instructor?.tagline || instructor?.bio ||
                         "用身體說故事的引領者，期待在課堂上與你相遇，一起把日常變成節奏。"}
                     </p>
                     {instructor?.slug && (
