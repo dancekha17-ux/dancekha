@@ -14,6 +14,7 @@ import { HeroImageEditor } from "@/components/teacher/HeroImageEditor";
 import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
+import { EventPublisher } from "@/components/teacher/EventPublisher";
 
 const profileSchema = z.object({
   name: z.string().trim().min(1, "請輸入姓名").max(100),
@@ -575,6 +576,14 @@ export default function TeacherDashboard() {
           description="每一堂課都是一個邀請。"
         >
           <CoursesEditor teacherId={profile.id} />
+        </SectionCard>
+
+        <SectionCard
+          eyebrow="Publish"
+          title="刊登新課程 / 活動"
+          description="送出後將自動關聯到你，並即時顯示於首頁。"
+        >
+          <EventPublisher userId={user!.id} instructorName={profile.name} />
         </SectionCard>
         </div>
 
