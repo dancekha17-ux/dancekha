@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { BookOpen, Globe2, Music, Sparkles, Users2 } from "lucide-react";
+import { WorldMap } from "@/components/world-map/WorldMap";
 
 /**
  * 世界民俗舞蹈專區
@@ -154,6 +155,16 @@ export function WorldFolkSection() {
             從烏克蘭草原到安達魯西亞夜晚，從巴爾幹的不對稱節拍到地中海岸邊的圓圈——
             我們收藏每個民族用身體寫下的歷史。
           </p>
+        </motion.div>
+
+        {/* 互動式世界舞蹈地圖 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.1 }}
+          className="mb-16 md:mb-20"
+        >
+          <WorldMap />
         </motion.div>
 
         {/* 熱門民俗探索 */}
