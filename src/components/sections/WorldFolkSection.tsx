@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { BookOpen, Globe2, Music, Sparkles, Users2 } from "lucide-react";
+import { WorldMap } from "@/components/world-map/WorldMap";
 
 /**
  * 世界民俗舞蹈專區
