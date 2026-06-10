@@ -53,9 +53,16 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.href}
-                to={item.href}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(item.href);
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
                 className={`flow-line font-body text-sm transition-colors ${
                   isScrolled
                     ? "text-foreground hover:text-primary"
@@ -63,7 +70,7 @@ export function Header() {
                 }`}
               >
                 {lang === "zh" ? item.label : item.labelEn}
-              </Link>
+              </a>
             ))}
           </div>
 
