@@ -14,6 +14,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import TeacherPreview from "./pages/TeacherPreview";
 import Dashboard from "./pages/Dashboard";
 import MasterDashboard from "./pages/MasterDashboard";
+import EventDetail from "./pages/EventDetail";
 
 const queryClient = new QueryClient();
 
