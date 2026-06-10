@@ -67,8 +67,17 @@ export default function EventDetail() {
       }
       setEvent(data as EventRow);
 
-      // Try fetch matching instructor by name (best-effort).
-      if (data.instructor) {
+      // Prefer linking via created_by (foreign key); fall back to name match.
+      const createdBy = (data as any).created_by as string | null;
+      if (createdBy) {
+        const { data: t } = await supabase
+          .from("teacher_profiles")
+          .select("name, slug, avatar_url, bio, tagline")
+          .eq("user_id", createdBy)
+          .maybeSingle();
+        if (alive && t) setInstructor(t as InstructorMini);
+      }
+      if (!instructor && data.instructor) {
         const { data: t } = await supabase
           .from("teacher_profiles")
           .select("name, slug, avatar_url, bio, tagline")

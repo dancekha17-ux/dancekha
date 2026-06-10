@@ -1,0 +1,2 @@
+CREATE POLICY "Teachers can publish own events" ON public.events FOR INSERT TO authenticated WITH CHECK (auth.uid() = created_by AND public.has_role(auth.uid(), 'teacher'));
+CREATE POLICY "Creator can delete own events" ON public.events FOR DELETE TO authenticated USING (auth.uid() = created_by);
