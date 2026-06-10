@@ -72,6 +72,18 @@ export function CoursesSection() {
           </p>
         </motion.div>
 
+        {regionFilter && (
+          <div className="flex justify-center mb-6">
+            <button
+              onClick={() => setRegionFilter(null)}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coral/15 text-coral-foreground border border-coral/40 text-sm font-body hover:bg-coral/25 transition-colors"
+            >
+              地區：{REGION_LABELS[regionFilter] ?? regionFilter}
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
