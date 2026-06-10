@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { label: "關於我們", labelEn: "About", href: "/#about" },
-  { label: "課程探索", labelEn: "Courses", href: "/#courses" },
-  { label: "舞島引領者", labelEn: "Instructors", href: "/#instructors" },
-  { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
-  { label: "社群日常", labelEn: "Community", href: "/#community" },
+   { label: "關於我們", labelEn: "About", href: "/#about" },
+   { label: "課程探索", labelEn: "Courses", href: "/#courses" },
+   { label: "師資介紹", labelEn: "Instructors", href: "/#instructors" },
+   { label: "舞遍世界", labelEn: "Global Styles", href: "/styles" },
+   { label: "社群日常", labelEn: "Community", href: "/#community" },
   { label: "行事曆總覽", labelEn: "Events", href: "/#events" },
 ];
 
