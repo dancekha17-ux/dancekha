@@ -14,6 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_registrations: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          name: string
+          note: string | null
+          phone: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          name: string
+          note?: string | null
+          phone: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          name?: string
+          note?: string | null
+          phone?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          duration: string | null
+          ends_at: string | null
+          fee: string | null
+          gradient: string | null
+          id: string
+          image_url: string | null
+          instructor: string | null
+          is_featured: boolean
+          is_online: boolean
+          is_published: boolean
+          kind: string
+          location: string | null
+          spots_left: number | null
+          starts_at: string | null
+          tags: string[]
+          title: string
+          total_spots: number | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          ends_at?: string | null
+          fee?: string | null
+          gradient?: string | null
+          id?: string
+          image_url?: string | null
+          instructor?: string | null
+          is_featured?: boolean
+          is_online?: boolean
+          is_published?: boolean
+          kind?: string
+          location?: string | null
+          spots_left?: number | null
+          starts_at?: string | null
+          tags?: string[]
+          title: string
+          total_spots?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          duration?: string | null
+          ends_at?: string | null
+          fee?: string | null
+          gradient?: string | null
+          id?: string
+          image_url?: string | null
+          instructor?: string | null
+          is_featured?: boolean
+          is_online?: boolean
+          is_published?: boolean
+          kind?: string
+          location?: string | null
+          spots_left?: number | null
+          starts_at?: string | null
+          tags?: string[]
+          title?: string
+          total_spots?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       instructor_courses: {
         Row: {
           cover_url: string | null
