@@ -1,9 +1,9 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { MapPin, Clock, Users, ExternalLink, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
-import { RegistrationDialog } from "@/components/RegistrationDialog";
 
 function formatDate(iso: string | null) {
   if (!iso) return { day: "—", month: "—", time: "" };
