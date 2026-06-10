@@ -118,14 +118,21 @@ export function Header() {
           >
             <div className="container-wide mx-auto py-6 space-y-4">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.href}
-                  to={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    const target = document.querySelector(item.href);
+                    if (target) {
+                      target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
                   className="block py-2 text-foreground hover:text-primary transition-colors"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
-                </Link>
+                </a>
               ))}
               <div className="flex gap-3 pt-4">
                 <Button asChild variant="outline" className="flex-1">
