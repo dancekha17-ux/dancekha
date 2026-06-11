@@ -65,7 +65,7 @@ export function HeroSection() {
             用舞步,
             <br />
             <span className="italic font-normal text-primary-foreground/95">
-              遇見世界。
+              跳進世界。
             </span>
           </motion.h1>
 
