@@ -99,7 +99,7 @@ export default function TeacherDashboard() {
           ...d,
           tagline: d.tagline ?? "",
           credentials: d.credentials ?? [],
-          languages: d.languages ?? [],
+          languages: (d.languages ?? []).length > 0 ? d.languages : ["中文"],
           hero_image_url: d.hero_image_url ?? null,
         });
       }
