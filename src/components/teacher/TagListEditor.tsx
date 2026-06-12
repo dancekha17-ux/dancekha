@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 
 interface Props {
   id: string;
-  label: React.ReactNode;
+  label: ReactNode;
   values: string[];
   placeholder?: string;
   onChange: (next: string[]) => void;
