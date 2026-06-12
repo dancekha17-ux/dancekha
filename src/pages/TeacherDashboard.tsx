@@ -464,7 +464,7 @@ export default function TeacherDashboard() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="slug">個人專屬網址設定</Label>
+                  <Label htmlFor="slug">個人專屬網址設定 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                   <div className="flex items-stretch rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background overflow-hidden">
                     <span className="hidden sm:inline-flex items-center px-3 text-xs text-muted-foreground bg-secondary/60 border-r border-input select-none whitespace-nowrap">
                       dancekha.lovable.app/instructors/
