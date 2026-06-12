@@ -17,24 +17,34 @@ import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
 import { EventPublisher } from "@/components/teacher/EventPublisher";
 
+const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
+
 const profileSchema = z.object({
-  name: z.string().trim().min(1, "請輸入姓名").max(100),
+  name: z.string().trim().min(1, REQUIRED_MSG).max(100),
   name_en: z.string().trim().max(100).optional().or(z.literal("")),
   slug: z
     .string()
     .trim()
+    .min(1, REQUIRED_MSG)
     .max(60)
-    .regex(/^[a-z0-9-]*$/, { message: "網址代稱只能使用小寫字母、數字、連字號" })
-    .optional()
-    .or(z.literal("")),
+    .regex(/^[a-z0-9-]+$/, { message: "網址代稱只能使用小寫字母、數字、連字號" }),
   specialty: z.string().trim().max(120).optional().or(z.literal("")),
-  region: z.string().trim().max(80).optional().or(z.literal("")),
-  tagline: z.string().trim().max(160).optional().or(z.literal("")),
+  region: z.string().trim().min(1, REQUIRED_MSG).max(80),
+  tagline: z.string().trim().min(1, REQUIRED_MSG).max(160),
   bio: z.string().trim().max(2000).optional().or(z.literal("")),
   instagram_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   youtube_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   website_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
 });
+
+// Field id -> DOM id for scroll-to-error
+const REQUIRED_FIELD_DOM_IDS: Record<string, string> = {
+  name: "name",
+  slug: "slug",
+  region: "region",
+  tagline: "tagline",
+  dance_styles: "styles",
+};
 
 interface Profile {
   id: string;
