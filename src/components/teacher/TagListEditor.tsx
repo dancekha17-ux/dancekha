@@ -1,9 +1,10 @@
+import type { ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 interface Props {
   id: string;
-  label: string;
+  label: ReactNode;
   values: string[];
   placeholder?: string;
   onChange: (next: string[]) => void;

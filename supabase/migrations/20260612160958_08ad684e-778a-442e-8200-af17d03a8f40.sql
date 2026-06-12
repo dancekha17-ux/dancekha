@@ -1,0 +1,4 @@
+ALTER TABLE public.instructor_media
+  ADD COLUMN IF NOT EXISTS scale numeric NOT NULL DEFAULT 1,
+  ADD COLUMN IF NOT EXISTS offset_x numeric NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS offset_y numeric NOT NULL DEFAULT 0;

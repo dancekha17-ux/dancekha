@@ -17,24 +17,34 @@ import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
 import { EventPublisher } from "@/components/teacher/EventPublisher";
 
+const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
+
 const profileSchema = z.object({
-  name: z.string().trim().min(1, "請輸入姓名").max(100),
+  name: z.string().trim().min(1, REQUIRED_MSG).max(100),
   name_en: z.string().trim().max(100).optional().or(z.literal("")),
   slug: z
     .string()
     .trim()
+    .min(1, REQUIRED_MSG)
     .max(60)
-    .regex(/^[a-z0-9-]*$/, { message: "網址代稱只能使用小寫字母、數字、連字號" })
-    .optional()
-    .or(z.literal("")),
+    .regex(/^[a-z0-9-]+$/, { message: "網址代稱只能使用小寫字母、數字、連字號" }),
   specialty: z.string().trim().max(120).optional().or(z.literal("")),
-  region: z.string().trim().max(80).optional().or(z.literal("")),
-  tagline: z.string().trim().max(160).optional().or(z.literal("")),
+  region: z.string().trim().min(1, REQUIRED_MSG).max(80),
+  tagline: z.string().trim().min(1, REQUIRED_MSG).max(160),
   bio: z.string().trim().max(2000).optional().or(z.literal("")),
   instagram_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   youtube_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   website_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
 });
+
+// Field id -> DOM id for scroll-to-error
+const REQUIRED_FIELD_DOM_IDS: Record<string, string> = {
+  name: "name",
+  slug: "slug",
+  region: "region",
+  tagline: "tagline",
+  dance_styles: "styles",
+};
 
 interface Profile {
   id: string;
@@ -89,7 +99,7 @@ export default function TeacherDashboard() {
           ...d,
           tagline: d.tagline ?? "",
           credentials: d.credentials ?? [],
-          languages: d.languages ?? [],
+          languages: (d.languages ?? []).length > 0 ? d.languages : ["中文"],
           hero_image_url: d.hero_image_url ?? null,
         });
       }
@@ -153,8 +163,38 @@ export default function TeacherDashboard() {
       .eq("user_id", user.id);
   };
 
+  const scrollToField = (fieldId: string) => {
+    const domId = REQUIRED_FIELD_DOM_IDS[fieldId];
+    if (!domId) return;
+    const el = document.getElementById(domId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => (el as HTMLElement).focus?.(), 400);
+    }
+  };
+
   const handleSave = async () => {
     if (!profile || !user) return;
+
+    // Required fields check (in display order)
+    const requiredChecks: Array<{ id: string; ok: boolean }> = [
+      { id: "name", ok: !!profile.name?.trim() },
+      { id: "slug", ok: !!profile.slug?.trim() },
+      { id: "dance_styles", ok: (profile.dance_styles ?? []).filter(Boolean).length > 0 },
+      { id: "region", ok: !!profile.region?.trim() },
+      { id: "tagline", ok: !!profile.tagline?.trim() },
+    ];
+    const firstMissing = requiredChecks.find((r) => !r.ok);
+    if (firstMissing) {
+      toast({
+        title: "請完成必填欄位",
+        description: REQUIRED_MSG,
+        variant: "destructive",
+      });
+      scrollToField(firstMissing.id);
+      return;
+    }
+
     const parsed = profileSchema.safeParse({
       name: profile.name,
       name_en: profile.name_en,
@@ -168,13 +208,19 @@ export default function TeacherDashboard() {
       website_url: profile.website_url ?? "",
     });
     if (!parsed.success) {
+      const issue = parsed.error.issues[0];
       toast({
         title: "請檢查欄位",
-        description: parsed.error.issues[0].message,
+        description: issue.message,
         variant: "destructive",
       });
+      if (issue.path?.[0]) scrollToField(String(issue.path[0]));
       return;
     }
+
+    // Auto-default teaching language to 中文 when user skipped it
+    const languages =
+      (profile.languages ?? []).filter(Boolean).length > 0 ? profile.languages : ["中文"];
 
     setSaving(true);
     const credentials = profile.credentials.map((s) => s.trim()).filter(Boolean);
@@ -189,7 +235,7 @@ export default function TeacherDashboard() {
         tagline: profile.tagline.trim(),
         bio: profile.bio.trim(),
         credentials,
-        languages: profile.languages,
+        languages,
         dance_styles: profile.dance_styles,
         instagram_url: profile.instagram_url?.trim() || null,
         youtube_url: profile.youtube_url?.trim() || null,
@@ -202,6 +248,7 @@ export default function TeacherDashboard() {
       const msg = error.message.includes("duplicate") ? "這個網址代稱已被使用" : error.message;
       toast({ title: "儲存失敗", description: msg, variant: "destructive" });
     } else {
+      setProfile((p) => (p ? { ...p, languages } : p));
       setDirty(false);
       toast({ title: "已儲存", description: "你的舞蹈故事已更新" });
     }
@@ -398,7 +445,7 @@ export default function TeacherDashboard() {
               <div className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="name">姓名 *</Label>
+                    <Label htmlFor="name">姓名 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                     <Input
                       id="name"
                       value={profile.name}
@@ -417,7 +464,7 @@ export default function TeacherDashboard() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="slug">個人專屬網址設定</Label>
+                  <Label htmlFor="slug">個人專屬網址設定 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                   <div className="flex items-stretch rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background overflow-hidden">
                     <span className="hidden sm:inline-flex items-center px-3 text-xs text-muted-foreground bg-secondary/60 border-r border-input select-none whitespace-nowrap">
                       dancekha.lovable.app/instructors/
@@ -464,7 +511,7 @@ export default function TeacherDashboard() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="region">地區</Label>
+                    <Label htmlFor="region">地區 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                     <Input
                       id="region"
                       value={profile.region}
@@ -475,7 +522,7 @@ export default function TeacherDashboard() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="tagline">一句話介紹</Label>
+                  <Label htmlFor="tagline">一句話介紹 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                   <Input
                     id="tagline"
                     value={profile.tagline}
@@ -516,7 +563,7 @@ export default function TeacherDashboard() {
               <div className="space-y-5">
                 <TagListEditor
                   id="styles"
-                  label="舞蹈風格"
+                  label={<>舞蹈風格／專長 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></>}
                   values={profile.dance_styles}
                   placeholder="現代舞, 即興, Contact Improv"
                   hint="以逗號分隔"
