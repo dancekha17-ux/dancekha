@@ -20,7 +20,6 @@ interface Props {
 export function MediaEditor({ teacherId, userId }: Props) {
   const { toast } = useToast();
   const [items, setItems] = useState<MediaRow[]>([]);
-  const [embedUrl, setEmbedUrl] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
