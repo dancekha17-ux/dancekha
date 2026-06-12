@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import { Trash2, Upload, Link2 } from "lucide-react";
+import { Trash2, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
 export interface MediaRow {
@@ -23,7 +20,6 @@ interface Props {
 export function MediaEditor({ teacherId, userId }: Props) {
   const { toast } = useToast();
   const [items, setItems] = useState<MediaRow[]>([]);
-  const [embedUrl, setEmbedUrl] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -80,12 +76,6 @@ export function MediaEditor({ teacherId, userId }: Props) {
     }
   };
 
-  const addEmbed = async () => {
-    if (!embedUrl.trim()) return;
-    await addRow({ kind: "video_embed", url: embedUrl.trim() });
-    setEmbedUrl("");
-  };
-
   return (
     <div className="space-y-6">
       {items.length > 0 && (
@@ -113,29 +103,18 @@ export function MediaEditor({ teacherId, userId }: Props) {
         </div>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-3">
-        <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
-          <Upload className="w-4 h-4" />
-          {busy ? "上傳中…" : "上傳照片"}
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={uploadImage}
-            disabled={busy}
-          />
-        </label>
-        <div className="flex gap-2">
-          <Input
-            value={embedUrl}
-            onChange={(e) => setEmbedUrl(e.target.value)}
-            placeholder="貼上 YouTube embed 連結"
-          />
-          <Button onClick={addEmbed} variant="outline">
-            <Link2 className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
+      <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
+        <Upload className="w-4 h-4" />
+        {busy ? "上傳中…" : "⬆️ 上傳照片"}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={uploadImage}
+          disabled={busy}
+        />
+      </label>
     </div>
   );
 }
+
