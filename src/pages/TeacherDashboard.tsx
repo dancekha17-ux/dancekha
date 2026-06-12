@@ -522,7 +522,7 @@ export default function TeacherDashboard() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="tagline">一句話介紹</Label>
+                  <Label htmlFor="tagline">一句話介紹 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                   <Input
                     id="tagline"
                     value={profile.tagline}
