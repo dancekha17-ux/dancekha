@@ -563,7 +563,7 @@ export default function TeacherDashboard() {
               <div className="space-y-5">
                 <TagListEditor
                   id="styles"
-                  label={"舞蹈風格／專長"}
+                  label={<>舞蹈風格／專長 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></>}
                   values={profile.dance_styles}
                   placeholder="現代舞, 即興, Contact Improv"
                   hint="以逗號分隔"
