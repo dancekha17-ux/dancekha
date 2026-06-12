@@ -511,7 +511,7 @@ export default function TeacherDashboard() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="region">地區</Label>
+                    <Label htmlFor="region">地區 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                     <Input
                       id="region"
                       value={profile.region}
