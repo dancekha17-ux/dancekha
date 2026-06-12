@@ -403,16 +403,40 @@ export default function TeacherDashboard() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="slug">網址代稱</Label>
-              <Input
-                id="slug"
-                value={profile.slug ?? ""}
-                maxLength={60}
-                placeholder="yachi-lin"
-                onChange={(e) => update({ slug: e.target.value.toLowerCase() })}
-              />
+              <Label htmlFor="slug">個人專屬網址設定</Label>
+              <div className="flex items-stretch rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background overflow-hidden">
+                <span className="hidden sm:inline-flex items-center px-3 text-xs text-muted-foreground bg-secondary/60 border-r border-input select-none whitespace-nowrap">
+                  dancekha.lovable.app/instructors/
+                </span>
+                <Input
+                  id="slug"
+                  value={profile.slug ?? ""}
+                  maxLength={60}
+                  placeholder="elisha"
+                  className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none"
+                  onChange={(e) => {
+                    const raw = e.target.value.trim().toLowerCase();
+                    // If user pasted a URL, extract last path segment
+                    const extracted = raw.includes("/")
+                      ? raw.replace(/\/+$/, "").split("/").pop() ?? ""
+                      : raw;
+                    const sanitized = extracted.replace(/[^a-z0-9-]/g, "");
+                    if (raw && sanitized !== raw) {
+                      toast({
+                        title: "格式不正確",
+                        description: "只能輸入英文、數字或連字號，請勿填寫完整網址。",
+                        variant: "destructive",
+                      });
+                    }
+                    update({ slug: sanitized });
+                  }}
+                />
+              </div>
               <p className="text-xs text-muted-foreground">
-                /instructors/{profile.slug || "your-name"}
+                請填寫自訂的英文或數字（例如: elisha），這將成為您在舞島咖的專屬名片網址。
+              </p>
+              <p className="text-xs text-muted-foreground">
+                預覽：dancekha.lovable.app/instructors/{profile.slug || "your-name"}
               </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-5">
