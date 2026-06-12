@@ -163,8 +163,38 @@ export default function TeacherDashboard() {
       .eq("user_id", user.id);
   };
 
+  const scrollToField = (fieldId: string) => {
+    const domId = REQUIRED_FIELD_DOM_IDS[fieldId];
+    if (!domId) return;
+    const el = document.getElementById(domId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => (el as HTMLElement).focus?.(), 400);
+    }
+  };
+
   const handleSave = async () => {
     if (!profile || !user) return;
+
+    // Required fields check (in display order)
+    const requiredChecks: Array<{ id: string; ok: boolean }> = [
+      { id: "name", ok: !!profile.name?.trim() },
+      { id: "slug", ok: !!profile.slug?.trim() },
+      { id: "dance_styles", ok: (profile.dance_styles ?? []).filter(Boolean).length > 0 },
+      { id: "region", ok: !!profile.region?.trim() },
+      { id: "tagline", ok: !!profile.tagline?.trim() },
+    ];
+    const firstMissing = requiredChecks.find((r) => !r.ok);
+    if (firstMissing) {
+      toast({
+        title: "請完成必填欄位",
+        description: REQUIRED_MSG,
+        variant: "destructive",
+      });
+      scrollToField(firstMissing.id);
+      return;
+    }
+
     const parsed = profileSchema.safeParse({
       name: profile.name,
       name_en: profile.name_en,
@@ -178,13 +208,19 @@ export default function TeacherDashboard() {
       website_url: profile.website_url ?? "",
     });
     if (!parsed.success) {
+      const issue = parsed.error.issues[0];
       toast({
         title: "請檢查欄位",
-        description: parsed.error.issues[0].message,
+        description: issue.message,
         variant: "destructive",
       });
+      if (issue.path?.[0]) scrollToField(String(issue.path[0]));
       return;
     }
+
+    // Auto-default teaching language to 中文 when user skipped it
+    const languages =
+      (profile.languages ?? []).filter(Boolean).length > 0 ? profile.languages : ["中文"];
 
     setSaving(true);
     const credentials = profile.credentials.map((s) => s.trim()).filter(Boolean);
@@ -199,7 +235,7 @@ export default function TeacherDashboard() {
         tagline: profile.tagline.trim(),
         bio: profile.bio.trim(),
         credentials,
-        languages: profile.languages,
+        languages,
         dance_styles: profile.dance_styles,
         instagram_url: profile.instagram_url?.trim() || null,
         youtube_url: profile.youtube_url?.trim() || null,
@@ -212,6 +248,7 @@ export default function TeacherDashboard() {
       const msg = error.message.includes("duplicate") ? "這個網址代稱已被使用" : error.message;
       toast({ title: "儲存失敗", description: msg, variant: "destructive" });
     } else {
+      setProfile((p) => (p ? { ...p, languages } : p));
       setDirty(false);
       toast({ title: "已儲存", description: "你的舞蹈故事已更新" });
     }
