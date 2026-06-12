@@ -445,7 +445,7 @@ export default function TeacherDashboard() {
               <div className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="name">姓名 *</Label>
+                    <Label htmlFor="name">姓名 <span className="text-[#E89B5C] ml-0.5" aria-hidden="true">*</span></Label>
                     <Input
                       id="name"
                       value={profile.name}
