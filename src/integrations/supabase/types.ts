@@ -186,6 +186,9 @@ export type Database = {
           created_at: string
           id: string
           kind: string
+          offset_x: number
+          offset_y: number
+          scale: number
           sort_order: number
           teacher_id: string
           url: string
@@ -195,6 +198,9 @@ export type Database = {
           created_at?: string
           id?: string
           kind?: string
+          offset_x?: number
+          offset_y?: number
+          scale?: number
           sort_order?: number
           teacher_id: string
           url: string
@@ -204,6 +210,9 @@ export type Database = {
           created_at?: string
           id?: string
           kind?: string
+          offset_x?: number
+          offset_y?: number
+          scale?: number
           sort_order?: number
           teacher_id?: string
           url?: string
