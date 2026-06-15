@@ -1,13 +1,39 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { Instagram, Youtube, Star } from "lucide-react";
+import { useMemo, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Instagram, Youtube, Star, X } from "lucide-react";
 import { usePublicInstructors } from "@/hooks/usePublicInstructors";
+import { MAP_REGIONS } from "@/components/world-map/WorldMap";
 
 export function InstructorsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { items: instructors } = usePublicInstructors();
+  const { items: allInstructors } = usePublicInstructors();
+  const location = useLocation();
+  const regionParam = new URLSearchParams(location.search).get("region");
+  const activeRegion = useMemo(
+    () => MAP_REGIONS.find((r) => r.queryParam === regionParam) ?? null,
+    [regionParam],
+  );
+
+  const instructors = useMemo(() => {
+    if (!activeRegion) return allInstructors;
+    const kw = activeRegion.keywords.map((k) => k.toLowerCase());
+    const matches = allInstructors.filter((i) => {
+      const hay = [
+        i.region,
+        i.specialty,
+        i.name,
+        i.nameEn,
+        ...(i.functionTags || []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return kw.some((k) => hay.includes(k));
+    });
+    return matches.length > 0 ? matches : allInstructors;
+  }, [allInstructors, activeRegion]);
 
   return (
     <section
