@@ -126,7 +126,7 @@ export default function TeacherAuth() {
                 style={{ backgroundColor: "#E63946" }}
                 disabled={busy || (mode === "signup" && !isPasswordStrong(password))}
               >
-                {busy ? "處理中…" : mode === "signin" ? "登入引領者專區" : "成為引領者,啟動舞蹈冒險"}
+                {busy ? "處理中…" : mode === "signin" ? "登入引領者專區" : "成為引領者，啟動舞蹈冒險"}
               </Button>
             </form>
 
