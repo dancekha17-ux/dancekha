@@ -22,7 +22,7 @@ import { fetchInstructorBySlug, PublicInstructor } from "@/hooks/usePublicInstru
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [instructor, setInstructor] = useState<PublicInstructor | null | undefined>(undefined);
+  const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
   const coursesRef = useRef<HTMLDivElement | null>(null);
 
