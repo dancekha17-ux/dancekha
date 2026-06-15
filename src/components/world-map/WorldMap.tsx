@@ -32,13 +32,12 @@ const MAP_REGIONS: MapRegion[] = [
   { id: "indonesia", name: "印尼", top: "65%", left: "80%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
   { id: "philippines", name: "菲律賓", top: "59%", left: "81.5%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
   { id: "thailand", name: "泰國", top: "57%", left: "76%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
-  { id: "india", name: "印度", top: "55%", left: "69%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
+  { id: "india", name: "印度", top: "56%", left: "71%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
   { id: "middle_east", name: "中東與北非", top: "50%", left: "57%", country: "中東與北非", dance: "東方舞 Belly Dance", desc: "如水蛇般擺動的腰臀、流暢的腹部抖動，在手鼓敲擊中喚醒遠古大地的母神力量。", queryParam: "MiddleEast", keywords: ["中東", "肚皮舞", "Belly", "Oriental"] },
-  { id: "turkey", name: "土耳其", top: "44%", left: "55%", country: "土耳其", dance: "蘇菲旋轉舞 Sufi Whirling", desc: "右手朝天接引神恩，左手朝地傳遞大愛。在永無止境的純白漩渦中與宇宙靈性融為一體。", queryParam: "Turkey", keywords: ["土耳其", "Turkey", "Sufi", "蘇菲"] },
   { id: "israel", name: "以色列", top: "47%", left: "54.5%", country: "以色列", dance: "霍拉圓圈舞 Hora", desc: "手拉手並肩跳躍，在同一個圓圈中凝聚力量，踏出古老民族重生與希望的集體步伐。", queryParam: "Israel", keywords: ["以色列", "Israel", "Hora"] },
 
   // --- EUROPE ---
-  { id: "scotland", name: "蘇格蘭", top: "29%", left: "47%", country: "蘇格蘭 / 北歐", dance: "Scottish Country Dance & Highland Dance", desc: "在悠揚的風笛聲中昂首踮足，於菱形劍鋒之間靈巧跳躍，舞出高地民族的驕傲與優雅秩序。", queryParam: "Scotland", keywords: ["蘇格蘭", "Scotland", "Highland", "Scottish Country", "北歐"] },
+  { id: "scotland", name: "蘇格蘭", top: "33%", left: "46%", country: "蘇格蘭 / 北歐", dance: "Scottish Country Dance & Highland Dance", desc: "在悠揚的風笛聲中昂首踮足，於菱形劍鋒之間靈巧跳躍，舞出高地民族的驕傲與優雅秩序。", queryParam: "Scotland", keywords: ["蘇格蘭", "Scotland", "Highland", "Scottish Country", "北歐"] },
   { id: "ireland", name: "愛爾蘭", top: "32%", left: "46%", country: "愛爾蘭", dance: "踢踏舞 Irish Step Dance", desc: "上半身挺拔如松，雙腳如機關槍般迅猛擊打地面，釋放愛爾蘭風笛最極致的狂熱。", queryParam: "Ireland", keywords: ["愛爾蘭", "Ireland", "Irish", "踢踏"] },
   { id: "spain", name: "西班牙 · 安達魯西亞", top: "45%", left: "46%", country: "西班牙 · 安達魯西亞", dance: "弗拉明戈 Flamenco", desc: "熱情奔放的吉普賽靈魂，用強烈的腳步聲與吉他擊碎深夜的寂靜。", queryParam: "Spain", keywords: ["西班牙", "Spain", "Flamenco", "佛朗明哥", "弗拉明戈"] },
   { id: "italy", name: "義大利", top: "43.5%", left: "48.5%", country: "義大利", dance: "塔蘭泰拉 Tarantella", desc: "源自義大利南部的解毒之舞，在極速的鈴鼓聲與狂亂旋轉中釋放身體能量與壓抑。", queryParam: "Italy", keywords: ["義大利", "Italy", "Tarantella"] },
@@ -56,9 +55,9 @@ const MAP_REGIONS: MapRegion[] = [
 
   // --- OCEANIA & AFRICA ---
   // 紐西蘭北島 (North Island) — 北島位於整個紐西蘭的上半部
-  { id: "new_zealand", name: "紐西蘭 · 北島", top: "78%", left: "93%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", top: "84%", left: "95%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
   // 夏威夷群島 — 中太平洋，約位於地圖中段偏左
-  { id: "hawaii", name: "夏威夷", top: "47%", left: "14%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
+  { id: "hawaii", name: "夏威夷", top: "52%", left: "9%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
   // 西非陸地 — 幾內亞、馬利、塞內加爾一帶
   { id: "west_africa", name: "西非", top: "57%", left: "48%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
