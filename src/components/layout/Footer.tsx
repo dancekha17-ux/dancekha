@@ -129,6 +129,14 @@ export function Footer() {
             <a href="#" className="hover:text-primary transition-colors">
               服務條款
             </a>
+            <span>·</span>
+            <a
+              href="/admin"
+              className="text-[11px] text-primary-foreground/25 hover:text-primary/80 transition-colors tracking-wider"
+              title="管理者後台"
+            >
+              · admin ·
+            </a>
           </div>
         </div>
       </div>
