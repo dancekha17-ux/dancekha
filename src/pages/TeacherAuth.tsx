@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { PasswordInput, PasswordStrengthMeter, isPasswordStrong } from "@/components/ui/password-input";
 
 const credentialsSchema = z.object({
   email: z.string().trim().email({ message: "請輸入有效的 Email" }).max(255),
@@ -109,21 +110,21 @@ export default function TeacherAuth() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">密碼</Label>
-                <Input
+                <PasswordInput
                   id="password"
-                  type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="至少 8 個字元"
                 />
+                {mode === "signup" && <PasswordStrengthMeter value={password} />}
               </div>
               <Button
                 type="submit"
                 size="lg"
                 className="w-full text-white hover:opacity-90"
                 style={{ backgroundColor: "#E63946" }}
-                disabled={busy}
+                disabled={busy || (mode === "signup" && !isPasswordStrong(password))}
               >
                 {busy ? "處理中…" : mode === "signin" ? "登入引領者專區" : "成為引領者，啟動舞蹈冒險"}
               </Button>
