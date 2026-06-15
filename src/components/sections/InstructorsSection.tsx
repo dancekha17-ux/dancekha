@@ -58,6 +58,18 @@ export function InstructorsSection() {
             每一位老師都是文化傳遞者，
             帶著獨特的故事、節奏與風土，等待與你相遇。
           </p>
+          {activeRegion && (
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBF5EC] border border-[#E8DCC4] text-sm font-body text-[#9C5A2E]">
+              <span>正在篩選：{activeRegion.country} · {activeRegion.dance}</span>
+              <Link
+                to="/#instructors"
+                aria-label="清除篩選"
+                className="ml-1 text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </Link>
+            </div>
+          )}
         </motion.div>
 
         {/* Instructors Grid */}
