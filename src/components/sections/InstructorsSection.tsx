@@ -1,13 +1,39 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { Instagram, Youtube, Star } from "lucide-react";
+import { useMemo, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Instagram, Youtube, Star, X } from "lucide-react";
 import { usePublicInstructors } from "@/hooks/usePublicInstructors";
+import { MAP_REGIONS } from "@/components/world-map/WorldMap";
 
 export function InstructorsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { items: instructors } = usePublicInstructors();
+  const { items: allInstructors } = usePublicInstructors();
+  const location = useLocation();
+  const regionParam = new URLSearchParams(location.search).get("region");
+  const activeRegion = useMemo(
+    () => MAP_REGIONS.find((r) => r.queryParam === regionParam) ?? null,
+    [regionParam],
+  );
+
+  const instructors = useMemo(() => {
+    if (!activeRegion) return allInstructors;
+    const kw = activeRegion.keywords.map((k) => k.toLowerCase());
+    const matches = allInstructors.filter((i) => {
+      const hay = [
+        i.region,
+        i.specialty,
+        i.name,
+        i.nameEn,
+        ...(i.functionTags || []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return kw.some((k) => hay.includes(k));
+    });
+    return matches.length > 0 ? matches : allInstructors;
+  }, [allInstructors, activeRegion]);
 
   return (
     <section
@@ -32,6 +58,18 @@ export function InstructorsSection() {
             每一位老師都是文化傳遞者，
             帶著獨特的故事、節奏與風土，等待與你相遇。
           </p>
+          {activeRegion && (
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBF5EC] border border-[#E8DCC4] text-sm font-body text-[#9C5A2E]">
+              <span>正在篩選：{activeRegion.country} · {activeRegion.dance}</span>
+              <Link
+                to="/#instructors"
+                aria-label="清除篩選"
+                className="ml-1 text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </Link>
+            </div>
+          )}
         </motion.div>
 
         {/* Instructors Grid */}
