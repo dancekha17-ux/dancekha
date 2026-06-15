@@ -93,22 +93,55 @@ export function usePublicInstructors() {
   return { items, loading };
 }
 
-export async function fetchInstructorBySlug(slug: string): Promise<PublicInstructor | undefined> {
-  const { data } = await supabase
+export async function fetchInstructorBySlug(
+  slug: string,
+): Promise<(PublicInstructor & { isPreview?: boolean }) | undefined> {
+  const { data: approved } = await supabase
     .from("teacher_profiles")
     .select("*")
     .eq("slug", slug)
     .eq("is_approved", true)
     .maybeSingle();
-  if (data) {
+
+  let row: any = approved;
+  let isPreview = false;
+
+  if (!row) {
+    const { data: anyRow } = await supabase
+      .from("teacher_profiles")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (anyRow) {
+      const { data: auth } = await supabase.auth.getUser();
+      const uid = auth.user?.id;
+      if (uid) {
+        if (uid === (anyRow as any).user_id) {
+          row = anyRow;
+          isPreview = true;
+        } else {
+          const { data: isAdmin } = await (supabase as any).rpc("has_role", {
+            _user_id: uid,
+            _role: "admin",
+          });
+          if (isAdmin) {
+            row = anyRow;
+            isPreview = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (row) {
     const { data: master } = await (supabase as any)
       .from("master_profiles")
       .select("*")
-      .eq("user_id", (data as any).user_id)
-      .eq("is_published", true)
+      .eq("user_id", row.user_id)
       .maybeSingle();
-    return dbToPublic(data, master);
+    return { ...dbToPublic(row, master), isPreview };
   }
+
   const fromStatic = staticInstructors.find((i) => i.slug === slug);
   return fromStatic ? staticToPublic(fromStatic) : undefined;
 }
