@@ -22,7 +22,7 @@ import { fetchInstructorBySlug, PublicInstructor } from "@/hooks/usePublicInstru
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [instructor, setInstructor] = useState<PublicInstructor | null | undefined>(undefined);
+  const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
   const coursesRef = useRef<HTMLDivElement | null>(null);
 
@@ -69,6 +69,18 @@ export default function InstructorProfile() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+
+      {instructor.isPreview && (
+        <div className="pt-20">
+          <div className="container-wide mx-auto px-4 md:px-8 mt-4">
+            <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary font-medium text-center">
+              管理員預覽模式 · 此引導者尚未公開，僅管理員與本人可見
+            </div>
+          </div>
+        </div>
+      )}
+
+
 
       {/* Cover */}
       <section className="relative pt-20">
