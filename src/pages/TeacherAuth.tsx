@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { PasswordInput, PasswordStrengthMeter, isPasswordStrong } from "@/components/ui/password-input";
 
 const credentialsSchema = z.object({
   email: z.string().trim().email({ message: "請輸入有效的 Email" }).max(255),
