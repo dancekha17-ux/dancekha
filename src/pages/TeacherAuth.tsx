@@ -76,12 +76,12 @@ export default function TeacherAuth() {
 
           <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl shadow-[#E63946]/5 p-8 md:p-10 border border-[#E63946]/10">
             <h1 className="font-display text-2xl text-foreground mb-2">
-              {mode === "signin" ? "歡迎回來，引領者" : "建立你的引領者檔案"}
+              {mode === "signin" ? "歡迎回來，引導者！" : "建立你的引導者檔案"}
             </h1>
             <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
               {mode === "signin"
                 ? "謝謝您的進駐！願舞島咖能成為您自由揮灑創作、專注教學的溫暖樂土。"
-                : "註冊後即可建立引領者頁面，由團隊檢視完整度後上線。"}
+                : "註冊後即可建立引導者頁面，由團隊檢視完整度後上線。"}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -126,7 +126,7 @@ export default function TeacherAuth() {
                 style={{ backgroundColor: "#E63946" }}
                 disabled={busy || (mode === "signup" && !isPasswordStrong(password))}
               >
-                {busy ? "處理中…" : mode === "signin" ? "登入引領者專區" : "成為引領者，啟動舞蹈冒險"}
+                {busy ? "處理中…" : mode === "signin" ? "登入引導者專區" : "成為引導者，啟動舞蹈冒險"}
               </Button>
             </form>
 
@@ -136,7 +136,7 @@ export default function TeacherAuth() {
                 onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
                 className="text-primary hover:underline font-medium"
               >
-                {mode === "signin" ? "註冊成為舞島的引領者" : "前往登入"}
+                {mode === "signin" ? "註冊成為舞島的引導者" : "前往登入"}
               </button>
             </div>
           </div>
