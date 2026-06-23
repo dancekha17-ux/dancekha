@@ -39,7 +39,7 @@ export interface CourseRow {
 
 const STATUS_META: Record<CourseRow["status"], { label: string; cls: string }> = {
   draft: { label: "草稿", cls: "bg-muted text-muted-foreground border-border" },
-  pending: { label: "審核中", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
+  pending: { label: "已提交", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
   published: { label: "已發布", cls: "bg-success/10 text-success border-success/30" },
 };
 
