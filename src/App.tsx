@@ -12,6 +12,7 @@ import CourseDetail from "./pages/CourseDetail";
 import TeacherAuth from "./pages/TeacherAuth";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import TeacherPreview from "./pages/TeacherPreview";
+import TeacherRecruit from "./pages/TeacherRecruit";
 import Dashboard from "./pages/Dashboard";
 import MasterDashboard from "./pages/MasterDashboard";
 import EventDetail from "./pages/EventDetail";
