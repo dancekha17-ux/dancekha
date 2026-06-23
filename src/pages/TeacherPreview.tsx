@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Instagram, Youtube, Globe2, MapPin } from "lucide-react";
+import { ArrowLeft, Instagram, Youtube, Globe2, MapPin, Award } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
 interface Profile {
+  id: string;
   name: string;
   name_en: string;
   slug: string | null;
@@ -14,16 +15,27 @@ interface Profile {
   bio: string;
   avatar_url: string | null;
   dance_styles: string[];
+  credentials: string[];
   instagram_url: string | null;
   youtube_url: string | null;
   website_url: string | null;
   is_approved: boolean;
 }
 
+interface MediaItem {
+  id: string;
+  url: string;
+  caption: string;
+  scale: number;
+  offset_x: number;
+  offset_y: number;
+}
+
 export default function TeacherPreview() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [media, setMedia] = useState<MediaItem[]>([]);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
@@ -31,12 +43,21 @@ export default function TeacherPreview() {
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("teacher_profiles")
-      .select("*")
-      .eq("user_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => setProfile(data as Profile));
+    (async () => {
+      const { data } = await supabase
+        .from("teacher_profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (!data) return;
+      setProfile(data as Profile);
+      const { data: mediaData } = await (supabase as any)
+        .from("instructor_media")
+        .select("id,url,caption,scale,offset_x,offset_y,sort_order")
+        .eq("teacher_id", (data as any).id)
+        .order("sort_order", { ascending: true });
+      setMedia((mediaData as MediaItem[]) ?? []);
+    })();
   }, [user]);
 
   if (!profile) {
@@ -46,6 +67,8 @@ export default function TeacherPreview() {
       </div>
     );
   }
+
+  const credentials = (profile.credentials ?? []).map((s) => s.trim()).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-background">
@@ -107,6 +130,53 @@ export default function TeacherPreview() {
             </div>
           )}
 
+          {/* Experience & Awards */}
+          {credentials.length > 0 && (
+            <div className="mb-12">
+              <span className="eyebrow">Experience & Awards</span>
+              <div className="hairline mt-3 mb-5 mx-0" />
+              <ul className="space-y-3">
+                {credentials.map((c, i) => (
+                  <li key={i} className="flex items-start gap-3 text-foreground/85 leading-relaxed">
+                    <Award className="w-4 h-4 mt-1 text-soul shrink-0" />
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Moments */}
+          {media.length > 0 && (
+            <div className="mb-12">
+              <span className="eyebrow">Moments</span>
+              <div className="hairline mt-3 mb-5 mx-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {media.map((m) => (
+                  <figure
+                    key={m.id}
+                    className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-secondary shadow-soft"
+                  >
+                    <img
+                      src={m.url}
+                      alt={m.caption || ""}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{
+                        transform: `translate(${m.offset_x}px, ${m.offset_y}px) scale(${m.scale || 1})`,
+                        transformOrigin: "center",
+                      }}
+                    />
+                    {m.caption && (
+                      <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent text-white text-xs px-4 py-3">
+                        {m.caption}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
           {(profile.instagram_url || profile.youtube_url || profile.website_url) && (
             <div className="flex gap-3 pt-6 border-t border-border/50">
               {profile.instagram_url && (
@@ -140,3 +210,4 @@ export default function TeacherPreview() {
     </div>
   );
 }
+
