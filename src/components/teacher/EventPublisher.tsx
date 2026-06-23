@@ -326,4 +326,4 @@ export const EventPublisher = forwardRef<EventPublisherHandle, Props>(function E
       </Dialog>
     </div>
   );
-}
+});
