@@ -86,11 +86,22 @@ export default function ResetPassword() {
 
             {error ? (
               <div className="space-y-6">
-                <div className="rounded-2xl bg-[#FFF5E6] border border-[#E63946]/10 p-5 text-sm leading-relaxed text-foreground">
-                  {error}
+                <div className="rounded-2xl bg-[#FFF5E6] border border-[#E63946]/20 p-5 text-sm leading-[1.7] text-foreground">
+                  <p className="font-medium mb-1">{error}</p>
+                  <p className="text-muted-foreground text-xs">
+                    為了您的帳號安全，重設連結有時效性。請重新申請一封新的引導信。
+                  </p>
                 </div>
-                <Link to="/forgot-password" className="block text-center text-sm text-primary hover:underline">
-                  重新申請重設連結
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full text-white hover:opacity-90"
+                  style={{ backgroundColor: "#E63946" }}
+                >
+                  <Link to="/forgot-password">重新申請重設連結</Link>
+                </Button>
+                <Link to="/teacher/login" className="block text-center text-xs text-muted-foreground hover:text-foreground">
+                  ← 返回登入
                 </Link>
               </div>
             ) : (
