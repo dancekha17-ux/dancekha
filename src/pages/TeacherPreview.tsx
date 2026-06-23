@@ -202,7 +202,7 @@ export default function TeacherPreview() {
 
           {!profile.is_approved && (
             <p className="text-xs text-muted-foreground mt-12 text-center">
-              這是僅你可見的預覽 · 公開頁面將於審核後上線
+              這是僅你可見的預覽 · 公開頁面將於確認後上線
             </p>
           )}
         </div>

@@ -496,7 +496,7 @@ export default function TeacherDashboard() {
                   </>
                 ) : (
                   <>
-                    <p className="font-medium text-foreground">待審核中</p>
+                    <p className="font-medium text-foreground">待確認中</p>
                     <p className="mt-0.5">把故事寫得更完整,團隊會盡快為你上線。</p>
                   </>
                 )}
