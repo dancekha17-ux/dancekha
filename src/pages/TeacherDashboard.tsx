@@ -850,6 +850,17 @@ export default function TeacherDashboard() {
           舞島咖 DanceKha · 引領者專區
         </p>
       </div>
+
+      <AgreementModal
+        open={agreementOpen}
+        onOpenChange={setAgreementOpen}
+        userId={user!.id}
+        onSigned={(signedAt) => {
+          setProfile((p) => (p ? { ...p, agreement_signed_at: signedAt } : p));
+          // Immediately open the publisher dialog
+          setTimeout(() => publisherRef.current?.openPublisher(), 50);
+        }}
+      />
     </div>
   );
 }
