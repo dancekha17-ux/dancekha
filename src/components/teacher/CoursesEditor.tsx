@@ -33,7 +33,15 @@ export interface CourseRow {
   online_link: string | null;
   session_info: string | null;
   is_published: boolean;
+  status: "draft" | "pending" | "published";
+  revision_notes: string | null;
 }
+
+const STATUS_META: Record<CourseRow["status"], { label: string; cls: string }> = {
+  draft: { label: "草稿", cls: "bg-muted text-muted-foreground border-border" },
+  pending: { label: "審核中", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
+  published: { label: "已發布", cls: "bg-success/10 text-success border-success/30" },
+};
 
 const TAIWAN_REGIONS = [
   "台北市","新北市","基隆市","桃園市","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣",
