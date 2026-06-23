@@ -19,6 +19,7 @@ import EventDetail from "./pages/EventDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AgreementPage from "./pages/AgreementPage";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+            <Route path="/teacher/agreement" element={<AgreementPage />} />
             <Route path="/teacher/preview" element={<TeacherPreview />} />
             <Route path="/register" element={<TeacherRecruit />} />
             <Route path="/dashboard" element={<Dashboard />} />

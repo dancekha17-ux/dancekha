@@ -138,11 +138,16 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          is_published: boolean
           level: string
+          location_address: string | null
           notes: string | null
+          online_link: string | null
           price: string
           region: string | null
           schedule: string
+          service_type: string
+          session_info: string | null
           sessions_count: number | null
           sort_order: number
           teacher_id: string
@@ -156,11 +161,16 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          is_published?: boolean
           level?: string
+          location_address?: string | null
           notes?: string | null
+          online_link?: string | null
           price?: string
           region?: string | null
           schedule?: string
+          service_type?: string
+          session_info?: string | null
           sessions_count?: number | null
           sort_order?: number
           teacher_id: string
@@ -174,11 +184,16 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          is_published?: boolean
           level?: string
+          location_address?: string | null
           notes?: string | null
+          online_link?: string | null
           price?: string
           region?: string | null
           schedule?: string
+          service_type?: string
+          session_info?: string | null
           sessions_count?: number | null
           sort_order?: number
           teacher_id?: string

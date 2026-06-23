@@ -16,8 +16,7 @@ import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
-import { EventPublisher, type EventPublisherHandle } from "@/components/teacher/EventPublisher";
-import { AgreementModal } from "@/components/teacher/AgreementModal";
+
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
 
@@ -80,8 +79,7 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const skipDirty = useRef(true);
-  const [agreementOpen, setAgreementOpen] = useState(false);
-  const publisherRef = useRef<EventPublisherHandle>(null);
+  
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
@@ -277,7 +275,7 @@ export default function TeacherDashboard() {
     !!profile.bio?.trim();
   const step2Done = !!profile.agreement_signed_at;
   const step3Done = false; // 待第三步完成後啟用
-  const coursesUnlocked = step1Done; // courses section interactable once profile is set; publish button gates by agreement
+  const coursesUnlocked = step1Done && step2Done; // 必須完成品牌專頁 + 簽署協議
 
   const SavePanel = (
     <div className="space-y-4">
@@ -334,9 +332,9 @@ export default function TeacherDashboard() {
   );
 
   const steps = [
-    { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done },
-    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "點擊發佈時會自動跳出", done: step2Done, active: step1Done && !step2Done },
-    { icon: CalendarRange, label: "發佈課程與活動", hint: "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done },
+    { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done, href: "#identity" },
+    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "前往閱讀並簽署 →", done: step2Done, active: step1Done && !step2Done, href: "/teacher/agreement" },
+    { icon: CalendarRange, label: "發佈課程與服務", hint: step2Done ? "可開始建立服務" : "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done, href: "#courses" },
   ];
   const completedCount = steps.filter((s) => s.done).length;
   const progressPct = Math.round((completedCount / steps.length) * 100);
@@ -423,37 +421,54 @@ export default function TeacherDashboard() {
               <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 relative">
                 {steps.map((s, i) => {
                   const Icon = s.done ? CheckCircle2 : s.active ? s.icon : Lock;
-                  return (
-                    <div
-                      key={s.label}
-                      className={`relative rounded-2xl border p-4 transition-all ${
-                        s.done
-                          ? "border-success/40 bg-success/5"
-                          : s.active
-                          ? "border-[#E63946]/40 bg-[#FFF5E6] shadow-sm"
-                          : "border-border bg-secondary/30 opacity-70"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
-                            s.done
-                              ? "bg-success/15 text-success"
-                              : s.active
-                              ? "bg-[#E63946]/10 text-[#E63946]"
-                              : "bg-muted text-muted-foreground"
-                          }`}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-                            Step {i + 1}
-                          </div>
-                          <div className="font-medium text-sm text-foreground truncate">{s.label}</div>
-                          <div className="text-[11px] text-muted-foreground mt-0.5">{s.hint}</div>
-                        </div>
+                  const interactive = s.active || s.done;
+                  const isInternal = s.href.startsWith("/");
+                  const inner = (
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                          s.done
+                            ? "bg-success/15 text-success"
+                            : s.active
+                            ? "bg-[#E63946]/10 text-[#E63946]"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
                       </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
+                          Step {i + 1}
+                        </div>
+                        <div className="font-medium text-sm text-foreground truncate">{s.label}</div>
+                        <div className="text-[11px] text-muted-foreground mt-0.5">{s.hint}</div>
+                      </div>
+                    </div>
+                  );
+                  const className = `relative rounded-2xl border p-4 transition-all ${
+                    s.done
+                      ? "border-success/40 bg-success/5"
+                      : s.active
+                      ? "border-[#E63946]/40 bg-[#FFF5E6] shadow-sm hover:shadow-md"
+                      : "border-border bg-secondary/30 opacity-70"
+                  } ${interactive ? "cursor-pointer" : ""}`;
+                  if (interactive && isInternal) {
+                    return (
+                      <Link key={s.label} to={s.href} className={className}>
+                        {inner}
+                      </Link>
+                    );
+                  }
+                  if (interactive) {
+                    return (
+                      <a key={s.label} href={s.href} className={className}>
+                        {inner}
+                      </a>
+                    );
+                  }
+                  return (
+                    <div key={s.label} className={className}>
+                      {inner}
                     </div>
                   );
                 })}
@@ -759,15 +774,6 @@ export default function TeacherDashboard() {
                   <div className={coursesUnlocked ? "" : "pointer-events-none select-none opacity-40 blur-[1px]"}>
                     <div className="space-y-8">
                       <CoursesEditor teacherId={profile.id} />
-                      <div className="pt-2 border-t border-border/50">
-                        <EventPublisher
-                          ref={publisherRef}
-                          userId={user!.id}
-                          instructorName={profile.name}
-                          agreementSigned={step2Done}
-                          onRequestAgreement={() => setAgreementOpen(true)}
-                        />
-                      </div>
                     </div>
                   </div>
                   {!coursesUnlocked && (
@@ -776,10 +782,21 @@ export default function TeacherDashboard() {
                         <div className="w-10 h-10 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mx-auto mb-2">
                           <Lock className="w-4 h-4" />
                         </div>
-                        <p className="font-display text-base text-foreground">此區待啟用</p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          請先完成「完善品牌專頁」步驟,即可開始發佈課程與活動。
+                        <p className="font-display text-base text-foreground">
+                          {!step1Done ? "請先完善品牌專頁" : "請先完成合作協議簽署"}
                         </p>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed mb-3">
+                          {!step1Done
+                            ? "完成 Step 1 後即可進行 Step 2 簽署。"
+                            : "簽署協議是發佈服務的最後一步,完成後即可開放發布權限。"}
+                        </p>
+                        {step1Done && !step2Done && (
+                          <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
+                            <Link to="/teacher/agreement">
+                              <FileSignature className="w-4 h-4" /> 前往簽署協議
+                            </Link>
+                          </Button>
+                        )}
                       </div>
                     </div>
                   )}
@@ -850,17 +867,6 @@ export default function TeacherDashboard() {
           舞島咖 DanceKha · 引導者專區
         </p>
       </div>
-
-      <AgreementModal
-        open={agreementOpen}
-        onOpenChange={setAgreementOpen}
-        userId={user!.id}
-        onSigned={(signedAt) => {
-          setProfile((p) => (p ? { ...p, agreement_signed_at: signedAt } : p));
-          // Immediately open the publisher dialog
-          setTimeout(() => publisherRef.current?.openPublisher(), 50);
-        }}
-      />
     </div>
   );
 }
