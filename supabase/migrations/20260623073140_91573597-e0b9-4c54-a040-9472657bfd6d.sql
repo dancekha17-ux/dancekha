@@ -1,0 +1,6 @@
+ALTER TABLE public.instructor_courses
+  ADD COLUMN IF NOT EXISTS course_image_url TEXT,
+  ADD COLUMN IF NOT EXISTS region TEXT,
+  ADD COLUMN IF NOT EXISTS sessions_count INTEGER,
+  ADD COLUMN IF NOT EXISTS age_range TEXT,
+  ADD COLUMN IF NOT EXISTS notes TEXT;

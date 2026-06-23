@@ -132,39 +132,54 @@ export type Database = {
       }
       instructor_courses: {
         Row: {
+          age_range: string | null
+          course_image_url: string | null
           cover_url: string | null
           created_at: string
           description: string
           id: string
           level: string
+          notes: string | null
           price: string
+          region: string | null
           schedule: string
+          sessions_count: number | null
           sort_order: number
           teacher_id: string
           title: string
           updated_at: string
         }
         Insert: {
+          age_range?: string | null
+          course_image_url?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string
           id?: string
           level?: string
+          notes?: string | null
           price?: string
+          region?: string | null
           schedule?: string
+          sessions_count?: number | null
           sort_order?: number
           teacher_id: string
           title?: string
           updated_at?: string
         }
         Update: {
+          age_range?: string | null
+          course_image_url?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string
           id?: string
           level?: string
+          notes?: string | null
           price?: string
+          region?: string | null
           schedule?: string
+          sessions_count?: number | null
           sort_order?: number
           teacher_id?: string
           title?: string
