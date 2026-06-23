@@ -481,27 +481,32 @@ export function CoursesEditor({ teacherId }: Props) {
               />
             </div>
 
-            {/* Persistent save / publish dual buttons */}
-            <div className="sticky bottom-0 -mx-5 -mb-5 px-5 py-3 bg-background/95 backdrop-blur border-t border-border/60 rounded-b-2xl flex flex-col sm:flex-row gap-2">
-              <Button
-                variant="outline"
-                size="lg"
-                className="sm:flex-1"
-                disabled={busyId === course.id}
-                onClick={() => saveDraft(course)}
-              >
-                <FileText className="w-4 h-4" /> 儲存草稿
-              </Button>
-              <Button
-                size="lg"
-                className="sm:flex-1 text-white hover:opacity-90"
-                style={{ backgroundColor: "#E63946" }}
-                disabled={busyId === course.id}
-                onClick={() => publish(course)}
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                {course.is_published ? "更新已發布內容" : "發布服務"}
-              </Button>
+            {/* Persistent save / submit dual buttons */}
+            <div className="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-background/95 backdrop-blur border-t border-border/60 rounded-b-2xl space-y-2">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="sm:flex-1"
+                  disabled={busyId === course.id}
+                  onClick={() => saveDraft(course)}
+                >
+                  <FileText className="w-4 h-4" /> 儲存草稿
+                </Button>
+                <Button
+                  size="lg"
+                  className="sm:flex-1 text-white hover:opacity-90"
+                  style={{ backgroundColor: "#E63946" }}
+                  disabled={busyId === course.id || course.status === "pending"}
+                  onClick={() => submitForReview(course)}
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  {course.status === "pending" ? "等待策展團隊審核" : "發布我的舞動旅程"}
+                </Button>
+              </div>
+              <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
+                提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
+              </p>
             </div>
           </div>
         );
