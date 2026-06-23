@@ -332,7 +332,7 @@ export default function TeacherRecruit() {
                   color: "#FFFFFF",
                 }}
               >
-                <Link to="/teacher/login?mode=signup">
+                <Link to="/teacher/login">
                   開啟您的引導者冒險
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
