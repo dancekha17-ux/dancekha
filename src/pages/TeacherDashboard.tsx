@@ -681,29 +681,12 @@ export default function TeacherDashboard() {
               </div>
             </SectionCard>
 
-            {/* Courses & Events (merged) */}
-            <div id="courses" className="scroll-mt-24">
-              <SectionCard
-                eyebrow="Courses & Events"
-                title="課程與活動管理"
-                description="在這裡管理您的所有課程與活動。只要建立並發布，系統將自動同步至您的個人名片、世界地圖與平台首頁！"
-              >
-                {/* Empty-state hint shown above editor; CoursesEditor handles its own empty copy */}
-                <div className="space-y-8">
-                  <CoursesEditor teacherId={profile.id} />
-                  <div className="pt-2 border-t border-border/50">
-                    <EventPublisher userId={user!.id} instructorName={profile.name} />
-                  </div>
-                </div>
-              </SectionCard>
-            </div>
-
             {/* Media */}
             <div id="media" className="scroll-mt-24">
               <SectionCard
                 eyebrow="Moments"
                 title="課堂精彩瞬間"
-                description="上傳 1~3 張真實的課堂照片，充滿笑容與溫度的畫面最能打動學員！"
+                description="上傳 1~3 張真實的課堂照片,充滿笑容與溫度的畫面最能打動學員！"
               >
                 <MediaEditor teacherId={profile.id} userId={user!.id} />
               </SectionCard>
@@ -747,7 +730,54 @@ export default function TeacherDashboard() {
                 </div>
               </div>
             </SectionCard>
+
+            {/* Courses & Events — moved to bottom, locked until 合作協議 signed */}
+            <div id="courses" className="scroll-mt-24 relative">
+              <SectionCard
+                eyebrow="Courses & Events"
+                title={
+                  <span className="flex items-center gap-2">
+                    課程與活動管理
+                    {!coursesUnlocked && (
+                      <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+                        <Lock className="w-3 h-3" /> 待啟用
+                      </span>
+                    )}
+                  </span>
+                }
+                description={
+                  coursesUnlocked
+                    ? "在這裡管理您的所有課程與活動。只要建立並發布,系統將自動同步至您的個人名片、世界地圖與平台首頁！"
+                    : "完成「簽署合作協議」後即可開放,屆時你可以在這裡發佈課程與活動,並同步至世界地圖。"
+                }
+              >
+                <div className="relative">
+                  <div className={coursesUnlocked ? "" : "pointer-events-none select-none opacity-40 blur-[1px]"}>
+                    <div className="space-y-8">
+                      <CoursesEditor teacherId={profile.id} />
+                      <div className="pt-2 border-t border-border/50">
+                        <EventPublisher userId={user!.id} instructorName={profile.name} />
+                      </div>
+                    </div>
+                  </div>
+                  {!coursesUnlocked && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="rounded-2xl bg-white/95 border border-[#E89B5C]/40 shadow-soft px-6 py-5 text-center max-w-sm">
+                        <div className="w-10 h-10 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mx-auto mb-2">
+                          <Lock className="w-4 h-4" />
+                        </div>
+                        <p className="font-display text-base text-foreground">此區待啟用</p>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                          請先完成上方第二步「簽署合作協議」,即可開始發佈課程與活動。
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </SectionCard>
+            </div>
           </div>
+
 
           {/* Sticky save panel (desktop) */}
           <aside className="hidden lg:block">
