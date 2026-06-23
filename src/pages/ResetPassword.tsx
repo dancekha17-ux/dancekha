@@ -1,0 +1,137 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import {
+  PasswordInput,
+  PasswordStrengthMeter,
+  isPasswordStrong,
+} from "@/components/ui/password-input";
+
+export default function ResetPassword() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Supabase 透過 magic-link 將 token 放在 URL hash，
+  // 點擊郵件連結後 client 會自動建立 recovery session。
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
+        setReady(true);
+      }
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) setReady(true);
+      else {
+        // 給 hash token 一點時間被解析
+        setTimeout(async () => {
+          const { data: d2 } = await supabase.auth.getSession();
+          if (d2.session) setReady(true);
+          else setError("重設連結已失效或不正確，請重新申請。");
+        }, 800);
+      }
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isPasswordStrong(password)) {
+      toast({ title: "密碼強度不足", description: "請依下方規則設定更安全的密碼。", variant: "destructive" });
+      return;
+    }
+    if (password !== confirm) {
+      toast({ title: "兩次密碼不一致", description: "請確認後再試一次。", variant: "destructive" });
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw error;
+      toast({ title: "密碼已更新", description: "請使用新密碼登入。" });
+      await supabase.auth.signOut();
+      navigate("/teacher/login", { replace: true });
+    } catch (err: any) {
+      toast({
+        title: "無法更新密碼",
+        description: err?.message ?? "請稍後再試。",
+        variant: "destructive",
+      });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col font-body" style={{ backgroundColor: "#FFF5E6" }}>
+      <div className="flex-1 flex items-center justify-center px-4 py-16">
+        <div className="w-full max-w-md">
+          <Link to="/" className="block text-center mb-10">
+            <span className="font-display text-3xl text-gradient">舞島咖 DanceKha</span>
+            <p className="eyebrow mt-2">GUIDES' LOUNGE</p>
+          </Link>
+
+          <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl shadow-[#E63946]/5 p-8 md:p-10 border border-[#E63946]/10">
+            <h1 className="font-display text-2xl text-foreground mb-2">設定新的密碼</h1>
+            <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
+              為了您的帳號安全，請設定一組僅您知道的全新密碼。
+            </p>
+
+            {error ? (
+              <div className="space-y-6">
+                <div className="rounded-2xl bg-[#FFF5E6] border border-[#E63946]/10 p-5 text-sm leading-relaxed text-foreground">
+                  {error}
+                </div>
+                <Link to="/forgot-password" className="block text-center text-sm text-primary hover:underline">
+                  重新申請重設連結
+                </Link>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="password">新密碼</Label>
+                  <PasswordInput
+                    id="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="至少 8 個字元"
+                    disabled={!ready}
+                  />
+                  <PasswordStrengthMeter value={password} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirm">再次輸入新密碼</Label>
+                  <PasswordInput
+                    id="confirm"
+                    required
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                    placeholder="再次輸入以確認"
+                    disabled={!ready}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full text-white hover:opacity-90"
+                  style={{ backgroundColor: "#E63946" }}
+                  disabled={busy || !ready || !isPasswordStrong(password) || password !== confirm}
+                >
+                  {busy ? "更新中…" : ready ? "更新密碼" : "驗證連結中…"}
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
