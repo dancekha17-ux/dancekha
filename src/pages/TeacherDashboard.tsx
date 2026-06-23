@@ -263,40 +263,80 @@ export default function TeacherDashboard() {
     );
   }
 
+  // ---- Onboarding progress (3 steps) ----
+  const step1Done =
+    !!profile.name?.trim() &&
+    !!profile.slug?.trim() &&
+    !!profile.region?.trim() &&
+    !!profile.tagline?.trim() &&
+    (profile.dance_styles ?? []).filter(Boolean).length > 0 &&
+    !!profile.bio?.trim();
+  const step2Done = false; // 合作協議簽署功能即將開放
+  const step3Done = false; // 待第二步完成後啟用
+  const coursesUnlocked = step2Done;
+
   const SavePanel = (
-    <div className="rounded-3xl border border-[#E63946]/15 bg-white shadow-soft p-5">
-      <div className="flex items-center gap-2 text-xs mb-3">
-        {dirty ? (
-          <>
-            <Circle className="w-2.5 h-2.5 fill-[#E63946] text-[#E63946]" />
-            <span className="text-[#E63946]">有未儲存的變更</span>
-          </>
-        ) : (
-          <>
-            <CheckCircle2 className="w-3.5 h-3.5 text-success" />
-            <span className="text-muted-foreground">所有變更皆已儲存</span>
-          </>
-        )}
+    <div className="space-y-4">
+      <div className="rounded-3xl border border-[#E63946]/15 bg-white shadow-soft p-5">
+        <div className="flex items-center gap-2 text-xs mb-3">
+          {dirty ? (
+            <>
+              <Circle className="w-2.5 h-2.5 fill-[#E63946] text-[#E63946]" />
+              <span className="text-[#E63946]">有未儲存的變更</span>
+            </>
+          ) : (
+            <>
+              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
+              <span className="text-muted-foreground">所有變更皆已儲存</span>
+            </>
+          )}
+        </div>
+        <Button
+          onClick={handleSave}
+          disabled={saving}
+          size="lg"
+          className="w-full text-white hover:opacity-90"
+          style={{ backgroundColor: "#E63946" }}
+        >
+          <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
+        </Button>
+        <Button asChild variant="outline" size="lg" className="w-full mt-2">
+          <Link to="/teacher/preview">
+            <Eye className="w-4 h-4" /> 預覽完整頁面
+          </Link>
+        </Button>
+        <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
+          所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
+        </p>
       </div>
-      <Button
-        onClick={handleSave}
-        disabled={saving}
-        size="lg"
-        className="w-full text-white hover:opacity-90"
-        style={{ backgroundColor: "#E63946" }}
-      >
-        <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
-      </Button>
-      <Button asChild variant="outline" size="lg" className="w-full mt-2">
-        <Link to="/teacher/preview">
-          <Eye className="w-4 h-4" /> 預覽頁面
-        </Link>
-      </Button>
-      <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
-        所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
-      </p>
+
+      {/* Dedicated brand-page (map card) preview */}
+      <div className="rounded-3xl border border-[#E89B5C]/30 bg-gradient-to-br from-[#FFF5E6] to-white shadow-soft p-5">
+        <div className="flex items-center gap-2 mb-2">
+          <MapPin className="w-4 h-4 text-[#E89B5C]" />
+          <span className="eyebrow" style={{ color: "#E89B5C" }}>Brand Card</span>
+        </div>
+        <h3 className="font-display text-base text-foreground mb-1">品牌專頁預覽</h3>
+        <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
+          即便還沒發佈課程,也能先看看自己在世界地圖上的專屬名片長什麼樣子。
+        </p>
+        <Button asChild variant="outline" size="sm" className="w-full border-[#E89B5C]/50 text-[#B25C2E] hover:bg-[#E89B5C]/10">
+          <Link to="/teacher/preview?card=1">
+            <Eye className="w-4 h-4" /> 預覽地圖名片
+          </Link>
+        </Button>
+      </div>
     </div>
   );
+
+  const steps = [
+    { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done },
+    { icon: FileSignature, label: "簽署合作協議", hint: "即將開放", done: step2Done, active: step1Done && !step2Done },
+    { icon: CalendarRange, label: "發佈課程與活動", hint: "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done },
+  ];
+  const completedCount = steps.filter((s) => s.done).length;
+  const progressPct = Math.round((completedCount / steps.length) * 100);
+
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#FFF5E6" }}>
