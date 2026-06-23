@@ -80,6 +80,8 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const skipDirty = useRef(true);
+  const [agreementOpen, setAgreementOpen] = useState(false);
+  const publisherRef = useRef<EventPublisherHandle>(null);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
