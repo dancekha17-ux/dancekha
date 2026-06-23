@@ -49,9 +49,18 @@ interface EventLite {
 interface Props {
   userId: string;
   instructorName: string;
+  agreementSigned?: boolean;
+  onRequestAgreement?: () => void;
 }
 
-export function EventPublisher({ userId, instructorName }: Props) {
+export interface EventPublisherHandle {
+  openPublisher: () => void;
+}
+
+export const EventPublisher = forwardRef<EventPublisherHandle, Props>(function EventPublisher(
+  { userId, instructorName, agreementSigned = true, onRequestAgreement },
+  ref,
+) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [list, setList] = useState<EventLite[]>([]);
