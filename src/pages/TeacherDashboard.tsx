@@ -275,9 +275,9 @@ export default function TeacherDashboard() {
     !!profile.tagline?.trim() &&
     (profile.dance_styles ?? []).filter(Boolean).length > 0 &&
     !!profile.bio?.trim();
-  const step2Done = false; // 合作協議簽署功能即將開放
-  const step3Done = false; // 待第二步完成後啟用
-  const coursesUnlocked = step2Done;
+  const step2Done = !!profile.agreement_signed_at;
+  const step3Done = false; // 待第三步完成後啟用
+  const coursesUnlocked = step1Done; // courses section interactable once profile is set; publish button gates by agreement
 
   const SavePanel = (
     <div className="space-y-4">
