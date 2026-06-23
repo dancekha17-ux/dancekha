@@ -133,28 +133,52 @@ export function CoursesEditor({ teacherId }: Props) {
     setBusyId(course.id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
-      .update({ ...buildPayload(course), is_published: false })
+      .update({ ...buildPayload(course), status: "draft", is_published: false })
       .eq("id", course.id);
     setBusyId(null);
     if (error) return toast({ title: "儲存失敗", description: error.message, variant: "destructive" });
-    updateLocal(course.id, { is_published: false });
+    updateLocal(course.id, { status: "draft", is_published: false });
     toast({ title: "草稿已儲存" });
   };
 
-  const publish = async (course: CourseRow) => {
-    if (!course.title?.trim()) {
-      toast({ title: "請先填寫服務名稱", variant: "destructive" });
+  const submitForReview = async (course: CourseRow) => {
+    // Validation of required fields
+    const missing: string[] = [];
+    if (!course.title?.trim()) missing.push("名稱");
+    if (!course.description?.trim()) missing.push("介紹");
+    if (!course.service_type) missing.push("服務類型");
+    const t = course.service_type;
+    if ((t === "in_person" || t === "space_rental") && !course.location_address?.trim()) missing.push("地點 / 地址");
+    if (t === "pre_recorded" && !course.online_link?.trim()) missing.push("影片 / 平台連結");
+    if (t === "event_ticket" && !course.session_info?.trim()) missing.push("場次 / 座位資訊");
+    if (!course.price?.trim()) missing.push("價格");
+
+    if (missing.length > 0) {
+      toast({
+        title: "請先補齊以下欄位",
+        description: missing.join("、"),
+        variant: "destructive",
+      });
       return;
     }
+
     setBusyId(course.id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
-      .update({ ...buildPayload(course), is_published: true })
+      .update({
+        ...buildPayload(course),
+        status: "pending",
+        submitted_at: new Date().toISOString(),
+        revision_notes: null,
+      })
       .eq("id", course.id);
     setBusyId(null);
-    if (error) return toast({ title: "發布失敗", description: error.message, variant: "destructive" });
-    updateLocal(course.id, { is_published: true });
-    toast({ title: "服務已發布", description: "已同步至個人名片與平台首頁" });
+    if (error) return toast({ title: "送審失敗", description: error.message, variant: "destructive" });
+    updateLocal(course.id, { status: "pending", revision_notes: null });
+    toast({
+      title: "已成功提交！",
+      description: "我們的策展團隊將與您聯繫，期待您的舞動旅程與世界分享。",
+    });
   };
 
   const uploadImage = async (course: CourseRow, file: File) => {
