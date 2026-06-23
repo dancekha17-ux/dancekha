@@ -402,6 +402,60 @@ export default function TeacherDashboard() {
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10">
           {/* Form column */}
           <div className="min-w-0 max-w-3xl">
+            {/* Onboarding Progress Tracker */}
+            <section className="mb-10 rounded-3xl border border-[#E63946]/15 bg-white/80 backdrop-blur shadow-soft p-6 md:p-7">
+              <div className="flex items-end justify-between mb-5 gap-4 flex-wrap">
+                <div>
+                  <span className="eyebrow" style={{ color: "#E63946" }}>Onboarding</span>
+                  <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">進駐進度</h2>
+                  <p className="text-xs text-muted-foreground mt-1">三個步驟,完整啟動你的舞蹈品牌。</p>
+                </div>
+                <div className="text-right">
+                  <div className="font-display text-2xl text-[#E63946]">{progressPct}%</div>
+                  <div className="text-[11px] text-muted-foreground">已完成 {completedCount} / {steps.length}</div>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 relative">
+                {steps.map((s, i) => {
+                  const Icon = s.done ? CheckCircle2 : s.active ? s.icon : Lock;
+                  return (
+                    <div
+                      key={s.label}
+                      className={`relative rounded-2xl border p-4 transition-all ${
+                        s.done
+                          ? "border-success/40 bg-success/5"
+                          : s.active
+                          ? "border-[#E63946]/40 bg-[#FFF5E6] shadow-sm"
+                          : "border-border bg-secondary/30 opacity-70"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                            s.done
+                              ? "bg-success/15 text-success"
+                              : s.active
+                              ? "bg-[#E63946]/10 text-[#E63946]"
+                              : "bg-muted text-muted-foreground"
+                          }`}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
+                            Step {i + 1}
+                          </div>
+                          <div className="font-medium text-sm text-foreground truncate">{s.label}</div>
+                          <div className="text-[11px] text-muted-foreground mt-0.5">{s.hint}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
             {/* Status banner */}
             <div
               className={`flex items-start gap-3 p-4 rounded-2xl mb-10 border shadow-sm ${
@@ -424,11 +478,13 @@ export default function TeacherDashboard() {
                 ) : (
                   <>
                     <p className="font-medium text-foreground">待審核中</p>
-                    <p className="mt-0.5">把故事寫得更完整，團隊會盡快為你上線。</p>
+                    <p className="mt-0.5">把故事寫得更完整,團隊會盡快為你上線。</p>
                   </>
                 )}
               </div>
             </div>
+
+
 
             <div id="identity" className="mb-10">
               <span className="eyebrow" style={{ color: "#E63946" }}>Your Story</span>
