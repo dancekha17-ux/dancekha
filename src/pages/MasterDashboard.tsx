@@ -95,7 +95,7 @@ export default function MasterDashboard() {
       );
       if (!allowed) {
         toast({
-          title: "此頁僅供引領者使用",
+          title: "此頁僅供引導者使用",
           description: "已為你導向學員主控台。",
         });
         navigate("/dashboard?role=student", { replace: true });
@@ -260,7 +260,7 @@ export default function MasterDashboard() {
         <div className="mb-8">
           <span className="eyebrow">Become a Master</span>
           <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3">
-            點亮你的<span className="text-accent-italic">引領者頁面</span>
+            點亮你的<span className="text-accent-italic">引導者頁面</span>
           </h1>
           <p className="text-muted-foreground mt-3 leading-relaxed">
             三個步驟，把你的舞蹈世界寫成一封讓人想走進來的邀請函。

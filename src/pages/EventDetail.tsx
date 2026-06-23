@@ -279,7 +279,7 @@ export default function EventDetail() {
                 transition={{ duration: 0.7 }}
                 className="card-elevated p-7 md:p-9"
               >
-                <span className="eyebrow">Leader · 引領者</span>
+                <span className="eyebrow">Guide · 引導者</span>
                 <div className="hairline mt-4 mb-6" />
                 <div className="flex items-start gap-5">
                   <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-sand/40 shrink-0">
@@ -297,14 +297,14 @@ export default function EventDetail() {
                     </h3>
                     <p className="text-sm text-foreground/75 font-body leading-relaxed">
                       {instructor?.tagline || instructor?.bio ||
-                        "用身體說故事的引領者，期待在課堂上與你相遇，一起把日常變成節奏。"}
+                        "用身體說故事的引導者，期待在課堂上與你相遇，一起把日常變成節奏。"}
                     </p>
                     {instructor?.slug && (
                       <Link
                         to={`/instructors/${instructor.slug}`}
                         className="inline-block mt-3 text-sm text-primary hover:underline font-body"
                       >
-                        查看引領者專頁 →
+                        查看引導者專頁 →
                       </Link>
                     )}
                   </div>

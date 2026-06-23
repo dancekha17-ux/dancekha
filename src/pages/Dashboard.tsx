@@ -303,7 +303,7 @@ function MasterDashboard() {
     <div className="container-wide mx-auto px-4 md:px-6 space-y-12">
       {/* Editorial header */}
       <header className="border-b border-border pb-8">
-        <span className="eyebrow tracking-[0.3em]">Master · 引領者</span>
+        <span className="eyebrow tracking-[0.3em]">Master · 引導者</span>
         <h1 className="font-display italic text-4xl md:text-6xl text-foreground mt-3 leading-[1.05]">
           你的舞台，<br className="hidden md:block" />
           由你親手策展。
@@ -339,7 +339,7 @@ function MasterDashboard() {
             <div className="mt-4 h-1 rounded-full bg-background/20 overflow-hidden">
               <div className="h-full bg-background/90 rounded-full" style={{ width: "87%" }} />
             </div>
-            <p className="text-xs text-background/60 mt-3">高於 92% 的引領者 · +6 本月</p>
+            <p className="text-xs text-background/60 mt-3">高於 92% 的引導者 · +6 本月</p>
           </CardContent>
         </Card>
         {stats.map((s) => (
