@@ -335,7 +335,7 @@ export default function TeacherDashboard() {
 
   const steps = [
     { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done },
-    { icon: FileSignature, label: "簽署合作協議", hint: "即將開放", done: step2Done, active: step1Done && !step2Done },
+    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "點擊發佈時會自動跳出", done: step2Done, active: step1Done && !step2Done },
     { icon: CalendarRange, label: "發佈課程與活動", hint: "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done },
   ];
   const completedCount = steps.filter((s) => s.done).length;
