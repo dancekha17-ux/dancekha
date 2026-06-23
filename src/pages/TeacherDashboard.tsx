@@ -17,7 +17,6 @@ import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
 import { EventPublisher, type EventPublisherHandle } from "@/components/teacher/EventPublisher";
-import { AgreementModal } from "@/components/teacher/AgreementModal";
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
 
@@ -80,7 +79,6 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const skipDirty = useRef(true);
-  const [agreementOpen, setAgreementOpen] = useState(false);
   const publisherRef = useRef<EventPublisherHandle>(null);
 
   useEffect(() => {
@@ -277,7 +275,7 @@ export default function TeacherDashboard() {
     !!profile.bio?.trim();
   const step2Done = !!profile.agreement_signed_at;
   const step3Done = false; // 待第三步完成後啟用
-  const coursesUnlocked = step1Done; // courses section interactable once profile is set; publish button gates by agreement
+  const coursesUnlocked = step1Done && step2Done; // 必須完成品牌專頁 + 簽署協議
 
   const SavePanel = (
     <div className="space-y-4">
@@ -334,9 +332,9 @@ export default function TeacherDashboard() {
   );
 
   const steps = [
-    { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done },
-    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "點擊發佈時會自動跳出", done: step2Done, active: step1Done && !step2Done },
-    { icon: CalendarRange, label: "發佈課程與活動", hint: "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done },
+    { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done, href: "#identity" },
+    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "前往閱讀並簽署 →", done: step2Done, active: step1Done && !step2Done, href: "/teacher/agreement" },
+    { icon: CalendarRange, label: "發佈課程與服務", hint: step2Done ? "可開始建立服務" : "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done, href: "#courses" },
   ];
   const completedCount = steps.filter((s) => s.done).length;
   const progressPct = Math.round((completedCount / steps.length) * 100);
