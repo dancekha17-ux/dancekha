@@ -12,6 +12,7 @@ import CourseDetail from "./pages/CourseDetail";
 import TeacherAuth from "./pages/TeacherAuth";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import TeacherPreview from "./pages/TeacherPreview";
+import TeacherRecruit from "./pages/TeacherRecruit";
 import Dashboard from "./pages/Dashboard";
 import MasterDashboard from "./pages/MasterDashboard";
 import EventDetail from "./pages/EventDetail";
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/teacher/login" element={<TeacherAuth />} />
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
             <Route path="/teacher/preview" element={<TeacherPreview />} />
+            <Route path="/register" element={<TeacherRecruit />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/master-dashboard" element={<MasterDashboard />} />
             <Route path="/events/:id" element={<EventDetail />} />
