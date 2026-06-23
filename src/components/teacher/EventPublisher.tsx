@@ -89,6 +89,10 @@ export const EventPublisher = forwardRef<EventPublisherHandle, Props>(function E
     load();
   }, [userId]);
 
+  useImperativeHandle(ref, () => ({
+    openPublisher: () => setOpen(true),
+  }));
+
   const handleSubmit = async () => {
     const parsed = eventSchema.safeParse(form);
     if (!parsed.success) {
