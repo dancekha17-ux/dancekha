@@ -229,18 +229,26 @@ export function CoursesEditor({ teacherId }: Props) {
             className="rounded-2xl border border-border/60 bg-background/50 p-5 space-y-5"
           >
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <GripVertical className="w-4 h-4 text-muted-foreground/50" />
-                <span
-                  className={`inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-1 rounded-full border ${
-                    course.is_published
-                      ? "bg-success/10 text-success border-success/30"
-                      : "bg-muted text-muted-foreground border-border"
-                  }`}
-                >
-                  {course.is_published ? <CheckCircle2 className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
-                  {course.is_published ? "已發布" : "草稿"}
-                </span>
+                {(() => {
+                  const meta = STATUS_META[course.status ?? "draft"];
+                  return (
+                    <span
+                      className={`inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-1 rounded-full border ${meta.cls}`}
+                    >
+                      {course.status === "published" ? (
+                        <CheckCircle2 className="w-3 h-3" />
+                      ) : (
+                        <FileText className="w-3 h-3" />
+                      )}
+                      {meta.label}
+                    </span>
+                  );
+                })()}
+                {course.status === "pending" && (
+                  <span className="text-[11px] text-muted-foreground">策展團隊審核中…</span>
+                )}
               </div>
               <Button
                 variant="ghost"
@@ -251,6 +259,18 @@ export function CoursesEditor({ teacherId }: Props) {
                 <Trash2 className="w-4 h-4" />
               </Button>
             </div>
+
+            {course.status === "pending" && (
+              <div className="rounded-xl bg-[#E89B5C]/10 border border-[#E89B5C]/30 px-4 py-3 text-xs text-[#7a3d18] leading-relaxed">
+                已提交審核，預計需 2 個工作天完成內容確認。期間您仍可編輯草稿內容，送出後我們會以最新版本為準。
+              </div>
+            )}
+            {course.revision_notes && course.status !== "published" && (
+              <div className="rounded-xl bg-destructive/5 border border-destructive/30 px-4 py-3 text-xs text-destructive leading-relaxed whitespace-pre-wrap">
+                <p className="font-medium mb-1">策展團隊的修改建議：</p>
+                {course.revision_notes}
+              </div>
+            )}
 
             {/* Service type */}
             <div className="space-y-2">
