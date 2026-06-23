@@ -130,8 +130,10 @@ export function CoursesEditor({ teacherId }: Props) {
     }
     setUploadingId(course.id);
     try {
+      const { data: userData, error: userErr } = await supabase.auth.getUser();
+      if (userErr || !userData.user) throw userErr ?? new Error("尚未登入");
       const ext = file.name.split(".").pop();
-      const path = `${teacherId}/course-${course.id}-${Date.now()}.${ext}`;
+      const path = `${userData.user.id}/course-${course.id}-${Date.now()}.${ext}`;
       const { error } = await supabase.storage
         .from("instructor-media")
         .upload(path, file, { upsert: true, contentType: file.type });
