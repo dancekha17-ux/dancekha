@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import { Plus, Trash2, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
@@ -14,7 +14,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -49,9 +48,18 @@ interface EventLite {
 interface Props {
   userId: string;
   instructorName: string;
+  agreementSigned?: boolean;
+  onRequestAgreement?: () => void;
 }
 
-export function EventPublisher({ userId, instructorName }: Props) {
+export interface EventPublisherHandle {
+  openPublisher: () => void;
+}
+
+export const EventPublisher = forwardRef<EventPublisherHandle, Props>(function EventPublisher(
+  { userId, instructorName, agreementSigned = true, onRequestAgreement },
+  ref,
+) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [list, setList] = useState<EventLite[]>([]);
@@ -80,6 +88,10 @@ export function EventPublisher({ userId, instructorName }: Props) {
   useEffect(() => {
     load();
   }, [userId]);
+
+  useImperativeHandle(ref, () => ({
+    openPublisher: () => setOpen(true),
+  }));
 
   const handleSubmit = async () => {
     const parsed = eventSchema.safeParse(form);
@@ -189,15 +201,20 @@ export function EventPublisher({ userId, instructorName }: Props) {
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            size="lg"
-            className="w-full text-white hover:opacity-90"
-            style={{ backgroundColor: "#E63946" }}
-          >
-            <Plus className="w-4 h-4" /> 刊登新課程 / 活動
-          </Button>
-        </DialogTrigger>
+        <Button
+          size="lg"
+          className="w-full text-white hover:opacity-90"
+          style={{ backgroundColor: "#E63946" }}
+          onClick={() => {
+            if (!agreementSigned) {
+              onRequestAgreement?.();
+              return;
+            }
+            setOpen(true);
+          }}
+        >
+          <Plus className="w-4 h-4" /> 刊登新課程 / 活動
+        </Button>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="font-display">刊登新課程 / 活動</DialogTitle>
@@ -312,4 +329,4 @@ export function EventPublisher({ userId, instructorName }: Props) {
       </Dialog>
     </div>
   );
-}
+});

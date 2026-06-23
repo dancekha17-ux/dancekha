@@ -283,6 +283,7 @@ export type Database = {
       }
       teacher_profiles: {
         Row: {
+          agreement_signed_at: string | null
           avatar_url: string | null
           bio: string
           created_at: string
@@ -311,6 +312,7 @@ export type Database = {
           youtube_url: string | null
         }
         Insert: {
+          agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
           created_at?: string
@@ -339,6 +341,7 @@ export type Database = {
           youtube_url?: string | null
         }
         Update: {
+          agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
           created_at?: string

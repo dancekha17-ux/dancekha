@@ -16,7 +16,8 @@ import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
-import { EventPublisher } from "@/components/teacher/EventPublisher";
+import { EventPublisher, type EventPublisherHandle } from "@/components/teacher/EventPublisher";
+import { AgreementModal } from "@/components/teacher/AgreementModal";
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
 
@@ -66,6 +67,7 @@ interface Profile {
   youtube_url: string | null;
   website_url: string | null;
   is_approved: boolean;
+  agreement_signed_at: string | null;
 }
 
 export default function TeacherDashboard() {
@@ -78,6 +80,8 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const skipDirty = useRef(true);
+  const [agreementOpen, setAgreementOpen] = useState(false);
+  const publisherRef = useRef<EventPublisherHandle>(null);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
@@ -271,9 +275,9 @@ export default function TeacherDashboard() {
     !!profile.tagline?.trim() &&
     (profile.dance_styles ?? []).filter(Boolean).length > 0 &&
     !!profile.bio?.trim();
-  const step2Done = false; // 合作協議簽署功能即將開放
-  const step3Done = false; // 待第二步完成後啟用
-  const coursesUnlocked = step2Done;
+  const step2Done = !!profile.agreement_signed_at;
+  const step3Done = false; // 待第三步完成後啟用
+  const coursesUnlocked = step1Done; // courses section interactable once profile is set; publish button gates by agreement
 
   const SavePanel = (
     <div className="space-y-4">
@@ -331,7 +335,7 @@ export default function TeacherDashboard() {
 
   const steps = [
     { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done },
-    { icon: FileSignature, label: "簽署合作協議", hint: "即將開放", done: step2Done, active: step1Done && !step2Done },
+    { icon: FileSignature, label: "簽署合作協議", hint: step2Done ? "已完成簽署" : "點擊發佈時會自動跳出", done: step2Done, active: step1Done && !step2Done },
     { icon: CalendarRange, label: "發佈課程與活動", hint: "完成前兩步後啟用", done: step3Done, active: step2Done && !step3Done },
   ];
   const completedCount = steps.filter((s) => s.done).length;
@@ -746,9 +750,9 @@ export default function TeacherDashboard() {
                   </span>
                 }
                 description={
-                  coursesUnlocked
+                  step2Done
                     ? "在這裡管理您的所有課程與活動。只要建立並發布,系統將自動同步至您的個人名片、世界地圖與平台首頁！"
-                    : "完成「簽署合作協議」後即可開放,屆時你可以在這裡發佈課程與活動,並同步至世界地圖。"
+                    : "點擊下方「刊登新課程 / 活動」時,系統會請你先完成「合作夥伴協議」簽署,簽署後即可立即發佈。"
                 }
               >
                 <div className="relative">
@@ -756,7 +760,13 @@ export default function TeacherDashboard() {
                     <div className="space-y-8">
                       <CoursesEditor teacherId={profile.id} />
                       <div className="pt-2 border-t border-border/50">
-                        <EventPublisher userId={user!.id} instructorName={profile.name} />
+                        <EventPublisher
+                          ref={publisherRef}
+                          userId={user!.id}
+                          instructorName={profile.name}
+                          agreementSigned={step2Done}
+                          onRequestAgreement={() => setAgreementOpen(true)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -768,7 +778,7 @@ export default function TeacherDashboard() {
                         </div>
                         <p className="font-display text-base text-foreground">此區待啟用</p>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          請先完成上方第二步「簽署合作協議」,即可開始發佈課程與活動。
+                          請先完成「完善品牌專頁」步驟,即可開始發佈課程與活動。
                         </p>
                       </div>
                     </div>
@@ -840,6 +850,17 @@ export default function TeacherDashboard() {
           舞島咖 DanceKha · 引領者專區
         </p>
       </div>
+
+      <AgreementModal
+        open={agreementOpen}
+        onOpenChange={setAgreementOpen}
+        userId={user!.id}
+        onSigned={(signedAt) => {
+          setProfile((p) => (p ? { ...p, agreement_signed_at: signedAt } : p));
+          // Immediately open the publisher dialog
+          setTimeout(() => publisherRef.current?.openPublisher(), 50);
+        }}
+      />
     </div>
   );
 }
