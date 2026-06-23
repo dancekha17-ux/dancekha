@@ -145,7 +145,7 @@ export default function TeacherRecruit() {
                   color: "#FFFFFF",
                 }}
               >
-                <Link to="/teacher/login?mode=signup">
+                <Link to="/teacher/login">
                   立即申請成為引導者
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
