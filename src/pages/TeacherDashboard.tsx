@@ -16,7 +16,8 @@ import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
-import { EventPublisher } from "@/components/teacher/EventPublisher";
+import { EventPublisher, type EventPublisherHandle } from "@/components/teacher/EventPublisher";
+import { AgreementModal } from "@/components/teacher/AgreementModal";
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
 
