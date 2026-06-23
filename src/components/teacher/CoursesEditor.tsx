@@ -513,7 +513,7 @@ export function CoursesEditor({ teacherId }: Props) {
       })}
 
       <Button onClick={addCourse} variant="outline" size="lg" className="w-full">
-        <Plus className="w-4 h-4" /> 新增服務
+        <Plus className="w-4 h-4" /> 新增課程/活動
       </Button>
     </div>
   );
