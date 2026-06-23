@@ -37,7 +37,7 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+        isScrolled || isLightHero
           ? "bg-background/90 backdrop-blur-lg shadow-soft"
           : "bg-transparent"
       }`}
@@ -50,7 +50,7 @@ export function Header() {
               <span className="text-2xl font-display font-semibold text-gradient">
                 舞島咖
               </span>
-              <span className={`text-sm font-body transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
+              <span className={`text-sm font-body transition-colors ${isScrolled || isLightHero ? 'text-muted-foreground' : 'text-primary-foreground/70'}`}>
                 DanceKha
               </span>
             </Link>
@@ -70,7 +70,7 @@ export function Header() {
                   }
                 }}
                 className={`flow-line font-body text-sm transition-colors ${
-                  isScrolled
+                  isScrolled || isLightHero
                     ? "text-foreground hover:text-primary"
                     : "text-primary-foreground/90 hover:text-primary-foreground"
                 }`}
@@ -85,7 +85,7 @@ export function Header() {
             <button
               onClick={toggleLang}
               className={`flex items-center gap-1 text-sm transition-colors ${
-                isScrolled
+                isScrolled || isLightHero
                   ? "text-muted-foreground hover:text-foreground"
                   : "text-primary-foreground/70 hover:text-primary-foreground"
               }`}
@@ -93,7 +93,7 @@ export function Header() {
               <Globe className="w-4 h-4" />
               {lang === "zh" ? "EN" : "中"}
             </button>
-            <Button asChild variant={isScrolled ? "outline" : "heroOutline"} size="sm">
+            <Button asChild variant={isScrolled || isLightHero ? "outline" : "heroOutline"} size="sm">
               <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
@@ -105,7 +105,7 @@ export function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors ${
-              isScrolled ? "text-foreground" : "text-primary-foreground"
+              isScrolled || isLightHero ? "text-foreground" : "text-primary-foreground"
             }`}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
