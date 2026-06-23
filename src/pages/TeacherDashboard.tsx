@@ -348,7 +348,7 @@ export default function TeacherDashboard() {
         <div className="container-wide mx-auto h-16 flex items-center justify-between gap-3">
           <Link to="/" className="flex items-baseline gap-2 min-w-0">
             <span className="font-display text-xl text-gradient truncate">舞島咖 DanceKha</span>
-            <span className="eyebrow hidden sm:inline">Leaders' Studio</span>
+            <span className="eyebrow hidden sm:inline">GUIDES' LOUNGE</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
