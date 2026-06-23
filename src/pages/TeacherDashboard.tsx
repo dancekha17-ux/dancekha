@@ -16,7 +16,7 @@ import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { MediaEditor } from "@/components/teacher/MediaEditor";
 import { TagListEditor } from "@/components/teacher/TagListEditor";
 import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
-import { EventPublisher, type EventPublisherHandle } from "@/components/teacher/EventPublisher";
+
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
 
@@ -79,7 +79,7 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const skipDirty = useRef(true);
-  const publisherRef = useRef<EventPublisherHandle>(null);
+  
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
