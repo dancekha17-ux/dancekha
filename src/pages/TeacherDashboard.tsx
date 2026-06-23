@@ -348,7 +348,7 @@ export default function TeacherDashboard() {
         <div className="container-wide mx-auto h-16 flex items-center justify-between gap-3">
           <Link to="/" className="flex items-baseline gap-2 min-w-0">
             <span className="font-display text-xl text-gradient truncate">舞島咖 DanceKha</span>
-            <span className="eyebrow hidden sm:inline">Leaders' Studio</span>
+            <span className="eyebrow hidden sm:inline">GUIDES' LOUNGE</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -847,7 +847,7 @@ export default function TeacherDashboard() {
           />
         </svg>
         <p className="absolute bottom-2 left-0 right-0 text-center text-xs text-muted-foreground font-body">
-          舞島咖 DanceKha · 引領者專區
+          舞島咖 DanceKha · 引導者專區
         </p>
       </div>
 

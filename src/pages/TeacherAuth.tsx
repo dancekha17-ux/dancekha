@@ -71,7 +71,7 @@ export default function TeacherAuth() {
         <div className="w-full max-w-md">
           <Link to="/" className="block text-center mb-10">
             <span className="font-display text-3xl text-gradient">舞島咖 DanceKha</span>
-            <p className="eyebrow mt-2">Leaders' Studio</p>
+            <p className="eyebrow mt-2">GUIDES' LOUNGE</p>
           </Link>
 
           <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl shadow-[#E63946]/5 p-8 md:p-10 border border-[#E63946]/10">
