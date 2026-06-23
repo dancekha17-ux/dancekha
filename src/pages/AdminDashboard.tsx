@@ -239,6 +239,100 @@ export default function AdminDashboard() {
           )}
         </section>
 
+        {/* Pending courses awaiting publication review */}
+        <section className="mb-12">
+          <div className="flex items-baseline justify-between mb-4">
+            <h2 className="font-display text-xl text-foreground flex items-center gap-2">
+              <Send className="w-5 h-5 text-[#E89B5C]" />
+              課程送審清單 <span className="text-muted-foreground text-sm">({pendingCourses.length})</span>
+            </h2>
+          </div>
+          {pendingCourses.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
+              目前沒有等待審核的課程 ☕
+            </div>
+          ) : (
+            <ul className="space-y-4">
+              {pendingCourses.map((c) => {
+                const teacherName = c.teacher_profiles?.name ?? "未具名老師";
+                const teacherSlug = c.teacher_profiles?.slug;
+                const serviceLabels: Record<string, string> = {
+                  in_person: "實體課程",
+                  pre_recorded: "線上預錄",
+                  event_ticket: "演出票券",
+                  space_rental: "空間出租",
+                };
+                return (
+                  <li key={c.id} className="rounded-3xl border border-border/60 bg-card p-5 md:p-6 shadow-sm space-y-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] border border-[#E89B5C]/40">
+                            {serviceLabels[c.service_type] ?? c.service_type}
+                          </span>
+                          <span className="text-xs text-muted-foreground">{teacherName}</span>
+                        </div>
+                        <p className="font-display text-lg text-foreground">{c.title || "（未命名服務）"}</p>
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2 whitespace-pre-wrap">
+                          {c.description || "—"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {[c.region, c.location_address, c.online_link, c.session_info, c.price]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </p>
+                        {c.submitted_at && (
+                          <p className="text-[11px] text-muted-foreground/80 mt-1">
+                            送審於 {new Date(c.submitted_at).toLocaleString("zh-TW")}
+                          </p>
+                        )}
+                      </div>
+                      {teacherSlug && (
+                        <Button asChild variant="ghost" size="sm">
+                          <Link to={`/instructors/${teacherSlug}`} target="_blank">
+                            <ExternalLink className="w-4 h-4" /> 看老師頁
+                          </Link>
+                        </Button>
+                      )}
+                    </div>
+
+                    <div>
+                      <Textarea
+                        rows={2}
+                        placeholder="退回時的修改建議（核准則可留空）"
+                        value={reviewNotes[c.id] ?? ""}
+                        onChange={(e) =>
+                          setReviewNotes((m) => ({ ...m, [c.id]: e.target.value }))
+                        }
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={busyId === c.id}
+                        onClick={() => rejectCourse(c.id)}
+                      >
+                        <XCircle className="w-4 h-4" /> 退回老師修改
+                      </Button>
+                      <Button
+                        size="sm"
+                        disabled={busyId === c.id}
+                        onClick={() => approveCourse(c.id)}
+                      >
+                        <CheckCircle2 className="w-4 h-4" /> 核准並發布
+                      </Button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+
+
+
         <section>
           <h2 className="font-display text-xl text-foreground flex items-center gap-2 mb-4">
             <CheckCircle2 className="w-5 h-5 text-success" />
