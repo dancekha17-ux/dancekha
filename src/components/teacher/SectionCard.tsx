@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface Props {
   eyebrow: string;
-  title: React.ReactNode;
+  title: ReactNode;
 
   description?: string;
   children: ReactNode;
