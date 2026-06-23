@@ -750,9 +750,9 @@ export default function TeacherDashboard() {
                   </span>
                 }
                 description={
-                  coursesUnlocked
+                  step2Done
                     ? "在這裡管理您的所有課程與活動。只要建立並發布,系統將自動同步至您的個人名片、世界地圖與平台首頁！"
-                    : "完成「簽署合作協議」後即可開放,屆時你可以在這裡發佈課程與活動,並同步至世界地圖。"
+                    : "點擊下方「刊登新課程 / 活動」時,系統會請你先完成「合作夥伴協議」簽署,簽署後即可立即發佈。"
                 }
               >
                 <div className="relative">
@@ -760,7 +760,13 @@ export default function TeacherDashboard() {
                     <div className="space-y-8">
                       <CoursesEditor teacherId={profile.id} />
                       <div className="pt-2 border-t border-border/50">
-                        <EventPublisher userId={user!.id} instructorName={profile.name} />
+                        <EventPublisher
+                          ref={publisherRef}
+                          userId={user!.id}
+                          instructorName={profile.name}
+                          agreementSigned={step2Done}
+                          onRequestAgreement={() => setAgreementOpen(true)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -772,7 +778,7 @@ export default function TeacherDashboard() {
                         </div>
                         <p className="font-display text-base text-foreground">此區待啟用</p>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          請先完成上方第二步「簽署合作協議」,即可開始發佈課程與活動。
+                          請先完成「完善品牌專頁」步驟,即可開始發佈課程與活動。
                         </p>
                       </div>
                     </div>
