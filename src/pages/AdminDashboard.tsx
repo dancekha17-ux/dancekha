@@ -27,6 +27,8 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [pending, setPending] = useState<PendingProfile[]>([]);
   const [approved, setApproved] = useState<PendingProfile[]>([]);
+  const [pendingCourses, setPendingCourses] = useState<any[]>([]);
+  const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
