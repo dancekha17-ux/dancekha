@@ -33,7 +33,15 @@ export interface CourseRow {
   online_link: string | null;
   session_info: string | null;
   is_published: boolean;
+  status: "draft" | "pending" | "published";
+  revision_notes: string | null;
 }
+
+const STATUS_META: Record<CourseRow["status"], { label: string; cls: string }> = {
+  draft: { label: "草稿", cls: "bg-muted text-muted-foreground border-border" },
+  pending: { label: "審核中", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
+  published: { label: "已發布", cls: "bg-success/10 text-success border-success/30" },
+};
 
 const TAIWAN_REGIONS = [
   "台北市","新北市","基隆市","桃園市","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣",
@@ -125,28 +133,52 @@ export function CoursesEditor({ teacherId }: Props) {
     setBusyId(course.id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
-      .update({ ...buildPayload(course), is_published: false })
+      .update({ ...buildPayload(course), status: "draft", is_published: false })
       .eq("id", course.id);
     setBusyId(null);
     if (error) return toast({ title: "儲存失敗", description: error.message, variant: "destructive" });
-    updateLocal(course.id, { is_published: false });
+    updateLocal(course.id, { status: "draft", is_published: false });
     toast({ title: "草稿已儲存" });
   };
 
-  const publish = async (course: CourseRow) => {
-    if (!course.title?.trim()) {
-      toast({ title: "請先填寫服務名稱", variant: "destructive" });
+  const submitForReview = async (course: CourseRow) => {
+    // Validation of required fields
+    const missing: string[] = [];
+    if (!course.title?.trim()) missing.push("名稱");
+    if (!course.description?.trim()) missing.push("介紹");
+    if (!course.service_type) missing.push("服務類型");
+    const t = course.service_type;
+    if ((t === "in_person" || t === "space_rental") && !course.location_address?.trim()) missing.push("地點 / 地址");
+    if (t === "pre_recorded" && !course.online_link?.trim()) missing.push("影片 / 平台連結");
+    if (t === "event_ticket" && !course.session_info?.trim()) missing.push("場次 / 座位資訊");
+    if (!course.price?.trim()) missing.push("價格");
+
+    if (missing.length > 0) {
+      toast({
+        title: "請先補齊以下欄位",
+        description: missing.join("、"),
+        variant: "destructive",
+      });
       return;
     }
+
     setBusyId(course.id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
-      .update({ ...buildPayload(course), is_published: true })
+      .update({
+        ...buildPayload(course),
+        status: "pending",
+        submitted_at: new Date().toISOString(),
+        revision_notes: null,
+      })
       .eq("id", course.id);
     setBusyId(null);
-    if (error) return toast({ title: "發布失敗", description: error.message, variant: "destructive" });
-    updateLocal(course.id, { is_published: true });
-    toast({ title: "服務已發布", description: "已同步至個人名片與平台首頁" });
+    if (error) return toast({ title: "送審失敗", description: error.message, variant: "destructive" });
+    updateLocal(course.id, { status: "pending", revision_notes: null });
+    toast({
+      title: "已成功提交！",
+      description: "我們的策展團隊將與您聯繫，期待您的舞動旅程與世界分享。",
+    });
   };
 
   const uploadImage = async (course: CourseRow, file: File) => {
@@ -197,18 +229,26 @@ export function CoursesEditor({ teacherId }: Props) {
             className="rounded-2xl border border-border/60 bg-background/50 p-5 space-y-5"
           >
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <GripVertical className="w-4 h-4 text-muted-foreground/50" />
-                <span
-                  className={`inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-1 rounded-full border ${
-                    course.is_published
-                      ? "bg-success/10 text-success border-success/30"
-                      : "bg-muted text-muted-foreground border-border"
-                  }`}
-                >
-                  {course.is_published ? <CheckCircle2 className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
-                  {course.is_published ? "已發布" : "草稿"}
-                </span>
+                {(() => {
+                  const meta = STATUS_META[course.status ?? "draft"];
+                  return (
+                    <span
+                      className={`inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-1 rounded-full border ${meta.cls}`}
+                    >
+                      {course.status === "published" ? (
+                        <CheckCircle2 className="w-3 h-3" />
+                      ) : (
+                        <FileText className="w-3 h-3" />
+                      )}
+                      {meta.label}
+                    </span>
+                  );
+                })()}
+                {course.status === "pending" && (
+                  <span className="text-[11px] text-muted-foreground">策展團隊審核中…</span>
+                )}
               </div>
               <Button
                 variant="ghost"
@@ -219,6 +259,18 @@ export function CoursesEditor({ teacherId }: Props) {
                 <Trash2 className="w-4 h-4" />
               </Button>
             </div>
+
+            {course.status === "pending" && (
+              <div className="rounded-xl bg-[#E89B5C]/10 border border-[#E89B5C]/30 px-4 py-3 text-xs text-[#7a3d18] leading-relaxed">
+                已提交審核，預計需 2 個工作天完成內容確認。期間您仍可編輯草稿內容，送出後我們會以最新版本為準。
+              </div>
+            )}
+            {course.revision_notes && course.status !== "published" && (
+              <div className="rounded-xl bg-destructive/5 border border-destructive/30 px-4 py-3 text-xs text-destructive leading-relaxed whitespace-pre-wrap">
+                <p className="font-medium mb-1">策展團隊的修改建議：</p>
+                {course.revision_notes}
+              </div>
+            )}
 
             {/* Service type */}
             <div className="space-y-2">
@@ -429,27 +481,32 @@ export function CoursesEditor({ teacherId }: Props) {
               />
             </div>
 
-            {/* Persistent save / publish dual buttons */}
-            <div className="sticky bottom-0 -mx-5 -mb-5 px-5 py-3 bg-background/95 backdrop-blur border-t border-border/60 rounded-b-2xl flex flex-col sm:flex-row gap-2">
-              <Button
-                variant="outline"
-                size="lg"
-                className="sm:flex-1"
-                disabled={busyId === course.id}
-                onClick={() => saveDraft(course)}
-              >
-                <FileText className="w-4 h-4" /> 儲存草稿
-              </Button>
-              <Button
-                size="lg"
-                className="sm:flex-1 text-white hover:opacity-90"
-                style={{ backgroundColor: "#E63946" }}
-                disabled={busyId === course.id}
-                onClick={() => publish(course)}
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                {course.is_published ? "更新已發布內容" : "發布服務"}
-              </Button>
+            {/* Persistent save / submit dual buttons */}
+            <div className="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-background/95 backdrop-blur border-t border-border/60 rounded-b-2xl space-y-2">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="sm:flex-1"
+                  disabled={busyId === course.id}
+                  onClick={() => saveDraft(course)}
+                >
+                  <FileText className="w-4 h-4" /> 儲存草稿
+                </Button>
+                <Button
+                  size="lg"
+                  className="sm:flex-1 text-white hover:opacity-90"
+                  style={{ backgroundColor: "#E63946" }}
+                  disabled={busyId === course.id || course.status === "pending"}
+                  onClick={() => submitForReview(course)}
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  {course.status === "pending" ? "等待策展團隊審核" : "發布我的舞動旅程"}
+                </Button>
+              </div>
+              <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
+                提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
+              </p>
             </div>
           </div>
         );

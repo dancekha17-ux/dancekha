@@ -145,11 +145,15 @@ export type Database = {
           online_link: string | null
           price: string
           region: string | null
+          reviewed_at: string | null
+          revision_notes: string | null
           schedule: string
           service_type: string
           session_info: string | null
           sessions_count: number | null
           sort_order: number
+          status: string
+          submitted_at: string | null
           teacher_id: string
           title: string
           updated_at: string
@@ -168,11 +172,15 @@ export type Database = {
           online_link?: string | null
           price?: string
           region?: string | null
+          reviewed_at?: string | null
+          revision_notes?: string | null
           schedule?: string
           service_type?: string
           session_info?: string | null
           sessions_count?: number | null
           sort_order?: number
+          status?: string
+          submitted_at?: string | null
           teacher_id: string
           title?: string
           updated_at?: string
@@ -191,11 +199,15 @@ export type Database = {
           online_link?: string | null
           price?: string
           region?: string | null
+          reviewed_at?: string | null
+          revision_notes?: string | null
           schedule?: string
           service_type?: string
           session_info?: string | null
           sessions_count?: number | null
           sort_order?: number
+          status?: string
+          submitted_at?: string | null
           teacher_id?: string
           title?: string
           updated_at?: string
