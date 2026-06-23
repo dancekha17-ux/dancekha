@@ -247,7 +247,7 @@ export function CoursesEditor({ teacherId }: Props) {
                   );
                 })()}
                 {course.status === "pending" && (
-                  <span className="text-[11px] text-muted-foreground">策展團隊審核中…</span>
+                  <span className="text-[11px] text-muted-foreground">舞島咖團隊確認中…</span>
                 )}
               </div>
               <Button
@@ -262,7 +262,7 @@ export function CoursesEditor({ teacherId }: Props) {
 
             {course.status === "pending" && (
               <div className="rounded-xl bg-[#E89B5C]/10 border border-[#E89B5C]/30 px-4 py-3 text-xs text-[#7a3d18] leading-relaxed">
-                已提交審核，預計需 2 個工作天完成內容確認。期間您仍可編輯草稿內容，送出後我們會以最新版本為準。
+                提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
               </div>
             )}
             {course.revision_notes && course.status !== "published" && (
