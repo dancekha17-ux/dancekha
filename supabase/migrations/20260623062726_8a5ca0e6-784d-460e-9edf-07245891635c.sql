@@ -1,0 +1,1 @@
+ALTER TABLE public.teacher_profiles ADD COLUMN IF NOT EXISTS agreement_signed_at timestamptz;
