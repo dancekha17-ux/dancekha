@@ -155,7 +155,7 @@ export default function ResetPassword() {
                 <div className="rounded-2xl bg-[#FFF5E6] border border-[#E63946]/20 p-5 text-sm leading-[1.7] text-foreground">
                   <p className="font-medium mb-1">{error}</p>
                   <p className="text-muted-foreground text-xs">
-                    為了您的帳號安全，重設連結有時效性。請重新申請一封新的引導信。
+                    為了您的帳號安全，重設連結有時效性。將在 3 秒後自動為您導向重新申請頁面…
                   </p>
                 </div>
                 <Button
