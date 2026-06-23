@@ -118,6 +118,16 @@ export default function TeacherAuth() {
                   placeholder="至少 8 個字元"
                 />
                 {mode === "signup" && <PasswordStrengthMeter value={password} />}
+                {mode === "signin" && (
+                  <div className="text-right">
+                    <Link
+                      to="/forgot-password"
+                      className="text-xs text-muted-foreground hover:text-primary hover:underline"
+                    >
+                      忘記密碼？
+                    </Link>
+                  </div>
+                )}
               </div>
               <Button
                 type="submit"
