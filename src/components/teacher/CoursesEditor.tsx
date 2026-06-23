@@ -177,7 +177,7 @@ export function CoursesEditor({ teacherId }: Props) {
     updateLocal(course.id, { status: "pending", revision_notes: null });
     toast({
       title: "已成功提交！",
-      description: "我們的策展團隊將與您聯繫，期待您的舞動旅程與世界分享。",
+      description: "我們的舞島咖團隊將與您聯繫，期待您的舞動旅程與世界分享。",
     });
   };
 
@@ -267,7 +267,7 @@ export function CoursesEditor({ teacherId }: Props) {
             )}
             {course.revision_notes && course.status !== "published" && (
               <div className="rounded-xl bg-destructive/5 border border-destructive/30 px-4 py-3 text-xs text-destructive leading-relaxed whitespace-pre-wrap">
-                <p className="font-medium mb-1">策展團隊的修改建議：</p>
+                <p className="font-medium mb-1">舞島咖團隊的修改建議：</p>
                 {course.revision_notes}
               </div>
             )}
@@ -501,7 +501,7 @@ export function CoursesEditor({ teacherId }: Props) {
                   onClick={() => submitForReview(course)}
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  {course.status === "pending" ? "等待策展團隊審核" : "發布我的舞動旅程"}
+                  {course.status === "pending" ? "等待舞島咖團隊確認" : "發布我的舞動旅程"}
                 </Button>
               </div>
               <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
