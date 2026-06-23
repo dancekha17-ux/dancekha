@@ -198,15 +198,20 @@ export const EventPublisher = forwardRef<EventPublisherHandle, Props>(function E
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            size="lg"
-            className="w-full text-white hover:opacity-90"
-            style={{ backgroundColor: "#E63946" }}
-          >
-            <Plus className="w-4 h-4" /> 刊登新課程 / 活動
-          </Button>
-        </DialogTrigger>
+        <Button
+          size="lg"
+          className="w-full text-white hover:opacity-90"
+          style={{ backgroundColor: "#E63946" }}
+          onClick={() => {
+            if (!agreementSigned) {
+              onRequestAgreement?.();
+              return;
+            }
+            setOpen(true);
+          }}
+        >
+          <Plus className="w-4 h-4" /> 刊登新課程 / 活動
+        </Button>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="font-display">刊登新課程 / 活動</DialogTitle>
