@@ -57,6 +57,13 @@ export default function AdminDashboard() {
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => !r.is_approved));
     setApproved(rows.filter((r) => r.is_approved));
+
+    const { data: courses } = await (supabase as any)
+      .from("instructor_courses")
+      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug)")
+      .eq("status", "pending")
+      .order("submitted_at", { ascending: true });
+    setPendingCourses(courses ?? []);
   };
 
   const setApproval = async (row: PendingProfile, value: boolean) => {
@@ -76,6 +83,36 @@ export default function AdminDashboard() {
         ? `${row.name ?? "該師資"} 現已公開於平台。`
         : `${row.name ?? "該師資"} 已退回草稿狀態。`,
     });
+    refresh();
+  };
+
+  const approveCourse = async (id: string) => {
+    setBusyId(id);
+    const { error } = await (supabase as any)
+      .from("instructor_courses")
+      .update({ status: "published", is_published: true, reviewed_at: new Date().toISOString(), revision_notes: null })
+      .eq("id", id);
+    setBusyId(null);
+    if (error) return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+    toast({ title: "已核准上架", description: "課程已同步至公開頁面。" });
+    refresh();
+  };
+
+  const rejectCourse = async (id: string) => {
+    const notes = (reviewNotes[id] ?? "").trim();
+    if (!notes) {
+      toast({ title: "請填寫修改建議", description: "退回時請說明需要老師調整的內容。", variant: "destructive" });
+      return;
+    }
+    setBusyId(id);
+    const { error } = await (supabase as any)
+      .from("instructor_courses")
+      .update({ status: "draft", is_published: false, reviewed_at: new Date().toISOString(), revision_notes: notes })
+      .eq("id", id);
+    setBusyId(null);
+    if (error) return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+    toast({ title: "已退回老師修改", description: "系統將同步通知老師查看建議。" });
+    setReviewNotes((m) => ({ ...m, [id]: "" }));
     refresh();
   };
 
