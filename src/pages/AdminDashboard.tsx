@@ -340,7 +340,11 @@ export default function AdminDashboard() {
                           </span>
                           <span className="text-xs text-muted-foreground">{teacherName}</span>
                         </div>
-                        <p className="font-display text-lg text-foreground">{c.title || "（未命名服務）"}</p>
+                        <ContactLine
+                          email={c.teacher_profiles?.contact_email}
+                          phone={c.teacher_profiles?.contact_phone}
+                        />
+                        <p className="font-display text-lg text-foreground mt-1">{c.title || "（未命名服務）"}</p>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2 whitespace-pre-wrap">
                           {c.description || "—"}
                         </p>
