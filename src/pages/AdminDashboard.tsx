@@ -70,7 +70,7 @@ export default function AdminDashboard() {
 
     const { data: courses } = await (supabase as any)
       .from("instructor_courses")
-      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug)")
+      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug,user_id)")
       .eq("status", "pending")
       .order("submitted_at", { ascending: true });
     setPendingCourses(courses ?? []);
