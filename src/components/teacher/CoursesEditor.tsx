@@ -499,33 +499,23 @@ export function CoursesEditor({ teacherId }: Props) {
               />
             </div>
 
-            {/* Persistent save / submit dual buttons */}
+            {/* Submit button — draft auto-saves on blur, profile save lives in the sidebar */}
             <div className="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-background/95 backdrop-blur border-t border-border/60 rounded-b-2xl space-y-2">
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="sm:flex-1"
-                  disabled={busyId === course.id}
-                  onClick={() => saveDraft(course)}
-                >
-                  <FileText className="w-4 h-4" /> 儲存草稿
-                </Button>
-                <Button
-                  size="lg"
-                  className="sm:flex-1 text-white hover:opacity-90"
-                  style={{ backgroundColor: "#E63946" }}
-                  disabled={busyId === course.id || course.status === "pending"}
-                  onClick={() => submitForReview(course)}
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  {course.status === "pending" ? "等待舞島咖團隊確認" : "發布我的舞動旅程"}
-                </Button>
-              </div>
+              <Button
+                size="lg"
+                className="w-full text-white hover:opacity-90"
+                style={{ backgroundColor: "#E63946" }}
+                disabled={busyId === course.id || course.status === "pending"}
+                onClick={() => submitForReview(course)}
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                {course.status === "pending" ? "等待舞島咖團隊確認" : "發布我的舞動旅程"}
+              </Button>
               <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
-                提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
+                欄位內容會自動儲存為草稿。提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
               </p>
             </div>
+
           </div>
         );
       })}
