@@ -34,11 +34,31 @@ export default function InstructorProfile() {
   const navigate = useNavigate();
   const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
+  const [moments, setMoments] = useState<MomentMedia[]>([]);
   const coursesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!slug) return;
     fetchInstructorBySlug(slug).then((res) => setInstructor(res ?? null));
+  }, [slug]);
+
+  useEffect(() => {
+    if (!slug) return;
+    (async () => {
+      const { data: tp } = await supabase
+        .from("teacher_profiles")
+        .select("id")
+        .eq("slug", slug)
+        .maybeSingle();
+      if (!tp) return;
+      const { data } = await (supabase as any)
+        .from("instructor_media")
+        .select("id,url,caption,scale,offset_x,offset_y,sort_order")
+        .eq("teacher_id", (tp as any).id)
+        .eq("kind", "image")
+        .order("sort_order", { ascending: true });
+      setMoments((data as MomentMedia[]) ?? []);
+    })();
   }, [slug]);
 
   useEffect(() => {
