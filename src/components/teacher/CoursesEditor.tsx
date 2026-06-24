@@ -162,6 +162,24 @@ export function CoursesEditor({ teacherId }: Props) {
       return;
     }
 
+    // Require contact info on the teacher profile so admins can reach out
+    const { data: contactRow } = await (supabase as any)
+      .from("teacher_profiles")
+      .select("contact_email,contact_phone")
+      .eq("id", teacherId)
+      .maybeSingle();
+    const missingContacts: string[] = [];
+    if (!contactRow?.contact_email?.trim()) missingContacts.push("聯絡 Email");
+    if (!contactRow?.contact_phone?.trim()) missingContacts.push("聯絡電話");
+    if (missingContacts.length > 0) {
+      toast({
+        title: "請先補齊聯絡資訊",
+        description: `送審前請至「聯絡與社群」區塊填寫:${missingContacts.join("、")}。`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setBusyId(course.id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
