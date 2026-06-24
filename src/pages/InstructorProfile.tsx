@@ -18,6 +18,16 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { fetchInstructorBySlug, PublicInstructor } from "@/hooks/usePublicInstructors";
+import { supabase } from "@/integrations/supabase/client";
+
+interface MomentMedia {
+  id: string;
+  url: string;
+  caption: string;
+  scale: number;
+  offset_x: number;
+  offset_y: number;
+}
 
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
