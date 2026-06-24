@@ -18,17 +18,47 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { fetchInstructorBySlug, PublicInstructor } from "@/hooks/usePublicInstructors";
+import { supabase } from "@/integrations/supabase/client";
+
+interface MomentMedia {
+  id: string;
+  url: string;
+  caption: string;
+  scale: number;
+  offset_x: number;
+  offset_y: number;
+}
 
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
+  const [moments, setMoments] = useState<MomentMedia[]>([]);
   const coursesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!slug) return;
     fetchInstructorBySlug(slug).then((res) => setInstructor(res ?? null));
+  }, [slug]);
+
+  useEffect(() => {
+    if (!slug) return;
+    (async () => {
+      const { data: tp } = await supabase
+        .from("teacher_profiles")
+        .select("id")
+        .eq("slug", slug)
+        .maybeSingle();
+      if (!tp) return;
+      const { data } = await (supabase as any)
+        .from("instructor_media")
+        .select("id,url,caption,scale,offset_x,offset_y,sort_order")
+        .eq("teacher_id", (tp as any).id)
+        .eq("kind", "image")
+        .order("sort_order", { ascending: true });
+      setMoments((data as MomentMedia[]) ?? []);
+    })();
   }, [slug]);
 
   useEffect(() => {
@@ -407,6 +437,37 @@ export default function InstructorProfile() {
                       {!instructor.instagramUrl && !instructor.youtubeUrl && !instructor.websiteUrl && (
                         <p className="text-muted-foreground">引導者尚未提供聯絡方式</p>
                       )}
+                    </div>
+                  </motion.div>
+                )}
+
+                {moments.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="mt-4 card-elevated p-5 border border-border/60"
+                  >
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
+                      課堂精彩瞬間 · Moments
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {moments.slice(0, 6).map((m) => (
+                        <figure
+                          key={m.id}
+                          className="relative aspect-square rounded-lg overflow-hidden bg-secondary"
+                        >
+                          <img
+                            src={m.url}
+                            alt={m.caption || "課堂瞬間"}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{
+                              transform: `translate(${m.offset_x}px, ${m.offset_y}px) scale(${m.scale || 1})`,
+                              transformOrigin: "center",
+                            }}
+                          />
+                        </figure>
+                      ))}
                     </div>
                   </motion.div>
                 )}
