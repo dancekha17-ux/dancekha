@@ -24,8 +24,40 @@ interface PendingProfile {
   region: string | null;
   avatar_url: string | null;
   bio: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
   updated_at: string;
   is_approved: boolean;
+}
+
+function ContactLine({ email, phone }: { email?: string | null; phone?: string | null }) {
+  if (!email && !phone) {
+    return (
+      <p className="text-xs text-muted-foreground/70 italic mt-0.5">尚未提供聯絡方式</p>
+    );
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-0.5 text-xs text-muted-foreground">
+      {email && (
+        <a
+          href={`mailto:${email}`}
+          className="inline-flex items-center gap-1 hover:text-foreground hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Mail className="w-3 h-3" /> {email}
+        </a>
+      )}
+      {phone && (
+        <a
+          href={`tel:${phone.replace(/\s+/g, "")}`}
+          className="inline-flex items-center gap-1 hover:text-foreground hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Phone className="w-3 h-3" /> {phone}
+        </a>
+      )}
+    </div>
+  );
 }
 
 export default function AdminDashboard() {
