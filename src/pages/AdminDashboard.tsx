@@ -108,23 +108,48 @@ export default function AdminDashboard() {
     refresh();
   };
 
-  const rejectCourse = async (id: string) => {
-    const notes = (reviewNotes[id] ?? "").trim();
+  const confirmRejectCourse = async () => {
+    if (!rejectingCourse) return;
+    const notes = rejectNotes.trim();
     if (!notes) {
       toast({ title: "請填寫修改建議", description: "退回時請說明需要老師調整的內容。", variant: "destructive" });
       return;
     }
+    const id = rejectingCourse.id;
     setBusyId(id);
     const { error } = await (supabase as any)
       .from("instructor_courses")
       .update({ status: "draft", is_published: false, reviewed_at: new Date().toISOString(), revision_notes: notes })
       .eq("id", id);
+    if (error) {
+      setBusyId(null);
+      return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+    }
+    // Best-effort email notification — silently ignore if email infra is not yet ready
+    try {
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "course-revision-request",
+          recipientEmail: rejectingCourse.teacher_profiles?.contact_email ?? undefined,
+          recipientUserId: rejectingCourse.teacher_profiles?.user_id ?? undefined,
+          idempotencyKey: `course-revision-${id}-${Date.now()}`,
+          templateData: {
+            teacherName: rejectingCourse.teacher_profiles?.name ?? "老師",
+            courseTitle: rejectingCourse.title ?? "你的服務",
+            revisionNotes: notes,
+          },
+        },
+      });
+    } catch (_) {
+      /* email notify is non-blocking */
+    }
     setBusyId(null);
-    if (error) return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
-    toast({ title: "已退回老師修改", description: "系統將同步通知老師查看建議。" });
-    setReviewNotes((m) => ({ ...m, [id]: "" }));
+    toast({ title: "已退回老師修改", description: "建議已存入，系統將通知老師查看。" });
+    setRejectingCourse(null);
+    setRejectNotes("");
     refresh();
   };
+
 
   if (authLoading || isAdmin === null) {
     return (
