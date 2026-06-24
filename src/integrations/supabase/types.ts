@@ -328,6 +328,8 @@ export type Database = {
           agreement_signed_at: string | null
           avatar_url: string | null
           bio: string
+          contact_email: string | null
+          contact_phone: string | null
           created_at: string
           credentials: string[]
           culture_body: string
@@ -357,6 +359,8 @@ export type Database = {
           agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
+          contact_email?: string | null
+          contact_phone?: string | null
           created_at?: string
           credentials?: string[]
           culture_body?: string
@@ -386,6 +390,8 @@ export type Database = {
           agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
+          contact_email?: string | null
+          contact_phone?: string | null
           created_at?: string
           credentials?: string[]
           culture_body?: string

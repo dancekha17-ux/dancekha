@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send } from "lucide-react";
+import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -24,8 +24,40 @@ interface PendingProfile {
   region: string | null;
   avatar_url: string | null;
   bio: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
   updated_at: string;
   is_approved: boolean;
+}
+
+function ContactLine({ email, phone }: { email?: string | null; phone?: string | null }) {
+  if (!email && !phone) {
+    return (
+      <p className="text-xs text-muted-foreground/70 italic mt-0.5">尚未提供聯絡方式</p>
+    );
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-0.5 text-xs text-muted-foreground">
+      {email && (
+        <a
+          href={`mailto:${email}`}
+          className="inline-flex items-center gap-1 hover:text-foreground hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Mail className="w-3 h-3" /> {email}
+        </a>
+      )}
+      {phone && (
+        <a
+          href={`tel:${phone.replace(/\s+/g, "")}`}
+          className="inline-flex items-center gap-1 hover:text-foreground hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Phone className="w-3 h-3" /> {phone}
+        </a>
+      )}
+    </div>
+  );
 }
 
 export default function AdminDashboard() {
@@ -60,9 +92,9 @@ export default function AdminDashboard() {
   }, [user]);
 
   const refresh = async () => {
-    const { data } = await supabase
+    const { data } = await (supabase as any)
       .from("teacher_profiles")
-      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,updated_at,is_approved")
+      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => !r.is_approved));
@@ -70,7 +102,7 @@ export default function AdminDashboard() {
 
     const { data: courses } = await (supabase as any)
       .from("instructor_courses")
-      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug,user_id)")
+      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug,user_id,contact_email,contact_phone)")
       .eq("status", "pending")
       .order("submitted_at", { ascending: true });
     setPendingCourses(courses ?? []);
@@ -236,7 +268,8 @@ export default function AdminDashboard() {
                           <span className="ml-2 text-xs text-muted-foreground font-body">/{row.slug}</span>
                         )}
                       </p>
-                      <p className="text-sm text-muted-foreground truncate">
+                      <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                      <p className="text-sm text-muted-foreground truncate mt-1">
                         {[row.specialty, row.region].filter(Boolean).join(" · ") || "尚未填寫專長"}
                       </p>
                       <p className="text-xs text-muted-foreground/80 mt-1">
@@ -307,7 +340,11 @@ export default function AdminDashboard() {
                           </span>
                           <span className="text-xs text-muted-foreground">{teacherName}</span>
                         </div>
-                        <p className="font-display text-lg text-foreground">{c.title || "（未命名服務）"}</p>
+                        <ContactLine
+                          email={c.teacher_profiles?.contact_email}
+                          phone={c.teacher_profiles?.contact_phone}
+                        />
+                        <p className="font-display text-lg text-foreground mt-1">{c.title || "（未命名服務）"}</p>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2 whitespace-pre-wrap">
                           {c.description || "—"}
                         </p>
@@ -378,7 +415,8 @@ export default function AdminDashboard() {
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                    <p className="text-xs text-muted-foreground truncate mt-1">
                       {[row.specialty, row.region].filter(Boolean).join(" · ")}
                     </p>
                   </div>

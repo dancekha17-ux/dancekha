@@ -36,6 +36,8 @@ const profileSchema = z.object({
   instagram_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   youtube_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   website_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
+  contact_email: z.string().trim().email("請輸入有效的 Email").max(255).optional().or(z.literal("")),
+  contact_phone: z.string().trim().max(40).optional().or(z.literal("")),
 });
 
 // Field id -> DOM id for scroll-to-error
@@ -65,6 +67,8 @@ interface Profile {
   instagram_url: string | null;
   youtube_url: string | null;
   website_url: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
   is_approved: boolean;
   agreement_signed_at: string | null;
 }
@@ -219,6 +223,8 @@ export default function TeacherDashboard() {
       instagram_url: profile.instagram_url ?? "",
       youtube_url: profile.youtube_url ?? "",
       website_url: profile.website_url ?? "",
+      contact_email: profile.contact_email ?? "",
+      contact_phone: profile.contact_phone ?? "",
     });
     if (!parsed.success) {
       const issue = parsed.error.issues[0];
@@ -253,6 +259,8 @@ export default function TeacherDashboard() {
         instagram_url: profile.instagram_url?.trim() || null,
         youtube_url: profile.youtube_url?.trim() || null,
         website_url: profile.website_url?.trim() || null,
+        contact_email: profile.contact_email?.trim() || null,
+        contact_phone: profile.contact_phone?.trim() || null,
       })
       .eq("user_id", user.id);
     setSaving(false);
@@ -759,8 +767,40 @@ export default function TeacherDashboard() {
             </div>
 
             {/* Social */}
-            <SectionCard eyebrow="Connect" title="社群連結">
+            <SectionCard eyebrow="Connect" title="聯絡與社群">
               <div className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_email">
+                      聯絡 Email <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="contact_email"
+                      type="email"
+                      required
+                      value={profile.contact_email ?? ""}
+                      maxLength={255}
+                      placeholder="you@example.com"
+                      onChange={(e) => update({ contact_email: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">送審時必填,舞島咖團隊將以此聯繫您。</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_phone">
+                      聯絡電話 <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="contact_phone"
+                      type="tel"
+                      required
+                      value={profile.contact_phone ?? ""}
+                      maxLength={40}
+                      placeholder="例:0912-345-678"
+                      onChange={(e) => update({ contact_phone: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">僅平台管理員可見,不會公開顯示。</p>
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="ig">Instagram</Label>
                   <Input
