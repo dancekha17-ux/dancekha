@@ -36,6 +36,8 @@ const profileSchema = z.object({
   instagram_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   youtube_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
   website_url: z.string().trim().url("請輸入完整網址").max(255).optional().or(z.literal("")),
+  contact_email: z.string().trim().email("請輸入有效的 Email").max(255).optional().or(z.literal("")),
+  contact_phone: z.string().trim().max(40).optional().or(z.literal("")),
 });
 
 // Field id -> DOM id for scroll-to-error
