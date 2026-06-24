@@ -415,7 +415,8 @@ export default function AdminDashboard() {
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                    <p className="text-xs text-muted-foreground truncate mt-1">
                       {[row.specialty, row.region].filter(Boolean).join(" · ")}
                     </p>
                   </div>
