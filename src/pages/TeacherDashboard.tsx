@@ -107,6 +107,14 @@ export default function TeacherDashboard() {
           languages: (d.languages ?? []).length > 0 ? d.languages : ["中文"],
           hero_image_url: d.hero_image_url ?? null,
         });
+        // Fetch any courses with admin revision feedback
+        const { data: revRows } = await (supabase as any)
+          .from("instructor_courses")
+          .select("id,title,revision_notes,status")
+          .eq("teacher_id", d.id)
+          .eq("status", "draft")
+          .not("revision_notes", "is", null);
+        setRevisionAlerts((revRows ?? []).filter((r: any) => (r.revision_notes ?? "").trim().length > 0));
       }
       setLoading(false);
     })();
