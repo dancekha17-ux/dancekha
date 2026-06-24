@@ -259,6 +259,8 @@ export default function TeacherDashboard() {
         instagram_url: profile.instagram_url?.trim() || null,
         youtube_url: profile.youtube_url?.trim() || null,
         website_url: profile.website_url?.trim() || null,
+        contact_email: profile.contact_email?.trim() || null,
+        contact_phone: profile.contact_phone?.trim() || null,
       })
       .eq("user_id", user.id);
     setSaving(false);
