@@ -441,6 +441,37 @@ export default function InstructorProfile() {
                   </motion.div>
                 )}
 
+                {moments.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="mt-4 card-elevated p-5 border border-border/60"
+                  >
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
+                      課堂精彩瞬間 · Moments
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {moments.slice(0, 6).map((m) => (
+                        <figure
+                          key={m.id}
+                          className="relative aspect-square rounded-lg overflow-hidden bg-secondary"
+                        >
+                          <img
+                            src={m.url}
+                            alt={m.caption || "課堂瞬間"}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{
+                              transform: `translate(${m.offset_x}px, ${m.offset_y}px) scale(${m.scale || 1})`,
+                              transformOrigin: "center",
+                            }}
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
                 <Link
                   to="/styles"
                   className="block mt-4 text-center text-sm text-primary hover:underline"
