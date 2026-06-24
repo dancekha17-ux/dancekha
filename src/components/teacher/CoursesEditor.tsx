@@ -509,7 +509,7 @@ export function CoursesEditor({ teacherId }: Props) {
                 onClick={() => submitForReview(course)}
               >
                 <CheckCircle2 className="w-4 h-4" />
-                {course.status === "pending" ? "等待舞島咖團隊確認" : "發布我的舞動旅程"}
+                {course.status === "pending" ? "等待舞島咖團隊確認" : "已完成請刊登"}
               </Button>
               <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
                 欄位內容會自動儲存為草稿。提交後，我們將協助您公開頁面，預計需 2 個工作天完成內容確認。
