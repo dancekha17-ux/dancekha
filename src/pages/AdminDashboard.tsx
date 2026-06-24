@@ -38,6 +38,8 @@ export default function AdminDashboard() {
   const [pendingCourses, setPendingCourses] = useState<any[]>([]);
   const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [rejectingCourse, setRejectingCourse] = useState<any | null>(null);
+  const [rejectNotes, setRejectNotes] = useState("");
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
