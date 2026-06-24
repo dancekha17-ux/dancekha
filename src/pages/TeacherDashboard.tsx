@@ -223,6 +223,8 @@ export default function TeacherDashboard() {
       instagram_url: profile.instagram_url ?? "",
       youtube_url: profile.youtube_url ?? "",
       website_url: profile.website_url ?? "",
+      contact_email: profile.contact_email ?? "",
+      contact_phone: profile.contact_phone ?? "",
     });
     if (!parsed.success) {
       const issue = parsed.error.issues[0];
