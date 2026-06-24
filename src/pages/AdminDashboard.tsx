@@ -92,9 +92,9 @@ export default function AdminDashboard() {
   }, [user]);
 
   const refresh = async () => {
-    const { data } = await supabase
+    const { data } = await (supabase as any)
       .from("teacher_profiles")
-      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,updated_at,is_approved")
+      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => !r.is_approved));
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
 
     const { data: courses } = await (supabase as any)
       .from("instructor_courses")
-      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug,user_id)")
+      .select("id,title,description,service_type,price,region,location_address,online_link,session_info,submitted_at,teacher_id,teacher_profiles!inner(name,slug,user_id,contact_email,contact_phone)")
       .eq("status", "pending")
       .order("submitted_at", { ascending: true });
     setPendingCourses(courses ?? []);
