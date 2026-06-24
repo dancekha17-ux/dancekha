@@ -414,6 +414,43 @@ export default function TeacherDashboard() {
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10">
           {/* Form column */}
           <div className="min-w-0 max-w-3xl">
+            {revisionAlerts.length > 0 && (
+              <section className="mb-8 rounded-3xl border-2 border-destructive/40 bg-destructive/5 p-5 md:p-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-destructive/15 text-destructive flex items-center justify-center shrink-0">
+                    !
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-lg text-destructive">
+                      舞島咖團隊的修改建議（{revisionAlerts.length}）
+                    </h3>
+                    <p className="text-xs text-destructive/80 mt-1">
+                      以下服務已退回為草稿狀態，請依建議完成調整後再次送出審核。
+                    </p>
+                    <ul className="mt-4 space-y-3">
+                      {revisionAlerts.map((r) => (
+                        <li
+                          key={r.id}
+                          className="rounded-xl bg-white/70 border border-destructive/20 p-3"
+                        >
+                          <p className="text-sm font-medium text-foreground">
+                            {r.title || "（未命名服務）"}
+                          </p>
+                          <p className="text-xs text-destructive whitespace-pre-wrap mt-1">
+                            {r.revision_notes}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-4">
+                      <Button asChild size="sm" variant="outline">
+                        <a href="#courses">前往修改</a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
             {/* Onboarding Progress Tracker */}
             <section className="mb-10 rounded-3xl border border-[#E63946]/15 bg-white/80 backdrop-blur shadow-soft p-6 md:p-7">
               <div className="flex items-end justify-between mb-5 gap-4 flex-wrap">
