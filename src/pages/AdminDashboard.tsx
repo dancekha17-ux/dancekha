@@ -331,23 +331,15 @@ export default function AdminDashboard() {
                       )}
                     </div>
 
-                    <div>
-                      <Textarea
-                        rows={2}
-                        placeholder="退回時的修改建議（核准則可留空）"
-                        value={reviewNotes[c.id] ?? ""}
-                        onChange={(e) =>
-                          setReviewNotes((m) => ({ ...m, [c.id]: e.target.value }))
-                        }
-                      />
-                    </div>
-
                     <div className="flex flex-wrap items-center justify-end gap-2">
                       <Button
                         variant="outline"
                         size="sm"
                         disabled={busyId === c.id}
-                        onClick={() => rejectCourse(c.id)}
+                        onClick={() => {
+                          setRejectingCourse(c);
+                          setRejectNotes("");
+                        }}
                       >
                         <XCircle className="w-4 h-4" /> 退回老師修改
                       </Button>
