@@ -396,6 +396,56 @@ export default function AdminDashboard() {
           )}
         </section>
       </main>
+
+      <Dialog
+        open={!!rejectingCourse}
+        onOpenChange={(open) => {
+          if (!open) {
+            setRejectingCourse(null);
+            setRejectNotes("");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>退回老師修改</DialogTitle>
+            <DialogDescription>
+              請填寫具體的修改建議。送出後課程將回到「草稿」狀態，並透過 Email 通知老師。
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              服務：<span className="text-foreground font-medium">{rejectingCourse?.title || "（未命名）"}</span>
+            </p>
+            <Textarea
+              autoFocus
+              rows={5}
+              required
+              placeholder="例如：請補充課程地點、上課時段，並提供至少一張封面照片。"
+              value={rejectNotes}
+              onChange={(e) => setRejectNotes(e.target.value)}
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setRejectingCourse(null);
+                setRejectNotes("");
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              disabled={!rejectNotes.trim() || busyId === rejectingCourse?.id}
+              onClick={confirmRejectCourse}
+            >
+              <XCircle className="w-4 h-4" /> 確認退回並通知
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
