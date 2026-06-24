@@ -767,8 +767,40 @@ export default function TeacherDashboard() {
             </div>
 
             {/* Social */}
-            <SectionCard eyebrow="Connect" title="社群連結">
+            <SectionCard eyebrow="Connect" title="聯絡與社群">
               <div className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_email">
+                      聯絡 Email <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="contact_email"
+                      type="email"
+                      required
+                      value={profile.contact_email ?? ""}
+                      maxLength={255}
+                      placeholder="you@example.com"
+                      onChange={(e) => update({ contact_email: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">送審時必填,舞島咖團隊將以此聯繫您。</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_phone">
+                      聯絡電話 <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="contact_phone"
+                      type="tel"
+                      required
+                      value={profile.contact_phone ?? ""}
+                      maxLength={40}
+                      placeholder="例:0912-345-678"
+                      onChange={(e) => update({ contact_phone: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">僅平台管理員可見,不會公開顯示。</p>
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="ig">Instagram</Label>
                   <Input
