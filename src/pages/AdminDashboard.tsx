@@ -268,7 +268,8 @@ export default function AdminDashboard() {
                           <span className="ml-2 text-xs text-muted-foreground font-body">/{row.slug}</span>
                         )}
                       </p>
-                      <p className="text-sm text-muted-foreground truncate">
+                      <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                      <p className="text-sm text-muted-foreground truncate mt-1">
                         {[row.specialty, row.region].filter(Boolean).join(" · ") || "尚未填寫專長"}
                       </p>
                       <p className="text-xs text-muted-foreground/80 mt-1">
