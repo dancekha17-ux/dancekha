@@ -67,6 +67,8 @@ interface Profile {
   instagram_url: string | null;
   youtube_url: string | null;
   website_url: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
   is_approved: boolean;
   agreement_signed_at: string | null;
 }
