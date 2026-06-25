@@ -64,15 +64,24 @@ const MAP_REGIONS: MapRegion[] = [
   { id: "west_africa", name: "西非", top: "57%", left: "48%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
+interface MapInstructor {
+  slug: string;
+  name: string;
+  specialty: string | null;
+  region: string | null;
+  dance_styles: string[] | null;
+}
+
 interface RegionCardProps {
   region: MapRegion;
+  instructors: MapInstructor[];
   onExplore: (region: MapRegion) => void;
   onClose?: () => void;
   floating?: boolean;
   style?: React.CSSProperties;
 }
 
-function RegionCard({ region, onExplore, onClose, floating, style }: RegionCardProps) {
+function RegionCard({ region, instructors, onExplore, onClose, floating, style }: RegionCardProps) {
   return (
     <div
       style={style}
@@ -98,11 +107,35 @@ function RegionCard({ region, onExplore, onClose, floating, style }: RegionCardP
       <p className="text-sm text-slate-600 font-body leading-relaxed mb-3">
         {region.desc}
       </p>
-      <div className="text-xs font-body text-slate-500 bg-[#F3E9D7]/60 rounded-md px-3 py-2 mb-4 leading-relaxed">
+      <div className="text-xs font-body text-slate-500 bg-[#F3E9D7]/60 rounded-md px-3 py-2 mb-3 leading-relaxed">
         <span className="text-[#9C5A2E] font-medium">舞種發源地：</span>{region.country}
         <span className="mx-1.5 text-slate-300">|</span>
         <span className="text-[#9C5A2E] font-medium">實體授課地：</span>依老師而定
       </div>
+
+      {/* 關聯師資 */}
+      <div className="mb-4">
+        <p className="text-[11px] uppercase tracking-widest text-[#9C5A2E] font-medium mb-1.5">
+          關聯引導者
+        </p>
+        {instructors.length > 0 ? (
+          <ul className="space-y-1 max-h-32 overflow-auto pr-1">
+            {instructors.slice(0, 6).map((i) => (
+              <li key={i.slug}>
+                <Link
+                  to={`/instructors/${i.slug}`}
+                  className="text-sm text-slate-700 hover:text-[#E36435] underline-offset-2 hover:underline transition-colors"
+                >
+                  · {i.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-xs text-slate-400 italic">尚無引導者，期待第一位開課老師。</p>
+        )}
+      </div>
+
       <button
         onClick={() => onExplore(region)}
         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#E36435] text-white text-sm font-medium hover:bg-[#c95628] transition-all hover:gap-2.5 shadow-sm"
@@ -113,6 +146,7 @@ function RegionCard({ region, onExplore, onClose, floating, style }: RegionCardP
     </div>
   );
 }
+
 
 export function WorldMap() {
   const [activeId, setActiveId] = useState<string | null>(null);
