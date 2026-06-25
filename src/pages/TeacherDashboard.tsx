@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Camera, Eye, LogOut, Save, CheckCircle2, Clock, Circle, Lock, UserCircle2, FileSignature, CalendarRange, MapPin } from "lucide-react";
+import { Camera, Eye, LogOut, Save, CheckCircle2, Clock, Circle, Lock, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -80,9 +80,11 @@ export default function TeacherDashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
+
 
   const skipDirty = useRef(true);
   
@@ -275,7 +277,68 @@ export default function TeacherDashboard() {
     }
   };
 
+  const handleSubmitForReview = async () => {
+    if (!profile) return;
+    if (dirty) {
+      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
+      return;
+    }
+    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
+      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
+      return;
+    }
+    if (!profile.agreement_signed_at) {
+      toast({ title: "請先完成合作協議簽署", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { data: drafts, error: fetchErr } = await (supabase as any)
+      .from("instructor_courses")
+      .select("*")
+      .eq("teacher_id", profile.id)
+      .eq("status", "draft");
+    if (fetchErr) {
+      setSubmitting(false);
+      return toast({ title: "讀取失敗", description: fetchErr.message, variant: "destructive" });
+    }
+    if (!drafts || drafts.length === 0) {
+      setSubmitting(false);
+      return toast({
+        title: "尚無可送審的課程／活動",
+        description: "請先在下方「課程與活動管理」新增至少一筆完整內容。",
+        variant: "destructive",
+      });
+    }
+    const valid = drafts.filter((c: any) => {
+      if (!c.title?.trim() || !c.description?.trim() || !c.price?.trim()) return false;
+      const t = c.service_type;
+      if ((t === "in_person" || t === "space_rental") && !c.location_address?.trim()) return false;
+      if (t === "pre_recorded" && !c.online_link?.trim()) return false;
+      if (t === "event_ticket" && !c.session_info?.trim()) return false;
+      return true;
+    });
+    if (valid.length === 0) {
+      setSubmitting(false);
+      return toast({
+        title: "請補齊草稿欄位",
+        description: "至少要有一筆完整的課程／活動才能申請刊登。",
+        variant: "destructive",
+      });
+    }
+    const { error } = await (supabase as any)
+      .from("instructor_courses")
+      .update({ status: "pending", submitted_at: new Date().toISOString(), revision_notes: null })
+      .in("id", valid.map((c: any) => c.id));
+    setSubmitting(false);
+    if (error) return toast({ title: "送審失敗", description: error.message, variant: "destructive" });
+    toast({
+      title: "已申請刊登！",
+      description: `已提交 ${valid.length} 筆服務，舞島咖團隊將於 2 個工作天內完成審閱與聯繫。`,
+    });
+  };
+
   if (authLoading || loading || !profile) {
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <p className="text-muted-foreground">載入中…</p>
@@ -325,10 +388,30 @@ export default function TeacherDashboard() {
             <Eye className="w-4 h-4" /> 預覽完整頁面
           </Link>
         </Button>
+
+        {/* 申請刊登 — primary submit-for-review CTA */}
+        <div className="mt-3 pt-3 border-t border-dashed border-[#E89B5C]/40">
+          <Button
+            onClick={handleSubmitForReview}
+            disabled={submitting || !coursesUnlocked || dirty}
+            size="lg"
+            className="w-full text-white shadow-glow hover:opacity-95 ring-2 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60 transition-all"
+            style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+          >
+            <Send className="w-4 h-4" /> {submitting ? "送出中…" : "申請刊登"}
+          </Button>
+          <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
+            {coursesUnlocked
+              ? "一鍵將所有完整的草稿提交給舞島咖團隊審閱，預計 2 個工作天內回覆。"
+              : "完成「品牌專頁」與「合作協議」後即可申請刊登。"}
+          </p>
+        </div>
+
         <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
           所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
         </p>
       </div>
+
 
       {/* Dedicated brand-page (map card) preview */}
       <div className="rounded-3xl border border-[#E89B5C]/30 bg-gradient-to-br from-[#FFF5E6] to-white shadow-soft p-5">
