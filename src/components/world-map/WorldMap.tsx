@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, X } from "lucide-react";
 import worldMapAsset from "@/assets/world-map.jpg.asset.json";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { supabase } from "@/integrations/supabase/client";
+
 
 /**
  * 互動式世界舞蹈地圖
