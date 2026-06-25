@@ -277,7 +277,68 @@ export default function TeacherDashboard() {
     }
   };
 
+  const handleSubmitForReview = async () => {
+    if (!profile) return;
+    if (dirty) {
+      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
+      return;
+    }
+    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
+      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
+      return;
+    }
+    if (!profile.agreement_signed_at) {
+      toast({ title: "請先完成合作協議簽署", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { data: drafts, error: fetchErr } = await (supabase as any)
+      .from("instructor_courses")
+      .select("*")
+      .eq("teacher_id", profile.id)
+      .eq("status", "draft");
+    if (fetchErr) {
+      setSubmitting(false);
+      return toast({ title: "讀取失敗", description: fetchErr.message, variant: "destructive" });
+    }
+    if (!drafts || drafts.length === 0) {
+      setSubmitting(false);
+      return toast({
+        title: "尚無可送審的課程／活動",
+        description: "請先在下方「課程與活動管理」新增至少一筆完整內容。",
+        variant: "destructive",
+      });
+    }
+    const valid = drafts.filter((c: any) => {
+      if (!c.title?.trim() || !c.description?.trim() || !c.price?.trim()) return false;
+      const t = c.service_type;
+      if ((t === "in_person" || t === "space_rental") && !c.location_address?.trim()) return false;
+      if (t === "pre_recorded" && !c.online_link?.trim()) return false;
+      if (t === "event_ticket" && !c.session_info?.trim()) return false;
+      return true;
+    });
+    if (valid.length === 0) {
+      setSubmitting(false);
+      return toast({
+        title: "請補齊草稿欄位",
+        description: "至少要有一筆完整的課程／活動才能申請刊登。",
+        variant: "destructive",
+      });
+    }
+    const { error } = await (supabase as any)
+      .from("instructor_courses")
+      .update({ status: "pending", submitted_at: new Date().toISOString(), revision_notes: null })
+      .in("id", valid.map((c: any) => c.id));
+    setSubmitting(false);
+    if (error) return toast({ title: "送審失敗", description: error.message, variant: "destructive" });
+    toast({
+      title: "已申請刊登！",
+      description: `已提交 ${valid.length} 筆服務，舞島咖團隊將於 2 個工作天內完成審閱與聯繫。`,
+    });
+  };
+
   if (authLoading || loading || !profile) {
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <p className="text-muted-foreground">載入中…</p>
