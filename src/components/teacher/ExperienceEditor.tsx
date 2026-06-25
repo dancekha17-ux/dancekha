@@ -22,7 +22,35 @@ export function ExperienceEditor({ values, onChange }: Props) {
   return (
     <div className="space-y-2">
       <Label>經歷/獎項/證照</Label>
-...
+      <div className="space-y-2">
+        {values.map((v, idx) => (
+          <div key={idx} className="flex items-center gap-2">
+            <Input
+              value={v}
+              maxLength={40}
+              placeholder="例：5 年兒童舞蹈教學經驗"
+              onChange={(e) => updateAt(idx, e.target.value)}
+            />
+            <span className="text-[10px] text-muted-foreground w-10 text-right tabular-nums">
+              {v.length}/40
+            </span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => removeAt(idx)}
+              className="shrink-0 text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+        ))}
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        onClick={add}
         className="mt-2"
       >
         <Plus className="w-4 h-4" /> 新增經歷／獎項／證照
