@@ -388,10 +388,30 @@ export default function TeacherDashboard() {
             <Eye className="w-4 h-4" /> 預覽完整頁面
           </Link>
         </Button>
+
+        {/* 申請刊登 — primary submit-for-review CTA */}
+        <div className="mt-3 pt-3 border-t border-dashed border-[#E89B5C]/40">
+          <Button
+            onClick={handleSubmitForReview}
+            disabled={submitting || !coursesUnlocked || dirty}
+            size="lg"
+            className="w-full text-white shadow-glow hover:opacity-95 ring-2 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60 transition-all"
+            style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+          >
+            <Send className="w-4 h-4" /> {submitting ? "送出中…" : "申請刊登"}
+          </Button>
+          <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
+            {coursesUnlocked
+              ? "一鍵將所有完整的草稿提交給舞島咖團隊審閱，預計 2 個工作天內回覆。"
+              : "完成「品牌專頁」與「合作協議」後即可申請刊登。"}
+          </p>
+        </div>
+
         <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
           所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
         </p>
       </div>
+
 
       {/* Dedicated brand-page (map card) preview */}
       <div className="rounded-3xl border border-[#E89B5C]/30 bg-gradient-to-br from-[#FFF5E6] to-white shadow-soft p-5">
