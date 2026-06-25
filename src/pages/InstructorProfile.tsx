@@ -271,7 +271,7 @@ export default function InstructorProfile() {
                   <div className="flex items-center gap-2 mb-4">
                     <Award className="w-5 h-5 text-primary" />
                     <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                      經歷與獎項 · Credentials
+                      經歷/獎項/證照 · CREDENTIALS
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">

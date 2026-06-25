@@ -21,7 +21,7 @@ export function ExperienceEditor({ values, onChange }: Props) {
 
   return (
     <div className="space-y-2">
-      <Label>經歷與獎項</Label>
+      <Label>經歷/獎項/證照</Label>
       <div className="space-y-2">
         {values.map((v, idx) => (
           <div key={idx} className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export function ExperienceEditor({ values, onChange }: Props) {
         onClick={add}
         className="mt-2"
       >
-        <Plus className="w-4 h-4" /> 新增經歷／獎項
+        <Plus className="w-4 h-4" /> 新增經歷／獎項／證照
       </Button>
       <p className="text-xs text-muted-foreground">
         請用精簡的條列式呈現您的含金量（例：5年兒童舞蹈教學經驗 / 雲門舞集巡演編舞助理），讓學員一秒抓到重點！
