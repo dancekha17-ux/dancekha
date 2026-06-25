@@ -275,7 +275,7 @@ export default function InstructorProfile() {
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
-                    田野與舞台的足跡
+                    舞動歷程與足跡
                   </h2>
                   <ul className="grid sm:grid-cols-2 gap-3">
                     {instructor.credentials.map((c) => (
