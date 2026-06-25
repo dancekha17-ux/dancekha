@@ -133,7 +133,7 @@ export default function TeacherPreview() {
           {/* Experience & Awards */}
           {credentials.length > 0 && (
             <div className="mb-12">
-              <span className="eyebrow">Experience & Awards</span>
+              <span className="eyebrow">經歷/獎項/證照 · CREDENTIALS</span>
               <div className="hairline mt-3 mb-5 mx-0" />
               <ul className="space-y-3">
                 {credentials.map((c, i) => (
