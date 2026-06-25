@@ -150,10 +150,28 @@ function RegionCard({ region, instructors, onExplore, onClose, floating, style }
 
 export function WorldMap() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [allInstructors, setAllInstructors] = useState<MapInstructor[]>([]);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    (supabase as any)
+      .from("teacher_profiles")
+      .select("slug,name,specialty,region,dance_styles")
+      .eq("is_approved", true)
+      .not("slug", "is", null)
+      .then(({ data }: any) => setAllInstructors((data as MapInstructor[]) ?? []));
+  }, []);
+
   const activeRegion = MAP_REGIONS.find((r) => r.id === activeId) ?? null;
+
+  const matchInstructors = (region: MapRegion): MapInstructor[] => {
+    const kws = region.keywords.map((k) => k.toLowerCase());
+    return allInstructors.filter((i) => {
+      const hay = `${i.specialty ?? ""} ${i.region ?? ""} ${(i.dance_styles ?? []).join(" ")}`.toLowerCase();
+      return kws.some((k) => k && hay.includes(k));
+    });
+  };
 
   const handleExplore = (region: MapRegion) => {
     navigate(`/?region=${encodeURIComponent(region.queryParam)}#instructors`);
@@ -201,6 +219,7 @@ export function WorldMap() {
               {!isMobile && isActive && activeRegion?.id === region.id && (
                 <RegionCard
                   region={region}
+                  instructors={matchInstructors(region)}
                   onExplore={handleExplore}
                   onClose={() => setActiveId(null)}
                   floating
@@ -216,6 +235,7 @@ export function WorldMap() {
       {isMobile && activeRegion && (
         <RegionCard
           region={activeRegion}
+          instructors={matchInstructors(activeRegion)}
           onExplore={handleExplore}
           onClose={() => setActiveId(null)}
         />
@@ -223,5 +243,6 @@ export function WorldMap() {
     </div>
   );
 }
+
 
 export { MAP_REGIONS };
