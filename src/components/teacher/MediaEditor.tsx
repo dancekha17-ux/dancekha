@@ -182,17 +182,22 @@ export function MediaEditor({ teacherId, userId }: Props) {
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 8 * 1024 * 1024) {
-      toast({ title: "圖片過大", description: "請上傳 8MB 以內", variant: "destructive" });
+    if (items.length >= 4) {
+      toast({ title: "已達上限", description: "課堂精彩瞬間最多上傳 4 張照片", variant: "destructive" });
+      e.target.value = "";
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      toast({ title: "圖片過大", description: "請上傳 15MB 以內", variant: "destructive" });
       return;
     }
     setBusy(true);
     try {
-      const ext = file.name.split(".").pop();
-      const path = `${userId}/gallery-${Date.now()}.${ext}`;
+      const webpBlob = await compressToWebp(file, 1600, 0.85);
+      const path = `${userId}/gallery-${Date.now()}.webp`;
       const { error } = await supabase.storage
         .from("instructor-media")
-        .upload(path, file, { contentType: file.type });
+        .upload(path, webpBlob, { contentType: "image/webp", cacheControl: "31536000" });
       if (error) throw error;
       const { data } = supabase.storage.from("instructor-media").getPublicUrl(path);
       await addRow({ kind: "image", url: data.publicUrl, scale: 1, offset_x: 0, offset_y: 0 });
