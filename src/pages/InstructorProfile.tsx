@@ -144,12 +144,21 @@ export default function InstructorProfile() {
 
             {/* Identity */}
             <div className="flex-1 pb-2">
-              <button
-                onClick={() => navigate(-1)}
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-3 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" /> 返回
-              </button>
+              <div className="flex items-center gap-3 mb-3">
+                <button
+                  onClick={() => navigate(-1)}
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" /> 返回上一頁
+                </button>
+                <span className="text-muted-foreground/40">·</span>
+                <Link
+                  to="/#instructors"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  回師資團隊
+                </Link>
+              </div>
               <h1 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-1">
                 {instructor.name}
               </h1>

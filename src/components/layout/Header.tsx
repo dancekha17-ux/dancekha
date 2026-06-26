@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -20,8 +20,20 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState<"zh" | "en">("zh");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isLightHero = lightHeroPaths.includes(location.pathname);
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,13 +74,7 @@ export function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.querySelector(item.href);
-                  if (target) {
-                    target.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }
-                }}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className={`flow-line font-body text-sm transition-colors ${
                   isScrolled || isLightHero
                     ? "text-foreground hover:text-primary"
@@ -127,14 +133,7 @@ export function Header() {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMobileMenuOpen(false);
-                    const target = document.querySelector(item.href);
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="block py-2 text-foreground hover:text-primary transition-colors"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
