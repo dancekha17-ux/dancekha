@@ -13,6 +13,7 @@ import {
   Sparkles,
   Star,
   Users2,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/layout/Header";
@@ -29,13 +30,37 @@ interface MomentMedia {
   offset_y: number;
 }
 
+interface PublishedCourse {
+  id: string;
+  title: string;
+  description: string | null;
+  schedule: string | null;
+  level: string | null;
+  price: string | null;
+  region: string | null;
+  service_type: string | null;
+  course_image_url: string | null;
+  location_address: string | null;
+  online_link: string | null;
+}
+
+const SERVICE_LABEL: Record<string, string> = {
+  in_person: "實體課程",
+  pre_recorded: "線上預錄",
+  event_ticket: "演出票券",
+  space_rental: "空間出租",
+};
+
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
   const [moments, setMoments] = useState<MomentMedia[]>([]);
+  const [publishedCourses, setPublishedCourses] = useState<PublishedCourse[]>([]);
   const coursesRef = useRef<HTMLDivElement | null>(null);
+  const courseListRef = useRef<HTMLDivElement | null>(null);
+
 
   useEffect(() => {
     if (!slug) return;
@@ -51,13 +76,22 @@ export default function InstructorProfile() {
         .eq("slug", slug)
         .maybeSingle();
       if (!tp) return;
+      const teacherId = (tp as any).id;
       const { data } = await (supabase as any)
         .from("instructor_media")
         .select("id,url,caption,scale,offset_x,offset_y,sort_order")
-        .eq("teacher_id", (tp as any).id)
+        .eq("teacher_id", teacherId)
         .eq("kind", "image")
         .order("sort_order", { ascending: true });
       setMoments((data as MomentMedia[]) ?? []);
+      const { data: courseData } = await (supabase as any)
+        .from("instructor_courses")
+        .select("id,title,description,schedule,level,price,region,service_type,course_image_url,location_address,online_link,sort_order")
+        .eq("teacher_id", teacherId)
+        .eq("status", "published")
+        .order("sort_order", { ascending: true });
+      setPublishedCourses((courseData as PublishedCourse[]) ?? []);
+
     })();
   }, [slug]);
 
@@ -158,6 +192,19 @@ export default function InstructorProfile() {
                 >
                   回師資團隊
                 </Link>
+                {publishedCourses.length > 0 && (
+                  <>
+                    <span className="text-muted-foreground/40">·</span>
+                    <button
+                      onClick={() =>
+                        courseListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                      }
+                      className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+                    >
+                      <GraduationCap className="w-4 h-4" /> 查看開設課程（{publishedCourses.length}）
+                    </button>
+                  </>
+                )}
               </div>
               <h1 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-1">
                 {instructor.name}
@@ -301,7 +348,99 @@ export default function InstructorProfile() {
                   </ul>
                 </motion.div>
               )}
+
+              {/* 開設課程 · Courses */}
+              {publishedCourses.length > 0 && (
+                <motion.div
+                  ref={courseListRef}
+                  id="teacher-courses"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="scroll-mt-28"
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <GraduationCap className="w-5 h-5 text-primary" />
+                    <span className="text-xs uppercase tracking-widest text-primary font-medium">
+                      開設課程 · COURSES
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
+                    跟隨引導者一起舞動
+                  </h2>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {publishedCourses.map((c) => (
+                      <article
+                        key={c.id}
+                        className="group card-elevated overflow-hidden border border-border/50 flex flex-col"
+                      >
+                        {c.course_image_url && (
+                          <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                            <img
+                              src={c.course_image_url}
+                              alt={c.title}
+                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                            />
+                          </div>
+                        )}
+                        <div className="p-5 flex-1 flex flex-col">
+                          <div className="flex items-center gap-2 mb-2">
+                            {c.service_type && (
+                              <span className="px-2 py-0.5 text-[10px] rounded-full bg-primary/10 text-primary font-medium">
+                                {SERVICE_LABEL[c.service_type] || c.service_type}
+                              </span>
+                            )}
+                            {c.level && (
+                              <span className="px-2 py-0.5 text-[10px] rounded-full bg-soul/10 text-soul font-medium">
+                                {c.level}
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="font-display text-lg text-foreground mb-2 leading-snug">
+                            {c.title}
+                          </h3>
+                          {c.description && (
+                            <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+                              {c.description}
+                            </p>
+                          )}
+                          <div className="mt-auto space-y-1.5 text-xs text-muted-foreground">
+                            {c.schedule && (
+                              <p className="inline-flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5" /> {c.schedule}
+                              </p>
+                            )}
+                            {(c.region || c.location_address) && (
+                              <p className="inline-flex items-center gap-1.5">
+                                <MapPin className="w-3.5 h-3.5" />
+                                {c.region}
+                                {c.region && c.location_address ? " · " : ""}
+                                {c.location_address}
+                              </p>
+                            )}
+                            {c.price && (
+                              <p className="font-medium text-foreground/80">{c.price}</p>
+                            )}
+                          </div>
+                          {c.online_link && (
+                            <a
+                              href={c.online_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 inline-flex items-center justify-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium"
+                            >
+                              前往課程連結 ↗
+                            </a>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
+
 
             {/* Right sticky booking */}
             <aside className="lg:block">
