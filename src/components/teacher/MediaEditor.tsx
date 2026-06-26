@@ -257,21 +257,31 @@ export function MediaEditor({ teacherId, userId }: Props) {
 
       {items.length > 0 && (
         <p className="text-xs text-muted-foreground -mt-2">
-          ✨ 上傳後可拖曳調整位置、用滑桿縮放，找到最動人的構圖。
+          ✨ 上傳後可拖曳調整位置、用滑桿縮放，找到最動人的構圖。（最多 4 張）
         </p>
       )}
 
-      <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
-        <Upload className="w-4 h-4" />
-        {busy ? "上傳中…" : "⬆️ 上傳照片"}
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={uploadImage}
-          disabled={busy}
-        />
-      </label>
+      {items.length < 4 ? (
+        <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
+          <Upload className="w-4 h-4" />
+          {busy ? "上傳中…（自動壓縮為 WebP）" : `⬆️ 上傳照片（${items.length}/4）`}
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={uploadImage}
+            disabled={busy}
+          />
+        </label>
+      ) : (
+        <p className="text-xs text-center text-muted-foreground py-3 rounded-2xl border border-dashed border-border/60">
+          已達 4 張上限，如需更換請先刪除既有照片。
+        </p>
+      )}
+
+      <p className="text-[11px] leading-relaxed text-muted-foreground/80 bg-secondary/40 rounded-xl px-3 py-2">
+        💡 建議上傳解析度高於 800×800px 的照片，並避免使用截圖，效果最好。系統會自動壓縮並轉為 WebP 格式，兼顧畫質與載入速度。
+      </p>
     </div>
   );
 }
