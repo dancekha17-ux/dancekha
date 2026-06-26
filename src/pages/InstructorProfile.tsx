@@ -605,6 +605,16 @@ export default function InstructorProfile() {
                   </motion.div>
                 )}
 
+                <div className="mt-4 flex justify-center">
+                  <button
+                    onClick={() => navigate(-1)}
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" /> 返回上一頁
+                  </button>
+                </div>
+
+
               </div>
             </aside>
           </div>
