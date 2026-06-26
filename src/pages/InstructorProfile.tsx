@@ -30,13 +30,37 @@ interface MomentMedia {
   offset_y: number;
 }
 
+interface PublishedCourse {
+  id: string;
+  title: string;
+  description: string | null;
+  schedule: string | null;
+  level: string | null;
+  price: string | null;
+  region: string | null;
+  service_type: string | null;
+  course_image_url: string | null;
+  location_address: string | null;
+  online_link: string | null;
+}
+
+const SERVICE_LABEL: Record<string, string> = {
+  in_person: "實體課程",
+  pre_recorded: "線上預錄",
+  event_ticket: "演出票券",
+  space_rental: "空間出租",
+};
+
 export default function InstructorProfile() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [instructor, setInstructor] = useState<(PublicInstructor & { isPreview?: boolean }) | null | undefined>(undefined);
   const [priceRevealed, setPriceRevealed] = useState(false);
   const [moments, setMoments] = useState<MomentMedia[]>([]);
+  const [publishedCourses, setPublishedCourses] = useState<PublishedCourse[]>([]);
   const coursesRef = useRef<HTMLDivElement | null>(null);
+  const courseListRef = useRef<HTMLDivElement | null>(null);
+
 
   useEffect(() => {
     if (!slug) return;
