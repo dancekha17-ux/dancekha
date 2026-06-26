@@ -20,8 +20,20 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState<"zh" | "en">("zh");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isLightHero = lightHeroPaths.includes(location.pathname);
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
