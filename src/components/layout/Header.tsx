@@ -74,13 +74,7 @@ export function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.querySelector(item.href);
-                  if (target) {
-                    target.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }
-                }}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className={`flow-line font-body text-sm transition-colors ${
                   isScrolled || isLightHero
                     ? "text-foreground hover:text-primary"
