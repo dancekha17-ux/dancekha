@@ -348,11 +348,11 @@ export default function InstructorProfile() {
                   <div className="flex items-center gap-2 mb-4">
                     <GraduationCap className="w-5 h-5 text-primary" />
                     <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                      開設課程 · COURSES
+                      實體課程/線上課程/營隊活動/演出票卷 · COURSES
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
-                    實體課程/線上課程/營隊活動/演出票卷
+                    開啟你的舞蹈旅程
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {publishedCourses.map((c) => (
