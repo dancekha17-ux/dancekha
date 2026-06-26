@@ -352,7 +352,7 @@ export default function InstructorProfile() {
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
-                    常態課程/最新活動
+                    實體課程/線上課程/營隊活動/演出票卷
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {publishedCourses.map((c) => (
