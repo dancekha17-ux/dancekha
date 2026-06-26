@@ -130,6 +130,37 @@ function CropCard({
   );
 }
 
+async function compressToWebp(file: File, maxDim = 1600, quality = 0.85): Promise<Blob> {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result as string);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = reject;
+    i.src = dataUrl;
+  });
+  let { width, height } = img;
+  const scale = Math.min(1, maxDim / Math.max(width, height));
+  width = Math.round(width * scale);
+  height = Math.round(height * scale);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas unsupported");
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, 0, 0, width, height);
+  const blob: Blob | null = await new Promise((resolve) =>
+    canvas.toBlob((b) => resolve(b), "image/webp", quality),
+  );
+  if (!blob) throw new Error("壓縮失敗");
+  return blob;
+}
+
 export function MediaEditor({ teacherId, userId }: Props) {
   const { toast } = useToast();
   const [items, setItems] = useState<MediaRow[]>([]);
