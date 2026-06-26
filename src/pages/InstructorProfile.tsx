@@ -186,7 +186,7 @@ export default function InstructorProfile() {
                     }
                     className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
                   >
-                    <GraduationCap className="w-4 h-4" /> 查看開設課程（{publishedCourses.length}）
+                    <GraduationCap className="w-4 h-4" /> 跟著老師一起跳（{publishedCourses.length}）
                   </button>
                 )}
 
