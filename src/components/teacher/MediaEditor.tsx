@@ -130,6 +130,37 @@ function CropCard({
   );
 }
 
+async function compressToWebp(file: File, maxDim = 1600, quality = 0.85): Promise<Blob> {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result as string);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = reject;
+    i.src = dataUrl;
+  });
+  let { width, height } = img;
+  const scale = Math.min(1, maxDim / Math.max(width, height));
+  width = Math.round(width * scale);
+  height = Math.round(height * scale);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas unsupported");
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, 0, 0, width, height);
+  const blob: Blob | null = await new Promise((resolve) =>
+    canvas.toBlob((b) => resolve(b), "image/webp", quality),
+  );
+  if (!blob) throw new Error("壓縮失敗");
+  return blob;
+}
+
 export function MediaEditor({ teacherId, userId }: Props) {
   const { toast } = useToast();
   const [items, setItems] = useState<MediaRow[]>([]);
@@ -182,17 +213,22 @@ export function MediaEditor({ teacherId, userId }: Props) {
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 8 * 1024 * 1024) {
-      toast({ title: "圖片過大", description: "請上傳 8MB 以內", variant: "destructive" });
+    if (items.length >= 4) {
+      toast({ title: "已達上限", description: "課堂精彩瞬間最多上傳 4 張照片", variant: "destructive" });
+      e.target.value = "";
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      toast({ title: "圖片過大", description: "請上傳 15MB 以內", variant: "destructive" });
       return;
     }
     setBusy(true);
     try {
-      const ext = file.name.split(".").pop();
-      const path = `${userId}/gallery-${Date.now()}.${ext}`;
+      const webpBlob = await compressToWebp(file, 1600, 0.85);
+      const path = `${userId}/gallery-${Date.now()}.webp`;
       const { error } = await supabase.storage
         .from("instructor-media")
-        .upload(path, file, { contentType: file.type });
+        .upload(path, webpBlob, { contentType: "image/webp", cacheControl: "31536000" });
       if (error) throw error;
       const { data } = supabase.storage.from("instructor-media").getPublicUrl(path);
       await addRow({ kind: "image", url: data.publicUrl, scale: 1, offset_x: 0, offset_y: 0 });
@@ -221,21 +257,31 @@ export function MediaEditor({ teacherId, userId }: Props) {
 
       {items.length > 0 && (
         <p className="text-xs text-muted-foreground -mt-2">
-          ✨ 上傳後可拖曳調整位置、用滑桿縮放，找到最動人的構圖。
+          ✨ 上傳後可拖曳調整位置、用滑桿縮放，找到最動人的構圖。（最多 4 張）
         </p>
       )}
 
-      <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
-        <Upload className="w-4 h-4" />
-        {busy ? "上傳中…" : "⬆️ 上傳照片"}
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={uploadImage}
-          disabled={busy}
-        />
-      </label>
+      {items.length < 4 ? (
+        <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
+          <Upload className="w-4 h-4" />
+          {busy ? "上傳中…（自動壓縮為 WebP）" : `⬆️ 上傳照片（${items.length}/4）`}
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={uploadImage}
+            disabled={busy}
+          />
+        </label>
+      ) : (
+        <p className="text-xs text-center text-muted-foreground py-3 rounded-2xl border border-dashed border-border/60">
+          已達 4 張上限，如需更換請先刪除既有照片。
+        </p>
+      )}
+
+      <p className="text-[11px] leading-relaxed text-muted-foreground/80 bg-secondary/40 rounded-xl px-3 py-2">
+        💡 建議上傳解析度高於 800×800px 的照片，並避免使用截圖，效果最好。系統會自動壓縮並轉為 WebP 格式，兼顧畫質與載入速度。
+      </p>
     </div>
   );
 }

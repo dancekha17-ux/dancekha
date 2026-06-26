@@ -585,19 +585,18 @@ export default function InstructorProfile() {
                       課堂精彩瞬間 · Moments
                     </p>
                     <div className="grid grid-cols-2 gap-2">
-                      {moments.slice(0, 6).map((m) => (
+                      {moments.slice(0, 4).map((m) => (
                         <figure
                           key={m.id}
-                          className="relative aspect-square rounded-lg overflow-hidden bg-secondary"
+                          className="relative aspect-square rounded-lg overflow-hidden bg-secondary/60 flex items-center justify-center"
                         >
                           <img
                             src={m.url}
                             alt={m.caption || "課堂瞬間"}
-                            className="absolute inset-0 w-full h-full object-cover"
-                            style={{
-                              transform: `translate(${m.offset_x}px, ${m.offset_y}px) scale(${m.scale || 1})`,
-                              transformOrigin: "center",
-                            }}
+                            loading="lazy"
+                            decoding="async"
+                            sizes="(max-width: 768px) 50vw, 400px"
+                            className="max-w-full max-h-full object-contain"
                           />
                         </figure>
                       ))}
