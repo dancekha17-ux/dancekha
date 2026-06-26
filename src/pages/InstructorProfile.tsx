@@ -192,6 +192,19 @@ export default function InstructorProfile() {
                 >
                   回師資團隊
                 </Link>
+                {publishedCourses.length > 0 && (
+                  <>
+                    <span className="text-muted-foreground/40">·</span>
+                    <button
+                      onClick={() =>
+                        courseListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                      }
+                      className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+                    >
+                      <GraduationCap className="w-4 h-4" /> 查看開設課程（{publishedCourses.length}）
+                    </button>
+                  </>
+                )}
               </div>
               <h1 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-1">
                 {instructor.name}
