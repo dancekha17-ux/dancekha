@@ -348,7 +348,7 @@ export default function InstructorProfile() {
                   <div className="flex items-center gap-2 mb-4">
                     <GraduationCap className="w-5 h-5 text-primary" />
                     <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                      實體課程/線上課程/營隊活動/演出票卷 · COURSES
+                      實體課程/線上課程/營隊活動/演出票卷 · COURSES/CAMPS/EVENT
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
