@@ -133,14 +133,7 @@ export function Header() {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMobileMenuOpen(false);
-                    const target = document.querySelector(item.href);
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="block py-2 text-foreground hover:text-primary transition-colors"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
