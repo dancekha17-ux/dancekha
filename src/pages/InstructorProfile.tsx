@@ -584,11 +584,11 @@ export default function InstructorProfile() {
                     <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
                       課堂精彩瞬間 · Moments
                     </p>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-[5px] rounded-lg overflow-hidden border border-border/60 bg-secondary/40">
                       {moments.slice(0, 4).map((m) => (
                         <figure
                           key={m.id}
-                          className="relative aspect-square rounded-lg overflow-hidden bg-secondary/60 flex items-center justify-center"
+                          className="relative aspect-square overflow-hidden bg-secondary/60 group"
                         >
                           <img
                             src={m.url}
@@ -596,7 +596,7 @@ export default function InstructorProfile() {
                             loading="lazy"
                             decoding="async"
                             sizes="(max-width: 768px) 50vw, 400px"
-                            className="max-w-full max-h-full object-contain"
+                            className="w-full h-full object-cover object-center transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-105"
                           />
                         </figure>
                       ))}
