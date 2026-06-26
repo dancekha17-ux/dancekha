@@ -76,13 +76,22 @@ export default function InstructorProfile() {
         .eq("slug", slug)
         .maybeSingle();
       if (!tp) return;
+      const teacherId = (tp as any).id;
       const { data } = await (supabase as any)
         .from("instructor_media")
         .select("id,url,caption,scale,offset_x,offset_y,sort_order")
-        .eq("teacher_id", (tp as any).id)
+        .eq("teacher_id", teacherId)
         .eq("kind", "image")
         .order("sort_order", { ascending: true });
       setMoments((data as MomentMedia[]) ?? []);
+      const { data: courseData } = await (supabase as any)
+        .from("instructor_courses")
+        .select("id,title,description,schedule,level,price,region,service_type,course_image_url,location_address,online_link,sort_order")
+        .eq("teacher_id", teacherId)
+        .eq("status", "published")
+        .order("sort_order", { ascending: true });
+      setPublishedCourses((courseData as PublishedCourse[]) ?? []);
+
     })();
   }, [slug]);
 
