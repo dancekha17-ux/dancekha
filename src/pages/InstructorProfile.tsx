@@ -348,7 +348,99 @@ export default function InstructorProfile() {
                   </ul>
                 </motion.div>
               )}
+
+              {/* 開設課程 · Courses */}
+              {publishedCourses.length > 0 && (
+                <motion.div
+                  ref={courseListRef}
+                  id="teacher-courses"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="scroll-mt-28"
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <GraduationCap className="w-5 h-5 text-primary" />
+                    <span className="text-xs uppercase tracking-widest text-primary font-medium">
+                      開設課程 · COURSES
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
+                    跟隨引導者一起舞動
+                  </h2>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {publishedCourses.map((c) => (
+                      <article
+                        key={c.id}
+                        className="group card-elevated overflow-hidden border border-border/50 flex flex-col"
+                      >
+                        {c.course_image_url && (
+                          <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                            <img
+                              src={c.course_image_url}
+                              alt={c.title}
+                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                            />
+                          </div>
+                        )}
+                        <div className="p-5 flex-1 flex flex-col">
+                          <div className="flex items-center gap-2 mb-2">
+                            {c.service_type && (
+                              <span className="px-2 py-0.5 text-[10px] rounded-full bg-primary/10 text-primary font-medium">
+                                {SERVICE_LABEL[c.service_type] || c.service_type}
+                              </span>
+                            )}
+                            {c.level && (
+                              <span className="px-2 py-0.5 text-[10px] rounded-full bg-soul/10 text-soul font-medium">
+                                {c.level}
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="font-display text-lg text-foreground mb-2 leading-snug">
+                            {c.title}
+                          </h3>
+                          {c.description && (
+                            <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+                              {c.description}
+                            </p>
+                          )}
+                          <div className="mt-auto space-y-1.5 text-xs text-muted-foreground">
+                            {c.schedule && (
+                              <p className="inline-flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5" /> {c.schedule}
+                              </p>
+                            )}
+                            {(c.region || c.location_address) && (
+                              <p className="inline-flex items-center gap-1.5">
+                                <MapPin className="w-3.5 h-3.5" />
+                                {c.region}
+                                {c.region && c.location_address ? " · " : ""}
+                                {c.location_address}
+                              </p>
+                            )}
+                            {c.price && (
+                              <p className="font-medium text-foreground/80">{c.price}</p>
+                            )}
+                          </div>
+                          {c.online_link && (
+                            <a
+                              href={c.online_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 inline-flex items-center justify-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium"
+                            >
+                              前往課程連結 ↗
+                            </a>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
+
 
             {/* Right sticky booking */}
             <aside className="lg:block">
