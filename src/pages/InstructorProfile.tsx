@@ -13,6 +13,7 @@ import {
   Sparkles,
   Star,
   Users2,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/layout/Header";
