@@ -56,7 +56,7 @@ export function InstructorsSection() {
           </h2>
           <p className="text-fluid-lead text-muted-foreground font-body">
             每一位老師都是文化傳遞者，
-            帶著獨特的故事、節奏與風土，等待與你相遇。
+            帶著獨特的故事與節奏，等待與你相遇。
           </p>
           {activeRegion && (
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBF5EC] border border-[#E8DCC4] text-sm font-body text-[#9C5A2E]">
