@@ -370,7 +370,7 @@ export default function InstructorProfile() {
                           </div>
                         )}
                         <div className="p-5 flex-1 flex flex-col">
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="flex flex-col items-start gap-1.5 mb-3">
                             {c.service_type && (
                               <span className="px-2 py-0.5 text-[10px] rounded-full bg-primary/10 text-primary font-medium">
                                 {SERVICE_LABEL[c.service_type] || c.service_type}
@@ -382,15 +382,15 @@ export default function InstructorProfile() {
                               </span>
                             )}
                           </div>
-                          <h3 className="font-display text-lg text-foreground mb-2 leading-snug">
+                          <h3 className="font-display text-lg text-foreground mb-3 leading-snug">
                             {c.title}
                           </h3>
                           {c.description && (
-                            <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+                            <p className="text-sm text-muted-foreground mb-4 whitespace-pre-wrap">
                               {c.description}
                             </p>
                           )}
-                          <div className="mt-auto space-y-1.5 text-xs text-muted-foreground">
+                          <div className="mt-auto space-y-4 text-xs text-muted-foreground">
                             {c.schedule && (
                               <p className="inline-flex items-center gap-1.5">
                                 <Clock className="w-3.5 h-3.5" /> {c.schedule}
