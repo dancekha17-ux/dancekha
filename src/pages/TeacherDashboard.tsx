@@ -1027,8 +1027,6 @@ export default function TeacherDashboard() {
       </main>
 
 
-        </div>
-      </div>
 
       {/* Wave decoration footer */}
       <div className="relative h-24 overflow-hidden hidden lg:block" aria-hidden="true">
