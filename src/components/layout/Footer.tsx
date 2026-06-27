@@ -15,7 +15,7 @@ const footerLinks = {
     title: "關於我們",
     links: [
       { label: "品牌故事", href: "/#about" },
-      { label: "師資團隊", href: "/#instructors" },
+      { label: "引導者團隊", href: "/#instructors" },
       { label: "合作夥伴", href: "/register" },
       { label: "加入我們", href: "/register" },
     ],
