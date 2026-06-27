@@ -146,15 +146,30 @@ export function InstructorsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center mt-12"
+          className="mt-16 text-center"
         >
-          <Link
-            to="/styles"
-            className="inline-flex items-center gap-2 text-primary font-medium flow-line hover:gap-3 transition-all"
-          >
-            探索全球舞種總覽
-            <span>→</span>
-          </Link>
+          <div className="inline-block max-w-xl mx-auto px-8 py-8 rounded-2xl bg-background/60 border border-border/60 backdrop-blur-sm">
+            <p className="eyebrow !mb-3">Join Us · 加入引導者聚落</p>
+            <p className="text-base font-body text-muted-foreground mb-5 leading-relaxed">
+              你也用生命在跳舞嗎？讓你的文化故事，成為下一位學員啟程的起點。
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <Link
+                to="/register"
+                className="inline-flex items-center gap-2 text-primary font-medium flow-line hover:gap-3 transition-all"
+              >
+                成為舞島咖引導者
+                <span>→</span>
+              </Link>
+              <Link
+                to="/styles"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body"
+              >
+                探索全球舞種總覽
+                <span>→</span>
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
