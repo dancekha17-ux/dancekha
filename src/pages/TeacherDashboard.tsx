@@ -358,79 +358,8 @@ export default function TeacherDashboard() {
   const step3Done = false; // 待第三步完成後啟用
   const coursesUnlocked = step1Done && step2Done; // 必須完成品牌專頁 + 簽署協議
 
-  const SavePanel = (
-    <div className="space-y-4">
-      <div className="rounded-3xl border border-[#E63946]/15 bg-white shadow-soft p-5">
-        <div className="flex items-center gap-2 text-xs mb-3">
-          {dirty ? (
-            <>
-              <Circle className="w-2.5 h-2.5 fill-[#E63946] text-[#E63946]" />
-              <span className="text-[#E63946]">有未儲存的變更</span>
-            </>
-          ) : (
-            <>
-              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
-              <span className="text-muted-foreground">所有變更皆已儲存</span>
-            </>
-          )}
-        </div>
-        <Button
-          onClick={handleSave}
-          disabled={saving}
-          size="lg"
-          className="w-full text-white hover:opacity-90"
-          style={{ backgroundColor: "#E63946" }}
-        >
-          <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
-        </Button>
-        <Button asChild variant="outline" size="lg" className="w-full mt-2">
-          <Link to="/teacher/preview">
-            <Eye className="w-4 h-4" /> 預覽專頁
-          </Link>
-        </Button>
+  // Header now hosts Save / Preview / Submit / Map actions (see header JSX below).
 
-        {/* 申請刊登 — primary submit-for-review CTA */}
-        <div className="mt-3 pt-3 border-t border-dashed border-[#E89B5C]/40">
-          <Button
-            onClick={handleSubmitForReview}
-            disabled={submitting || !coursesUnlocked || dirty}
-            size="lg"
-            className="w-full text-white shadow-glow hover:opacity-95 ring-2 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60 transition-all"
-            style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
-          >
-            <Send className="w-4 h-4" /> {submitting ? "送出中…" : "申請刊登"}
-          </Button>
-          <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
-            {coursesUnlocked
-              ? "一鍵將所有完整的草稿提交給舞島咖團隊審閱，預計 2 個工作天內回覆。"
-              : "完成「品牌專頁」與「合作協議」後即可申請刊登。"}
-          </p>
-        </div>
-
-        <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
-          所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
-        </p>
-      </div>
-
-
-      {/* Dedicated brand-page (map card) preview */}
-      <div className="rounded-3xl border border-[#E89B5C]/30 bg-gradient-to-br from-[#FFF5E6] to-white shadow-soft p-5">
-        <div className="flex items-center gap-2 mb-2">
-          <MapPin className="w-4 h-4 text-[#E89B5C]" />
-          <span className="eyebrow" style={{ color: "#E89B5C" }}>Brand Card</span>
-        </div>
-        <h3 className="font-display text-base text-foreground mb-1">品牌專頁預覽</h3>
-        <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
-          即便還沒發佈課程,也能先看看自己在世界地圖上的專屬名片長什麼樣子。
-        </p>
-        <Button asChild variant="outline" size="sm" className="w-full border-[#E89B5C]/50 text-[#B25C2E] hover:bg-[#E89B5C]/10">
-          <Link to="/teacher/preview?card=1">
-            <Eye className="w-4 h-4" /> 預覽地圖名片
-          </Link>
-        </Button>
-      </div>
-    </div>
-  );
 
   const steps = [
     { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done, href: "#identity" },
