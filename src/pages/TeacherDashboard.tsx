@@ -792,7 +792,7 @@ export default function TeacherDashboard() {
             <SectionCard
               eyebrow="Story"
               title="關於我/團隊"
-              description="像跟新朋友聊天一樣，分享你怎麼開始跳舞。"
+              description="像跟新朋友聊天一樣，分享你怎麼開始跳舞/介紹團隊或品牌。"
             >
               <div className="space-y-3">
                 <Textarea
