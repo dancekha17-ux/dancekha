@@ -548,10 +548,11 @@ export default function TeacherDashboard() {
       </header>
 
 
-      <main className="container-wide mx-auto py-10 md:py-16 px-4 pb-32 lg:pb-16 max-w-6xl">
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10">
+      <main className="container-wide mx-auto py-10 md:py-16 px-4 max-w-4xl">
+        <div>
           {/* Form column */}
-          <div className="min-w-0 max-w-3xl">
+          <div className="min-w-0">
+
             {revisionAlerts.length > 0 && (
               <section className="mb-8 rounded-3xl border-2 border-destructive/40 bg-destructive/5 p-5 md:p-6">
                 <div className="flex items-start gap-3">
