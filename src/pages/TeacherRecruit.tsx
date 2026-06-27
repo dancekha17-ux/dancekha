@@ -295,7 +295,7 @@ export default function TeacherRecruit() {
               >
                 成為引導者的
                 <span className="italic" style={{ color: PALETTE.accent }}>
-                  四大優勢
+                  四種力量
                 </span>
               </h2>
             </motion.div>
