@@ -791,7 +791,7 @@ export default function TeacherDashboard() {
             {/* Story */}
             <SectionCard
               eyebrow="Story"
-              title="關於我"
+              title="關於我/團隊"
               description="像跟新朋友聊天一樣，分享你怎麼開始跳舞。"
             >
               <div className="space-y-3">
