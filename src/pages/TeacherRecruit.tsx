@@ -145,6 +145,7 @@ export default function TeacherRecruit() {
   const ctaInView = useInView(ctaRef, { once: true, margin: "-80px" });
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openCardIndex, setOpenCardIndex] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: PALETTE.bg }}>
@@ -300,54 +301,79 @@ export default function TeacherRecruit() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {valueCards.map((card, index) => (
-                <motion.div
-                  key={card.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={cardsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.12 * (index + 1) }}
-                  className="group rounded-2xl p-8 transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    backgroundColor: PALETTE.surface,
-                    border: `1px solid ${PALETTE.border}`,
-                  }}
-                >
-                  <div className="flex items-start gap-5">
-                    <div
-                      className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-2xl"
-                      style={{
-                        backgroundColor: "#F5EDE3",
-                        border: `1px solid ${PALETTE.border}`,
-                      }}
-                      aria-hidden
-                    >
-                      <span>{card.emoji}</span>
-                    </div>
-                    <div className="flex-1">
-                      <h3
-                        className="font-display font-medium mb-3"
+              {valueCards.map((card, index) => {
+                const isOpen = openCardIndex === index;
+                return (
+                  <motion.button
+                    key={card.title}
+                    type="button"
+                    onClick={() => setOpenCardIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={cardsInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.7, delay: 0.12 * (index + 1) }}
+                    className="group text-left rounded-2xl p-8 transition-all duration-300 hover:shadow-lg cursor-pointer"
+                    style={{
+                      backgroundColor: PALETTE.surface,
+                      border: `1px solid ${PALETTE.border}`,
+                    }}
+                  >
+                    <div className="flex items-start gap-6">
+                      <div
+                        className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center text-4xl md:text-5xl transition-transform duration-300 group-hover:scale-105"
                         style={{
-                          fontSize: "1.2rem",
-                          lineHeight: 1.4,
-                          color: PALETTE.ink,
+                          backgroundColor: "#F5EDE3",
+                          border: `1px solid ${PALETTE.border}`,
                         }}
+                        aria-hidden
                       >
-                        {card.title}
-                      </h3>
-                      <p
-                        className="font-body"
-                        style={{
-                          fontSize: "0.95rem",
-                          lineHeight: 1.75,
-                          color: PALETTE.inkMuted,
-                        }}
-                      >
-                        {card.description}
-                      </p>
+                        <span>{card.emoji}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3
+                          className="font-display font-medium"
+                          style={{
+                            fontSize: "clamp(1.4rem, 1.2vw + 0.9rem, 1.8rem)",
+                            lineHeight: 1.35,
+                            color: PALETTE.ink,
+                          }}
+                        >
+                          {card.title}
+                        </h3>
+                        <motion.div
+                          initial={false}
+                          animate={{
+                            height: isOpen ? "auto" : 0,
+                            opacity: isOpen ? 1 : 0,
+                            marginTop: isOpen ? 16 : 0,
+                          }}
+                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          style={{ overflow: "hidden" }}
+                        >
+                          <p
+                            className="font-body"
+                            style={{
+                              fontSize: "0.95rem",
+                              lineHeight: 1.75,
+                              color: PALETTE.inkMuted,
+                            }}
+                          >
+                            {card.description}
+                          </p>
+                        </motion.div>
+                        {!isOpen && (
+                          <p
+                            className="font-body mt-3 text-xs tracking-wider opacity-60 group-hover:opacity-100 transition-opacity"
+                            style={{ color: PALETTE.inkMuted }}
+                          >
+                            點擊展開說明 →
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         </section>
