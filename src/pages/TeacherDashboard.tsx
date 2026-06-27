@@ -385,7 +385,7 @@ export default function TeacherDashboard() {
         </Button>
         <Button asChild variant="outline" size="lg" className="w-full mt-2">
           <Link to="/teacher/preview">
-            <Eye className="w-4 h-4" /> 預覽完整頁面
+            <Eye className="w-4 h-4" /> 預覽專頁
           </Link>
         </Button>
 
