@@ -147,7 +147,7 @@ export function Header() {
                 </Button>
                 <Button asChild variant="hero" className="flex-1">
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    {lang === "zh" ? "師資登入" : "Master Login"}
+                    {lang === "zh" ? "引導者登入" : "Master Login"}
                   </Link>
                 </Button>
               </div>
