@@ -358,79 +358,8 @@ export default function TeacherDashboard() {
   const step3Done = false; // 待第三步完成後啟用
   const coursesUnlocked = step1Done && step2Done; // 必須完成品牌專頁 + 簽署協議
 
-  const SavePanel = (
-    <div className="space-y-4">
-      <div className="rounded-3xl border border-[#E63946]/15 bg-white shadow-soft p-5">
-        <div className="flex items-center gap-2 text-xs mb-3">
-          {dirty ? (
-            <>
-              <Circle className="w-2.5 h-2.5 fill-[#E63946] text-[#E63946]" />
-              <span className="text-[#E63946]">有未儲存的變更</span>
-            </>
-          ) : (
-            <>
-              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
-              <span className="text-muted-foreground">所有變更皆已儲存</span>
-            </>
-          )}
-        </div>
-        <Button
-          onClick={handleSave}
-          disabled={saving}
-          size="lg"
-          className="w-full text-white hover:opacity-90"
-          style={{ backgroundColor: "#E63946" }}
-        >
-          <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
-        </Button>
-        <Button asChild variant="outline" size="lg" className="w-full mt-2">
-          <Link to="/teacher/preview">
-            <Eye className="w-4 h-4" /> 預覽專頁
-          </Link>
-        </Button>
+  // Header now hosts Save / Preview / Submit / Map actions (see header JSX below).
 
-        {/* 申請刊登 — primary submit-for-review CTA */}
-        <div className="mt-3 pt-3 border-t border-dashed border-[#E89B5C]/40">
-          <Button
-            onClick={handleSubmitForReview}
-            disabled={submitting || !coursesUnlocked || dirty}
-            size="lg"
-            className="w-full text-white shadow-glow hover:opacity-95 ring-2 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60 transition-all"
-            style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
-          >
-            <Send className="w-4 h-4" /> {submitting ? "送出中…" : "申請刊登"}
-          </Button>
-          <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
-            {coursesUnlocked
-              ? "一鍵將所有完整的草稿提交給舞島咖團隊審閱，預計 2 個工作天內回覆。"
-              : "完成「品牌專頁」與「合作協議」後即可申請刊登。"}
-          </p>
-        </div>
-
-        <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
-          所有變更都會在你點下「儲存」後同步至個人名片、世界地圖與平台首頁。
-        </p>
-      </div>
-
-
-      {/* Dedicated brand-page (map card) preview */}
-      <div className="rounded-3xl border border-[#E89B5C]/30 bg-gradient-to-br from-[#FFF5E6] to-white shadow-soft p-5">
-        <div className="flex items-center gap-2 mb-2">
-          <MapPin className="w-4 h-4 text-[#E89B5C]" />
-          <span className="eyebrow" style={{ color: "#E89B5C" }}>Brand Card</span>
-        </div>
-        <h3 className="font-display text-base text-foreground mb-1">品牌專頁預覽</h3>
-        <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
-          即便還沒發佈課程,也能先看看自己在世界地圖上的專屬名片長什麼樣子。
-        </p>
-        <Button asChild variant="outline" size="sm" className="w-full border-[#E89B5C]/50 text-[#B25C2E] hover:bg-[#E89B5C]/10">
-          <Link to="/teacher/preview?card=1">
-            <Eye className="w-4 h-4" /> 預覽地圖名片
-          </Link>
-        </Button>
-      </div>
-    </div>
-  );
 
   const steps = [
     { icon: UserCircle2, label: "完善品牌專頁", hint: "個人介紹與背景", done: step1Done, active: !step1Done, href: "#identity" },
@@ -450,7 +379,7 @@ export default function TeacherDashboard() {
             <span className="eyebrow hidden sm:inline">GUIDES' LOUNGE</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1">
             {[
               { href: "#identity", label: "個人檔案" },
               { href: "#courses", label: "課程與活動" },
@@ -466,11 +395,57 @@ export default function TeacherDashboard() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm">
+          {/* Integrated action bar (replaces right sidebar SavePanel) */}
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <span
+              className="hidden md:inline-flex items-center gap-1.5 text-[11px] mr-1"
+              aria-live="polite"
+            >
+              {dirty ? (
+                <>
+                  <Circle className="w-2 h-2 fill-[#E63946] text-[#E63946]" />
+                  <span className="text-[#E63946]">未儲存</span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="w-3 h-3 text-success" />
+                  <span className="text-muted-foreground">已儲存</span>
+                </>
+              )}
+            </span>
+
+            <Button
+              onClick={handleSave}
+              disabled={saving}
+              size="sm"
+              className="text-white hover:opacity-90"
+              style={{ backgroundColor: "#E63946" }}
+            >
+              <Save className="w-4 h-4" /> <span className="hidden sm:inline">{saving ? "儲存中…" : "儲存變更"}</span>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
               <Link to="/teacher/preview">
-                <Eye className="w-4 h-4" /> <span className="hidden sm:inline">預覽</span>
+                <Eye className="w-4 h-4" /> 預覽專頁
               </Link>
+            </Button>
+            <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex border border-[#E89B5C]/40 text-[#B25C2E] hover:bg-[#E89B5C]/10">
+              <Link to="/teacher/preview?card=1">
+                <MapPin className="w-4 h-4" /> 預覽地圖
+              </Link>
+            </Button>
+            <Button
+              onClick={handleSubmitForReview}
+              disabled={submitting || !coursesUnlocked || dirty}
+              size="sm"
+              className="text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
+              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+              title={
+                coursesUnlocked
+                  ? "一鍵將草稿提交給舞島咖團隊審閱"
+                  : "請先完成品牌專頁與合作協議"
+              }
+            >
+              <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請刊登"}</span>
             </Button>
             <Button
               variant="ghost"
@@ -480,11 +455,11 @@ export default function TeacherDashboard() {
                 navigate("/");
               }}
             >
-              <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">登出</span>
+              <LogOut className="w-4 h-4" />
             </Button>
           </div>
         </div>
-        <div className="md:hidden border-t border-[#E63946]/10 px-4 py-2 flex gap-2 overflow-x-auto">
+        <div className="xl:hidden border-t border-[#E63946]/10 px-4 py-2 flex gap-2 overflow-x-auto">
           {[
             { href: "#identity", label: "個人檔案" },
             { href: "#courses", label: "課程與活動" },
@@ -501,10 +476,12 @@ export default function TeacherDashboard() {
         </div>
       </header>
 
-      <main className="container-wide mx-auto py-10 md:py-16 px-4 pb-32 lg:pb-16 max-w-6xl">
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-10">
+
+      <main className="container-wide mx-auto py-10 md:py-16 px-4 max-w-4xl">
+        <div>
           {/* Form column */}
-          <div className="min-w-0 max-w-3xl">
+          <div className="min-w-0">
+
             {revisionAlerts.length > 0 && (
               <section className="mb-8 rounded-3xl border-2 border-destructive/40 bg-destructive/5 p-5 md:p-6">
                 <div className="flex items-start gap-3">
@@ -975,43 +952,10 @@ export default function TeacherDashboard() {
             </div>
           </div>
 
-
-          {/* Sticky save panel (desktop) */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">{SavePanel}</div>
-          </aside>
         </div>
       </main>
 
-      {/* Mobile fixed save bar */}
-      <div
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#E63946]/15 bg-[#FFF5E6]/90 backdrop-blur shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-4 py-3"
-      >
-        <div className="container-wide mx-auto flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-[11px] min-w-0 flex-1">
-            {dirty ? (
-              <>
-                <Circle className="w-2 h-2 fill-[#E63946] text-[#E63946] shrink-0" />
-                <span className="text-[#E63946] truncate">有未儲存的變更</span>
-              </>
-            ) : (
-              <>
-                <CheckCircle2 className="w-3 h-3 text-success shrink-0" />
-                <span className="text-muted-foreground truncate">已儲存</span>
-              </>
-            )}
-          </div>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            size="lg"
-            className="text-white hover:opacity-90"
-            style={{ backgroundColor: "#E63946" }}
-          >
-            <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
-          </Button>
-        </div>
-      </div>
+
 
       {/* Wave decoration footer */}
       <div className="relative h-24 overflow-hidden hidden lg:block" aria-hidden="true">
