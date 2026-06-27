@@ -49,6 +49,24 @@ export function CTASection() {
               預約一場參觀
             </a>
           </div>
+
+          {/* 引導者邀請 · Join Us */}
+          <div className="mt-16 pt-10 border-t border-border/40 max-w-2xl mx-auto">
+            <div className="flex items-center justify-center gap-2 mb-3 text-primary">
+              <Sparkles className="w-4 h-4" />
+              <span className="eyebrow !mb-0">Join Us · 加入引導者聚落</span>
+            </div>
+            <p className="text-base text-muted-foreground font-body mb-5">
+              你也是用生命跳舞的人嗎？加入舞島咖，讓世界看見你的文化舞步。
+            </p>
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 text-primary font-medium flow-line hover:gap-3 transition-all"
+            >
+              成為舞島咖引導者
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
