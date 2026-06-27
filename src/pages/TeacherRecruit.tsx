@@ -336,6 +336,7 @@ export default function TeacherRecruit() {
                             fontSize: "clamp(1.4rem, 1.2vw + 0.9rem, 1.8rem)",
                             lineHeight: 1.35,
                             color: PALETTE.ink,
+                            whiteSpace: "pre-line",
                           }}
                         >
                           {card.title}
