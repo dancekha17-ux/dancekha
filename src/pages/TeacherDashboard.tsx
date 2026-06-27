@@ -842,8 +842,8 @@ export default function TeacherDashboard() {
             <div id="media" className="scroll-mt-24">
               <SectionCard
                 eyebrow="Moments"
-                title="課堂精彩瞬間"
-                description="上傳 1~3 張真實的課堂照片,充滿笑容與溫度的畫面最能打動學員！"
+                title="課堂瞬間/教室環境"
+                description="精選 1~4 張真實的課堂照片/環境氛圍，或充滿笑容與溫度的畫面~最能打動學員！"
               >
                 <MediaEditor teacherId={profile.id} userId={user!.id} />
               </SectionCard>
