@@ -14,17 +14,17 @@ const footerLinks = {
   about: {
     title: "關於我們",
     links: [
-      { label: "品牌故事", href: "#" },
-      { label: "師資團隊", href: "#" },
-      { label: "合作夥伴", href: "#" },
-      { label: "加入我們", href: "#" },
+      { label: "品牌故事", href: "/#about" },
+      { label: "師資團隊", href: "/#instructors" },
+      { label: "合作夥伴", href: "/register" },
+      { label: "加入我們", href: "/register" },
     ],
   },
   support: {
     title: "支援",
     links: [
-      { label: "常見問題", href: "#" },
-      { label: "聯絡我們", href: "#" },
+      { label: "常見問題", href: "/register#faq" },
+      { label: "聯絡我們", href: "mailto:hello@dancekha.tw" },
       { label: "隱私政策", href: "#" },
       { label: "服務條款", href: "#" },
     ],
