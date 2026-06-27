@@ -1023,41 +1023,10 @@ export default function TeacherDashboard() {
             </div>
           </div>
 
-
-          {/* Sticky save panel (desktop) */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">{SavePanel}</div>
-          </aside>
         </div>
       </main>
 
-      {/* Mobile fixed save bar */}
-      <div
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#E63946]/15 bg-[#FFF5E6]/90 backdrop-blur shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-4 py-3"
-      >
-        <div className="container-wide mx-auto flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-[11px] min-w-0 flex-1">
-            {dirty ? (
-              <>
-                <Circle className="w-2 h-2 fill-[#E63946] text-[#E63946] shrink-0" />
-                <span className="text-[#E63946] truncate">有未儲存的變更</span>
-              </>
-            ) : (
-              <>
-                <CheckCircle2 className="w-3 h-3 text-success shrink-0" />
-                <span className="text-muted-foreground truncate">已儲存</span>
-              </>
-            )}
-          </div>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            size="lg"
-            className="text-white hover:opacity-90"
-            style={{ backgroundColor: "#E63946" }}
-          >
-            <Save className="w-4 h-4" /> {saving ? "儲存中…" : "儲存變更"}
-          </Button>
+
         </div>
       </div>
 
