@@ -145,6 +145,7 @@ export default function TeacherRecruit() {
   const ctaInView = useInView(ctaRef, { once: true, margin: "-80px" });
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openCardIndex, setOpenCardIndex] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: PALETTE.bg }}>
