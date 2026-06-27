@@ -214,7 +214,7 @@ export function MediaEditor({ teacherId, userId }: Props) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (items.length >= 4) {
-      toast({ title: "已達上限", description: "課堂精彩瞬間最多上傳 4 張照片", variant: "destructive" });
+      toast({ title: "已達上限", description: "課堂照片/環境氛圍最多上傳 4 張照片", variant: "destructive" });
       e.target.value = "";
       return;
     }
