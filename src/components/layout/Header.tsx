@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
    { label: "關於我們", labelEn: "About", href: "#about" },
    { label: "課程探索", labelEn: "Courses", href: "#courses" },
-   { label: "師資團隊", labelEn: "Instructors", href: "#instructors" },
+   { label: "引導者團隊", labelEn: "Instructors", href: "#instructors" },
    { label: "舞遍世界", labelEn: "Global Styles", href: "#world-folk" },
    { label: "社群日常", labelEn: "Community", href: "#community" },
    { label: "行事曆總覽", labelEn: "Events", href: "#events" },
@@ -103,7 +103,7 @@ export function Header() {
               <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "師資登入" : "Master Login"}</Link>
+              <Link to="/teacher/login">{lang === "zh" ? "引導者登入" : "Master Login"}</Link>
             </Button>
           </div>
 
@@ -147,7 +147,7 @@ export function Header() {
                 </Button>
                 <Button asChild variant="hero" className="flex-1">
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    {lang === "zh" ? "師資登入" : "Master Login"}
+                    {lang === "zh" ? "引導者登入" : "Master Login"}
                   </Link>
                 </Button>
               </div>

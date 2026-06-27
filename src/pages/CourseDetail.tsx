@@ -173,7 +173,7 @@ export default function CourseDetail() {
                 </div>
               </motion.div>
 
-              {/* 師資團隊 */}
+              {/* 引導者團隊 */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -183,7 +183,7 @@ export default function CourseDetail() {
                 <div className="flex items-center gap-2 mb-4">
                   <UserCircle2 className="w-5 h-5 text-primary" />
                   <span className="text-xs uppercase tracking-widest text-primary font-medium">
-                    師資團隊 · Your Instructor
+                    引導者團隊 · Your Instructor
                   </span>
                 </div>
                 <div className="card-elevated p-6 md:p-8 flex flex-col sm:flex-row gap-6 items-start">

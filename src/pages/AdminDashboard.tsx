@@ -232,7 +232,7 @@ export default function AdminDashboard() {
             師資<span className="text-accent-italic">審核控制台</span>
           </h1>
           <p className="text-muted-foreground mt-3 leading-relaxed">
-            審核新加入的引導者，他們通過後即會出現在師資團隊與世界地圖。
+            審核新加入的引導者，他們通過後即會出現在引導者團隊與世界地圖。
           </p>
         </div>
 

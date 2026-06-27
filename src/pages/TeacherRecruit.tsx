@@ -102,7 +102,7 @@ const steps = [
   {
     icon: Rocket,
     title: "公開上線・開課",
-    description: "出現在師資團隊與世界舞蹈地圖，開始迎接您的探索者。",
+    description: "出現在引導者團隊與世界舞蹈地圖，開始迎接您的探索者。",
   },
 ];
 
