@@ -103,7 +103,7 @@ export function Header() {
               <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
             <Button asChild variant="hero" size="sm">
-              <Link to="/teacher/login">{lang === "zh" ? "師資登入" : "Master Login"}</Link>
+              <Link to="/teacher/login">{lang === "zh" ? "引導者登入" : "Master Login"}</Link>
             </Button>
           </div>
 
