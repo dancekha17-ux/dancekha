@@ -67,7 +67,7 @@ export function RegistrationDialog({ open, onOpenChange, eventId, eventTitle }: 
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="reg-name">姓名 *</Label>
+            <Label htmlFor="reg-name">老師姓名/品牌名稱&nbsp;*</Label>
             <Input id="reg-name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} required />
           </div>
           <div className="space-y-2">
