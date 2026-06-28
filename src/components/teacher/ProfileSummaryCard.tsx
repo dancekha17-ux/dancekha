@@ -108,7 +108,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
           <div>
             <span className="eyebrow">Profile · 引導者名片</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
-              大師與團退
+              基本資訊
             </h2>
           </div>
         </div>
