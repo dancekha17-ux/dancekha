@@ -303,7 +303,7 @@ export default function TeacherDashboard() {
       setSubmitting(false);
       return toast({
         title: "尚無可送審的課程／活動",
-        description: "請先在下方「課程與活動管理」新增至少一筆完整內容。",
+        description: "請先在下方「課程活動管理」新增至少一筆完整內容。",
         variant: "destructive",
       });
     }
@@ -647,7 +647,7 @@ export default function TeacherDashboard() {
                 eyebrow="Courses & Events"
                 title={
                   <span className="flex items-center gap-2">
-                    課程與活動管理
+                    課程活動管理
                     {!coursesUnlocked && (
                       <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
                         <Lock className="w-3 h-3" /> 待啟用
