@@ -73,7 +73,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
             <BookHeart className="w-5 h-5" />
           </div>
           <div>
-            <span className="eyebrow">Story · 舞蹈故事與畫面</span>
+            <span className="eyebrow">STORY · 大師團隊的故事</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
               舞蹈故事與畫面
             </h2>
@@ -115,7 +115,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
         </div>
 
         <div>
-          <p className="eyebrow mb-3">舞蹈故事與畫面／教室環境</p>
+          <p className="eyebrow mb-3">精彩瞬間／教室環境</p>
           {moments.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
               {moments.slice(0, 4).map((m) => (
