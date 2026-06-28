@@ -73,7 +73,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
             <BookHeart className="w-5 h-5" />
           </div>
           <div>
-            <span className="eyebrow">STORY · 舞蹈畫面</span>
+            <span className="eyebrow">STORY · 跳舞畫面</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
               精彩瞬間
             </h2>
@@ -149,7 +149,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           <DialogHeader>
             <DialogTitle className="font-display text-2xl">精彩瞬間</DialogTitle>
             <DialogDescription>
-              封面影像、舞蹈畫面與精彩瞬間，三個層次一次完成。
+              封面影像、跳舞畫面與精彩瞬間，三個層次一次完成。
             </DialogDescription>
           </DialogHeader>
 
@@ -190,7 +190,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
 
             <div>
               <Label className="mb-3 block">
-                舞蹈畫面／教室環境 · Moments
+                跳舞畫面／教室環境 · Moments
                 <span className="block text-xs text-muted-foreground font-normal mt-1">
                   精選 1~4 張真實的課堂照片／環境氛圍，最能打動學員！
                 </span>

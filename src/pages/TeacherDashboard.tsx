@@ -381,7 +381,7 @@ export default function TeacherDashboard() {
             {[
               { href: "#identity", label: "基本資訊" },
               { href: "#courses", label: "課程活動" },
-              { href: "#media", label: "精彩瞬間" },
+              { href: "#media", label: "跳舞畫面" },
             ].map((n) => (
               <a
                 key={n.href}
@@ -461,7 +461,7 @@ export default function TeacherDashboard() {
           {[
             { href: "#identity", label: "基本資訊" },
             { href: "#courses", label: "課程活動" },
-            { href: "#media", label: "精彩瞬間" },
+              { href: "#media", label: "跳舞畫面" },
           ].map((n) => (
             <a
               key={n.href}

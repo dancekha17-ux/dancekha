@@ -92,7 +92,7 @@ const steps = [
   {
     icon: ClipboardEdit,
     title: "完善您的品牌頁",
-    description: "上傳介紹、經歷、精彩瞬間，打造一張屬於您的數位名片。",
+    description: "上傳介紹、經歷、跳舞畫面，打造一張屬於您的數位名片。",
   },
   {
     icon: ShieldCheck,
