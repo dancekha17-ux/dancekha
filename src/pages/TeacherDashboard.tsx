@@ -588,45 +588,6 @@ export default function TeacherDashboard() {
               </div>
             </section>
 
-            {/* Status banner */}
-            <div
-              className={`flex items-start gap-3 p-4 rounded-2xl mb-10 border shadow-sm ${
-                profile.is_approved
-                  ? "bg-success/5 border-success/30 text-success"
-                  : "bg-white border-[#E63946]/15 text-muted-foreground"
-              }`}
-            >
-              {profile.is_approved ? (
-                <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" />
-              ) : (
-                <Clock className="w-5 h-5 mt-0.5 shrink-0" />
-              )}
-              <div className="text-sm leading-relaxed">
-                {profile.is_approved ? (
-                  <>
-                    <p className="font-medium">你的故事已上線</p>
-                    <p className="text-foreground/70 mt-0.5">學員可以在公開頁面與你相遇。</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="font-medium text-foreground">待確認中</p>
-                    <p className="mt-0.5">把故事寫得更完整,團隊會盡快為你上線。</p>
-                  </>
-                )}
-              </div>
-            </div>
-
-
-
-            <div id="identity" className="mb-10">
-              <span className="eyebrow" style={{ color: "#E63946" }}>Your Story</span>
-              <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3">
-                編輯<span className="text-accent-italic">舞蹈旅程</span>
-              </h1>
-              <p className="text-muted-foreground mt-3 leading-relaxed">
-                這不是履歷，是邀請函。讓人從這裡開始,願意走進你的舞蹈世界。
-              </p>
-            </div>
 
             {/* Card A — Identity + Tags + Connect */}
             <ProfileSummaryCard userId={user!.id} profile={profile} update={update} />
