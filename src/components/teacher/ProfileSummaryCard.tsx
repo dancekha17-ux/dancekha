@@ -261,7 +261,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">
-                  姓名 <span className="text-[#E89B5C]">*</span>
+                  老師姓名/品牌名稱&nbsp;<span className="text-[#E89B5C]">*</span>
                 </Label>
                 <Input
                   id="name"
