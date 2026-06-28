@@ -75,7 +75,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           <div>
             <span className="eyebrow">Story · 舞蹈故事與畫面</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
-              關於我／封面／舞蹈故事與畫面
+              舞蹈故事與畫面
             </h2>
           </div>
         </div>
