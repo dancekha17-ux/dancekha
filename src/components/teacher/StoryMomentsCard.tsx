@@ -190,7 +190,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
 
             <div>
               <Label className="mb-3 block">
-                跳舞畫面／教室環境 · Moments
+                精彩瞬間／教室環境 · Moments
                 <span className="block text-xs text-muted-foreground font-normal mt-1">
                   精選 1~4 張真實的課堂照片／環境氛圍，最能打動學員！
                 </span>
