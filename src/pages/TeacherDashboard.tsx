@@ -11,11 +11,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { SectionCard } from "@/components/teacher/SectionCard";
-import { HeroImageEditor } from "@/components/teacher/HeroImageEditor";
 import { CoursesEditor } from "@/components/teacher/CoursesEditor";
-import { MediaEditor } from "@/components/teacher/MediaEditor";
-import { TagListEditor } from "@/components/teacher/TagListEditor";
-import { ExperienceEditor } from "@/components/teacher/ExperienceEditor";
+import { ProfileSummaryCard } from "@/components/teacher/ProfileSummaryCard";
+import { StoryMomentsCard } from "@/components/teacher/StoryMomentsCard";
 
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
