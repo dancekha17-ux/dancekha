@@ -106,9 +106,9 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
             <UserCircle2 className="w-5 h-5" />
           </div>
           <div>
-            <span className="eyebrow">Profile · 引導者名片</span>
+            <span className="eyebrow">PROFILE · 基本資訊</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
-              基本資訊
+              引導者名片
             </h2>
           </div>
         </div>
