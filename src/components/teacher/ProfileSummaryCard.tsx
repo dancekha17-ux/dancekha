@@ -108,7 +108,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
           <div>
             <span className="eyebrow">Profile · 引導者名片</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
-              基本身份／背景／聯絡
+              大師與團退
             </h2>
           </div>
         </div>
@@ -223,7 +223,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl">編輯引導者名片</DialogTitle>
+            <DialogTitle className="font-display text-2xl">填寫基本資訊</DialogTitle>
             <DialogDescription>
               基本身份、舞蹈風格與聯絡資訊，整合於同一處編輯。
             </DialogDescription>
