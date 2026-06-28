@@ -149,7 +149,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           <DialogHeader>
             <DialogTitle className="font-display text-2xl">精彩瞬間</DialogTitle>
             <DialogDescription>
-              封面影像、舞蹈畫面與精彩瞬間，三個層次一次完成。
+              封面影像、跳舞畫面與精彩瞬間，三個層次一次完成。
             </DialogDescription>
           </DialogHeader>
 
