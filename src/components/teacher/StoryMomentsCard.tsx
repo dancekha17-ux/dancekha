@@ -115,7 +115,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
         </div>
 
         <div>
-          <p className="eyebrow mb-3">課堂瞬間／教室環境</p>
+          <p className="eyebrow mb-3">舞蹈故事與畫面／教室環境</p>
           {moments.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
               {moments.slice(0, 4).map((m) => (
