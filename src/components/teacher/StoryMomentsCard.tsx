@@ -147,7 +147,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl">編輯故事與畫面</DialogTitle>
+            <DialogTitle className="font-display text-2xl">精彩瞬間</DialogTitle>
             <DialogDescription>
               封面影像、舞蹈故事與畫面，三個層次一次完成。
             </DialogDescription>
@@ -190,7 +190,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
 
             <div>
               <Label className="mb-3 block">
-                舞蹈故事與畫面／教室環境 · Moments
+                舞蹈畫面／教室環境 · Moments
                 <span className="block text-xs text-muted-foreground font-normal mt-1">
                   精選 1~4 張真實的課堂照片／環境氛圍，最能打動學員！
                 </span>
