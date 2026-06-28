@@ -255,11 +255,6 @@ export function MediaEditor({ teacherId, userId }: Props) {
         </div>
       )}
 
-      {items.length > 0 && (
-        <p className="text-xs text-muted-foreground -mt-2">
-          ✨ 上傳後可拖曳調整位置、用滑桿縮放，找到最動人的構圖。（最多 4 張）
-        </p>
-      )}
 
       {items.length < 4 ? (
         <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-border hover:bg-secondary/50 transition cursor-pointer text-sm">
