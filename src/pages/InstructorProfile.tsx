@@ -582,7 +582,7 @@ export default function InstructorProfile() {
                     className="mt-4 card-elevated p-5 border border-border/60"
                   >
                     <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">
-                      課堂瞬間/教室環境 · Moments
+                      舞蹈故事與畫面/教室環境 · Moments
                     </p>
                     <div className="grid grid-cols-2 gap-[5px] rounded-lg overflow-hidden border border-border/60 bg-secondary/40">
                       {moments.slice(0, 4).map((m) => (
@@ -592,7 +592,7 @@ export default function InstructorProfile() {
                         >
                           <img
                             src={m.url}
-                            alt={m.caption || "課堂瞬間"}
+                            alt={m.caption || "舞蹈故事與畫面"}
                             loading="lazy"
                             decoding="async"
                             sizes="(max-width: 768px) 50vw, 400px"

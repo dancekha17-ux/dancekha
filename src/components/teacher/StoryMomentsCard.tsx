@@ -75,7 +75,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           <div>
             <span className="eyebrow">Story · 舞蹈故事與畫面</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
-              關於我／封面／課堂瞬間
+              關於我／封面／舞蹈故事與畫面
             </h2>
           </div>
         </div>
@@ -115,7 +115,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
         </div>
 
         <div>
-          <p className="eyebrow mb-3">課堂瞬間／教室環境</p>
+          <p className="eyebrow mb-3">舞蹈故事與畫面／教室環境</p>
           {moments.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
               {moments.slice(0, 4).map((m) => (
@@ -149,7 +149,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           <DialogHeader>
             <DialogTitle className="font-display text-2xl">編輯故事與畫面</DialogTitle>
             <DialogDescription>
-              封面影像、舞蹈故事與課堂瞬間，三個畫面層次一次完成。
+              封面影像、舞蹈故事與畫面，三個層次一次完成。
             </DialogDescription>
           </DialogHeader>
 
@@ -190,7 +190,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
 
             <div>
               <Label className="mb-3 block">
-                課堂瞬間／教室環境 · Moments
+                舞蹈故事與畫面／教室環境 · Moments
                 <span className="block text-xs text-muted-foreground font-normal mt-1">
                   精選 1~4 張真實的課堂照片／環境氛圍，最能打動學員！
                 </span>
