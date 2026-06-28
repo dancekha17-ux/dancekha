@@ -344,7 +344,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
 
             <div className="space-y-2">
               <Label htmlFor="tagline">
-                一句話介紹 <span className="text-[#E89B5C]">*</span>
+                一句話介紹品牌 <span className="text-[#E89B5C]">*</span>
               </Label>
               <Input
                 id="tagline"
