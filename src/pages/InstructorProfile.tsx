@@ -592,7 +592,7 @@ export default function InstructorProfile() {
                         >
                           <img
                             src={m.url}
-                            alt={m.caption || "課堂瞬間"}
+                            alt={m.caption || "舞蹈故事與畫面"}
                             loading="lazy"
                             decoding="async"
                             sizes="(max-width: 768px) 50vw, 400px"
