@@ -352,7 +352,7 @@ export default function InstructorProfile() {
                     </span>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-display font-semibold text-foreground mb-6">
-                    開啟你的舞蹈旅程
+                    一起來跳舞吧！
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {publishedCourses.map((c) => (
