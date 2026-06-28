@@ -380,8 +380,8 @@ export default function TeacherDashboard() {
           <nav className="hidden xl:flex items-center gap-1">
             {[
               { href: "#identity", label: "基本資訊" },
-              { href: "#courses", label: "課程活動管理" },
-              { href: "#media", label: "舞蹈故事與畫面" },
+              { href: "#courses", label: "課程活動" },
+              { href: "#media", label: "精彩瞬間" },
             ].map((n) => (
               <a
                 key={n.href}
@@ -460,8 +460,8 @@ export default function TeacherDashboard() {
         <div className="xl:hidden border-t border-[#E63946]/10 px-4 py-2 flex gap-2 overflow-x-auto">
           {[
             { href: "#identity", label: "基本資訊" },
-            { href: "#courses", label: "課程活動管理" },
-            { href: "#media", label: "舞蹈故事與畫面" },
+            { href: "#courses", label: "課程活動" },
+            { href: "#media", label: "精彩瞬間" },
           ].map((n) => (
             <a
               key={n.href}
