@@ -565,7 +565,7 @@ export default function TeacherDashboard() {
                           <Lock className="w-4 h-4" />
                         </div>
                         <p className="font-display text-base text-foreground">
-                          {!step1Done ? "請先完善品牌專頁" : "請先完成合作協議簽署"}
+                          {!step1Done ? "請完成: 基本資訊與精彩瞬間" : "請先完成合作協議簽署"}
                         </p>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed mb-3">
                           {!step1Done
