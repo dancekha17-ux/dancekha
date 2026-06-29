@@ -73,7 +73,7 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
             <BookHeart className="w-5 h-5" />
           </div>
           <div>
-            <span className="eyebrow">STORY · 精彩瞬間</span>
+            <span className="eyebrow">STORY · 您的故事與精彩瞬間</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
               精彩瞬間
             </h2>
