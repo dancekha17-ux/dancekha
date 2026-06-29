@@ -608,7 +608,7 @@ export default function TeacherDashboard() {
                 eyebrow="Courses & Events"
                 title={
                   <span className="flex items-center gap-2">
-                    課程活動管理
+                    課程活動
                     {!coursesUnlocked && (
                       <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
                         <Lock className="w-3 h-3" /> 待啟用
@@ -618,7 +618,7 @@ export default function TeacherDashboard() {
                 }
                 description={
                   step2Done
-                    ? "請在這裡管理您的所有課程與活動。"
+                    ? "請在這裡管理您的所有課程、活動與服務。"
                     : "點擊下方「刊登新課程 / 活動」時,系統會請你先完成「合作夥伴協議」簽署,簽署後即可立即發佈。"
                 }
               >
