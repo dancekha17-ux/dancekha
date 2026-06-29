@@ -106,7 +106,7 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
             <UserCircle2 className="w-5 h-5" />
           </div>
           <div>
-            <span className="eyebrow">PROFILE ·大師／團隊的名片</span>
+            <span className="eyebrow">PROFILE ·老師/團隊的名片</span>
             <h2 className="font-display text-xl md:text-2xl text-foreground mt-1">
               基本資訊
             </h2>
