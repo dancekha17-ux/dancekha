@@ -508,7 +508,7 @@ export default function TeacherRecruit() {
                   color: PALETTE.ink,
                 }}
               >
-                四步驟，
+                輕鬆四步驟，
                 <span className="italic" style={{ color: PALETTE.accent }}>
                   開啟您的舞動旅程
                 </span>
