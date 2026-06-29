@@ -96,8 +96,8 @@ const steps = [
   },
   {
     icon: ShieldCheck,
-    title: "提交審核",
-    description: "舞島咖團隊將於 2 個工作天內完成內容確認與上線協助。",
+    title: "提交刊登",
+    description: "舞島咖團隊將於1-2 個工作天內，完成內容確認與上線協助。",
   },
   {
     icon: Rocket,
