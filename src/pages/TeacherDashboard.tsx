@@ -549,7 +549,7 @@ export default function TeacherDashboard() {
                 description={
                   step2Done
                     ? "請在這裡管理您的所有課程、活動與服務。"
-                    : "點擊下方「刊登新課程 / 活動」時,系統會請你先完成「合作夥伴協議」簽署,簽署後即可立即發佈。"
+                    : "點擊下方「刊登新課程 / 活動」時,系統會請你先完成「合作夥伴協議」簽署,簽署後方可提交新增課程。"
                 }
               >
                 <div className="relative">
