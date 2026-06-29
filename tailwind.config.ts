@@ -101,6 +101,11 @@ export default {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        "breath": {
+          "0%, 100%": { opacity: "0.55", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.15)" },
+        },
+
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
