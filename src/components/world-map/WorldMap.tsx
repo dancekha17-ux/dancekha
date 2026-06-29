@@ -204,14 +204,17 @@ export function WorldMap() {
                 aria-label={region.name}
                 onMouseEnter={() => !isMobile && setActiveId(region.id)}
                 onClick={() => setActiveId(isActive ? null : region.id)}
-                className="relative w-5 h-5 flex items-center justify-center group focus:outline-none"
+                className="relative w-6 h-6 flex items-center justify-center group focus:outline-none"
               >
-                <span
-                  className={`relative block w-2.5 h-2.5 rounded-full bg-[#F5C469] shadow-[0_0_10px_rgba(245,196,105,0.65)] ring-1 ring-[#E6A055]/60 transition-transform duration-300 ${
-                    isActive ? "scale-150 opacity-100" : "group-hover:scale-125 motion-safe:animate-[breath_3.6s_ease-in-out_infinite]"
+                <Sparkles
+                  className={`w-5 h-5 text-[#C96B2C] drop-shadow-[0_0_6px_rgba(201,107,44,0.55)] transition-transform duration-300 ${
+                    isActive ? "scale-150 text-[#E36435]" : "group-hover:scale-125 motion-safe:animate-[breath_3.6s_ease-in-out_infinite]"
                   }`}
+                  strokeWidth={1.75}
+                  fill="rgba(245,196,105,0.35)"
                 />
               </button>
+
 
 
               {/* Desktop: floating card near pin */}
