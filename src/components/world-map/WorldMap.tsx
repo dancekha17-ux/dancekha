@@ -206,14 +206,15 @@ export function WorldMap() {
                 onClick={() => setActiveId(isActive ? null : region.id)}
                 className="relative w-6 h-6 flex items-center justify-center group focus:outline-none"
               >
-                <Sparkles
-                  className={`w-5 h-5 text-[#C96B2C] drop-shadow-[0_0_6px_rgba(201,107,44,0.55)] transition-transform duration-300 ${
-                    isActive ? "scale-150 text-[#E36435]" : "group-hover:scale-125 motion-safe:animate-[breath_3.6s_ease-in-out_infinite]"
+                <span className="absolute inset-0 m-auto w-6 h-6 rounded-full bg-amber-500/40 [animation:ping_2s_cubic-bezier(0,0,0.2,1)_infinite]" />
+                <span className="absolute inset-0 m-auto w-4 h-4 rounded-full bg-orange-500/30" />
+                <span
+                  className={`relative block w-2.5 h-2.5 rounded-full bg-[#E36435] ring-2 ring-white/80 shadow-[0_0_8px_rgba(227,100,53,0.7)] transition-transform ${
+                    isActive ? "scale-150" : "group-hover:scale-125"
                   }`}
-                  strokeWidth={1.75}
-                  fill="rgba(245,196,105,0.35)"
                 />
               </button>
+
 
 
 
