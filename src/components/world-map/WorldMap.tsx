@@ -26,15 +26,15 @@ interface MapRegion {
 
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
-  { id: "taiwan", name: "台灣", top: "51%", left: "80%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
-  { id: "china", name: "中國", top: "44%", left: "75%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
-  { id: "japan", name: "日本", top: "46%", left: "84.5%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
-  { id: "korea", name: "韓國", top: "44.5%", left: "79.5%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
-  { id: "malaysia", name: "馬來西亞", top: "61%", left: "78%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
-  { id: "indonesia", name: "印尼", top: "64%", left: "82%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
-  { id: "philippines", name: "菲律賓", top: "58%", left: "82%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
-  { id: "thailand", name: "泰國", top: "56%", left: "76.5%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
-  { id: "india", name: "印度", top: "54%", left: "69%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
+  { id: "taiwan", name: "台灣", top: "50%", left: "84%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
+  { id: "china", name: "中國", top: "42%", left: "76%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
+  { id: "japan", name: "日本", top: "46%", left: "86.5%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
+  { id: "korea", name: "韓國", top: "43%", left: "82.5%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
+  { id: "malaysia", name: "馬來西亞", top: "62%", left: "82%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
+  { id: "indonesia", name: "印尼", top: "64%", left: "87%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
+  { id: "philippines", name: "菲律賓", top: "58.5%", left: "86.5%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
+  { id: "thailand", name: "泰國", top: "55%", left: "79.5%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
+  { id: "india", name: "印度", top: "53%", left: "71%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
   { id: "middle_east", name: "中東與北非", top: "50%", left: "57%", country: "中東與北非", dance: "東方舞 Belly Dance", desc: "如水蛇般擺動的腰臀、流暢的腹部抖動，在手鼓敲擊中喚醒遠古大地的母神力量。", queryParam: "MiddleEast", keywords: ["中東", "肚皮舞", "Belly", "Oriental"] },
   { id: "israel", name: "以色列", top: "47%", left: "54.5%", country: "以色列", dance: "霍拉圓圈舞 Hora", desc: "手拉手並肩跳躍，在同一個圓圈中凝聚力量，踏出古老民族重生與希望的集體步伐。", queryParam: "Israel", keywords: ["以色列", "Israel", "Hora"] },
 
