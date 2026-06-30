@@ -57,11 +57,11 @@ const MAP_REGIONS: MapRegion[] = [
 
   // --- OCEANIA & AFRICA ---
   // 紐西蘭北島 (North Island) — 北島位於整個紐西蘭的上半部
-  { id: "new_zealand", name: "紐西蘭 · 北島", top: "82%", left: "92%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", top: "80%", left: "92%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
   // 夏威夷群島 — 中太平洋，約位於地圖中段偏左
   { id: "hawaii", name: "夏威夷", top: "49%", left: "7.5%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
   // 西非陸地 — 幾內亞、馬利、塞內加爾一帶
-  { id: "west_africa", name: "西非", top: "61%", left: "47%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
+  { id: "west_africa", name: "西非", top: "57%", left: "49%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
 interface MapInstructor {
