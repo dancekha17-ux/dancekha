@@ -124,7 +124,7 @@ export function InstructorsSection() {
                       {instructor.region}
                     </span>
                   </div>
-                  <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4">
+                  <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4 line-clamp-2">
                     {instructor.bio}
                   </p>
                   <div className="flex items-center justify-between text-sm">
