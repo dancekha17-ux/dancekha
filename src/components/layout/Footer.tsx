@@ -8,7 +8,7 @@ const footerLinks = {
       { label: "現代舞", href: "#" },
       { label: "中國舞", href: "#" },
       { label: "拉丁舞", href: "#" },
-      { label: "樂齡律動", href: "#" },
+      { label: "樂齡舞蹈", href: "#" },
     ],
   },
   about: {
