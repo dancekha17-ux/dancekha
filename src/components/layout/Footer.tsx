@@ -54,7 +54,7 @@ export function Footer() {
             <p className="text-sm text-primary-foreground/60 font-body leading-relaxed mb-6">
               啟動你的舞蹈冒險
               <br />
-              用舞步&nbsp; &nbsp; 遇見世界
+              用舞步&nbsp; &nbsp; 跳進世界
             </p>
 
             {/* Social Links */}
