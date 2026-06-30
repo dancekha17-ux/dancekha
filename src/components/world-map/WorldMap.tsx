@@ -26,42 +26,42 @@ interface MapRegion {
 
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
-  { id: "taiwan", name: "台灣", top: "52%", left: "79.5%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
-  { id: "china", name: "中國", top: "46%", left: "75%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
-  { id: "japan", name: "日本", top: "43%", left: "83%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
-  { id: "korea", name: "韓國", top: "45%", left: "80%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
-  { id: "malaysia", name: "馬來西亞", top: "61%", left: "77%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
-  { id: "indonesia", name: "印尼", top: "65%", left: "80%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
-  { id: "philippines", name: "菲律賓", top: "59%", left: "81.5%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
-  { id: "thailand", name: "泰國", top: "57%", left: "76%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
-  { id: "india", name: "印度", top: "56%", left: "71%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
+  { id: "taiwan", name: "台灣", top: "52%", left: "80.5%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
+  { id: "china", name: "中國", top: "42%", left: "75%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
+  { id: "japan", name: "日本", top: "45%", left: "83%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
+  { id: "korea", name: "韓國", top: "43%", left: "80%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
+  { id: "malaysia", name: "馬來西亞", top: "61%", left: "78%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
+  { id: "indonesia", name: "印尼", top: "66%", left: "83%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
+  { id: "philippines", name: "菲律賓", top: "58%", left: "81.5%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
+  { id: "thailand", name: "泰國", top: "56%", left: "78%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
+  { id: "india", name: "印度", top: "53%", left: "70%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
   { id: "middle_east", name: "中東與北非", top: "50%", left: "57%", country: "中東與北非", dance: "東方舞 Belly Dance", desc: "如水蛇般擺動的腰臀、流暢的腹部抖動，在手鼓敲擊中喚醒遠古大地的母神力量。", queryParam: "MiddleEast", keywords: ["中東", "肚皮舞", "Belly", "Oriental"] },
   { id: "israel", name: "以色列", top: "47%", left: "54.5%", country: "以色列", dance: "霍拉圓圈舞 Hora", desc: "手拉手並肩跳躍，在同一個圓圈中凝聚力量，踏出古老民族重生與希望的集體步伐。", queryParam: "Israel", keywords: ["以色列", "Israel", "Hora"] },
 
   // --- EUROPE ---
-  { id: "scotland", name: "蘇格蘭", top: "33%", left: "46%", country: "蘇格蘭 / 北歐", dance: "Scottish Country Dance & Highland Dance", desc: "在悠揚的風笛聲中昂首踮足，於菱形劍鋒之間靈巧跳躍，舞出高地民族的驕傲與優雅秩序。", queryParam: "Scotland", keywords: ["蘇格蘭", "Scotland", "Highland", "Scottish Country", "北歐"] },
-  { id: "ireland", name: "愛爾蘭", top: "32%", left: "46%", country: "愛爾蘭", dance: "踢踏舞 Irish Step Dance", desc: "上半身挺拔如松，雙腳如機關槍般迅猛擊打地面，釋放愛爾蘭風笛最極致的狂熱。", queryParam: "Ireland", keywords: ["愛爾蘭", "Ireland", "Irish", "踢踏"] },
+  { id: "scotland", name: "蘇格蘭", top: "32%", left: "50%", country: "蘇格蘭 / 北歐", dance: "Scottish Country Dance & Highland Dance", desc: "在悠揚的風笛聲中昂首踮足，於菱形劍鋒之間靈巧跳躍，舞出高地民族的驕傲與優雅秩序。", queryParam: "Scotland", keywords: ["蘇格蘭", "Scotland", "Highland", "Scottish Country", "北歐"] },
+  { id: "ireland", name: "愛爾蘭", top: "35%", left: "48.5%", country: "愛爾蘭", dance: "踢踏舞 Irish Step Dance", desc: "上半身挺拔如松，雙腳如機關槍般迅猛擊打地面，釋放愛爾蘭風笛最極致的狂熱。", queryParam: "Ireland", keywords: ["愛爾蘭", "Ireland", "Irish", "踢踏"] },
   { id: "spain", name: "西班牙 · 安達魯西亞", top: "45%", left: "46%", country: "西班牙 · 安達魯西亞", dance: "弗拉明戈 Flamenco", desc: "熱情奔放的吉普賽靈魂，用強烈的腳步聲與吉他擊碎深夜的寂靜。", queryParam: "Spain", keywords: ["西班牙", "Spain", "Flamenco", "佛朗明哥", "弗拉明戈"] },
-  { id: "italy", name: "義大利", top: "43.5%", left: "48.5%", country: "義大利", dance: "塔蘭泰拉 Tarantella", desc: "源自義大利南部的解毒之舞，在極速的鈴鼓聲與狂亂旋轉中釋放身體能量與壓抑。", queryParam: "Italy", keywords: ["義大利", "Italy", "Tarantella"] },
-  { id: "hungary", name: "匈牙利", top: "40%", left: "51%", country: "匈牙利 / 中歐", dance: "Csárdás 查爾達斯", desc: "從緩板優雅的「Lassú」逐漸燃燒成飛速旋轉的「Friss」，跳出馬札爾民族最熾熱的激情。", queryParam: "Hungary", keywords: ["匈牙利", "Hungary", "Csardas", "查爾達斯", "中歐"] },
-  { id: "bulgaria", name: "保加利亞", top: "42.5%", left: "52.5%", country: "保加利亞 / 巴爾幹", dance: "Horo (Хоро) 圓圈舞", desc: "在 7/8、11/16 等不對稱節拍中手牽手疾走跳躍，是巴爾幹村落生生不息的集體脈動。", queryParam: "Bulgaria", keywords: ["保加利亞", "Bulgaria", "Horo", "Хоро", "巴爾幹"] },
-  { id: "greece", name: "希臘", top: "45%", left: "52.5%", country: "希臘", dance: "Sirtaki 西塔基", desc: "從緩慢的肩搭肩起步，逐步加速躍動，在布祖基琴聲中跳出希臘人對生命的歡愉與釋放。", queryParam: "Greece", keywords: ["希臘", "Greece", "Sirtaki", "西塔基"] },
-  { id: "ukraine", name: "烏克蘭", top: "38%", left: "54%", country: "烏克蘭", dance: "霍巴克 Hopak", desc: "奔放的哥薩克跳躍，在大草原上舞動出自由與生命的韌性。", queryParam: "Ukraine", keywords: ["烏克蘭", "Ukraine", "Hopak"] },
-  { id: "russia", name: "俄羅斯", top: "33%", left: "58%", country: "俄羅斯", dance: "Cossack Dance & Kalinka", desc: "壓低重心彈跳、踢腿、旋轉——哥薩克戰舞與卡林卡的歡騰，唱出西伯利亞凍土上不滅的火焰。", queryParam: "Russia", keywords: ["俄羅斯", "Russia", "Cossack", "Kalinka", "哥薩克"] },
+  { id: "italy", name: "義大利", top: "44%", left: "50.5%", country: "義大利", dance: "塔蘭泰拉 Tarantella", desc: "源自義大利南部的解毒之舞，在極速的鈴鼓聲與狂亂旋轉中釋放身體能量與壓抑。", queryParam: "Italy", keywords: ["義大利", "Italy", "Tarantella"] },
+  { id: "hungary", name: "匈牙利", top: "41%", left: "52%", country: "匈牙利 / 中歐", dance: "Csárdás 查爾達斯", desc: "從緩板優雅的「Lassú」逐漸燃燒成飛速旋轉的「Friss」，跳出馬札爾民族最熾熱的激情。", queryParam: "Hungary", keywords: ["匈牙利", "Hungary", "Csardas", "查爾達斯", "中歐"] },
+  { id: "bulgaria", name: "保加利亞", top: "43%", left: "53.5%", country: "保加利亞 / 巴爾幹", dance: "Horo (Хоро) 圓圈舞", desc: "在 7/8、11/16 等不對稱節拍中手牽手疾走跳躍，是巴爾幹村落生生不息的集體脈動。", queryParam: "Bulgaria", keywords: ["保加利亞", "Bulgaria", "Horo", "Хоро", "巴爾幹"] },
+  { id: "greece", name: "希臘", top: "46%", left: "53.5%", country: "希臘", dance: "Sirtaki 西塔基", desc: "從緩慢的肩搭肩起步，逐步加速躍動，在布祖基琴聲中跳出希臘人對生命的歡愉與釋放。", queryParam: "Greece", keywords: ["希臘", "Greece", "Sirtaki", "西塔基"] },
+  { id: "ukraine", name: "烏克蘭", top: "39.5%", left: "56%", country: "烏克蘭", dance: "霍巴克 Hopak", desc: "奔放的哥薩克跳躍，在大草原上舞動出自由與生命的韌性。", queryParam: "Ukraine", keywords: ["烏克蘭", "Ukraine", "Hopak"] },
+  { id: "russia", name: "俄羅斯", top: "32%", left: "62%", country: "俄羅斯", dance: "Cossack Dance & Kalinka", desc: "壓低重心彈跳、踢腿、旋轉——哥薩克戰舞與卡林卡的歡騰，唱出西伯利亞凍土上不滅的火焰。", queryParam: "Russia", keywords: ["俄羅斯", "Russia", "Cossack", "Kalinka", "哥薩克"] },
 
   // --- AMERICAS ---
-  { id: "usa", name: "美國", top: "42%", left: "22%", country: "美國 / 北美洲", dance: "Contra Dance、Square Dance、爵士與街頭舞", desc: "從新英格蘭穀倉裡的方塊舞與康特拉舞，到紐奧良的爵士與布朗克斯的街舞，跳出新大陸的自由節奏。", queryParam: "USA", keywords: ["美國", "USA", "Contra", "Square Dance", "方塊舞", "Jazz", "Swing", "Hip Hop"] },
-  { id: "mexico", name: "墨西哥", top: "52%", left: "21%", country: "墨西哥", dance: "草帽舞 Jarabe Tapatío", desc: "色彩斑斕的寬大長裙如花朵般在足尖叩擊聲中綻放，跳出墨西哥式對生活的熱烈歌頌。", queryParam: "Mexico", keywords: ["墨西哥", "Mexico", "Jarabe"] },
-  { id: "brazil", name: "巴西", top: "68%", left: "37%", country: "巴西", dance: "桑巴 & 卡波耶拉戰舞", desc: "狂歡節的熱情桑巴，與揉合武術、體操的非裔巴西戰舞，用肉體釋放無可比擬的能量。", queryParam: "Brazil", keywords: ["巴西", "Brazil", "Samba", "桑巴", "Capoeira"] },
-  { id: "argentina", name: "阿根廷", top: "78%", left: "32%", country: "阿根廷", dance: "探戈 Argentine Tango", desc: "暗夜裡纏綿交錯的雙鞋、緊密相貼的呼吸，在手風琴的憂傷中跳一場無聲的戀愛戲劇。", queryParam: "Argentina", keywords: ["阿根廷", "Argentina", "Tango", "探戈"] },
+  { id: "usa", name: "美國", top: "41%", left: "20%", country: "美國 / 北美洲", dance: "Contra Dance、Square Dance、爵士與街頭舞", desc: "從新英格蘭穀倉裡的方塊舞與康特拉舞，到紐奧良的爵士與布朗克斯的街舞，跳出新大陸的自由節奏。", queryParam: "USA", keywords: ["美國", "USA", "Contra", "Square Dance", "方塊舞", "Jazz", "Swing", "Hip Hop"] },
+  { id: "mexico", name: "墨西哥", top: "53%", left: "19.5%", country: "墨西哥", dance: "草帽舞 Jarabe Tapatío", desc: "色彩斑斕的寬大長裙如花朵般在足尖叩擊聲中綻放，跳出墨西哥式對生活的熱烈歌頌。", queryParam: "Mexico", keywords: ["墨西哥", "Mexico", "Jarabe"] },
+  { id: "brazil", name: "巴西", top: "68%", left: "34%", country: "巴西", dance: "桑巴 & 卡波耶拉戰舞", desc: "狂歡節的熱情桑巴，與揉合武術、體操的非裔巴西戰舞，用肉體釋放無可比擬的能量。", queryParam: "Brazil", keywords: ["巴西", "Brazil", "Samba", "桑巴", "Capoeira"] },
+  { id: "argentina", name: "阿根廷", top: "82%", left: "31%", country: "阿根廷", dance: "探戈 Argentine Tango", desc: "暗夜裡纏綿交錯的雙鞋、緊密相貼的呼吸，在手風琴的憂傷中跳一場無聲的戀愛戲劇。", queryParam: "Argentina", keywords: ["阿根廷", "Argentina", "Tango", "探戈"] },
 
   // --- OCEANIA & AFRICA ---
   // 紐西蘭北島 (North Island) — 北島位於整個紐西蘭的上半部
-  { id: "new_zealand", name: "紐西蘭 · 北島", top: "84%", left: "95%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", top: "82%", left: "89%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
   // 夏威夷群島 — 中太平洋，約位於地圖中段偏左
-  { id: "hawaii", name: "夏威夷", top: "52%", left: "9%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
+  { id: "hawaii", name: "夏威夷", top: "49%", left: "7.5%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
   // 西非陸地 — 幾內亞、馬利、塞內加爾一帶
-  { id: "west_africa", name: "西非", top: "57%", left: "48%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
+  { id: "west_africa", name: "西非", top: "57%", left: "49%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
 interface MapInstructor {
