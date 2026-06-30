@@ -57,7 +57,7 @@ const MAP_REGIONS: MapRegion[] = [
 
   // --- OCEANIA & AFRICA ---
   // 紐西蘭北島 (North Island) — 北島位於整個紐西蘭的上半部
-  { id: "new_zealand", name: "紐西蘭 · 北島", top: "80%", left: "92%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", top: "82%", left: "91%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
   // 夏威夷群島 — 中太平洋，約位於地圖中段偏左
   { id: "hawaii", name: "夏威夷", top: "49%", left: "7.5%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
   // 西非陸地 — 幾內亞、馬利、塞內加爾一帶
