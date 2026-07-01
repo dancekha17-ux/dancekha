@@ -570,7 +570,7 @@ export default function TeacherDashboard() {
 
 
             {/* Card A — Identity + Tags + Connect */}
-            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} />
+            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} onSave={handleSave} />
 
             {/* Card B — Story + Cover + Moments */}
             <div id="media" className="scroll-mt-24">
@@ -579,8 +579,10 @@ export default function TeacherDashboard() {
                 profile={profile}
                 updateBio={(v) => update({ bio: v })}
                 onHeroChange={handleHeroSave}
+                onSave={handleSave}
               />
             </div>
+
 
             {/* Courses & Events — moved to bottom, locked until 合作協議 signed */}
             <div id="courses" className="scroll-mt-24 relative">
