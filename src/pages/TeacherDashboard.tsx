@@ -393,11 +393,12 @@ export default function TeacherDashboard() {
             ))}
           </nav>
 
-          {/* Integrated action bar (replaces right sidebar SavePanel) */}
+          {/* Integrated action bar (Save button removed — modals persist on 完成編輯) */}
           <div className="flex items-center gap-1.5 md:gap-2">
             <span
-              className="hidden md:inline-flex items-center gap-1.5 text-[11px] mr-1"
+              className="inline-flex items-center gap-1.5 text-[11px] mr-1 px-2 py-1 rounded-full bg-white/70 border border-border/50"
               aria-live="polite"
+              title={dirty ? "有尚未儲存的變更" : "所有變更已儲存"}
             >
               {dirty ? (
                 <>
@@ -407,20 +408,12 @@ export default function TeacherDashboard() {
               ) : (
                 <>
                   <CheckCircle2 className="w-3 h-3 text-success" />
-                  <span className="text-muted-foreground">已儲存</span>
+                  <span className="text-muted-foreground">✓ 已儲存</span>
                 </>
               )}
             </span>
 
-            <Button
-              onClick={handleSave}
-              disabled={saving}
-              size="sm"
-              className="text-white hover:opacity-90"
-              style={{ backgroundColor: "#E63946" }}
-            >
-              <Save className="w-4 h-4" /> <span className="hidden sm:inline">{saving ? "儲存中…" : "儲存變更"}</span>
-            </Button>
+
             <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
               <Link to="/teacher/preview">
                 <Eye className="w-4 h-4" /> 預覽專頁
