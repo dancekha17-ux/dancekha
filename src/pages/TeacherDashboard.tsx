@@ -414,12 +414,22 @@ export default function TeacherDashboard() {
             </span>
 
 
-            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <Button
+              asChild
+              size="sm"
+              className="hidden sm:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
+              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+            >
               <Link to="/teacher/preview">
                 <Eye className="w-4 h-4" /> 預覽專頁
               </Link>
             </Button>
-            <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex border border-[#E89B5C]/40 text-[#B25C2E] hover:bg-[#E89B5C]/10">
+            <Button
+              asChild
+              size="sm"
+              className="hidden md:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
+              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+            >
               <Link to="/teacher/preview?card=1">
                 <MapPin className="w-4 h-4" /> 預覽地圖
               </Link>
@@ -428,8 +438,8 @@ export default function TeacherDashboard() {
               onClick={handleSubmitForReview}
               disabled={submitting || !coursesUnlocked || dirty}
               size="sm"
-              className="text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
-              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+              variant="outline"
+              className="bg-white/70"
               title={
                 coursesUnlocked
                   ? "一鍵將草稿提交給舞島咖團隊審閱"
@@ -495,37 +505,33 @@ export default function TeacherDashboard() {
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-display text-base md:text-lg text-foreground">
-                  {profile.agreement_signed_at
-                    ? "已完成「師資合作夥伴協議」簽署"
-                    : "師資合作夥伴協議書"}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
-                  {profile.agreement_signed_at
-                    ? `簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`
-                    : <span className="whitespace-pre-line">{"您可隨時編輯或維護「基本資訊」&「精彩瞬間」；\n如需新增或編輯「課程活動」，請先完成合作協議簽署。"}</span>}
-                </p>
+                {profile.agreement_signed_at ? (
+                  <>
+                    <p className="font-display text-base md:text-lg text-foreground">
+                      已完成「師資合作夥伴協議」簽署
+                    </p>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
+                      {`簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {"您可隨時編輯或維護「基本資訊」&「精彩瞬間」；\n如需新增或編輯「課程活動」，請先完成合作協議簽署。"}
+                  </p>
+                )}
               </div>
               <Button
                 asChild
                 size="sm"
-                variant={profile.agreement_signed_at ? "outline" : "default"}
-                className={
-                  profile.agreement_signed_at
-                    ? "shrink-0"
-                    : "text-white shrink-0 hover:opacity-90"
-                }
-                style={
-                  profile.agreement_signed_at
-                    ? undefined
-                    : { backgroundColor: "#E63946" }
-                }
+                variant="outline"
+                className="shrink-0 bg-white/70 border-border text-muted-foreground hover:bg-white hover:text-foreground"
               >
                 <Link to="/teacher/agreement">
                   <FileSignature className="w-4 h-4" />
                   {profile.agreement_signed_at ? "檢視協議內容" : "師資合作夥伴協議書"}
                 </Link>
               </Button>
+
             </section>
 
 
