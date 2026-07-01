@@ -229,8 +229,10 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
             <DialogTitle className="font-display text-2xl">填寫基本資訊</DialogTitle>
             <DialogDescription>
               基本身份、舞蹈風格與聯絡資訊，整合於同一處編輯。
+              <span className="block mt-1 text-xs">標註 <span className="text-[#E89B5C] font-semibold">*</span> 為基本必填欄位。</span>
             </DialogDescription>
           </DialogHeader>
+
 
           <div className="space-y-6 pt-2">
             {/* Avatar */}
