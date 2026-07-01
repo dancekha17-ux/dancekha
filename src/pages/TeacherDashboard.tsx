@@ -523,7 +523,7 @@ export default function TeacherDashboard() {
               >
                 <Link to="/teacher/agreement">
                   <FileSignature className="w-4 h-4" />
-                  {profile.agreement_signed_at ? "檢視協議內容" : "前往師資合作夥伴協議書"}
+                  {profile.agreement_signed_at ? "檢視協議內容" : "師資合作夥伴協議書"}
                 </Link>
               </Button>
             </section>
