@@ -498,12 +498,12 @@ export default function TeacherDashboard() {
                 <p className="font-display text-base md:text-lg text-foreground">
                   {profile.agreement_signed_at
                     ? "已完成「師資合作夥伴協議」簽署"
-                    : "師資合作夥伴協議 · 尚未簽署"}
+                    : "師資合作夥伴協議書"}
                 </p>
                 <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
                   {profile.agreement_signed_at
                     ? `簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`
-                    : "您隨時可以編輯「基本資訊」與「精彩瞬間」；如需新增／發佈課程活動，請先完成合作協議簽署。"}
+                    : <span className="whitespace-pre-line">{"您可隨時編輯或維護「基本資訊」&「精彩瞬間」；\n如需新增或編輯「課程活動」，請先完成合作協議簽署。"}</span>}
                 </p>
               </div>
               <Button
