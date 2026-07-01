@@ -414,12 +414,22 @@ export default function TeacherDashboard() {
             </span>
 
 
-            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <Button
+              asChild
+              size="sm"
+              className="hidden sm:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
+              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+            >
               <Link to="/teacher/preview">
                 <Eye className="w-4 h-4" /> 預覽專頁
               </Link>
             </Button>
-            <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex border border-[#E89B5C]/40 text-[#B25C2E] hover:bg-[#E89B5C]/10">
+            <Button
+              asChild
+              size="sm"
+              className="hidden md:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
+              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+            >
               <Link to="/teacher/preview?card=1">
                 <MapPin className="w-4 h-4" /> 預覽地圖
               </Link>
@@ -428,8 +438,8 @@ export default function TeacherDashboard() {
               onClick={handleSubmitForReview}
               disabled={submitting || !coursesUnlocked || dirty}
               size="sm"
-              className="text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
-              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+              variant="outline"
+              className="bg-white/70"
               title={
                 coursesUnlocked
                   ? "一鍵將草稿提交給舞島咖團隊審閱"
