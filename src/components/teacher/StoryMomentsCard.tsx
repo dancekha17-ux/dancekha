@@ -28,10 +28,13 @@ interface Props {
   profile: ProfileLike;
   updateBio: (val: string) => void;
   onHeroChange: (url: string) => void;
+  onSave?: () => Promise<void> | void;
 }
 
-export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: Props) {
+export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange, onSave }: Props) {
   const [open, setOpen] = useState(false);
+  const [savingModal, setSavingModal] = useState(false);
+
   const [moments, setMoments] = useState<
     Array<{ id: string; url: string; scale: number; offset_x: number; offset_y: number }>
   >([]);
