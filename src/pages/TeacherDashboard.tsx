@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Camera, Eye, LogOut, Save, CheckCircle2, Clock, Circle, Lock, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
+import { Camera, Eye, LogOut, CheckCircle2, Clock, Circle, Lock, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -354,7 +354,7 @@ export default function TeacherDashboard() {
     !!profile.bio?.trim();
   const step2Done = !!profile.agreement_signed_at;
   const step3Done = false; // 待第三步完成後啟用
-  const coursesUnlocked = step1Done && step2Done; // 必須完成品牌專頁 + 簽署協議
+  const coursesUnlocked = step2Done; // 只需完成合作協議簽署即可
 
   // Header now hosts Save / Preview / Submit / Map actions (see header JSX below).
 
@@ -393,11 +393,12 @@ export default function TeacherDashboard() {
             ))}
           </nav>
 
-          {/* Integrated action bar (replaces right sidebar SavePanel) */}
+          {/* Integrated action bar (Save button removed — modals persist on 完成編輯) */}
           <div className="flex items-center gap-1.5 md:gap-2">
             <span
-              className="hidden md:inline-flex items-center gap-1.5 text-[11px] mr-1"
+              className="inline-flex items-center gap-1.5 text-[11px] mr-1 px-2 py-1 rounded-full bg-white/70 border border-border/50"
               aria-live="polite"
+              title={dirty ? "有尚未儲存的變更" : "所有變更已儲存"}
             >
               {dirty ? (
                 <>
@@ -407,20 +408,12 @@ export default function TeacherDashboard() {
               ) : (
                 <>
                   <CheckCircle2 className="w-3 h-3 text-success" />
-                  <span className="text-muted-foreground">已儲存</span>
+                  <span className="text-muted-foreground">✓ 已儲存</span>
                 </>
               )}
             </span>
 
-            <Button
-              onClick={handleSave}
-              disabled={saving}
-              size="sm"
-              className="text-white hover:opacity-90"
-              style={{ backgroundColor: "#E63946" }}
-            >
-              <Save className="w-4 h-4" /> <span className="hidden sm:inline">{saving ? "儲存中…" : "儲存變更"}</span>
-            </Button>
+
             <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
               <Link to="/teacher/preview">
                 <Eye className="w-4 h-4" /> 預覽專頁
@@ -480,6 +473,63 @@ export default function TeacherDashboard() {
           {/* Form column */}
           <div className="min-w-0">
 
+            {/* Agreement banner — always visible at top */}
+            <section
+              className={`mb-6 rounded-2xl p-4 md:p-5 border flex items-start md:items-center gap-3 md:gap-4 flex-col md:flex-row ${
+                profile.agreement_signed_at
+                  ? "bg-success/5 border-success/30"
+                  : "bg-[#E89B5C]/10 border-[#E89B5C]/40"
+              }`}
+            >
+              <div
+                className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center ${
+                  profile.agreement_signed_at
+                    ? "bg-success/15 text-success"
+                    : "bg-[#E89B5C]/20 text-[#B25C2E]"
+                }`}
+              >
+                {profile.agreement_signed_at ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : (
+                  <FileSignature className="w-5 h-5" />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-base md:text-lg text-foreground">
+                  {profile.agreement_signed_at
+                    ? "已完成「師資合作夥伴協議」簽署"
+                    : "師資合作夥伴協議 · 尚未簽署"}
+                </p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
+                  {profile.agreement_signed_at
+                    ? `簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`
+                    : "您隨時可以編輯「基本資訊」與「精彩瞬間」；如需新增／發佈課程活動，請先完成合作協議簽署。"}
+                </p>
+              </div>
+              <Button
+                asChild
+                size="sm"
+                variant={profile.agreement_signed_at ? "outline" : "default"}
+                className={
+                  profile.agreement_signed_at
+                    ? "shrink-0"
+                    : "text-white shrink-0 hover:opacity-90"
+                }
+                style={
+                  profile.agreement_signed_at
+                    ? undefined
+                    : { backgroundColor: "#E63946" }
+                }
+              >
+                <Link to="/teacher/agreement">
+                  <FileSignature className="w-4 h-4" />
+                  {profile.agreement_signed_at ? "檢視協議內容" : "前往閱讀並簽署"}
+                </Link>
+              </Button>
+            </section>
+
+
+
             {revisionAlerts.length > 0 && (
               <section className="mb-8 rounded-3xl border-2 border-destructive/40 bg-destructive/5 p-5 md:p-6">
                 <div className="flex items-start gap-3">
@@ -520,7 +570,7 @@ export default function TeacherDashboard() {
 
 
             {/* Card A — Identity + Tags + Connect */}
-            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} />
+            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} onSave={handleSave} />
 
             {/* Card B — Story + Cover + Moments */}
             <div id="media" className="scroll-mt-24">
@@ -529,8 +579,10 @@ export default function TeacherDashboard() {
                 profile={profile}
                 updateBio={(v) => update({ bio: v })}
                 onHeroChange={handleHeroSave}
+                onSave={handleSave}
               />
             </div>
+
 
             {/* Courses & Events — moved to bottom, locked until 合作協議 signed */}
             <div id="courses" className="scroll-mt-24 relative">
@@ -565,20 +617,17 @@ export default function TeacherDashboard() {
                           <Lock className="w-4 h-4" />
                         </div>
                         <p className="font-display text-base text-foreground">
-                          {!step1Done ? "請完成: 基本資訊與精彩瞬間" : "請先完成合作協議簽署"}
+                          請先完成合作協議簽署
                         </p>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed mb-3">
-                          {!step1Done
-                            ? "完成 Step 1 後即可進行 Step 2 簽署。"
-                            : "簽署協議是發佈服務的最後一步,完成後即可開放發布權限。"}
+                          簽署協議是新增／發佈課程活動的前置條件，完成後即可開放發布權限。
                         </p>
-                        {step1Done && !step2Done && (
-                          <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
-                            <Link to="/teacher/agreement">
-                              <FileSignature className="w-4 h-4" /> 前往簽署協議
-                            </Link>
-                          </Button>
-                        )}
+                        <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
+                          <Link to="/teacher/agreement">
+                            <FileSignature className="w-4 h-4" /> 前往簽署協議
+                          </Link>
+                        </Button>
+
                       </div>
                     </div>
                   )}

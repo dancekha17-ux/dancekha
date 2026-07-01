@@ -53,12 +53,15 @@ interface Props {
   userId: string;
   profile: ProfileLike;
   update: (patch: Partial<ProfileLike>) => void;
+  onSave?: () => Promise<void> | void;
 }
 
-export function ProfileSummaryCard({ userId, profile, update }: Props) {
+export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [savingModal, setSavingModal] = useState(false);
+
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -226,8 +229,10 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
             <DialogTitle className="font-display text-2xl">填寫基本資訊</DialogTitle>
             <DialogDescription>
               基本身份、舞蹈風格與聯絡資訊，整合於同一處編輯。
+              <span className="block mt-1 text-xs">標註 <span className="text-[#E89B5C] font-semibold">*</span> 為基本必填欄位。</span>
             </DialogDescription>
           </DialogHeader>
+
 
           <div className="space-y-6 pt-2">
             {/* Avatar */}
@@ -452,20 +457,29 @@ export function ProfileSummaryCard({ userId, profile, update }: Props) {
           </div>
 
           <DialogFooter className="pt-4">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              關閉
+            <Button variant="outline" onClick={() => setOpen(false)} disabled={savingModal}>
+              取消
             </Button>
             <Button
-              onClick={() => setOpen(false)}
+              onClick={async () => {
+                if (onSave) {
+                  setSavingModal(true);
+                  try {
+                    await onSave();
+                  } finally {
+                    setSavingModal(false);
+                  }
+                }
+                setOpen(false);
+              }}
+              disabled={savingModal}
               className="text-white"
               style={{ backgroundColor: "#E63946" }}
             >
-              完成編輯
+              {savingModal ? "儲存中…" : "完成編輯並儲存"}
             </Button>
           </DialogFooter>
-          <p className="text-[11px] text-muted-foreground text-center -mt-2">
-            記得回到上方點選「儲存變更」，所有調整才會永久保存。
-          </p>
+
         </DialogContent>
       </Dialog>
     </section>

@@ -28,10 +28,13 @@ interface Props {
   profile: ProfileLike;
   updateBio: (val: string) => void;
   onHeroChange: (url: string) => void;
+  onSave?: () => Promise<void> | void;
 }
 
-export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: Props) {
+export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange, onSave }: Props) {
   const [open, setOpen] = useState(false);
+  const [savingModal, setSavingModal] = useState(false);
+
   const [moments, setMoments] = useState<
     Array<{ id: string; url: string; scale: number; offset_x: number; offset_y: number }>
   >([]);
@@ -200,20 +203,29 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange }: P
           </div>
 
           <DialogFooter className="pt-4">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              關閉
+            <Button variant="outline" onClick={() => setOpen(false)} disabled={savingModal}>
+              取消
             </Button>
             <Button
-              onClick={() => setOpen(false)}
+              onClick={async () => {
+                if (onSave) {
+                  setSavingModal(true);
+                  try {
+                    await onSave();
+                  } finally {
+                    setSavingModal(false);
+                  }
+                }
+                setOpen(false);
+              }}
+              disabled={savingModal}
               className="text-white"
               style={{ backgroundColor: "#E63946" }}
             >
-              完成編輯
+              {savingModal ? "儲存中…" : "完成編輯並儲存"}
             </Button>
           </DialogFooter>
-          <p className="text-[11px] text-muted-foreground text-center -mt-2">
-            記得回到上方點選「儲存變更」，文字內容才會永久保存。
-          </p>
+
         </DialogContent>
       </Dialog>
     </section>
