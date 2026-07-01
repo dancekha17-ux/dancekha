@@ -473,6 +473,63 @@ export default function TeacherDashboard() {
           {/* Form column */}
           <div className="min-w-0">
 
+            {/* Agreement banner — always visible at top */}
+            <section
+              className={`mb-6 rounded-2xl p-4 md:p-5 border flex items-start md:items-center gap-3 md:gap-4 flex-col md:flex-row ${
+                profile.agreement_signed_at
+                  ? "bg-success/5 border-success/30"
+                  : "bg-[#E89B5C]/10 border-[#E89B5C]/40"
+              }`}
+            >
+              <div
+                className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center ${
+                  profile.agreement_signed_at
+                    ? "bg-success/15 text-success"
+                    : "bg-[#E89B5C]/20 text-[#B25C2E]"
+                }`}
+              >
+                {profile.agreement_signed_at ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : (
+                  <FileSignature className="w-5 h-5" />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-base md:text-lg text-foreground">
+                  {profile.agreement_signed_at
+                    ? "已完成「師資合作夥伴協議」簽署"
+                    : "師資合作夥伴協議 · 尚未簽署"}
+                </p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
+                  {profile.agreement_signed_at
+                    ? `簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`
+                    : "您隨時可以編輯「基本資訊」與「精彩瞬間」；如需新增／發佈課程活動，請先完成合作協議簽署。"}
+                </p>
+              </div>
+              <Button
+                asChild
+                size="sm"
+                variant={profile.agreement_signed_at ? "outline" : "default"}
+                className={
+                  profile.agreement_signed_at
+                    ? "shrink-0"
+                    : "text-white shrink-0 hover:opacity-90"
+                }
+                style={
+                  profile.agreement_signed_at
+                    ? undefined
+                    : { backgroundColor: "#E63946" }
+                }
+              >
+                <Link to="/teacher/agreement">
+                  <FileSignature className="w-4 h-4" />
+                  {profile.agreement_signed_at ? "檢視協議內容" : "前往閱讀並簽署"}
+                </Link>
+              </Button>
+            </section>
+
+
+
             {revisionAlerts.length > 0 && (
               <section className="mb-8 rounded-3xl border-2 border-destructive/40 bg-destructive/5 p-5 md:p-6">
                 <div className="flex items-start gap-3">
