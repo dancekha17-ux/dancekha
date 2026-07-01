@@ -53,12 +53,15 @@ interface Props {
   userId: string;
   profile: ProfileLike;
   update: (patch: Partial<ProfileLike>) => void;
+  onSave?: () => Promise<void> | void;
 }
 
-export function ProfileSummaryCard({ userId, profile, update }: Props) {
+export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [savingModal, setSavingModal] = useState(false);
+
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
