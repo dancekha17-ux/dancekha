@@ -617,20 +617,17 @@ export default function TeacherDashboard() {
                           <Lock className="w-4 h-4" />
                         </div>
                         <p className="font-display text-base text-foreground">
-                          {!step1Done ? "請完成: 基本資訊與精彩瞬間" : "請先完成合作協議簽署"}
+                          請先完成合作協議簽署
                         </p>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed mb-3">
-                          {!step1Done
-                            ? "完成 Step 1 後即可進行 Step 2 簽署。"
-                            : "簽署協議是發佈服務的最後一步,完成後即可開放發布權限。"}
+                          簽署協議是新增／發佈課程活動的前置條件，完成後即可開放發布權限。
                         </p>
-                        {step1Done && !step2Done && (
-                          <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
-                            <Link to="/teacher/agreement">
-                              <FileSignature className="w-4 h-4" /> 前往簽署協議
-                            </Link>
-                          </Button>
-                        )}
+                        <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
+                          <Link to="/teacher/agreement">
+                            <FileSignature className="w-4 h-4" /> 前往簽署協議
+                          </Link>
+                        </Button>
+
                       </div>
                     </div>
                   )}
