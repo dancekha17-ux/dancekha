@@ -1,9 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Clock, Users, Play, Sparkles, X } from "lucide-react";
+import { Clock, Users, Play, Sparkles, X, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
+import { supabase } from "@/integrations/supabase/client";
 
 const categories = [
   { id: "all", label: "全部課程" },
@@ -25,13 +26,62 @@ const REGION_LABELS: Record<string, string> = {
   taiwan: "台灣", brazil: "巴西", mexico: "墨西哥", morocco: "摩洛哥",
 };
 
+interface InstructorCourseCard {
+  id: string;
+  title: string;
+  instructor: string;
+  slug: string;
+  region: string | null;
+  price: string | null;
+  schedule: string | null;
+  level: string | null;
+  service_type: string | null;
+  course_image_url: string | null;
+  signup_url: string | null;
+}
+
+const SERVICE_LABEL: Record<string, string> = {
+  in_person: "實體課程",
+  pre_recorded: "線上預錄",
+  event_ticket: "演出票券",
+  space_rental: "空間出租",
+};
+
 export function CoursesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
   const { data: courses, loading } = useEvents("course");
+  const [instructorCourses, setInstructorCourses] = useState<InstructorCourseCard[]>([]);
+  const [icLoading, setIcLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await (supabase as any)
+        .from("instructor_courses")
+        .select("id,title,region,price,schedule,level,service_type,course_image_url,signup_url,teacher_id,teacher_profiles!inner(name,slug,is_approved)")
+        .eq("status", "published")
+        .eq("teacher_profiles.is_approved", true)
+        .order("updated_at", { ascending: false });
+      const mapped: InstructorCourseCard[] = ((data as any[]) ?? []).map((r) => ({
+        id: r.id,
+        title: r.title || "（未命名課程）",
+        instructor: r.teacher_profiles?.name ?? "",
+        slug: r.teacher_profiles?.slug ?? r.teacher_id,
+        region: r.region,
+        price: r.price,
+        schedule: r.schedule,
+        level: r.level,
+        service_type: r.service_type,
+        course_image_url: r.course_image_url,
+        signup_url: r.signup_url,
+      }));
+      setInstructorCourses(mapped);
+      setIcLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
