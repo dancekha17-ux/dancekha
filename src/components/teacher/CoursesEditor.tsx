@@ -52,6 +52,7 @@ export interface CourseRow {
   is_published: boolean;
   status: "draft" | "pending" | "published";
   revision_notes: string | null;
+  signup_url: string | null;
 }
 
 const STATUS_META: Record<CourseRow["status"], { label: string; cls: string }> = {
@@ -158,6 +159,7 @@ export function CoursesEditor({ teacherId }: Props) {
     location_address: course.location_address,
     online_link: course.online_link,
     session_info: course.session_info,
+    signup_url: course.signup_url,
   });
 
   const persist = async (course: CourseRow, patch?: Partial<CourseRow>) => {
@@ -571,6 +573,22 @@ export function CoursesEditor({ teacherId }: Props) {
                     onChange={(e) => updateLocal(editing.id, { price: e.target.value })}
                     onBlur={() => persist(editing)}
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-1">
+                    🎫 報名 / 收款連結（選填）
+                  </Label>
+                  <Input
+                    type="url"
+                    value={editing.signup_url ?? ""}
+                    placeholder="https://forms.gle/... 或 綠界／街口收款連結"
+                    onChange={(e) => updateLocal(editing.id, { signup_url: e.target.value })}
+                    onBlur={() => persist(editing)}
+                  />
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    學員按下「🎫 我要報名」時，將於新分頁開啟此連結；未填寫時按鈕會顯示為「敬請期待」。
+                  </p>
                 </div>
 
                 <div className="space-y-2">
