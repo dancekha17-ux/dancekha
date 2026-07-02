@@ -42,6 +42,7 @@ interface PublishedCourse {
   course_image_url: string | null;
   location_address: string | null;
   online_link: string | null;
+  signup_url: string | null;
 }
 
 const SERVICE_LABEL: Record<string, string> = {
@@ -86,7 +87,7 @@ export default function InstructorProfile() {
       setMoments((data as MomentMedia[]) ?? []);
       const { data: courseData } = await (supabase as any)
         .from("instructor_courses")
-        .select("id,title,description,schedule,level,price,region,service_type,course_image_url,location_address,online_link,sort_order")
+        .select("id,title,description,schedule,level,price,region,service_type,course_image_url,location_address,online_link,signup_url,sort_order")
         .eq("teacher_id", teacherId)
         .eq("status", "published")
         .order("sort_order", { ascending: true });
@@ -418,6 +419,23 @@ export default function InstructorProfile() {
                               前往課程連結 ↗
                             </a>
                           )}
+                          <a
+                            href={c.signup_url && c.signup_url.trim() ? c.signup_url : "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => {
+                              if (!c.signup_url || !c.signup_url.trim()) e.preventDefault();
+                            }}
+                            className="mt-4 inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-full text-sm font-medium text-white shadow-md hover:shadow-lg hover:opacity-95 transition-all"
+                            style={{
+                              background:
+                                "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
+                              cursor: c.signup_url && c.signup_url.trim() ? "pointer" : "not-allowed",
+                              opacity: c.signup_url && c.signup_url.trim() ? 1 : 0.55,
+                            }}
+                          >
+                            🎫 {c.signup_url && c.signup_url.trim() ? "我要報名" : "敬請期待"}
+                          </a>
                         </div>
                       </article>
                     ))}
