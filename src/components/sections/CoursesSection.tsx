@@ -1,9 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Clock, Users, Play, Sparkles, X } from "lucide-react";
+import { Clock, Users, Play, Sparkles, X, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEvents } from "@/hooks/useEvents";
+import { supabase } from "@/integrations/supabase/client";
 
 const categories = [
   { id: "all", label: "全部課程" },
@@ -25,13 +26,62 @@ const REGION_LABELS: Record<string, string> = {
   taiwan: "台灣", brazil: "巴西", mexico: "墨西哥", morocco: "摩洛哥",
 };
 
+interface InstructorCourseCard {
+  id: string;
+  title: string;
+  instructor: string;
+  slug: string;
+  region: string | null;
+  price: string | null;
+  schedule: string | null;
+  level: string | null;
+  service_type: string | null;
+  course_image_url: string | null;
+  signup_url: string | null;
+}
+
+const SERVICE_LABEL: Record<string, string> = {
+  in_person: "實體課程",
+  pre_recorded: "線上預錄",
+  event_ticket: "演出票券",
+  space_rental: "空間出租",
+};
+
 export function CoursesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
   const { data: courses, loading } = useEvents("course");
+  const [instructorCourses, setInstructorCourses] = useState<InstructorCourseCard[]>([]);
+  const [icLoading, setIcLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await (supabase as any)
+        .from("instructor_courses")
+        .select("id,title,region,price,schedule,level,service_type,course_image_url,signup_url,teacher_id,teacher_profiles!inner(name,slug,is_approved)")
+        .eq("status", "published")
+        .eq("teacher_profiles.is_approved", true)
+        .order("updated_at", { ascending: false });
+      const mapped: InstructorCourseCard[] = ((data as any[]) ?? []).map((r) => ({
+        id: r.id,
+        title: r.title || "（未命名課程）",
+        instructor: r.teacher_profiles?.name ?? "",
+        slug: r.teacher_profiles?.slug ?? r.teacher_id,
+        region: r.region,
+        price: r.price,
+        schedule: r.schedule,
+        level: r.level,
+        service_type: r.service_type,
+        course_image_url: r.course_image_url,
+        signup_url: r.signup_url,
+      }));
+      setInstructorCourses(mapped);
+      setIcLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -184,6 +234,98 @@ export function CoursesSection() {
             ))}
           </div>
         )}
+
+        {/* Instructor-published courses */}
+        {!icLoading && instructorCourses.length > 0 && (
+          <div className="mt-20">
+            <div className="text-center mb-10">
+              <span className="eyebrow">Guides' Courses · 引導者的最新課程</span>
+              <div className="hairline mt-6 mb-6 mx-auto" />
+              <h3 className="text-fluid-h2 font-display font-medium text-foreground">
+                來自引導者的<span className="text-accent-italic">最新開課</span>
+              </h3>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
+              {instructorCourses.map((c, index) => (
+                <motion.div
+                  key={c.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
+                  className="group cursor-pointer"
+                  onClick={() => navigate(`/instructors/${c.slug}#teacher-courses`)}
+                >
+                  <div className="h-full flex flex-col">
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br from-sand/30 to-coral/20 mb-5">
+                      {c.course_image_url ? (
+                        <img
+                          src={c.course_image_url}
+                          alt={c.title}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                      ) : null}
+                      <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                        <div className="flex justify-between items-start">
+                          {c.service_type && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
+                              {SERVICE_LABEL[c.service_type] ?? c.service_type}
+                            </span>
+                          )}
+                        </div>
+                        {c.price && (
+                          <div className="text-xl font-display font-medium text-foreground/90 drop-shadow">{c.price}</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      {c.instructor && (
+                        <p className="text-[11px] uppercase font-body text-muted-foreground mb-2" style={{ letterSpacing: "0.18em" }}>
+                          {c.instructor}
+                        </p>
+                      )}
+                      <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+                        {c.title}
+                      </h3>
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto flex-wrap">
+                        {c.schedule && (
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
+                            {c.schedule}
+                          </span>
+                        )}
+                        {c.region && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
+                            {c.region}
+                          </span>
+                        )}
+                      </div>
+                      <a
+                        href={c.signup_url && c.signup_url.trim() ? c.signup_url : "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!c.signup_url || !c.signup_url.trim()) e.preventDefault();
+                        }}
+                        className="mt-4 inline-flex items-center justify-center gap-2 self-start px-5 py-2.5 rounded-full text-sm font-medium text-white shadow-md hover:shadow-lg hover:opacity-95 transition-all"
+                        style={{
+                          background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
+                          opacity: c.signup_url && c.signup_url.trim() ? 1 : 0.55,
+                          cursor: c.signup_url && c.signup_url.trim() ? "pointer" : "not-allowed",
+                        }}
+                      >
+                        🎫 {c.signup_url && c.signup_url.trim() ? "我要報名" : "敬請期待"}
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
