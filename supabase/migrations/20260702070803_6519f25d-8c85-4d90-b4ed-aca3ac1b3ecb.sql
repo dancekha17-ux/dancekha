@@ -1,0 +1,1 @@
+ALTER TABLE public.instructor_courses ADD COLUMN IF NOT EXISTS signup_url text;

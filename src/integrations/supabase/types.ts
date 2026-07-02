@@ -151,6 +151,7 @@ export type Database = {
           service_type: string
           session_info: string | null
           sessions_count: number | null
+          signup_url: string | null
           sort_order: number
           status: string
           submitted_at: string | null
@@ -178,6 +179,7 @@ export type Database = {
           service_type?: string
           session_info?: string | null
           sessions_count?: number | null
+          signup_url?: string | null
           sort_order?: number
           status?: string
           submitted_at?: string | null
@@ -205,6 +207,7 @@ export type Database = {
           service_type?: string
           session_info?: string | null
           sessions_count?: number | null
+          signup_url?: string | null
           sort_order?: number
           status?: string
           submitted_at?: string | null
