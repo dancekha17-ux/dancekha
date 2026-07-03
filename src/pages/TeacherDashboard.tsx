@@ -84,6 +84,8 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
+  const [showIntroAgreement, setShowIntroAgreement] = useState(false);
+
 
 
   const skipDirty = useRef(true);
