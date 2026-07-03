@@ -449,9 +449,10 @@ export default function TeacherDashboard() {
               className="hidden md:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
               style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
             >
-              <Link to="/teacher/preview?card=1">
+              <Link to="/#world-folk">
                 <MapPin className="w-4 h-4" /> 預覽地圖
               </Link>
+
             </Button>
             <Button
               onClick={handleSubmitForReview}
