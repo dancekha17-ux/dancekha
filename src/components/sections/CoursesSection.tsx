@@ -155,20 +155,102 @@ export function CoursesSection() {
           ))}
         </motion.div>
 
-        {loading ? (
+        {loading || icLoading ? (
           <p className="text-center text-muted-foreground py-16">載入課程中…</p>
-        ) : filtered.length === 0 ? (
+        ) : filtered.length === 0 && instructorCourses.length === 0 ? (
           <p className="text-center text-muted-foreground py-16">
             目前沒有符合篩選條件的課程，試試其他組合。
           </p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
+            {/* Instructor-published courses first (fresh from guides) */}
+            {instructorCourses.map((c, index) => (
+              <motion.div
+                key={`ic-${c.id}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
+                className="group cursor-pointer"
+                onClick={() => navigate(`/instructors/${c.slug}#teacher-courses`)}
+              >
+                <div className="h-full flex flex-col">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br from-sand/30 to-coral/20 mb-5">
+                    {c.course_image_url ? (
+                      <img
+                        src={c.course_image_url}
+                        alt={c.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    ) : null}
+                    <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                      <div className="flex justify-between items-start gap-2">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#E36435]/90 text-white rounded-full text-[11px] font-body">
+                          <Sparkles className="w-2.5 h-2.5" /> 引導者開課
+                        </span>
+                        {c.service_type && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
+                            {SERVICE_LABEL[c.service_type] ?? c.service_type}
+                          </span>
+                        )}
+                      </div>
+                      {c.price && (
+                        <div className="text-xl font-display font-medium text-foreground/90 drop-shadow">{c.price}</div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-1 flex flex-col">
+                    {c.instructor && (
+                      <p className="text-[11px] uppercase font-body text-muted-foreground mb-2" style={{ letterSpacing: "0.18em" }}>
+                        {c.instructor}
+                      </p>
+                    )}
+                    <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {c.title}
+                    </h3>
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto flex-wrap">
+                      {c.schedule && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
+                          {c.schedule}
+                        </span>
+                      )}
+                      {c.region && (
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
+                          {c.region}
+                        </span>
+                      )}
+                    </div>
+                    <a
+                      href={c.signup_url && c.signup_url.trim() ? c.signup_url : "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!c.signup_url || !c.signup_url.trim()) e.preventDefault();
+                      }}
+                      className="mt-4 inline-flex items-center justify-center gap-2 self-start px-5 py-2.5 rounded-full text-sm font-medium text-white shadow-md hover:shadow-lg hover:opacity-95 transition-all"
+                      style={{
+                        background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
+                        opacity: c.signup_url && c.signup_url.trim() ? 1 : 0.55,
+                        cursor: c.signup_url && c.signup_url.trim() ? "pointer" : "not-allowed",
+                      }}
+                    >
+                      🎫 {c.signup_url && c.signup_url.trim() ? "我要報名" : "敬請期待"}
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Curated events / legacy courses */}
             {filtered.map((course, index) => (
               <motion.div
                 key={course.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
+                transition={{ duration: 0.7, delay: 0.05 * (instructorCourses.length + index + 1) }}
                 className="group cursor-pointer"
                 onClick={() => navigate(`/events/${course.id}`)}
               >
@@ -235,96 +317,6 @@ export function CoursesSection() {
           </div>
         )}
 
-        {/* Instructor-published courses */}
-        {!icLoading && instructorCourses.length > 0 && (
-          <div className="mt-20">
-            <div className="text-center mb-10">
-              <span className="eyebrow">Guides' Courses · 引導者的最新課程</span>
-              <div className="hairline mt-6 mb-6 mx-auto" />
-              <h3 className="text-fluid-h2 font-display font-medium text-foreground">
-                來自引導者的<span className="text-accent-italic">最新開課</span>
-              </h3>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
-              {instructorCourses.map((c, index) => (
-                <motion.div
-                  key={c.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.05 * (index + 1) }}
-                  className="group cursor-pointer"
-                  onClick={() => navigate(`/instructors/${c.slug}#teacher-courses`)}
-                >
-                  <div className="h-full flex flex-col">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gradient-to-br from-sand/30 to-coral/20 mb-5">
-                      {c.course_image_url ? (
-                        <img
-                          src={c.course_image_url}
-                          alt={c.title}
-                          loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        />
-                      ) : null}
-                      <div className="absolute inset-0 p-5 flex flex-col justify-between">
-                        <div className="flex justify-between items-start">
-                          {c.service_type && (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-background/85 backdrop-blur-sm rounded-full text-[11px] font-body text-foreground">
-                              {SERVICE_LABEL[c.service_type] ?? c.service_type}
-                            </span>
-                          )}
-                        </div>
-                        {c.price && (
-                          <div className="text-xl font-display font-medium text-foreground/90 drop-shadow">{c.price}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex-1 flex flex-col">
-                      {c.instructor && (
-                        <p className="text-[11px] uppercase font-body text-muted-foreground mb-2" style={{ letterSpacing: "0.18em" }}>
-                          {c.instructor}
-                        </p>
-                      )}
-                      <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
-                        {c.title}
-                      </h3>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground font-body mt-auto flex-wrap">
-                        {c.schedule && (
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
-                            {c.schedule}
-                          </span>
-                        )}
-                        {c.region && (
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
-                            {c.region}
-                          </span>
-                        )}
-                      </div>
-                      <a
-                        href={c.signup_url && c.signup_url.trim() ? c.signup_url : "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (!c.signup_url || !c.signup_url.trim()) e.preventDefault();
-                        }}
-                        className="mt-4 inline-flex items-center justify-center gap-2 self-start px-5 py-2.5 rounded-full text-sm font-medium text-white shadow-md hover:shadow-lg hover:opacity-95 transition-all"
-                        style={{
-                          background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
-                          opacity: c.signup_url && c.signup_url.trim() ? 1 : 0.55,
-                          cursor: c.signup_url && c.signup_url.trim() ? "pointer" : "not-allowed",
-                        }}
-                      >
-                        🎫 {c.signup_url && c.signup_url.trim() ? "我要報名" : "敬請期待"}
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        )}
 
 
         <motion.div
