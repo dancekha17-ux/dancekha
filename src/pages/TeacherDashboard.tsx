@@ -14,6 +14,8 @@ import { SectionCard } from "@/components/teacher/SectionCard";
 import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { ProfileSummaryCard } from "@/components/teacher/ProfileSummaryCard";
 import { StoryMomentsCard } from "@/components/teacher/StoryMomentsCard";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+
 
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
