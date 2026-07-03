@@ -123,10 +123,25 @@ export default function TeacherDashboard() {
           .eq("status", "draft")
           .not("revision_notes", "is", null);
         setRevisionAlerts((revRows ?? []).filter((r: any) => (r.revision_notes ?? "").trim().length > 0));
+        // One-time agreement intro on first login: show if not yet signed and never seen before
+        try {
+          const key = `danceka:agreement-intro-seen:${user.id}`;
+          if (!d.agreement_signed_at && !localStorage.getItem(key)) {
+            setShowIntroAgreement(true);
+          }
+        } catch {}
       }
       setLoading(false);
     })();
   }, [user, toast]);
+
+  const dismissIntroAgreement = () => {
+    setShowIntroAgreement(false);
+    try {
+      if (user) localStorage.setItem(`danceka:agreement-intro-seen:${user.id}`, "1");
+    } catch {}
+  };
+
 
   // Mark dirty whenever the profile state actually changes via user edits
   const update = (patch: Partial<Profile>) => {
