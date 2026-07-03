@@ -14,6 +14,8 @@ import { SectionCard } from "@/components/teacher/SectionCard";
 import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { ProfileSummaryCard } from "@/components/teacher/ProfileSummaryCard";
 import { StoryMomentsCard } from "@/components/teacher/StoryMomentsCard";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+
 
 
 const REQUIRED_MSG = "此欄位為必填，有了它學員才能找到你喔！";
@@ -82,6 +84,8 @@ export default function TeacherDashboard() {
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
+  const [showIntroAgreement, setShowIntroAgreement] = useState(false);
+
 
 
   const skipDirty = useRef(true);
@@ -119,10 +123,25 @@ export default function TeacherDashboard() {
           .eq("status", "draft")
           .not("revision_notes", "is", null);
         setRevisionAlerts((revRows ?? []).filter((r: any) => (r.revision_notes ?? "").trim().length > 0));
+        // One-time agreement intro on first login: show if not yet signed and never seen before
+        try {
+          const key = `danceka:agreement-intro-seen:${user.id}`;
+          if (!d.agreement_signed_at && !localStorage.getItem(key)) {
+            setShowIntroAgreement(true);
+          }
+        } catch {}
       }
       setLoading(false);
     })();
   }, [user, toast]);
+
+  const dismissIntroAgreement = () => {
+    setShowIntroAgreement(false);
+    try {
+      if (user) localStorage.setItem(`danceka:agreement-intro-seen:${user.id}`, "1");
+    } catch {}
+  };
+
 
   // Mark dirty whenever the profile state actually changes via user edits
   const update = (patch: Partial<Profile>) => {
@@ -430,9 +449,10 @@ export default function TeacherDashboard() {
               className="hidden md:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
               style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
             >
-              <Link to="/teacher/preview?card=1">
+              <Link to="/#world-folk">
                 <MapPin className="w-4 h-4" /> 預覽地圖
               </Link>
+
             </Button>
             <Button
               onClick={handleSubmitForReview}
@@ -483,56 +503,40 @@ export default function TeacherDashboard() {
           {/* Form column */}
           <div className="min-w-0">
 
-            {/* Agreement banner — always visible at top */}
-            <section
-              className={`mb-6 rounded-2xl p-4 md:p-5 border flex items-start md:items-center gap-3 md:gap-4 flex-col md:flex-row ${
-                profile.agreement_signed_at
-                  ? "bg-success/5 border-success/30"
-                  : "bg-[#E89B5C]/10 border-[#E89B5C]/40"
-              }`}
-            >
-              <div
-                className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center ${
-                  profile.agreement_signed_at
-                    ? "bg-success/15 text-success"
-                    : "bg-[#E89B5C]/20 text-[#B25C2E]"
-                }`}
-              >
-                {profile.agreement_signed_at ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <FileSignature className="w-5 h-5" />
-                )}
-              </div>
-              <div className="min-w-0 flex-1">
-                {profile.agreement_signed_at ? (
-                  <>
-                    <p className="font-display text-base md:text-lg text-foreground">
-                      已完成「師資合作夥伴協議」簽署
-                    </p>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5 leading-relaxed">
-                      {`簽署於 ${new Date(profile.agreement_signed_at).toLocaleDateString("zh-TW")}，您已可自由新增課程與活動。`}
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {"您可隨時編輯或維護「基本資訊」&「精彩瞬間」；\n如需新增或編輯「課程活動」，請先完成合作協議簽署。"}
-                  </p>
-                )}
-              </div>
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="shrink-0 bg-white/70 border-border text-muted-foreground hover:bg-white hover:text-foreground"
-              >
-                <Link to="/teacher/agreement">
-                  <FileSignature className="w-4 h-4" />
-                  {profile.agreement_signed_at ? "檢視協議內容" : "師資合作夥伴協議書"}
-                </Link>
-              </Button>
+            {/* One-time agreement intro dialog (first login only) */}
+            <Dialog open={showIntroAgreement} onOpenChange={(o) => { if (!o) dismissIntroAgreement(); }}>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <div className="mx-auto w-14 h-14 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mb-2">
+                    <FileSignature className="w-7 h-7" />
+                  </div>
+                  <DialogTitle className="text-center font-display text-xl">
+                    歡迎加入舞島咖引導者專區
+                  </DialogTitle>
+                  <DialogDescription className="text-center leading-relaxed">
+                    您可隨時編輯「基本資訊」與「精彩瞬間」。<br />
+                    若要新增或編輯「課程活動」，請先完成
+                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署。
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="flex-col sm:flex-row gap-2 sm:justify-center">
+                  <Button variant="outline" onClick={dismissIntroAgreement}>
+                    稍後再說
+                  </Button>
+                  <Button
+                    asChild
+                    className="text-white"
+                    style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+                    onClick={dismissIntroAgreement}
+                  >
+                    <Link to="/teacher/agreement">
+                      <FileSignature className="w-4 h-4" /> 前往閱讀並簽署
+                    </Link>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
-            </section>
 
 
 
