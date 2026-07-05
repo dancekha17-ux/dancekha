@@ -50,7 +50,7 @@ export function AboutSection() {
             這座島，為<span className="text-accent-italic">舞動的靈魂</span>而生
           </h2>
           <p className="text-fluid-lead text-muted-foreground font-body whitespace-pre-line">
-            舞島咖是一個溫暖的舞蹈生態系。我們串起世界的舞蹈大師與愛舞者，{"\n"}
+            我們將串起世界各地的舞蹈大師與喜愛舞動的你，{"\n"}
             {"\u00a0"}創造一個讓每個人都能自在起舞、用身體與世界對話的平台。
           </p>
         </motion.div>
