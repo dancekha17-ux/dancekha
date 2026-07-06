@@ -480,16 +480,13 @@ export default function TeacherDashboard() {
           </div>
         </div>
         <div className="xl:hidden border-t border-[#E63946]/10 px-4 py-2 flex gap-2 overflow-x-auto">
-          {[
-            { href: "#identity", label: "基本資訊" },
-            { href: "#courses", label: "課程活動" },
-              { href: "#media", label: "精彩瞬間" },
-          ].map((n) => (
+          {DASHBOARD_MODULES.filter((m) => m.visible).map((n) => (
             <a
-              key={n.href}
+              key={n.id}
               href={n.href}
               className="shrink-0 px-3 py-1.5 rounded-full text-xs bg-white text-foreground/70 border border-[#E63946]/15"
             >
+              <span className="mr-1">{n.emoji}</span>
               {n.label}
             </a>
           ))}
