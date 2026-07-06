@@ -399,16 +399,13 @@ export default function TeacherDashboard() {
           </Link>
 
           <nav className="hidden xl:flex items-center gap-1">
-            {[
-              { href: "#identity", label: "基本資訊" },
-              { href: "#courses", label: "課程活動" },
-              { href: "#media", label: "精彩瞬間" },
-            ].map((n) => (
+            {DASHBOARD_MODULES.filter((m) => m.visible).map((n) => (
               <a
-                key={n.href}
+                key={n.id}
                 href={n.href}
                 className="px-3 py-1.5 rounded-full text-sm text-foreground/70 hover:text-[#E63946] hover:bg-white transition-colors"
               >
+                <span className="mr-1">{n.emoji}</span>
                 {n.label}
               </a>
             ))}
