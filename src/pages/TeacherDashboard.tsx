@@ -640,6 +640,9 @@ export default function TeacherDashboard() {
                 </div>
               </SectionCard>
             </div>
+
+            {/* Co-Creation Hub — pluggable programs (seed videos active, others coming soon) */}
+            <CoCreationHub />
           </div>
 
         </div>
