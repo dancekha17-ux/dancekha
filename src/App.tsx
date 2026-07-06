@@ -11,6 +11,7 @@ import GlobalStyles from "./pages/GlobalStyles";
 import CourseDetail from "./pages/CourseDetail";
 import TeacherAuth from "./pages/TeacherAuth";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import TeacherSeedVideos from "./pages/TeacherSeedVideos";
 import TeacherPreview from "./pages/TeacherPreview";
 import TeacherRecruit from "./pages/TeacherRecruit";
 import Dashboard from "./pages/Dashboard";
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+            <Route path="/teacher/co-creation/seed-videos" element={<TeacherSeedVideos />} />
             <Route path="/teacher/agreement" element={<AgreementPage />} />
             <Route path="/teacher/preview" element={<TeacherPreview />} />
             <Route path="/register" element={<TeacherRecruit />} />
