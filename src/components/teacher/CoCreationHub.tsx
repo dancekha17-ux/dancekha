@@ -8,13 +8,13 @@ export function CoCreationHub() {
   return (
     <div id="co-creation" className="scroll-mt-24">
       <SectionCard
-        eyebrow="Co-Creation Programs"
+        eyebrow="CO-CREATION PROGRAMS"
         title={
           <span className="flex items-center gap-2">
             🤝 聚落共創
           </span>
         }
-        description="與舞島咖攜手推廣世界舞蹈文化，透過內容分享、品牌合作與文化交流，累積品牌影響力，讓更多人認識您的專業與故事。"
+        description="與舞島咖一起分享舞蹈、推廣文化，讓每一次共創，都成為彼此成長的力量。"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {CO_CREATION_PROGRAMS.map((p) => {
@@ -32,7 +32,7 @@ export function CoCreationHub() {
                   <span className="text-2xl leading-none">{p.emoji}</span>
                   {!isActive && (
                     <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
-                      <Lock className="w-3 h-3" /> Coming Soon
+                      <Lock className="w-3 h-3" /> COMING SOON
                     </span>
                   )}
                 </div>
