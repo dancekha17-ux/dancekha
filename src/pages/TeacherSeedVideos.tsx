@@ -199,10 +199,10 @@ export default function TeacherSeedVideos() {
           <span className="eyebrow">聚落共創 / 種子短片</span>
           <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3 flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            種子短片管理
+            種子短片
           </h1>
           <p className="text-muted-foreground mt-3 leading-relaxed text-sm md:text-base">
-            建立初學者基礎教學短片，作為平台會員專屬內容。第一階段完成 {TARGET_COUNT} 支即可，之後可持續累積更多主題。
+            您可以依據自己的專長，分享一段最能代表教學特色的內容，幫助更多人認識您的舞蹈，也透過專業分享建立第一批喜愛您的學員與核心粉絲。
           </p>
         </div>
 
