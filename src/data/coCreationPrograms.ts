@@ -36,7 +36,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     description:
       "平台依據課程品質、內容特色與學員回饋，不定期推薦優質課程，提升品牌曝光與影響力。",
     status: "locked",
-    lockedMessage: "完成種子短片後，即可列入平台精選推薦資格。",
+    lockedMessage: "讓更多人看見您的專業與特色，提升品牌能見度，也創造更多合作與招生機會。",
   },
   {
     id: "world-culture",
