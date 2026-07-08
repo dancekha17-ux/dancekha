@@ -104,8 +104,8 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
     >
       <header className="flex items-start justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center">
-            <UserCircle2 className="w-5 h-5" />
+          <div className="w-11 h-11 rounded-2xl bg-[#E89B5C]/15 text-2xl flex items-center justify-center">
+            👤
           </div>
           <div>
             <span className="eyebrow">PROFILE ·老師/團隊的名片</span>
