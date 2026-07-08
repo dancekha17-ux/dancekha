@@ -271,7 +271,7 @@ export default function TeacherSeedVideos() {
           </h2>
           <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-foreground/85">
             {[
-              "規格 1080P & 橫式 16:9",
+              "格式：MP4 / 1080P /橫式16:9",
               "已完成自我介紹",
               "已說明舞蹈特色",
               "已示範基礎動作",
