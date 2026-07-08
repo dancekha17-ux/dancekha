@@ -24,7 +24,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     emoji: "🌱",
     title: "種子短片",
     description:
-      "建立初學者基礎教學短片，作為平台會員專屬內容，協助更多新手踏出第一步，也讓更多人透過您的教學認識您的舞蹈品牌。",
+      "您可以依據自己的專長，分享一段最能代表教學特色的內容，幫助更多人認識您的舞蹈，也透過專業分享建立第一批喜愛您的學員與核心粉絲。",
     status: "active",
     href: "/teacher/co-creation/seed-videos",
     ctaLabel: "開始建立",
