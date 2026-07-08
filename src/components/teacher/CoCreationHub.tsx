@@ -50,67 +50,70 @@ export function CoCreationHub() {
     : `🌱 完成 ${SEED_VIDEO_TARGET} 支種子短片`;
 
   return (
-    <div id="co-creation" className="scroll-mt-24 space-y-6">
-      {/* Journey summary hero card */}
-      <section
-        className="rounded-3xl border border-[#E89B5C]/30 p-6 md:p-8 shadow-soft relative overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(232,155,92,0.10) 0%, rgba(255,245,230,0.6) 55%, rgba(255,255,255,0.6) 100%)",
-        }}
-      >
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div className="min-w-0">
-            <span className="eyebrow">MY CO-CREATION JOURNEY</span>
-            <h2 className="font-display text-xl md:text-2xl text-foreground mt-2 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#E36435]" />
-              我的聚落進度
-            </h2>
-          </div>
-          <div className="text-right shrink-0">
-            <p className="font-display text-3xl text-[#B25C2E] leading-none">
-              {overallPct}
-              <span className="text-lg">%</span>
-            </p>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground mt-1">
-              Progress
-            </p>
-          </div>
-        </div>
-
-        <ProgressBar pct={overallPct} className="mt-5 h-2.5" />
-
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl bg-white/70 border border-border/50 p-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              目前完成
-            </p>
-            <p className="font-display text-lg text-foreground mt-1">
-              {completedMilestones}{" "}
-              <span className="text-muted-foreground text-sm">
-                / {CO_CREATION_TOTAL_MILESTONES} 個共創里程碑
-              </span>
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/70 border border-border/50 p-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-              下一步
-            </p>
-            <p className="text-sm text-foreground mt-1 leading-relaxed">{nextStep}</p>
-          </div>
-        </div>
-      </section>
-
+    <div id="co-creation" className="scroll-mt-24">
       <SectionCard
         eyebrow="CO-CREATION PROGRAMS"
         title={
-          <span className="flex items-center gap-2">
-            🤝 聚落共創
+          <span className="flex items-center gap-3">
+            <span className="w-11 h-11 rounded-2xl bg-[#E89B5C]/15 text-2xl flex items-center justify-center">
+              🤝
+            </span>
+            聚落共創
           </span>
         }
         description="這裡不只是功能專區，更是陪伴每位引導者持續發光的旅程。完成每一個共創里程碑，逐步累積品牌影響力，與舞島咖一起推廣舞蹈文化，讓更多人因您的舞步而受到啟發。"
       >
-        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Journey summary hero card */}
+        <section
+          className="rounded-3xl border border-[#E89B5C]/30 p-6 md:p-8 shadow-soft relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(232,155,92,0.10) 0%, rgba(255,245,230,0.6) 55%, rgba(255,255,255,0.6) 100%)",
+          }}
+        >
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="min-w-0">
+              <span className="eyebrow">MY CO-CREATION JOURNEY</span>
+              <h2 className="font-display text-xl md:text-2xl text-foreground mt-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-[#E36435]" />
+                我的聚落進度
+              </h2>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="font-display text-3xl text-[#B25C2E] leading-none">
+                {overallPct}
+                <span className="text-lg">%</span>
+              </p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground mt-1">
+                Progress
+              </p>
+            </div>
+          </div>
+
+          <ProgressBar pct={overallPct} className="mt-5 h-2.5" />
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl bg-white/70 border border-border/50 p-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                目前完成
+              </p>
+              <p className="font-display text-lg text-foreground mt-1">
+                {completedMilestones}{" "}
+                <span className="text-muted-foreground text-sm">
+                  / {CO_CREATION_TOTAL_MILESTONES} 個共創里程碑
+                </span>
+              </p>
+            </div>
+            <div className="rounded-2xl bg-white/70 border border-border/50 p-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                下一步
+              </p>
+              <p className="text-sm text-foreground mt-1 leading-relaxed">{nextStep}</p>
+            </div>
+          </div>
+        </section>
+
+        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {CO_CREATION_PROGRAMS.map((p, idx) => {
             const isActive = p.status === "active" && !!p.href;
             const isSeed = p.id === "seed-videos";
