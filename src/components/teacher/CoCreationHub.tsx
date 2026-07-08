@@ -108,7 +108,7 @@ export function CoCreationHub() {
             🤝 聚落共創
           </span>
         }
-        description="與舞島咖一起分享舞蹈、推廣文化，讓每一次共創，都成為彼此成長的力量。完成當前階段，逐步解鎖下一個共創機會。"
+        description="這裡不只是功能專區，更是陪伴每位引導者持續發光的旅程。完成每一個共創里程碑，逐步累積品牌影響力，與舞島咖一起推廣舞蹈文化，讓更多人因您的舞步而受到啟發。"
       >
         <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {CO_CREATION_PROGRAMS.map((p, idx) => {
