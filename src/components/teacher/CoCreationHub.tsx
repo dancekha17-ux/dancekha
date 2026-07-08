@@ -55,7 +55,7 @@ export function CoCreationHub() {
         eyebrow="CO-CREATION PROGRAMS"
         title={
           <span className="flex items-center gap-3">
-            <span className="w-11 h-11 rounded-2xl bg-[#E89B5C]/15 text-2xl flex items-center justify-center">
+            <span className="w-11 h-11 rounded-2xl bg-[#E89B5C]/15 text-2xl text-foreground flex items-center justify-center">
               🤝
             </span>
             聚落共創
