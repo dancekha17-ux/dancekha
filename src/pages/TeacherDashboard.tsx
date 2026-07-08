@@ -595,7 +595,10 @@ export default function TeacherDashboard() {
               <SectionCard
                 eyebrow="Courses & Events"
                 title={
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-3">
+                    <span className="w-11 h-11 rounded-2xl bg-[#10B981]/15 text-2xl text-foreground flex items-center justify-center">
+                      📚
+                    </span>
                     課程活動
                     {!coursesUnlocked && (
                       <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
