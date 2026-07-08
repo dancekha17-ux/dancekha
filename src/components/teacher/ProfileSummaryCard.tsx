@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Pencil,
-  UserCircle2,
   MapPin,
   Mail,
   Phone,
