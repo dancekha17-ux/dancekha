@@ -27,7 +27,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     title: "種子短片",
     subtitle: "一支短片、一顆種子，共築舞島聚落。",
     description:
-      "您的每一次分享，都是舞島咖會員典藏的重要養分。共同打造平台的文化根基，也逐步累積自己的數位資產，讓更多人認識並愛上這門舞蹈。",
+      "共同打造平台的文化根基，也逐步累積自己的數位資產，讓更多人認識並愛上這門舞蹈。",
     status: "active",
     href: "/teacher/co-creation/seed-videos",
     ctaLabel: "開始建立",
