@@ -202,7 +202,7 @@ export default function TeacherSeedVideos() {
             種子短片
           </h1>
           <p className="text-muted-foreground mt-3 leading-relaxed text-sm md:text-base">
-            您可以依據自己的專長，分享一段最能代表教學特色的內容，幫助更多人認識您的舞蹈，也透過專業分享建立第一批喜愛您的學員與核心粉絲。
+            分享一段最能代表教學特色的內容，幫助更多人認識您的舞蹈，透過您的專業分享，建立第一批喜愛您的學員與核心粉絲。
           </p>
         </div>
 
