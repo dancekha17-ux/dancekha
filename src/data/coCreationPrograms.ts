@@ -36,7 +36,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     id: "special-projects",
     emoji: "🎤",
     title: "特別企劃",
-    subtitle: "跨界合作 × 分享故事，放大品牌影響力。",
+    subtitle: "跨界合作×分享故事，放大品牌影響力。",
     description:
       "透過文化企劃、跨域合作與品牌專訪，讓更多人認識您的理念與舞蹈文化，持續拓展品牌影響力。",
     status: "locked",
