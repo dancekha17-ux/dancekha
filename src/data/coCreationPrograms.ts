@@ -8,13 +8,15 @@ export interface CoCreationProgram {
   id: string;
   emoji: string;
   title: string;
+  /** Short subtitle shown directly under the title */
+  subtitle: string;
   description: string;
   status: ProgramStatus;
   /** Route path when status === "active" */
   href?: string;
   /** Optional CTA label override */
   ctaLabel?: string;
-  /** Copy shown under the 🔒 尚未解鎖 label for locked cards */
+  /** Copy shown under the soft Coming Soon label for locked cards */
   lockedMessage?: string;
 }
 
@@ -23,45 +25,30 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     id: "seed-videos",
     emoji: "🌱",
     title: "種子短片",
+    subtitle: "一支短片、一顆種子，共築舞島聚落。",
     description:
-      "您可以依據自己的專長，分享一段最能代表教學特色的內容，幫助更多人認識您的舞蹈，也透過專業分享建立第一批喜愛您的學員與核心粉絲。",
+      "您的每一次分享，都是舞島咖會員典藏的重要養分。共同打造平台的文化根基，也逐步累積自己的數位資產，讓更多人認識並愛上這門舞蹈。",
     status: "active",
     href: "/teacher/co-creation/seed-videos",
     ctaLabel: "開始建立",
   },
   {
-    id: "featured-picks",
-    emoji: "⭐",
-    title: "島咖精選",
+    id: "special-projects",
+    emoji: "🎤",
+    title: "特別企劃",
+    subtitle: "跨界合作 × 分享故事，放大品牌影響力。",
     description:
-      "平台依據課程品質、內容特色與學員回饋，不定期推薦優質課程，提升品牌曝光與影響力。",
-    status: "locked",
-    lockedMessage: "讓更多人看見您的專業與特色，提升品牌能見度，也創造更多合作與招生機會。",
-  },
-  {
-    id: "world-culture",
-    emoji: "🌍",
-    title: "世界文化企劃",
-    description:
-      "與舞島咖共同策劃世界舞蹈文化主題，透過教學、故事與文化交流，一起推廣多元舞蹈文化。",
+      "透過文化企劃、跨域合作與品牌專訪，讓更多人認識您的理念與舞蹈文化，持續拓展品牌影響力。",
     status: "locked",
     lockedMessage: "未來可參與跨文化合作、世界舞蹈交流與特別企劃。",
-  },
-  {
-    id: "brand-interview",
-    emoji: "🎤",
-    title: "品牌專訪",
-    description:
-      "由舞島咖主動邀請引導者分享舞蹈故事、教學理念與文化初心，打造專屬品牌內容。",
-    status: "locked",
-    lockedMessage: "完成種子短片並持續經營品牌，將有機會接受舞島咖品牌專訪。",
   },
   {
     id: "badges",
     emoji: "🏅",
     title: "島咖徽章",
+    subtitle: "累積信任，成就品牌價值。",
     description:
-      "記錄您的教學投入、文化推廣與平台共創歷程，累積專屬徽章與品牌成就。",
+      "每一次分享、每一次參與，都是品牌成長的足跡，也成為聚落共同前行的見證。",
     status: "locked",
     lockedMessage: "隨著教學、共創及文化推廣，逐步累積屬於您的聚落徽章。",
   },
