@@ -413,7 +413,7 @@ export default function TeacherSeedVideos() {
           </div>
 
           <p className="text-xs md:text-sm text-muted-foreground mt-5 max-w-lg mx-auto leading-relaxed">
-            上傳完成後，舞島咖將協助完成影片確認、封面整理，
+            上傳完成後，舞島咖將協助完成影片上架，
             並收錄至引導者典藏會員專區。
           </p>
         </section>
