@@ -100,10 +100,11 @@ function loadVideos(userId: string): SeedVideo[] {
     if (!Array.isArray(parsed)) return [];
     // Backwards-compat: map old status shapes → new
     return parsed.map((v: any) => {
-      let status: SeedVideoStatus = v.status;
-      if (status === "draft") status = "received";
-      else if (status === "review") status = "reviewing";
-      else if (!STATUS_META[status]) status = "received";
+      let status: SeedVideoStatus;
+      if (v.status === "draft") status = "received";
+      else if (v.status === "review") status = "reviewing";
+      else if (STATUS_META[v.status as SeedVideoStatus]) status = v.status as SeedVideoStatus;
+      else status = "received";
       return {
         id: v.id,
         cover_url: v.cover_url ?? "",
