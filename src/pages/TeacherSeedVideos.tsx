@@ -390,7 +390,7 @@ export default function TeacherSeedVideos() {
                 "影片長度 8 分鐘內",
                 "收音和畫面都清楚",
                 "無版權音樂問題",
-                "已取得出演者同意",
+                '檔案命名："您或團隊大名_主題名稱"',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="inline-block w-4 h-4 mt-0.5 rounded border border-[#E89B5C]/60 bg-white shrink-0" />
