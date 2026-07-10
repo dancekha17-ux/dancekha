@@ -275,7 +275,7 @@ export default function TeacherSeedVideos() {
         <section className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-8 mb-8 shadow-soft">
           <span className="eyebrow">SUBMISSION FLOW</span>
           <h2 className="font-display text-xl md:text-2xl text-foreground mt-2 flex items-center gap-2">
-            <span>🌱</span> 投稿流程
+            <span>🌱</span> 流程說明
           </h2>
           <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
             共同創作的每一步，都有舞島咖與您並肩陪伴。
