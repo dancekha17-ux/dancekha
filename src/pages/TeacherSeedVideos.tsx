@@ -310,7 +310,7 @@ export default function TeacherSeedVideos() {
               </div>
               <p className="font-display text-sm md:text-base text-foreground">上傳影片</p>
               <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
-                請將影片上傳至舞島咖指定的 Google Drive 資料夾。
+                請將影片上傳至舞島咖指定的資料夾。
               </p>
             </div>
           </div>
