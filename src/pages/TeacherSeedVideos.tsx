@@ -252,7 +252,7 @@ export default function TeacherSeedVideos() {
             </div>
             <span className="text-xs md:text-sm text-muted-foreground">
               {remaining > 0
-                ? `還可以繼續播種 ${remaining} 支`
+                ? `還可新增 ${remaining} 支種子短片`
                 : "🎉 已完成本階段種子短片"}
             </span>
           </div>
