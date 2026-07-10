@@ -337,7 +337,7 @@ export default function TeacherSeedVideos() {
                 "經典舞步解析",
                 "節奏與音樂掌握",
                 "暖身方式",
-                "常見錯誤與修正",
+                "常見錯誤與解析",
                 "一段完整示範",
                 "最希望初學者先理解的一件事",
               ].map((item) => (
