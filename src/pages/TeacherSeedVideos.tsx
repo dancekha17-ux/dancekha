@@ -323,7 +323,7 @@ export default function TeacherSeedVideos() {
           <div className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-7 shadow-soft">
             <span className="eyebrow">SUGGESTED TOPICS</span>
             <h2 className="font-display text-lg md:text-xl text-foreground mt-2 flex items-center gap-2">
-              <span>🌿</span> 建議拍攝主題
+              <span>🌿</span> 拍攝主題
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
               自由選擇最能傳達您教學靈魂的主題。
