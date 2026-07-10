@@ -40,7 +40,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     description:
       "透過文化企劃、跨域合作與品牌專訪，讓更多人認識您的理念與舞蹈文化，持續拓展品牌影響力。",
     status: "locked",
-    lockedMessage: "未來可參與跨文化合作、世界舞蹈交流與特別企劃。",
+    lockedMessage: "未來可參與跨界合作、世界舞蹈交流與品牌專訪。",
   },
   {
     id: "badges",
