@@ -339,7 +339,7 @@ export default function TeacherSeedVideos() {
                 "暖身方式",
                 "Q&A",
                 "一段完整示範",
-                "最想送給學生的一句話",
+                "最希望初學者先理解的一件事",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="text-[#2E8B57] mt-0.5">✅</span>
