@@ -420,7 +420,7 @@ export default function TeacherSeedVideos() {
             <span>☁️</span> 上傳影片
           </h2>
           <p className="text-sm md:text-base text-foreground/75 mt-3 max-w-xl mx-auto leading-relaxed">
-            請點擊下方按鈕，將影片上傳至舞島咖指定 Google Drive 資料夾。
+            請點擊下方按鈕，上傳您的種子短片。
           </p>
 
           <div className="mt-6">
@@ -433,14 +433,13 @@ export default function TeacherSeedVideos() {
                   "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
               }}
             >
-              📤 前往 Google Drive 上傳
+              📤 上傳影片
               <ExternalLink className="w-4 h-4 ml-1" />
             </Button>
           </div>
 
           <p className="text-xs md:text-sm text-muted-foreground mt-5 max-w-lg mx-auto leading-relaxed">
-            上傳完成後，舞島咖將協助完成影片上架，
-            並收錄至引導者典藏會員專區。
+            上傳完成後，我們將協助後續整理、優化與發布。
           </p>
         </section>
 
