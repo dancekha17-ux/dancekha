@@ -5,7 +5,6 @@ import {
   Sprout,
   Video,
   UploadCloud,
-  CheckCircle2,
   Sparkles,
   Cloud,
   Film,
