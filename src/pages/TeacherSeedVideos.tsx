@@ -272,8 +272,9 @@ export default function TeacherSeedVideos() {
 
         {/* Teacher's part */}
         <section className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-8 mb-8 shadow-soft">
-          <h2 className="font-display text-xl md:text-2xl text-foreground mb-6 flex items-center gap-2">
-            <span>👩‍🏫</span> 您需要完成
+          <h2 className="font-display text-xl md:text-2xl text-foreground mb-6 flex items-center gap-2 whitespace-pre-line">
+            <span>👩‍🏫</span>
+            只需兩步驟
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-5">
