@@ -331,7 +331,7 @@ export default function TeacherSeedVideos() {
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-foreground/85">
               {[
                 "一段入門教學",
-                "常見錯誤解析",
+                "舞蹈文化小知識",
                 "核心技巧分享",
                 "身體運用觀念",
                 "經典舞步解析",
