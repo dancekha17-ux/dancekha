@@ -384,13 +384,13 @@ export default function TeacherSeedVideos() {
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-sm text-foreground/85">
               {[
                 '影片格式為 MP4',
-                '檔案命名："您或團隊大名_主題名稱"',
+                "已取得出演者同意",
                 "1080P 以上解析度",
                 "拍攝為橫式 16:9",
                 "影片長度 8 分鐘內",
                 "收音和畫面都清楚",
                 "無版權音樂問題",
-                "已取得出演者同意",
+                '檔案命名："您或團隊大名_主題名稱"',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="inline-block w-4 h-4 mt-0.5 rounded border border-[#E89B5C]/60 bg-white shrink-0" />
