@@ -336,10 +336,9 @@ export default function TeacherSeedVideos() {
                 "身體運用觀念",
                 "經典舞步解析",
                 "節奏與音樂掌握",
-                "暖身方式",
                 "常見錯誤與解析",
-                "一段完整示範",
                 "最希望初學者先理解的一件事",
+                "一段完整示範",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="text-[#2E8B57] mt-0.5">✅</span>
