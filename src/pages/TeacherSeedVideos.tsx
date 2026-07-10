@@ -5,7 +5,6 @@ import {
   Sprout,
   Video,
   UploadCloud,
-  CheckCircle2,
   Sparkles,
   Cloud,
   Film,
@@ -271,51 +270,77 @@ export default function TeacherSeedVideos() {
           </p>
         </section>
 
-        {/* Submission timeline */}
+        {/* Teacher's part */}
         <section className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-8 mb-8 shadow-soft">
-          <span className="eyebrow">CO-CREATION FLOW</span>
-          <h2 className="font-display text-xl md:text-2xl text-foreground mt-2 flex items-center gap-2">
-            <span>🌱</span> 流程說明
+          <h2 className="font-display text-xl md:text-2xl text-foreground mb-6 flex items-center gap-2">
+            <span>👩‍🏫</span> 您需要完成
           </h2>
-          <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
-            共同創作的每一步，都有舞島咖與您並肩陪伴。
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
+                  }}
+                >
+                  1
+                </span>
+                <Video className="w-4 h-4 text-[#B25C2E]" />
+              </div>
+              <p className="font-display text-sm md:text-base text-foreground">錄製影片</p>
+              <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
+                MP4、1080P、16:9，影片長度 8 分鐘內。
+              </p>
+            </div>
+            <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
+                  }}
+                >
+                  2
+                </span>
+                <UploadCloud className="w-4 h-4 text-[#B25C2E]" />
+              </div>
+              <p className="font-display text-sm md:text-base text-foreground">上傳影片</p>
+              <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
+                請將影片上傳至舞島咖指定的 Google Drive 資料夾。
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <ol className="mt-6 grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-3">
-            {[
-              { icon: Video, title: "錄製影片", desc: "以 MP4 / 1080P / 16:9 拍攝您的分享。" },
-              { icon: UploadCloud, title: "上傳 Drive", desc: "上傳至舞島咖指定的 Google Drive。" },
-              { icon: Eye, title: "平台審核", desc: "由舞島咖協助確認畫質與內容。" },
-              { icon: Sparkles, title: "整理製作", desc: "統一封面、字幕與品牌樣式。" },
-              { icon: CheckCircle2, title: "上架典藏", desc: "上傳官方 YouTube (Unlisted) 並收錄會員專區。" },
-            ].map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <li key={step.title} className="relative">
-                  <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-4 h-full">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
-                        style={{
-                          background:
-                            "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
-                        }}
-                      >
-                        {i + 1}
-                      </span>
-                      <Icon className="w-4 h-4 text-[#B25C2E]" />
-                    </div>
-                    <p className="font-display text-sm md:text-base text-foreground">
-                      {step.title}
-                    </p>
-                    <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+        {/* Danceka takes it from here */}
+        <section
+          className="rounded-3xl p-8 md:p-10 mb-8 shadow-soft relative overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg,#FDF6ED 0%,#F8E9D4 100%)",
+            border: "1px solid rgba(232,155,92,0.25)",
+          }}
+        >
+          <div className="flex flex-col md:flex-row md:items-start gap-5">
+            <div
+              className="w-14 h-14 rounded-2xl bg-white/70 backdrop-blur flex items-center justify-center shrink-0 shadow-sm"
+            >
+              <Sparkles className="w-7 h-7 text-[#C9461E]" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-display text-xl md:text-2xl text-foreground flex items-center gap-2">
+                <span>🤝</span> 接下來，就交給舞島咖
+              </h2>
+              <p className="text-sm md:text-base text-foreground/75 mt-3 leading-relaxed">
+                影片上傳完成後，我們將協助整理、優化與發布，讓您的作品能以最好的樣貌與更多人相遇。
+              </p>
+              <p className="text-sm md:text-base text-[#B25C2E] mt-2 leading-relaxed">
+                「您只需要專注分享，剩下的交給我們。」
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Two-column: suggested topics + checklist */}
@@ -394,7 +419,7 @@ export default function TeacherSeedVideos() {
             <span>☁️</span> 上傳影片
           </h2>
           <p className="text-sm md:text-base text-foreground/75 mt-3 max-w-xl mx-auto leading-relaxed">
-            請點擊下方按鈕，將影片上傳至舞島咖指定 Google Drive 資料夾。
+            請點擊下方按鈕，上傳您的種子短片。
           </p>
 
           <div className="mt-6">
@@ -407,14 +432,13 @@ export default function TeacherSeedVideos() {
                   "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
               }}
             >
-              📤 前往 Google Drive 上傳
+              📤 上傳影片
               <ExternalLink className="w-4 h-4 ml-1" />
             </Button>
           </div>
 
           <p className="text-xs md:text-sm text-muted-foreground mt-5 max-w-lg mx-auto leading-relaxed">
-            上傳完成後，舞島咖將協助完成影片上架，
-            並收錄至引導者典藏會員專區。
+            上傳完成後，我們將協助後續整理、優化與發布。
           </p>
         </section>
 
