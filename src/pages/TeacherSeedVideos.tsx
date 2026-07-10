@@ -335,7 +335,7 @@ export default function TeacherSeedVideos() {
                 "核心技巧分享",
                 "身體運用觀念",
                 "舞蹈文化故事",
-                "節奏練習",
+                "節奏與音樂掌握",
                 "暖身方式",
                 "Q&A",
                 "一段完整示範",
