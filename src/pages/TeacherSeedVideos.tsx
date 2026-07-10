@@ -234,7 +234,7 @@ export default function TeacherSeedVideos() {
           </h1>
           <p className="text-muted-foreground mt-4 leading-relaxed text-sm md:text-base max-w-2xl">
             分享一段最能代表教學特色的內容，只要交給我們影片素材，
-            舞島咖將協助您整理、審核並收錄至官方會員專區，讓更多人因您的舞步而受到啟發。
+            舞島咖將協助您整理，並收錄至引導者典藏會員專區，讓更多人因您的舞步而受到啟發。
           </p>
         </section>
 
@@ -326,7 +326,7 @@ export default function TeacherSeedVideos() {
               <span>🌿</span> 建議拍攝主題
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
-              自由選擇最能傳達您教學靈魂的主題，一支即可。
+              自由選擇最能傳達您教學靈魂的主題。
             </p>
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-foreground/85">
               {[
