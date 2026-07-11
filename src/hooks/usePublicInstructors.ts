@@ -70,7 +70,7 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
 }
 
 function staticToPublic(i: Instructor): PublicInstructor {
-  return { ...i, source: "static" };
+  return { ...i, tagline: (i as any).tagline || "", source: "static" };
 }
 
 export function usePublicInstructors() {
