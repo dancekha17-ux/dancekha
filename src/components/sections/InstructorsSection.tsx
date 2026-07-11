@@ -125,7 +125,7 @@ export function InstructorsSection() {
                     </span>
                   </div>
                   <p className="text-muted-foreground font-body text-sm leading-relaxed line-clamp-2">
-                    一句話介紹品牌
+                    {instructor.tagline || instructor.bio}
                   </p>
                 </div>
               </Link>
