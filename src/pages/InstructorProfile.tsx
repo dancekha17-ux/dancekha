@@ -231,18 +231,6 @@ export default function InstructorProfile() {
                 <p className="text-lg md:text-xl font-body leading-loose text-foreground/90">
                   {instructor.bio}
                 </p>
-                <div className="flex items-center gap-6 mt-6 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Star className="w-4 h-4 fill-primary text-primary" />
-                    <span className="font-medium text-foreground">
-                      {instructor.rating}
-                    </span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Users2 className="w-4 h-4" />
-                    {instructor.students} 位學員
-                  </span>
-                </div>
               </motion.div>
 
               {/* 舞種淵源 / 文化故事 */}
