@@ -52,6 +52,7 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
     cover: profileImg || row.hero_image_url || row.avatar_url || fallbackCover,
     avatar: master?.logo_url || row.avatar_url || "/placeholder.svg",
     bio: master?.bio || row.bio || "",
+    tagline: row.tagline || "",
     rating: 5,
     students: 0,
     cultureTitle: master?.motto || row.culture_title || "",
