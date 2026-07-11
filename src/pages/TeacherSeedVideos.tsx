@@ -352,7 +352,7 @@ export default function TeacherSeedVideos() {
               <span>🌿</span> 拍攝主題
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
-              自由選擇最能傳達您教學靈魂的主題，可參考如下，或任何您想拍攝的內容。
+              自由定義您想拍攝的內容！選擇最能傳達您教學靈魂的主題，也可參考如下。
             </p>
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-foreground/85">
               {[
