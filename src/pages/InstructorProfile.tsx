@@ -11,8 +11,6 @@ import {
   MapPin,
   Play,
   Sparkles,
-  Star,
-  Users2,
   GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -217,6 +215,14 @@ export default function InstructorProfile() {
         </div>
       </section>
 
+      {instructor.tagline?.trim() && (
+        <div className="container-wide mx-auto px-4 md:px-8 -mt-4 md:-mt-6 relative z-10">
+          <p className="text-lg md:text-xl font-body text-foreground/90 leading-relaxed max-w-3xl">
+            {instructor.tagline}
+          </p>
+        </div>
+      )}
+
       {/* Main content */}
       <section className="section-padding pt-12 md:pt-16">
         <div className="container-wide mx-auto">
@@ -233,18 +239,6 @@ export default function InstructorProfile() {
                 <p className="text-lg md:text-xl font-body leading-loose text-foreground/90">
                   {instructor.bio}
                 </p>
-                <div className="flex items-center gap-6 mt-6 text-sm text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Star className="w-4 h-4 fill-primary text-primary" />
-                    <span className="font-medium text-foreground">
-                      {instructor.rating}
-                    </span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Users2 className="w-4 h-4" />
-                    {instructor.students} 位學員
-                  </span>
-                </div>
               </motion.div>
 
               {/* 舞種淵源 / 文化故事 */}

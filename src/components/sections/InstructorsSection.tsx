@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Youtube, Star, X } from "lucide-react";
+import { Instagram, Youtube, X } from "lucide-react";
 import { usePublicInstructors } from "@/hooks/usePublicInstructors";
 import { MAP_REGIONS } from "@/components/world-map/WorldMap";
 
@@ -124,18 +124,9 @@ export function InstructorsSection() {
                       {instructor.region}
                     </span>
                   </div>
-                  <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-muted-foreground font-body text-sm leading-relaxed line-clamp-2">
                     {instructor.bio}
                   </p>
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-1 text-primary">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="font-medium">{instructor.rating}</span>
-                    </div>
-                    <span className="text-muted-foreground font-body">
-                      {instructor.students} 位學員
-                    </span>
-                  </div>
                 </div>
               </Link>
             </motion.div>
@@ -148,9 +139,9 @@ export function InstructorsSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-16 text-center"
         >
-          <div className="inline-block max-w-xl mx-auto px-8 py-8 rounded-2xl bg-background/60 border border-border/60 backdrop-blur-sm">
-            <p className="eyebrow !mb-3">Join Us · 加入引導者聚落</p>
-            <p className="text-base font-body text-muted-foreground mb-5 leading-relaxed">
+          <div className="inline-block max-w-xl mx-auto px-8 py-8 rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-sm">
+            <p className="eyebrow !mb-3">Join Us · 歡迎加入引導者聚落</p>
+            <p className="text-base font-body text-foreground/80 mb-5 leading-relaxed">
               你也用生命在跳舞嗎？讓你的文化故事，成為下一位學員啟程的起點。
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
@@ -159,13 +150,6 @@ export function InstructorsSection() {
                 className="inline-flex items-center gap-2 text-primary font-medium flow-line hover:gap-3 transition-all"
               >
                 成為舞島咖引導者
-                <span>→</span>
-              </Link>
-              <Link
-                to="/styles"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body"
-              >
-                探索全球舞種總覽
                 <span>→</span>
               </Link>
             </div>

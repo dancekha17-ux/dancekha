@@ -20,6 +20,7 @@ import { MediaEditor } from "@/components/teacher/MediaEditor";
 interface ProfileLike {
   id: string;
   bio: string;
+  tagline: string;
   hero_image_url: string | null;
 }
 
@@ -104,6 +105,12 @@ export function StoryMomentsCard({ userId, profile, updateBio, onHeroChange, onS
             </div>
           )}
         </div>
+
+        {profile.tagline?.trim() && (
+          <p className="text-lg md:text-xl font-body text-foreground/90 leading-relaxed">
+            {profile.tagline}
+          </p>
+        )}
 
         <div className="rounded-2xl bg-white/70 border border-border/40 p-5 md:p-6">
           {profile.bio?.trim() ? (

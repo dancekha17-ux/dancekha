@@ -12,6 +12,7 @@ export interface PublicInstructor {
   cover: string;
   avatar: string;
   bio: string;
+  tagline?: string;
   rating: number;
   students: number;
   cultureTitle: string;
@@ -51,6 +52,7 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
     cover: profileImg || row.hero_image_url || row.avatar_url || fallbackCover,
     avatar: master?.logo_url || row.avatar_url || "/placeholder.svg",
     bio: master?.bio || row.bio || "",
+    tagline: row.tagline || "",
     rating: 5,
     students: 0,
     cultureTitle: master?.motto || row.culture_title || "",
@@ -68,7 +70,7 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
 }
 
 function staticToPublic(i: Instructor): PublicInstructor {
-  return { ...i, source: "static" };
+  return { ...i, tagline: (i as any).tagline || "", source: "static" };
 }
 
 export function usePublicInstructors() {

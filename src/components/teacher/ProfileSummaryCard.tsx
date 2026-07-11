@@ -146,11 +146,6 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
                 </span>
               )}
             </h3>
-            {profile.tagline ? (
-              <p className="text-foreground/75 mt-1.5 leading-relaxed">{profile.tagline}</p>
-            ) : (
-              <p className="text-muted-foreground italic mt-1.5">尚未填寫一句話介紹</p>
-            )}
             {profile.region && (
               <p className="inline-flex items-center gap-1 text-xs text-muted-foreground mt-2">
                 <MapPin className="w-3.5 h-3.5" /> {profile.region}
