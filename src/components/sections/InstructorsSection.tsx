@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Youtube, Star, X } from "lucide-react";
+import { Instagram, Youtube, X } from "lucide-react";
 import { usePublicInstructors } from "@/hooks/usePublicInstructors";
 import { MAP_REGIONS } from "@/components/world-map/WorldMap";
 
