@@ -124,18 +124,9 @@ export function InstructorsSection() {
                       {instructor.region}
                     </span>
                   </div>
-                  <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-muted-foreground font-body text-sm leading-relaxed line-clamp-2">
                     {instructor.bio}
                   </p>
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-1 text-primary">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="font-medium">{instructor.rating}</span>
-                    </div>
-                    <span className="text-muted-foreground font-body">
-                      {instructor.students} 位學員
-                    </span>
-                  </div>
                 </div>
               </Link>
             </motion.div>
