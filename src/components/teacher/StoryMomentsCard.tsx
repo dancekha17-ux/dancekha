@@ -20,6 +20,7 @@ import { MediaEditor } from "@/components/teacher/MediaEditor";
 interface ProfileLike {
   id: string;
   bio: string;
+  tagline: string;
   hero_image_url: string | null;
 }
 
