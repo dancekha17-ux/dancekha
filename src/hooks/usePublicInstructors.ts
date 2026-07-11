@@ -12,7 +12,7 @@ export interface PublicInstructor {
   cover: string;
   avatar: string;
   bio: string;
-  tagline: string;
+  tagline?: string;
   rating: number;
   students: number;
   cultureTitle: string;
