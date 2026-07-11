@@ -142,7 +142,7 @@ export function InstructorsSection() {
           <div className="inline-block max-w-xl mx-auto px-8 py-8 rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-sm">
             <p className="eyebrow !mb-3">Join Us · 歡迎加入引導者聚落</p>
             <p className="text-base font-body text-foreground/80 mb-5 leading-relaxed">
-              你也用生命在跳舞嗎？讓你的文化故事，成為下一位學員啟程的起點。
+              讓世界看見你的文化舞步，也啟發更多學員舞動人生！
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <Link
