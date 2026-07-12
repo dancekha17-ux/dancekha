@@ -126,7 +126,8 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background border-t border-border"
+            className="lg:hidden bg-background border-t border-border overflow-hidden relative z-50"
+            style={{ pointerEvents: "auto" }}
           >
             <div className="container-wide mx-auto py-6 space-y-4">
               {navItems.map((item) => (
@@ -134,7 +135,7 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="block py-2 text-foreground hover:text-primary transition-colors"
+                  className="block py-2 text-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
                 </a>
@@ -155,6 +156,7 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
   );
 }
