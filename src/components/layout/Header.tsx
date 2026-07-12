@@ -5,12 +5,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-   { label: "關於我們", labelEn: "About", href: "#about" },
-   { label: "課程探索", labelEn: "Courses", href: "#courses" },
-   { label: "引導者團隊", labelEn: "Instructors", href: "#instructors" },
-   { label: "舞遍世界", labelEn: "Global Styles", href: "#world-folk" },
-   { label: "社群日常", labelEn: "Community", href: "#community" },
-   { label: "行事曆總覽", labelEn: "Events", href: "#events" },
+   { label: "關於我們", labelEn: "About", href: "#about", to: "/#about" },
+   { label: "課程探索", labelEn: "Courses", href: "#courses", to: "/#courses" },
+   { label: "引導者團隊", labelEn: "Instructors", href: "#instructors", to: "/#instructors" },
+   { label: "舞遍世界", labelEn: "Global Styles", href: "#world-folk", to: "/#world-folk" },
+   { label: "社群日常", labelEn: "Community", href: "#community", to: "/#community" },
+   { label: "行事曆總覽", labelEn: "Events", href: "#events", to: "/#events" },
 ];
 
 const lightHeroPaths = ["/register"];
@@ -34,6 +34,18 @@ export function Header() {
     const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  useEffect(() => {
+    if (location.pathname !== "/" || !location.hash) return;
+
+    const scrollToHash = () => {
+      const target = document.querySelector(location.hash);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    const frame = window.requestAnimationFrame(scrollToHash);
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +122,9 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            aria-label={isMobileMenuOpen ? "關閉手機選單" : "開啟手機選單"}
+            aria-expanded={isMobileMenuOpen}
             className={`lg:hidden p-2 transition-colors ${
               isScrolled || isLightHero ? "text-foreground" : "text-primary-foreground"
             }`}
@@ -129,16 +144,16 @@ export function Header() {
             className="lg:hidden bg-background border-t border-border overflow-hidden relative z-50"
             style={{ pointerEvents: "auto" }}
           >
-            <div className="container-wide mx-auto py-6 space-y-4">
+            <nav className="container-wide mx-auto py-6 space-y-4" aria-label="手機版導覽選單">
               {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="block py-2 text-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                   {lang === "zh" ? item.label : item.labelEn}
-                </a>
+                </Link>
               ))}
               <div className="flex gap-3 pt-4">
                 <Button asChild variant="outline" className="flex-1">
@@ -152,7 +167,7 @@ export function Header() {
                   </Link>
                 </Button>
               </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
