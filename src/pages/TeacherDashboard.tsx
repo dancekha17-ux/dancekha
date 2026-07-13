@@ -676,7 +676,7 @@ export default function TeacherDashboard() {
                     課程活動
                   </span>
                 }
-                description="請在這裡管理您的所有課程、活動與服務。完成填寫後，於上方點擊「申請刊登」送出審閱。"
+                description="您可在此管理您所有的實體課程、線上課程、展演票卷、空間出租等。完成填寫後，請於上方點擊「申請刊登」喔！"
               >
                 <div className="space-y-8">
                   <CoursesEditor teacherId={profile.id} />
