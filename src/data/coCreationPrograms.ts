@@ -55,7 +55,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
 ];
 
 export const CO_CREATION_TOTAL_MILESTONES = CO_CREATION_PROGRAMS.length;
-export const SEED_VIDEO_TARGET = 2;
+export const SEED_VIDEO_TARGET = 5;
 
 // Shared localStorage helpers for reading seed video progress from any surface.
 export function seedVideoStorageKey(userId: string) {
