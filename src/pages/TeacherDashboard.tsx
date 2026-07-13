@@ -401,7 +401,7 @@ export default function TeacherDashboard() {
     !!profile.bio?.trim();
   const step2Done = !!profile.agreement_signed_at;
   const step3Done = false; // 待第三步完成後啟用
-  const coursesUnlocked = step2Done; // 只需完成合作協議簽署即可
+  // Courses UI is always unlocked; agreement is prompted on 申請刊登.
 
   // Header now hosts Save / Preview / Submit / Map actions (see header JSX below).
 
