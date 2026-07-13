@@ -532,9 +532,9 @@ export default function TeacherDashboard() {
                     歡迎加入舞島咖引導者專區
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
-                    您可隨時編輯「基本資訊」與「精彩瞬間」。<br />
-                    若要新增或編輯「課程活動」，請先完成
-                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署。
+                    您可立即開始編輯「基本資訊」、「精彩瞬間」與「課程活動」。<br />
+                    當您點擊上方「申請刊登」時，系統會邀請您完成
+                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署，即可送出審閱。
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex-col sm:flex-row gap-2 sm:justify-center">
