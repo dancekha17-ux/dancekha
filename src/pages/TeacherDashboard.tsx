@@ -299,20 +299,8 @@ export default function TeacherDashboard() {
     }
   };
 
-  const handleSubmitForReview = async () => {
+  const performSubmit = async () => {
     if (!profile) return;
-    if (dirty) {
-      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
-      return;
-    }
-    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
-      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
-      return;
-    }
-    if (!profile.agreement_signed_at) {
-      toast({ title: "請先完成合作協議簽署", variant: "destructive" });
-      return;
-    }
     setSubmitting(true);
     const { data: drafts, error: fetchErr } = await (supabase as any)
       .from("instructor_courses")
@@ -358,6 +346,41 @@ export default function TeacherDashboard() {
       description: `已提交 ${valid.length} 筆服務，舞島咖團隊將於 2 個工作天內完成審閱與聯繫。`,
     });
   };
+
+  const handleSubmitForReview = async () => {
+    if (!profile) return;
+    if (dirty) {
+      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
+      return;
+    }
+    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
+      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
+      return;
+    }
+    if (!profile.agreement_signed_at) {
+      setPublishAgreed(false);
+      setShowPublishAgreement(true);
+      return;
+    }
+    await performSubmit();
+  };
+
+  const handleAgreeAndPublish = async () => {
+    if (!profile || !user || !publishAgreed) return;
+    const nowIso = new Date().toISOString();
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ agreement_signed_at: nowIso })
+      .eq("user_id", user.id);
+    if (error) {
+      toast({ title: "簽署失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, agreement_signed_at: nowIso } : p));
+    setShowPublishAgreement(false);
+    await performSubmit();
+  };
+
 
   if (authLoading || loading || !profile) {
 
