@@ -556,6 +556,57 @@ export default function TeacherDashboard() {
               </DialogContent>
             </Dialog>
 
+            {/* Publish-time agreement modal — shown when submitting without a signed agreement */}
+            <Dialog open={showPublishAgreement} onOpenChange={setShowPublishAgreement}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col rounded-3xl">
+                <DialogHeader>
+                  <div className="mx-auto w-12 h-12 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mb-1">
+                    <FileSignature className="w-6 h-6" />
+                  </div>
+                  <DialogTitle className="text-center font-display text-xl">
+                    師資合作夥伴協議書
+                  </DialogTitle>
+                  <DialogDescription className="text-center leading-relaxed">
+                    請完整閱讀以下條款，勾選同意後即可送出課程／活動審閱。
+                  </DialogDescription>
+                </DialogHeader>
+                <div
+                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 whitespace-pre-line overflow-y-auto"
+                  style={{ maxHeight: "50vh" }}
+                >
+                  {AGREEMENT_TEXT}
+                </div>
+                <label className="flex items-start gap-3 mt-2 cursor-pointer select-none px-1">
+                  <Checkbox
+                    checked={publishAgreed}
+                    onCheckedChange={(v) => setPublishAgreed(v === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-sm text-foreground/90 leading-relaxed">
+                    我已閱讀並同意本協議所有條款，願意成為舞島咖引導者夥伴。
+                  </span>
+                </label>
+                <DialogFooter className="flex-col sm:flex-row gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowPublishAgreement(false)}
+                    disabled={submitting}
+                  >
+                    稍後再說
+                  </Button>
+                  <Button
+                    onClick={handleAgreeAndPublish}
+                    disabled={!publishAgreed || submitting}
+                    className="text-white hover:opacity-95"
+                    style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+                  >
+                    <Send className="w-4 h-4" />
+                    {submitting ? "送出中…" : "我已閱讀並同意協議，確認刊登"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
 
 
 
