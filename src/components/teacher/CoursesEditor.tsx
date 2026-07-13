@@ -221,9 +221,9 @@ export function CoursesEditor({ teacherId }: Props) {
       {/* Empty state */}
       {courses.length === 0 && (
         <div className="rounded-2xl border-2 border-dashed border-[#E63946]/25 bg-white/60 p-10 text-center transition-all duration-500">
-          <p className="font-display text-base text-foreground mb-1">還沒有任何課程</p>
+          <p className="font-display text-base text-foreground mb-1">{"\n"}</p>
           <p className="text-xs text-muted-foreground mb-4">
-            新增第一筆服務，邀請學員走進你的舞蹈世界。
+            新增內容，邀請學員走進你的舞蹈世界！
           </p>
           <Button
             onClick={addCourse}
