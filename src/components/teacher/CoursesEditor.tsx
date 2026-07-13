@@ -361,7 +361,7 @@ export function CoursesEditor({ teacherId }: Props) {
               <div className="space-y-5 pt-2">
                 {/* Service type */}
                 <div className="space-y-2">
-                  <Label>服務類型 Service Type</Label>
+                  <Label>類型 Service Type</Label>
                   <Select
                     value={editing.service_type ?? "in_person"}
                     onValueChange={(val) => {
