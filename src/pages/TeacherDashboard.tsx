@@ -88,6 +88,8 @@ export default function TeacherDashboard() {
   const [dirty, setDirty] = useState(false);
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
   const [showIntroAgreement, setShowIntroAgreement] = useState(false);
+  const [showPublishAgreement, setShowPublishAgreement] = useState(false);
+  const [publishAgreed, setPublishAgreed] = useState(false);
 
 
 
