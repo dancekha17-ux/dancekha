@@ -209,7 +209,9 @@ export function CoursesEditor({ teacherId }: Props) {
         <Button
           onClick={addCourse}
           size="sm"
-          className="text-white hover:opacity-90"
+          className={`text-white hover:opacity-90 transition-all duration-300 ${
+            courses.length > 0 ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-1 pointer-events-none"
+          }`}
           style={{ backgroundColor: "#E63946" }}
         >
           <Plus className="w-4 h-4" /> 新增課程／活動
@@ -218,7 +220,7 @@ export function CoursesEditor({ teacherId }: Props) {
 
       {/* Empty state */}
       {courses.length === 0 && (
-        <div className="rounded-2xl border-2 border-dashed border-[#E63946]/25 bg-white/60 p-10 text-center">
+        <div className="rounded-2xl border-2 border-dashed border-[#E63946]/25 bg-white/60 p-10 text-center transition-all duration-500">
           <p className="font-display text-base text-foreground mb-1">還沒有任何課程</p>
           <p className="text-xs text-muted-foreground mb-4">
             新增第一筆服務，邀請學員走進你的舞蹈世界。
@@ -226,7 +228,7 @@ export function CoursesEditor({ teacherId }: Props) {
           <Button
             onClick={addCourse}
             size="sm"
-            className="text-white"
+            className="text-white hover:opacity-90 transition-opacity"
             style={{ backgroundColor: "#E63946" }}
           >
             <Plus className="w-4 h-4" /> 新增課程／活動
