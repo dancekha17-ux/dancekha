@@ -616,7 +616,7 @@ export function CoursesEditor({ teacherId }: Props) {
                     <Trash2 className="w-3.5 h-3.5" /> 刪除此筆
                   </button>
                   <Button onClick={() => setEditingId(null)} size="sm" variant="outline">
-                    完成編輯
+                    儲存並返回
                   </Button>
                 </div>
               </div>
