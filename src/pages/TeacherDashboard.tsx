@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Camera, Eye, LogOut, CheckCircle2, Clock, Circle, Lock, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
+import { Camera, Eye, LogOut, CheckCircle2, Clock, Circle, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -17,6 +17,8 @@ import { StoryMomentsCard } from "@/components/teacher/StoryMomentsCard";
 import { CoCreationHub } from "@/components/teacher/CoCreationHub";
 import { DASHBOARD_MODULES } from "@/data/coCreationPrograms";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { AGREEMENT_TEXT } from "@/pages/AgreementPage";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 
@@ -87,6 +89,8 @@ export default function TeacherDashboard() {
   const [dirty, setDirty] = useState(false);
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
   const [showIntroAgreement, setShowIntroAgreement] = useState(false);
+  const [showPublishAgreement, setShowPublishAgreement] = useState(false);
+  const [publishAgreed, setPublishAgreed] = useState(false);
 
 
 
@@ -296,20 +300,8 @@ export default function TeacherDashboard() {
     }
   };
 
-  const handleSubmitForReview = async () => {
+  const performSubmit = async () => {
     if (!profile) return;
-    if (dirty) {
-      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
-      return;
-    }
-    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
-      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
-      return;
-    }
-    if (!profile.agreement_signed_at) {
-      toast({ title: "請先完成合作協議簽署", variant: "destructive" });
-      return;
-    }
     setSubmitting(true);
     const { data: drafts, error: fetchErr } = await (supabase as any)
       .from("instructor_courses")
@@ -356,6 +348,41 @@ export default function TeacherDashboard() {
     });
   };
 
+  const handleSubmitForReview = async () => {
+    if (!profile) return;
+    if (dirty) {
+      toast({ title: "請先儲存變更", description: "申請刊登前請先儲存所有編輯。", variant: "destructive" });
+      return;
+    }
+    if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
+      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
+      return;
+    }
+    if (!profile.agreement_signed_at) {
+      setPublishAgreed(false);
+      setShowPublishAgreement(true);
+      return;
+    }
+    await performSubmit();
+  };
+
+  const handleAgreeAndPublish = async () => {
+    if (!profile || !user || !publishAgreed) return;
+    const nowIso = new Date().toISOString();
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ agreement_signed_at: nowIso })
+      .eq("user_id", user.id);
+    if (error) {
+      toast({ title: "簽署失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, agreement_signed_at: nowIso } : p));
+    setShowPublishAgreement(false);
+    await performSubmit();
+  };
+
+
   if (authLoading || loading || !profile) {
 
     return (
@@ -375,7 +402,7 @@ export default function TeacherDashboard() {
     !!profile.bio?.trim();
   const step2Done = !!profile.agreement_signed_at;
   const step3Done = false; // 待第三步完成後啟用
-  const coursesUnlocked = step2Done; // 只需完成合作協議簽署即可
+  // Courses UI is always unlocked; agreement is prompted on 申請刊登.
 
   // Header now hosts Save / Preview / Submit / Map actions (see header JSX below).
 
@@ -455,15 +482,11 @@ export default function TeacherDashboard() {
             </Button>
             <Button
               onClick={handleSubmitForReview}
-              disabled={submitting || !coursesUnlocked || dirty}
+              disabled={submitting || dirty}
               size="sm"
               variant="outline"
               className="bg-white/70"
-              title={
-                coursesUnlocked
-                  ? "一鍵將草稿提交給舞島咖團隊審閱"
-                  : "請先完成品牌專頁與合作協議"
-              }
+              title="一鍵將草稿提交給舞島咖團隊審閱"
             >
               <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請刊登"}</span>
             </Button>
@@ -510,9 +533,9 @@ export default function TeacherDashboard() {
                     歡迎加入舞島咖引導者專區
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
-                    您可隨時編輯「基本資訊」與「精彩瞬間」。<br />
-                    若要新增或編輯「課程活動」，請先完成
-                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署。
+                    您可立即開始編輯「基本資訊」、「精彩瞬間」與「課程活動」。<br />
+                    當您點擊上方「申請刊登」時，系統會邀請您完成
+                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署，即可送出審閱。
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex-col sm:flex-row gap-2 sm:justify-center">
@@ -528,6 +551,57 @@ export default function TeacherDashboard() {
                     <Link to="/teacher/agreement">
                       <FileSignature className="w-4 h-4" /> 前往閱讀並簽署
                     </Link>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            {/* Publish-time agreement modal — shown when submitting without a signed agreement */}
+            <Dialog open={showPublishAgreement} onOpenChange={setShowPublishAgreement}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col rounded-3xl">
+                <DialogHeader>
+                  <div className="mx-auto w-12 h-12 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mb-1">
+                    <FileSignature className="w-6 h-6" />
+                  </div>
+                  <DialogTitle className="text-center font-display text-xl">
+                    師資合作夥伴協議書
+                  </DialogTitle>
+                  <DialogDescription className="text-center leading-relaxed">
+                    請完整閱讀以下條款，勾選同意後即可送出課程／活動審閱。
+                  </DialogDescription>
+                </DialogHeader>
+                <div
+                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 whitespace-pre-line overflow-y-auto"
+                  style={{ maxHeight: "50vh" }}
+                >
+                  {AGREEMENT_TEXT}
+                </div>
+                <label className="flex items-start gap-3 mt-2 cursor-pointer select-none px-1">
+                  <Checkbox
+                    checked={publishAgreed}
+                    onCheckedChange={(v) => setPublishAgreed(v === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-sm text-foreground/90 leading-relaxed">
+                    我已閱讀並同意本協議所有條款，願意成為舞島咖引導者夥伴。
+                  </span>
+                </label>
+                <DialogFooter className="flex-col sm:flex-row gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowPublishAgreement(false)}
+                    disabled={submitting}
+                  >
+                    稍後再說
+                  </Button>
+                  <Button
+                    onClick={handleAgreeAndPublish}
+                    disabled={!publishAgreed || submitting}
+                    className="text-white hover:opacity-95"
+                    style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+                  >
+                    <Send className="w-4 h-4" />
+                    {submitting ? "送出中…" : "我已閱讀並同意協議，確認刊登"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -590,7 +664,7 @@ export default function TeacherDashboard() {
             </div>
 
 
-            {/* Courses & Events — moved to bottom, locked until 合作協議 signed */}
+            {/* Courses & Events — always editable; agreement is prompted on 申請刊登 */}
             <div id="courses" className="scroll-mt-24 relative">
               <SectionCard
                 eyebrow="Courses & Events"
@@ -600,46 +674,12 @@ export default function TeacherDashboard() {
                       📚
                     </span>
                     課程活動
-                    {!coursesUnlocked && (
-                      <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
-                        <Lock className="w-3 h-3" /> 待啟用
-                      </span>
-                    )}
                   </span>
                 }
-                description={
-                  step2Done
-                    ? "請在這裡管理您的所有課程、活動與服務。"
-                    : "點擊下方「刊登」時，系統會請你先完成「合作夥伴協議」簽署，簽署後方可提交新增課程。"
-                }
+                description="請在這裡管理您的所有課程、活動與服務。完成填寫後，於上方點擊「申請刊登」送出審閱。"
               >
-                <div className="relative">
-                  <div className={coursesUnlocked ? "" : "pointer-events-none select-none opacity-40 blur-[1px]"}>
-                    <div className="space-y-8">
-                      <CoursesEditor teacherId={profile.id} />
-                    </div>
-                  </div>
-                  {!coursesUnlocked && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="rounded-2xl bg-white/95 border border-[#E89B5C]/40 shadow-soft px-6 py-5 text-center max-w-sm">
-                        <div className="w-10 h-10 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mx-auto mb-2">
-                          <Lock className="w-4 h-4" />
-                        </div>
-                        <p className="font-display text-base text-foreground">
-                          請先完成合作協議簽署
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed mb-3">
-                          簽署協議是新增／發佈課程活動的前置條件，完成後即可開放發布權限。
-                        </p>
-                        <Button asChild size="sm" className="text-white" style={{ backgroundColor: "#E63946" }}>
-                          <Link to="/teacher/agreement">
-                            <FileSignature className="w-4 h-4" /> 前往簽署協議
-                          </Link>
-                        </Button>
-
-                      </div>
-                    </div>
-                  )}
+                <div className="space-y-8">
+                  <CoursesEditor teacherId={profile.id} />
                 </div>
               </SectionCard>
             </div>
