@@ -481,15 +481,11 @@ export default function TeacherDashboard() {
             </Button>
             <Button
               onClick={handleSubmitForReview}
-              disabled={submitting || !coursesUnlocked || dirty}
+              disabled={submitting || dirty}
               size="sm"
               variant="outline"
               className="bg-white/70"
-              title={
-                coursesUnlocked
-                  ? "一鍵將草稿提交給舞島咖團隊審閱"
-                  : "請先完成品牌專頁與合作協議"
-              }
+              title="一鍵將草稿提交給舞島咖團隊審閱"
             >
               <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請刊登"}</span>
             </Button>
