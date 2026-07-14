@@ -215,13 +215,6 @@ export default function InstructorProfile() {
         </div>
       </section>
 
-      {instructor.tagline?.trim() && (
-        <div className="container-wide mx-auto px-4 md:px-8 -mt-4 md:-mt-6 relative z-10">
-          <p className="text-lg md:text-xl font-body text-foreground/90 leading-relaxed max-w-3xl">
-            {instructor.tagline}
-          </p>
-        </div>
-      )}
 
       {/* Main content */}
       <section className="section-padding pt-12 md:pt-16">
