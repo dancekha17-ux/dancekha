@@ -195,7 +195,7 @@ export function WorldMap() {
 
         {MAP_REGIONS.map((region) => {
           const isActive = activeId === region.id;
-          const pos = getRegionPosition(region);
+          const pos = { top: region.top, left: region.left };
           return (
             <div
               key={region.id}
