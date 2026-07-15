@@ -34,7 +34,7 @@ const MAP_REGIONS: MapRegion[] = [
   { id: "indonesia", name: "印尼", top: "66%", left: "83%", country: "印尼", dance: "克差舞 & 列貢舞 Kecak", desc: "千百人齊聲「察」鳴，在神話的指尖顫動與眼神流轉中，勾勒熱帶島嶼的信仰印記。", queryParam: "Indonesia", keywords: ["印尼", "Indonesia", "Kecak", "Legong"] },
   { id: "philippines", name: "菲律賓", top: "58%", left: "81.5%", country: "菲律賓", dance: "竹竿舞 Tinikling", desc: "在交錯開合的竹竿間輕盈躍動、飛速閃避，展現如森林候鳥般的靈敏與歡騰生命力。", queryParam: "Philippines", keywords: ["菲律賓", "Philippines", "Tinikling"] },
   { id: "thailand", name: "泰國", top: "56%", left: "78%", country: "泰國", dance: "箜舞 Khon & 傳統圓圈舞", desc: "戴上面具化身羅摩史詩，在雙手反折、極致緩慢的優雅張力中訴說神祇的傳說。", queryParam: "Thailand", keywords: ["泰國", "Thailand", "Khon"] },
-  { id: "india", name: "印度", top: "53%", left: "70%", country: "印度", dance: "古典舞 & 旁遮普邦拉舞", desc: "從神廟祭祀的精準手印（Mudras）到麥田豐收的狂熱跳躍，跳出生命的靈性與喜悅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
+  { id: "india", name: "印度", top: "53%", left: "70%", country: "印度", dance: "奧迪西舞 Odissi", desc: "\n\n刻進神廟的千年舞姿，刻進神廟的千年舞姿，從方正穩健的 Chauka 到優雅流動的三道彎曲線，於剛柔之間舞出細膩與典雅。", queryParam: "India", keywords: ["印度", "India", "Bhangra", "Bharatanatyam"] },
   { id: "middle_east", name: "中東與北非", top: "50%", left: "57%", country: "中東與北非", dance: "東方舞 Belly Dance", desc: "如水蛇般擺動的腰臀、流暢的腹部抖動，在手鼓敲擊中喚醒遠古大地的母神力量。", queryParam: "MiddleEast", keywords: ["中東", "肚皮舞", "Belly", "Oriental"] },
   { id: "israel", name: "以色列", top: "47%", left: "54.5%", country: "以色列", dance: "霍拉圓圈舞 Hora", desc: "手拉手並肩跳躍，在同一個圓圈中凝聚力量，踏出古老民族重生與希望的集體步伐。", queryParam: "Israel", keywords: ["以色列", "Israel", "Hora"] },
 
