@@ -197,10 +197,11 @@ export function WorldMap() {
   const activeRegion = MAP_REGIONS.find((r) => r.id === activeId) ?? null;
 
   const matchInstructors = (region: MapRegion): MapInstructor[] => {
-    const kws = region.keywords.map((k) => k.toLowerCase());
+    // 只比對「專長」(specialty + dance_styles)，不限老師的實體授課地點 (region)。
+    const kws = region.keywords.map((k) => k.toLowerCase()).filter(Boolean);
     return allInstructors.filter((i) => {
-      const hay = `${i.specialty ?? ""} ${i.region ?? ""} ${(i.dance_styles ?? []).join(" ")}`.toLowerCase();
-      return kws.some((k) => k && hay.includes(k));
+      const hay = `${i.specialty ?? ""} ${(i.dance_styles ?? []).join(" ")}`.toLowerCase();
+      return kws.some((k) => hay.includes(k));
     });
   };
 
