@@ -66,8 +66,9 @@ export function latLngToMapPercent(
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
   // ✅ 測試資料：使用經緯度 + 手繪地圖校準 offset
-  { id: "taiwan",   name: "台灣",   lat: 23.9738,  lng: 120.9820,  offsetX: -3.1, offsetY: 15.3, country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
-  { id: "china",    name: "中國",   lat: 35.8617,  lng: 104.1954,  offsetX: -3.9, offsetY: 11.9, country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
+  { id: "taiwan",   name: "台灣",   lat: 23.9738,  lng: 120.9820,  offsetX: -1.21, offsetY: 11.18, country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
+  { id: "china",    name: "中國",   lat: 35.8617,  lng: 104.1954,  offsetX: -1.91, offsetY: 10.69, country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
+
   { id: "japan", name: "日本", top: "45%", left: "83%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
   { id: "korea", name: "韓國", top: "43%", left: "80%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
   { id: "malaysia", name: "馬來西亞", top: "61%", left: "78%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
