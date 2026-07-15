@@ -98,9 +98,10 @@ const MAP_REGIONS: MapRegion[] = [
 
   // --- OCEANIA & AFRICA ---
   // ✅ 測試資料：紐西蘭北島 — 以經緯度 + 校準 offset 精準落在北島陸地
-  { id: "new_zealand", name: "紐西蘭 · 北島", lat: -40.9006, lng: 174.8860, offsetX: -11.5, offsetY: 6.0, country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", lat: -40.9006, lng: 174.8860, offsetX: -9.11, offsetY: -7.72, country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
   // ✅ 測試資料：夏威夷
-  { id: "hawaii",      name: "夏威夷",       lat: 19.8968,  lng: -155.5828, offsetX: 0.7,  offsetY: 10.1, country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
+  { id: "hawaii",      name: "夏威夷",       lat: 19.8968,  lng: -155.5828, offsetX: 10.31, offsetY: 7.92, country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
+
   { id: "west_africa", name: "西非", top: "57%", left: "49%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
