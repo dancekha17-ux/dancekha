@@ -20,54 +20,15 @@ interface MapRegion {
   queryParam: string;
   /** 用於比對 instructors 的關鍵字（region / specialty / dance_styles） */
   keywords: string[];
-  /** 地理經緯度（新的座標驅動來源） */
-  lat?: number;
-  lng?: number;
-  /** 手繪地圖藝術變形的手動校準（百分比 offset） */
-  offsetX?: number;
-  offsetY?: number;
-  /** 舊版寫死的百分比座標（作為 fallback，直到全部改為經緯度） */
-  top?: string;
-  left?: string;
+  /** 手繪地圖百分比座標（唯一定位來源） */
+  top: string;
+  left: string;
 }
-
-/**
- * 將地理經緯度換算為手繪地圖圖片上的 X/Y 百分比座標。
- *
- * ⚠️ 本專案使用的是「手繪藝術世界地圖」，其裁切邊界與陸地比例並非標準地理投影，
- * 因此不能使用 -180~180 / -90~90 的標準等距圓柱投影公式，
- * 否則會需要極大且不合理的 offset 來硬拉點位。
- *
- * 經實測，本手繪圖片對應的有效經緯度邊界大約為：
- *   - 經度（X 軸）：-165° ~ 185°
- *   - 緯度（Y 軸）： -50° ~  75°
- *
- * 若某地區手繪變形嚴重仍無法對齊，可使用資料上的 offsetX / offsetY 微調，
- * 或直接在資料中提供 top / left 百分比字串來完全覆蓋（見 getRegionPosition）。
- */
-export function latLngToMapPercent(
-  lat: number,
-  lng: number,
-  offsetX = 0,
-  offsetY = 0,
-): { left: string; top: string } {
-  const minLng = -165;
-  const maxLng = 185;
-  const minLat = -50;
-  const maxLat = 75;
-
-  const x = ((lng - minLng) / (maxLng - minLng)) * 100 + offsetX;
-  // 緯度由上至下遞減，因此使用 maxLat - lat
-  const y = ((maxLat - lat) / (maxLat - minLat)) * 100 + offsetY;
-  return { left: `${x}%`, top: `${y}%` };
-}
-
 
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
-  // ✅ 測試資料：使用經緯度 + 手繪地圖校準 offset
-  { id: "taiwan",   name: "台灣",   lat: 23.9738,  lng: 120.9820,  offsetX: -1.21, offsetY: 11.18, country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
-  { id: "china",    name: "中國",   lat: 35.8617,  lng: 104.1954,  offsetX: -1.91, offsetY: 10.69, country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
+  { id: "taiwan", name: "台灣", top: "52%", left: "80.5%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
+  { id: "china", name: "中國", top: "42%", left: "75%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
 
   { id: "japan", name: "日本", top: "45%", left: "83%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
   { id: "korea", name: "韓國", top: "43%", left: "80%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
@@ -97,21 +58,12 @@ const MAP_REGIONS: MapRegion[] = [
   { id: "argentina", name: "阿根廷", top: "82%", left: "31%", country: "阿根廷", dance: "探戈 Argentine Tango", desc: "暗夜裡纏綿交錯的雙鞋、緊密相貼的呼吸，在手風琴的憂傷中跳一場無聲的戀愛戲劇。", queryParam: "Argentina", keywords: ["阿根廷", "Argentina", "Tango", "探戈"] },
 
   // --- OCEANIA & AFRICA ---
-  // ✅ 測試資料：紐西蘭北島 — 以經緯度 + 校準 offset 精準落在北島陸地
-  { id: "new_zealand", name: "紐西蘭 · 北島", lat: -40.9006, lng: 174.8860, offsetX: -9.11, offsetY: -7.72, country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
-  // ✅ 測試資料：夏威夷
-  { id: "hawaii",      name: "夏威夷",       lat: 19.8968,  lng: -155.5828, offsetX: 10.31, offsetY: 7.92, country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
+  { id: "new_zealand", name: "紐西蘭 · 北島", top: "86%", left: "84.5%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  { id: "hawaii", name: "夏威夷", top: "51%", left: "11%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
 
   { id: "west_africa", name: "西非", top: "57%", left: "49%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
-/** 計算 region 最終渲染的百分比座標。優先使用經緯度 + offset，否則 fallback 到舊 top/left。 */
-function getRegionPosition(region: MapRegion): { top: string; left: string } {
-  if (typeof region.lat === "number" && typeof region.lng === "number") {
-    return latLngToMapPercent(region.lat, region.lng, region.offsetX ?? 0, region.offsetY ?? 0);
-  }
-  return { top: region.top ?? "50%", left: region.left ?? "50%" };
-}
 
 interface MapInstructor {
   slug: string;
