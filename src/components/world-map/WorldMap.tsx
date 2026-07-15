@@ -33,8 +33,17 @@ interface MapRegion {
 
 /**
  * 將地理經緯度換算為手繪地圖圖片上的 X/Y 百分比座標。
- * 使用等距圓柱投影 (Equirectangular)。
- * 由於手繪地圖比例並非標準地理投影，需以每筆資料的 offsetX/offsetY 進行藝術微調。
+ *
+ * ⚠️ 本專案使用的是「手繪藝術世界地圖」，其裁切邊界與陸地比例並非標準地理投影，
+ * 因此不能使用 -180~180 / -90~90 的標準等距圓柱投影公式，
+ * 否則會需要極大且不合理的 offset 來硬拉點位。
+ *
+ * 經實測，本手繪圖片對應的有效經緯度邊界大約為：
+ *   - 經度（X 軸）：-165° ~ 185°
+ *   - 緯度（Y 軸）： -50° ~  75°
+ *
+ * 若某地區手繪變形嚴重仍無法對齊，可使用資料上的 offsetX / offsetY 微調，
+ * 或直接在資料中提供 top / left 百分比字串來完全覆蓋（見 getRegionPosition）。
  */
 export function latLngToMapPercent(
   lat: number,
@@ -42,10 +51,17 @@ export function latLngToMapPercent(
   offsetX = 0,
   offsetY = 0,
 ): { left: string; top: string } {
-  const x = ((lng + 180) / 360) * 100 + offsetX;
-  const y = ((90 - lat) / 180) * 100 + offsetY;
+  const minLng = -165;
+  const maxLng = 185;
+  const minLat = -50;
+  const maxLat = 75;
+
+  const x = ((lng - minLng) / (maxLng - minLng)) * 100 + offsetX;
+  // 緯度由上至下遞減，因此使用 maxLat - lat
+  const y = ((maxLat - lat) / (maxLat - minLat)) * 100 + offsetY;
   return { left: `${x}%`, top: `${y}%` };
 }
+
 
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
