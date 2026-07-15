@@ -81,7 +81,7 @@ export default function TeacherAuth() {
             <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
               {mode === "signin"
                 ? "謝謝您的進駐！願舞島咖能成為您自由揮灑創作、專注教學的溫暖樂土。"
-                : "註冊後即可建立引導者頁面，由團隊檢視完整度後上線。"}
+                : "註冊後即可建立品牌專頁，由團隊為您刊登上線。"}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
