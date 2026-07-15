@@ -224,11 +224,12 @@ export function WorldMap() {
 
         {MAP_REGIONS.map((region) => {
           const isActive = activeId === region.id;
+          const pos = getRegionPosition(region);
           return (
             <div
               key={region.id}
               className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ top: region.top, left: region.left, zIndex: isActive ? 50 : 10 }}
+              style={{ top: pos.top, left: pos.left, zIndex: isActive ? 50 : 10 }}
             >
               <button
                 type="button"
