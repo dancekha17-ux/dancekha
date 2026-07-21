@@ -361,14 +361,13 @@ function WorldDanceIGGallery() {
               從一堂體驗課開始,走進屬於你的文化舞步。
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => onExplore("")}
+          <Link
+            to="/#courses"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all whitespace-nowrap self-center md:self-auto"
           >
             探索體驗課程
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
