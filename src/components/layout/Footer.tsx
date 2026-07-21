@@ -32,7 +32,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Instagram, href: "https://www.instagram.com/dancekha17", label: "Instagram" },
   { icon: Youtube, href: "#", label: "YouTube" },
 ];
 
