@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Instagram, X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import worldMapAsset from "@/assets/world-map.jpg.asset.json";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,16 +20,38 @@ interface MapRegion {
   queryParam: string;
   /** 用於比對 instructors 的關鍵字（region / specialty / dance_styles） */
   keywords: string[];
-  /** 手繪地圖百分比座標（唯一定位來源） */
-  top: string;
-  left: string;
+  /** 地理經緯度（新的座標驅動來源） */
+  lat?: number;
+  lng?: number;
+  /** 手繪地圖藝術變形的手動校準（百分比 offset） */
+  offsetX?: number;
+  offsetY?: number;
+  /** 舊版寫死的百分比座標（作為 fallback，直到全部改為經緯度） */
+  top?: string;
+  left?: string;
+}
+
+/**
+ * 將地理經緯度換算為手繪地圖圖片上的 X/Y 百分比座標。
+ * 使用等距圓柱投影 (Equirectangular)。
+ * 由於手繪地圖比例並非標準地理投影，需以每筆資料的 offsetX/offsetY 進行藝術微調。
+ */
+export function latLngToMapPercent(
+  lat: number,
+  lng: number,
+  offsetX = 0,
+  offsetY = 0,
+): { left: string; top: string } {
+  const x = ((lng + 180) / 360) * 100 + offsetX;
+  const y = ((90 - lat) / 180) * 100 + offsetY;
+  return { left: `${x}%`, top: `${y}%` };
 }
 
 const MAP_REGIONS: MapRegion[] = [
   // --- ASIA ---
-  { id: "taiwan", name: "台灣", top: "52%", left: "80.5%", country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
-  { id: "china", name: "中國", top: "42%", left: "75%", country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
-
+  // ✅ 測試資料：使用經緯度 + 手繪地圖校準 offset
+  { id: "taiwan",   name: "台灣",   lat: 23.9738,  lng: 120.9820,  offsetX: -3.1, offsetY: 15.3, country: "台灣", dance: "原住民樂舞 & 傳統藝陣", desc: "凝聚大地的呼喚，在踏地重擊的舞步與複音歌聲中，傳承部落與土地的古老記憶。", queryParam: "Taiwan", keywords: ["台灣", "Taiwan", "原住民", "藝陣"] },
+  { id: "china",    name: "中國",   lat: 35.8617,  lng: 104.1954,  offsetX: -3.9, offsetY: 11.9, country: "中國", dance: "古典舞 & 民族民間舞", desc: "長袖飛舞、水袖弄影，在行雲流水的吐納與身韻間，展現東方身體的寫意美學。", queryParam: "China", keywords: ["中國", "China", "古典舞", "民族"] },
   { id: "japan", name: "日本", top: "45%", left: "83%", country: "日本", dance: "阿波舞 & 日本舞踊", desc: "在夏日祭典的純粹節奏中，手舞足蹈地跳起跨越生死界限、極具狂歡張力的傻瓜之舞。", queryParam: "Japan", keywords: ["日本", "Japan", "阿波", "舞踊"] },
   { id: "korea", name: "韓國", top: "43%", left: "80%", country: "韓國", dance: "傳統舞踊 & K-Pop", desc: "在宮廷扇子舞的優雅呼吸，與現代街頭極致律動間完美共存的獨特身體語言。", queryParam: "Korea", keywords: ["韓國", "Korea", "K-Pop", "Kpop"] },
   { id: "malaysia", name: "馬來西亞", top: "61%", left: "78%", country: "馬來西亞", dance: "馬來傳統舞 Zapin", desc: "手鼓與烏德琴奏響，在克制而優雅的足尖滑步與旋轉中，傳唱海洋絲路的歷史。", queryParam: "Malaysia", keywords: ["馬來", "Malaysia", "Zapin"] },
@@ -58,12 +80,20 @@ const MAP_REGIONS: MapRegion[] = [
   { id: "argentina", name: "阿根廷", top: "82%", left: "31%", country: "阿根廷", dance: "探戈 Argentine Tango", desc: "暗夜裡纏綿交錯的雙鞋、緊密相貼的呼吸，在手風琴的憂傷中跳一場無聲的戀愛戲劇。", queryParam: "Argentina", keywords: ["阿根廷", "Argentina", "Tango", "探戈"] },
 
   // --- OCEANIA & AFRICA ---
-  { id: "new_zealand", name: "紐西蘭 · 北島", top: "86%", left: "84.5%", country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
-  { id: "hawaii", name: "夏威夷", top: "51%", left: "11%", country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
-
+  // ✅ 測試資料：紐西蘭北島 — 以經緯度 + 校準 offset 精準落在北島陸地
+  { id: "new_zealand", name: "紐西蘭 · 北島", lat: -40.9006, lng: 174.8860, offsetX: -11.5, offsetY: 6.0, country: "紐西蘭 · 北島", dance: "毛利戰舞 Haka", desc: "搥胸、跺足、瞪目狂呼！以最震撼原始的身體張力展現毛利戰士的靈魂與對生命的敬畏。", queryParam: "NewZealand", keywords: ["紐西蘭", "New Zealand", "Haka", "毛利"] },
+  // ✅ 測試資料：夏威夷
+  { id: "hawaii",      name: "夏威夷",       lat: 19.8968,  lng: -155.5828, offsetX: 0.7,  offsetY: 10.1, country: "夏威夷", dance: "呼拉舞 Hula & 傳統 Mele", desc: "手掌如浪花起伏、如椰林搖曳，在尤克里里與傳統頌歌（Mele）中傳遞大自然與愛的神聖低語。", queryParam: "Hawaii", keywords: ["夏威夷", "Hawaii", "Hula", "呼拉", "Mele"] },
   { id: "west_africa", name: "西非", top: "57%", left: "49%", country: "西非", dance: "曼丁舞蹈 Manding", desc: "在非洲之鼓（Djembe）最狂野狂熱的撞擊聲下，赤腳踏響大地，用最純粹的身體律動釋放生命力。", queryParam: "WestAfrica", keywords: ["西非", "West Africa", "Manding", "非洲"] },
 ];
 
+/** 計算 region 最終渲染的百分比座標。優先使用經緯度 + offset，否則 fallback 到舊 top/left。 */
+function getRegionPosition(region: MapRegion): { top: string; left: string } {
+  if (typeof region.lat === "number" && typeof region.lng === "number") {
+    return latLngToMapPercent(region.lat, region.lng, region.offsetX ?? 0, region.offsetY ?? 0);
+  }
+  return { top: region.top ?? "50%", left: region.left ?? "50%" };
+}
 
 interface MapInstructor {
   slug: string;
@@ -195,7 +225,7 @@ export function WorldMap() {
 
         {MAP_REGIONS.map((region) => {
           const isActive = activeId === region.id;
-          const pos = { top: region.top, left: region.left };
+          const pos = getRegionPosition(region);
           return (
             <div
               key={region.id}
@@ -246,131 +276,7 @@ export function WorldMap() {
           onClose={() => setActiveId(null)}
         />
       )}
-
-      <WorldDanceIGGallery />
     </div>
-  );
-}
-
-// ============= World Dance IG Gallery =============
-
-const IG_URL = "https://www.instagram.com/dancekha17";
-
-interface IGCard {
-  id: string;
-  countryEn: string;
-  countryZh: string;
-  caption: string;
-  gradient: string;
-  emoji: string;
-}
-
-const IG_CARDS: IGCard[] = [
-  {
-    id: "bulgaria",
-    countryEn: "Bulgaria",
-    countryZh: "保加利亞",
-    caption: "7/8 不對稱節拍的 Horo 圓圈舞,把整個村莊跳成一條會呼吸的鏈。",
-    gradient: "from-[#3e5c3a] via-[#7a8f4a] to-[#d9b26a]",
-    emoji: "🇧🇬",
-  },
-  {
-    id: "slovakia",
-    countryEn: "Slovakia",
-    countryZh: "斯洛伐克",
-    caption: "喀爾巴阡山腳下的靴跟敲擊,牧羊人用身體記住每一段旋律。",
-    gradient: "from-[#5a4a3a] via-[#a97a4a] to-[#e8c88a]",
-    emoji: "🇸🇰",
-  },
-  {
-    id: "venezuela",
-    countryEn: "Venezuela",
-    countryZh: "委內瑞拉",
-    caption: "Joropo 三拍節奏在平原上翻飛,腳跟與吉他一同呼喊 ¡Zapateo!",
-    gradient: "from-[#6b3a2e] via-[#c96a3a] to-[#f3c98b]",
-    emoji: "🇻🇪",
-  },
-];
-
-function WorldDanceIGGallery() {
-  return (
-    <section className="mt-20 md:mt-24">
-      <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
-        <span className="eyebrow">World Dance IG · 精選片段</span>
-        <div className="hairline mt-5 mb-6" />
-        <h3 className="text-fluid-h2 font-display font-medium text-foreground mb-4">
-          在 Instagram 遇見<span className="text-accent-italic">世界的舞步</span>
-        </h3>
-        <p className="text-sm md:text-base text-muted-foreground font-body leading-relaxed">
-          從保加利亞的圓圈,到委內瑞拉的平原節奏——精選短片,一鍵前往我們的 IG。
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-        {IG_CARDS.map((card) => (
-          <a
-            key={card.id}
-            href={IG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative block aspect-[4/5] rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500"
-          >
-            {/* Background gradient (placeholder for real video preview) */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient}`} />
-            <div className="absolute inset-0 flex items-center justify-center text-[7rem] opacity-30 group-hover:scale-110 transition-transform duration-700">
-              {card.emoji}
-            </div>
-
-            {/* Bottom gradient for text legibility */}
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-            {/* Country badge */}
-            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-background/70 backdrop-blur-md border border-white/30">
-              <span className="text-xs font-medium text-foreground tracking-wide">
-                {card.countryEn} · {card.countryZh}
-              </span>
-            </div>
-
-            {/* Caption */}
-            <div className="absolute inset-x-0 bottom-0 p-5">
-              <p className="text-sm text-white/95 font-body leading-relaxed line-clamp-2">
-                {card.caption}
-              </p>
-            </div>
-
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
-              <Instagram className="w-10 h-10 text-white" strokeWidth={1.5} />
-              <span className="text-sm font-medium text-white tracking-wide">
-                View on Instagram
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
-
-      {/* CTA banner */}
-      <div className="mt-12 md:mt-16 relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/15 via-accent/10 to-soul/10 border border-primary/20 p-8 md:p-12">
-        <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary/15 blur-3xl pointer-events-none" />
-        <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-center md:text-left">
-          <div>
-            <h4 className="text-fluid-h3 font-display font-medium text-foreground mb-2">
-              想親身體驗這些世界舞種的魅力嗎?
-            </h4>
-            <p className="text-sm md:text-base text-muted-foreground font-body">
-              從一堂體驗課開始,走進屬於你的文化舞步。
-            </p>
-          </div>
-          <Link
-            to="/#courses"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all whitespace-nowrap self-center md:self-auto"
-          >
-            探索體驗課程
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
   );
 }
 
