@@ -247,7 +247,7 @@ export function WorldMap() {
         />
       )}
 
-      <WorldDanceIGGallery onExplore={handleExplore} />
+      <WorldDanceIGGallery />
     </div>
   );
 }
