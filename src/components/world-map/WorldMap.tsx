@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, Instagram, X } from "lucide-react";
 import worldMapAsset from "@/assets/world-map.jpg.asset.json";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
