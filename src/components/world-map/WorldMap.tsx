@@ -292,7 +292,7 @@ const IG_CARDS: IGCard[] = [
   },
 ];
 
-function WorldDanceIGGallery({ onExplore }: { onExplore: (q: string) => void }) {
+function WorldDanceIGGallery() {
   return (
     <section className="mt-20 md:mt-24">
       <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
