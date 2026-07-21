@@ -246,7 +246,132 @@ export function WorldMap() {
           onClose={() => setActiveId(null)}
         />
       )}
+
+      <WorldDanceIGGallery onExplore={handleExplore} />
     </div>
+  );
+}
+
+// ============= World Dance IG Gallery =============
+
+const IG_URL = "https://www.instagram.com/dancekha17";
+
+interface IGCard {
+  id: string;
+  countryEn: string;
+  countryZh: string;
+  caption: string;
+  gradient: string;
+  emoji: string;
+}
+
+const IG_CARDS: IGCard[] = [
+  {
+    id: "bulgaria",
+    countryEn: "Bulgaria",
+    countryZh: "保加利亞",
+    caption: "7/8 不對稱節拍的 Horo 圓圈舞,把整個村莊跳成一條會呼吸的鏈。",
+    gradient: "from-[#3e5c3a] via-[#7a8f4a] to-[#d9b26a]",
+    emoji: "🇧🇬",
+  },
+  {
+    id: "slovakia",
+    countryEn: "Slovakia",
+    countryZh: "斯洛伐克",
+    caption: "喀爾巴阡山腳下的靴跟敲擊,牧羊人用身體記住每一段旋律。",
+    gradient: "from-[#5a4a3a] via-[#a97a4a] to-[#e8c88a]",
+    emoji: "🇸🇰",
+  },
+  {
+    id: "venezuela",
+    countryEn: "Venezuela",
+    countryZh: "委內瑞拉",
+    caption: "Joropo 三拍節奏在平原上翻飛,腳跟與吉他一同呼喊 ¡Zapateo!",
+    gradient: "from-[#6b3a2e] via-[#c96a3a] to-[#f3c98b]",
+    emoji: "🇻🇪",
+  },
+];
+
+function WorldDanceIGGallery({ onExplore }: { onExplore: (q: string) => void }) {
+  return (
+    <section className="mt-20 md:mt-24">
+      <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+        <span className="eyebrow">World Dance IG · 精選片段</span>
+        <div className="hairline mt-5 mb-6" />
+        <h3 className="text-fluid-h2 font-display font-medium text-foreground mb-4">
+          在 Instagram 遇見<span className="text-accent-italic">世界的舞步</span>
+        </h3>
+        <p className="text-sm md:text-base text-muted-foreground font-body leading-relaxed">
+          從保加利亞的圓圈,到委內瑞拉的平原節奏——精選短片,一鍵前往我們的 IG。
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        {IG_CARDS.map((card) => (
+          <a
+            key={card.id}
+            href={IG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative block aspect-[4/5] rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-500"
+          >
+            {/* Background gradient (placeholder for real video preview) */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient}`} />
+            <div className="absolute inset-0 flex items-center justify-center text-[7rem] opacity-30 group-hover:scale-110 transition-transform duration-700">
+              {card.emoji}
+            </div>
+
+            {/* Bottom gradient for text legibility */}
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+            {/* Country badge */}
+            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-background/70 backdrop-blur-md border border-white/30">
+              <span className="text-xs font-medium text-foreground tracking-wide">
+                {card.countryEn} · {card.countryZh}
+              </span>
+            </div>
+
+            {/* Caption */}
+            <div className="absolute inset-x-0 bottom-0 p-5">
+              <p className="text-sm text-white/95 font-body leading-relaxed line-clamp-2">
+                {card.caption}
+              </p>
+            </div>
+
+            {/* Hover overlay */}
+            <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
+              <Instagram className="w-10 h-10 text-white" strokeWidth={1.5} />
+              <span className="text-sm font-medium text-white tracking-wide">
+                View on Instagram
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* CTA banner */}
+      <div className="mt-12 md:mt-16 relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/15 via-accent/10 to-soul/10 border border-primary/20 p-8 md:p-12">
+        <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary/15 blur-3xl pointer-events-none" />
+        <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-center md:text-left">
+          <div>
+            <h4 className="text-fluid-h3 font-display font-medium text-foreground mb-2">
+              想親身體驗這些世界舞種的魅力嗎?
+            </h4>
+            <p className="text-sm md:text-base text-muted-foreground font-body">
+              從一堂體驗課開始,走進屬於你的文化舞步。
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onExplore("")}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium shadow-glow hover:shadow-elevated hover:scale-[1.02] transition-all whitespace-nowrap self-center md:self-auto"
+          >
+            探索體驗課程
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }
 
