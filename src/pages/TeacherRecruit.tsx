@@ -343,7 +343,8 @@ export default function TeacherRecruit() {
                             whiteSpace: "pre-line",
                           }}
                         >
-                          {card.title}
+                          <span style={{ color: PALETTE.accent }}>{card.titleAccent}</span>
+                          <span>｜{card.title}</span>
                         </h3>
                         <motion.div
                           initial={false}
