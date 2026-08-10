@@ -78,6 +78,31 @@ export function InstructorsSection() {
           )}
         </motion.div>
 
+        {/* Recruiting state — shown until real guides are published */}
+        {instructors.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="max-w-2xl mx-auto text-center px-8 py-12 md:py-14 rounded-3xl bg-background border border-border shadow-soft"
+          >
+            <h3 className="text-fluid-h3 font-display font-medium text-foreground mb-4">
+              首批引導者招募中
+            </h3>
+            <p className="text-muted-foreground font-body leading-relaxed mb-8">
+              如果您也相信舞蹈能連結文化、世代與世界，歡迎進駐舞島咖，
+              建立專屬品牌頁面，與我們共築多元舞蹈聚落。
+            </p>
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+            >
+              了解引導者計畫
+              <span>→</span>
+            </Link>
+          </motion.div>
+        )}
+
         {/* Instructors Grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {instructors.map((instructor, index) => (
