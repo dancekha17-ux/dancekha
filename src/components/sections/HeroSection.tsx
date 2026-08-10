@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
 import heroJpg1024 from "@/assets/hero/hero-dance-1024.jpg";
@@ -88,23 +89,34 @@ export function HeroSection() {
             在這裡不只是學舞，還能透過社群舞出友誼的節奏。
           </motion.p>
 
-          {/* Single primary CTA — premium restraint */}
+          {/* CTAs — clear primary / secondary hierarchy */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.75 }}
-            className="flex items-center gap-6"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5"
           >
-            <Button variant="hero" size="lg" className="group">
-              解鎖你的舞蹈DNA
+            <Button
+              variant="hero"
+              size="lg"
+              className="group w-full sm:w-auto"
+              onClick={() =>
+                document
+                  .getElementById("courses")
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" })
+              }
+            >
+              探索舞蹈課程
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <a
-              href="#about"
-              className="text-sm font-body text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
             >
-              每個人的跳舞日常
-            </a>
+              <Link to="/register">成為舞島咖引導者</Link>
+            </Button>
           </motion.div>
         </div>
       </div>

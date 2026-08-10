@@ -16,10 +16,16 @@ export function InstructorsSection() {
     [regionParam],
   );
 
+  // Only show real, published guides from the database (demo/static data hidden pre-launch)
+  const publishedInstructors = useMemo(
+    () => allInstructors.filter((i) => i.source === "db"),
+    [allInstructors],
+  );
+
   const instructors = useMemo(() => {
-    if (!activeRegion) return allInstructors;
+    if (!activeRegion) return publishedInstructors;
     const kw = activeRegion.keywords.map((k) => k.toLowerCase());
-    const matches = allInstructors.filter((i) => {
+    const matches = publishedInstructors.filter((i) => {
       const hay = [
         i.region,
         i.specialty,
@@ -32,8 +38,8 @@ export function InstructorsSection() {
         .toLowerCase();
       return kw.some((k) => hay.includes(k));
     });
-    return matches.length > 0 ? matches : allInstructors;
-  }, [allInstructors, activeRegion]);
+    return matches.length > 0 ? matches : publishedInstructors;
+  }, [publishedInstructors, activeRegion]);
 
   return (
     <section
@@ -52,11 +58,11 @@ export function InstructorsSection() {
           <span className="eyebrow">Instructors · 創生軸心</span>
           <div className="hairline mt-6 mb-8" />
           <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
-            用生命跳舞的<span className="text-accent-italic">舞蹈家們</span>
+            用生命跳舞的<span className="text-accent-italic">文化引導者</span>
           </h2>
           <p className="text-fluid-lead text-muted-foreground font-body">
-            每一位老師都是文化傳遞者，
-            帶著獨特的故事與節奏，等待與你相遇。
+            每一位引導者，都帶著獨特的舞蹈故事與文化視野。
+            在這裡分享專業、連結學員，也讓更多人看見舞蹈的多元可能。
           </p>
           {activeRegion && (
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBF5EC] border border-[#E8DCC4] text-sm font-body text-[#9C5A2E]">
@@ -71,6 +77,31 @@ export function InstructorsSection() {
             </div>
           )}
         </motion.div>
+
+        {/* Recruiting state — shown until real guides are published */}
+        {instructors.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="max-w-2xl mx-auto text-center px-8 py-12 md:py-14 rounded-3xl bg-background border border-border shadow-soft"
+          >
+            <h3 className="text-fluid-h3 font-display font-medium text-foreground mb-4">
+              首批引導者招募中
+            </h3>
+            <p className="text-muted-foreground font-body leading-relaxed mb-8">
+              如果您也相信舞蹈能連結文化、世代與世界，歡迎進駐舞島咖，
+              建立專屬品牌頁面，與我們共築多元舞蹈聚落。
+            </p>
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+            >
+              了解引導者計畫
+              <span>→</span>
+            </Link>
+          </motion.div>
+        )}
 
         {/* Instructors Grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
