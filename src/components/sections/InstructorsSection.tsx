@@ -16,8 +16,14 @@ export function InstructorsSection() {
     [regionParam],
   );
 
+  // Only show real, published guides from the database (demo/static data hidden pre-launch)
+  const publishedInstructors = useMemo(
+    () => allInstructors.filter((i) => i.source === "db"),
+    [allInstructors],
+  );
+
   const instructors = useMemo(() => {
-    if (!activeRegion) return allInstructors;
+    if (!activeRegion) return publishedInstructors;
     const kw = activeRegion.keywords.map((k) => k.toLowerCase());
     const matches = allInstructors.filter((i) => {
       const hay = [
