@@ -38,9 +38,11 @@ export function CTASection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button variant="hero" size="lg" className="group">
-              免費開始
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Button asChild variant="hero" size="lg" className="group">
+              <Link to="/register">
+                免費開始
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
             <a
               href="#about"
