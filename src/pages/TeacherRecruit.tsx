@@ -344,7 +344,7 @@ export default function TeacherRecruit() {
                           }}
                         >
                           <span style={{ color: PALETTE.accent }}>{card.titleAccent}</span>
-                          <span>｜{card.title}</span>
+                          <span>{card.title}</span>
                         </h3>
                         <motion.div
                           initial={false}
