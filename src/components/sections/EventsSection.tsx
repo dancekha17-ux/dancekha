@@ -37,16 +37,17 @@ export function EventsSection() {
               即將到來的<span className="text-accent-italic">精彩時刻</span>
             </h2>
           </div>
-          <a href="#" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary font-body transition-colors">
-            查看完整行事曆
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
         </motion.div>
 
-        {loading ? (
-          <p className="text-center text-muted-foreground py-16">載入活動中…</p>
-        ) : events.length === 0 ? (
-          <p className="text-center text-muted-foreground py-16">目前尚未有上架活動，敬請期待。</p>
+        {loading || events.length === 0 ? (
+          <div className="max-w-xl mx-auto text-center py-12 md:py-16">
+            <h3 className="text-fluid-h3 font-display font-medium text-foreground mb-4">
+              新的舞蹈旅程正在醞釀
+            </h3>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              課程、文化聚會與跨界共舞活動即將登場，敬請期待。
+            </p>
+          </div>
         ) : (
           <div className="space-y-6">
             {events.map((event, index) => {
