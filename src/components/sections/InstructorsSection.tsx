@@ -58,11 +58,11 @@ export function InstructorsSection() {
           <span className="eyebrow">Instructors · 創生軸心</span>
           <div className="hairline mt-6 mb-8" />
           <h2 className="text-fluid-h1 font-display font-medium text-foreground mb-6">
-            用生命跳舞的<span className="text-accent-italic">舞蹈家們</span>
+            用生命跳舞的<span className="text-accent-italic">文化引導者</span>
           </h2>
           <p className="text-fluid-lead text-muted-foreground font-body">
-            每一位老師都是文化傳遞者，
-            帶著獨特的故事與節奏，等待與你相遇。
+            每一位引導者，都帶著獨特的舞蹈故事與文化視野。
+            在這裡分享專業、連結學員，也讓更多人看見舞蹈的多元可能。
           </p>
           {activeRegion && (
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBF5EC] border border-[#E8DCC4] text-sm font-body text-[#9C5A2E]">
