@@ -25,7 +25,7 @@ export function InstructorsSection() {
   const instructors = useMemo(() => {
     if (!activeRegion) return publishedInstructors;
     const kw = activeRegion.keywords.map((k) => k.toLowerCase());
-    const matches = allInstructors.filter((i) => {
+    const matches = publishedInstructors.filter((i) => {
       const hay = [
         i.region,
         i.specialty,
@@ -38,8 +38,8 @@ export function InstructorsSection() {
         .toLowerCase();
       return kw.some((k) => hay.includes(k));
     });
-    return matches.length > 0 ? matches : allInstructors;
-  }, [allInstructors, activeRegion]);
+    return matches.length > 0 ? matches : publishedInstructors;
+  }, [publishedInstructors, activeRegion]);
 
   return (
     <section
