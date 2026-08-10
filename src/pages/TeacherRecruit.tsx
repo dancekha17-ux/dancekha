@@ -52,7 +52,7 @@ const valueCards = [
     icon: Coins,
     emoji: "💰",
     titleAccent: "合理收益",
-    title: "｜\n專業獲得合理回報",
+    title: "｜\n讓專業永續創作",
     description:
       "尊重專業、珍視創作，透過多元合作共創價值，讓每一份專業投入，都能獲得合理且永續的回報。",
   },
