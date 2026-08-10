@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
 import heroJpg1024 from "@/assets/hero/hero-dance-1024.jpg";
