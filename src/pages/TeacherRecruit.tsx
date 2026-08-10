@@ -36,7 +36,7 @@ const valueCards = [
     icon: Globe2,
     emoji: "🌍",
     titleAccent: "品牌拓展",
-    title: "增加品牌影響力",
+    title: "｜\n增加品牌影響力",
     description:
       "建立專屬品牌頁面，完整呈現教學特色與專業理念，跨出原有同溫層，連結更多潛在學員與合作機會。",
   },
@@ -44,7 +44,7 @@ const valueCards = [
     icon: Settings2,
     emoji: "⚙️",
     titleAccent: "時間效益",
-    title: "提升您的時間價值",
+    title: "｜\n提升您的時間價值",
     description:
       "透過平台工具整合品牌、課程與學員社群，簡化日常經營，讓您把珍貴時間留給教學、創作與傳承。",
   },
@@ -52,7 +52,7 @@ const valueCards = [
     icon: Coins,
     emoji: "💰",
     titleAccent: "合理收益",
-    title: "讓專業獲得合理回報",
+    title: "｜\n專業獲得合理回報",
     description:
       "尊重專業、珍視創作，透過多元合作共創價值，讓每一份專業投入，都能獲得合理且永續的回報。",
   },
@@ -60,7 +60,7 @@ const valueCards = [
     icon: Sprout,
     emoji: "🌱",
     titleAccent: "跨界連結",
-    title: "共創舞蹈生態聚落",
+    title: "｜\n共創舞蹈生態聚落",
     description:
       "連結不同舞種、世代與地域的引導者，展開跨界共創與文化交流，匯聚彼此力量，讓舞蹈文化持續生長。",
   },
