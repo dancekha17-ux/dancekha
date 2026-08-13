@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -150,6 +150,11 @@ export default function TeacherRecruit() {
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openCardIndex, setOpenCardIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: PALETTE.bg }}>
