@@ -488,7 +488,7 @@ export default function TeacherDashboard() {
               className="bg-white/70"
               title="一鍵將草稿提交給舞島咖團隊審閱"
             >
-              <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請刊登"}</span>
+              <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請品牌頁上線"}</span>
             </Button>
             <Button
               variant="ghost"
@@ -515,6 +515,15 @@ export default function TeacherDashboard() {
           ))}
         </div>
       </header>
+
+      {/* Brand page publish helper text */}
+      <div className="border-b border-[#E63946]/10 bg-[#FFF5E6]/70">
+        <div className="container-wide mx-auto max-w-4xl px-4 py-3">
+          <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
+            完成品牌基本資料與精彩瞬間後，即可預覽並申請品牌頁上線。品牌頁目前免費提供，未來只有透過平台開課或收款時，才會啟用商業合作與分潤機制。
+          </p>
+        </div>
+      </div>
 
 
       <main className="container-wide mx-auto py-10 md:py-16 px-4 max-w-4xl">
