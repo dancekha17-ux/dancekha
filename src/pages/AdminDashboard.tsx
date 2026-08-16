@@ -97,6 +97,45 @@ export default function AdminDashboard() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejectingCourse, setRejectingCourse] = useState<any | null>(null);
   const [rejectNotes, setRejectNotes] = useState("");
+  const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
+  const [inviteNotes, setInviteNotes] = useState("");
+
+  // Brand page: confirm the teacher's brand page goes live
+  const confirmBrandLive = async (row: PendingProfile) => {
+    setBusyId(row.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: true, brand_page_status: "published", brand_revision_notes: null })
+      .eq("id", row.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "品牌頁已正式上線！" });
+    refresh();
+  };
+
+  // Brand page: invite the teacher to enrich their brand page
+  const sendBrandInvite = async () => {
+    if (!invitingProfile) return;
+    const notes = inviteNotes.trim();
+    if (!notes) return;
+    setBusyId(invitingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false, brand_page_status: "needs_revision", brand_revision_notes: notes })
+      .eq("id", invitingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "完善邀請已送出。" });
+    setInvitingProfile(null);
+    setInviteNotes("");
+    refresh();
+  };
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
