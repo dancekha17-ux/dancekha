@@ -78,6 +78,7 @@ interface Profile {
   is_approved: boolean;
   agreement_signed_at: string | null;
   brand_page_status: BrandPageStatus;
+  brand_revision_notes: string | null;
 }
 
 export default function TeacherDashboard() {
