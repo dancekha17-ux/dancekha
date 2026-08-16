@@ -334,6 +334,7 @@ export type Database = {
           brand_agreement_signed_at: string | null
           brand_agreement_version: string | null
           brand_page_status: string
+          brand_revision_notes: string | null
           brand_submitted_at: string | null
           contact_email: string | null
           contact_phone: string | null
@@ -369,6 +370,7 @@ export type Database = {
           brand_agreement_signed_at?: string | null
           brand_agreement_version?: string | null
           brand_page_status?: string
+          brand_revision_notes?: string | null
           brand_submitted_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null
@@ -404,6 +406,7 @@ export type Database = {
           brand_agreement_signed_at?: string | null
           brand_agreement_version?: string | null
           brand_page_status?: string
+          brand_revision_notes?: string | null
           brand_submitted_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null

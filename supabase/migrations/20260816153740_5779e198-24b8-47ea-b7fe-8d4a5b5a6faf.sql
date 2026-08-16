@@ -1,0 +1,1 @@
+ALTER TABLE public.teacher_profiles ADD COLUMN IF NOT EXISTS brand_revision_notes text;

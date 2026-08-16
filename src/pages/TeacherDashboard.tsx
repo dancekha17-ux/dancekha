@@ -78,6 +78,7 @@ interface Profile {
   is_approved: boolean;
   agreement_signed_at: string | null;
   brand_page_status: BrandPageStatus;
+  brand_revision_notes: string | null;
 }
 
 export default function TeacherDashboard() {
@@ -97,6 +98,7 @@ export default function TeacherDashboard() {
   const [showBrandAgreement, setShowBrandAgreement] = useState(false);
   const [brandAgreed, setBrandAgreed] = useState(false);
   const [brandSubmitting, setBrandSubmitting] = useState(false);
+  const [showBrandResubmit, setShowBrandResubmit] = useState(false);
 
 
   const skipDirty = useRef(true);
@@ -422,8 +424,31 @@ export default function TeacherDashboard() {
     setProfile((p) => (p ? { ...p, brand_page_status: "pending_review" } : p));
     setShowBrandAgreement(false);
     setBrandAgreed(false);
-    toast({ title: "品牌頁申請已送出！" });
+    toast({ title: "您的品牌頁已送出，舞島咖將協助確認上線內容。" });
   };
+
+  // Re-application after an invitation to enrich the brand page.
+  // Agreement metadata is intentionally preserved (already signed once).
+  const handleBrandResubmit = async () => {
+    if (!profile || !user) return;
+    setBrandSubmitting(true);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({
+        brand_page_status: "pending_review",
+        brand_submitted_at: new Date().toISOString(),
+      })
+      .eq("user_id", user.id);
+    setBrandSubmitting(false);
+    if (error) {
+      toast({ title: "送出失敗", description: "請稍後再試。", variant: "destructive" });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, brand_page_status: "pending_review", brand_revision_notes: null } : p));
+    setShowBrandResubmit(false);
+    toast({ title: "您的品牌頁已再次送出，舞島咖將協助確認上線內容。" });
+  };
+
 
 
 
@@ -535,7 +560,7 @@ export default function TeacherDashboard() {
                     disabled
                     title="品牌頁正在審核中，請耐心等候"
                   >
-                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁審核中</span>
+                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁確認中</span>
                   </Button>
                 );
               }
@@ -553,10 +578,14 @@ export default function TeacherDashboard() {
                 );
               }
               const label =
-                status === "needs_revision" ? "重新送出品牌頁" : "申請品牌頁上線";
+                status === "needs_revision" ? "完善後再次申請上線" : "申請品牌頁上線";
               return (
                 <Button
                   onClick={() => {
+                    if (status === "needs_revision") {
+                      setShowBrandResubmit(true);
+                      return;
+                    }
                     setBrandAgreed(false);
                     setShowBrandAgreement(true);
                   }}
@@ -565,7 +594,7 @@ export default function TeacherDashboard() {
                   className="bg-white/70"
                   title={
                     status === "needs_revision"
-                      ? "依據平台建議調整後，重新送出品牌頁申請"
+                      ? "補充完成後，再次申請品牌頁上線"
                       : "閱讀品牌頁刊登約定並送出品牌頁申請"
                   }
                 >
@@ -605,8 +634,47 @@ export default function TeacherDashboard() {
           <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
             完成品牌基本資料與精彩瞬間後，即可預覽並申請品牌頁上線。品牌頁目前免費提供，未來只有透過平台開課或收款時，才會啟用商業合作與分潤機制。
           </p>
+          {profile.brand_page_status === "needs_revision" && (
+            <div className="mt-3 rounded-2xl border border-[#E89B5C]/40 bg-white/80 p-4">
+              <p className="font-display text-base text-foreground">讓品牌頁更完整一些</p>
+              {profile.brand_revision_notes?.trim() && (
+                <p className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap leading-relaxed">
+                  {profile.brand_revision_notes}
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground/90 mt-2">完成補充後，即可再次申請上線。</p>
+              <Button
+                size="sm"
+                className="mt-3"
+                onClick={() => setShowBrandResubmit(true)}
+              >
+                <Send className="w-4 h-4" /> 完善後再次申請上線
+              </Button>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Simple re-application confirmation (agreement already signed) */}
+      <Dialog open={showBrandResubmit} onOpenChange={setShowBrandResubmit}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>準備再次申請上線嗎？</DialogTitle>
+            <DialogDescription>
+              確認內容已補充完成後，我們會再次協助您確認品牌頁的上線呈現。
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setShowBrandResubmit(false)}>
+              再檢查一下
+            </Button>
+            <Button disabled={brandSubmitting} onClick={handleBrandResubmit}>
+              {brandSubmitting ? "送出中…" : "確認並再次申請上線"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
 
 
       <main className="container-wide mx-auto py-10 md:py-16 px-4 max-w-4xl">

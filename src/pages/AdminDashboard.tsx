@@ -28,7 +28,32 @@ interface PendingProfile {
   contact_phone: string | null;
   updated_at: string;
   is_approved: boolean;
+  brand_page_status: string | null;
+  brand_revision_notes: string | null;
 }
+
+const BRAND_STATUS_LABEL: Record<string, string> = {
+  draft: "品牌頁準備中",
+  pending_review: "品牌頁確認中",
+  published: "品牌頁已上線",
+  needs_revision: "品牌頁待完善",
+};
+
+function BrandStatusBadge({ status }: { status?: string | null }) {
+  const key = status && BRAND_STATUS_LABEL[status] ? status : "draft";
+  const tone: Record<string, string> = {
+    draft: "bg-muted text-muted-foreground border-border",
+    pending_review: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40",
+    published: "bg-success/10 text-success border-success/30",
+    needs_revision: "bg-primary/10 text-primary border-primary/30",
+  };
+  return (
+    <span className={`inline-block text-[11px] px-2 py-0.5 rounded-full border ${tone[key]}`}>
+      {BRAND_STATUS_LABEL[key]}
+    </span>
+  );
+}
+
 
 function ContactLine({ email, phone }: { email?: string | null; phone?: string | null }) {
   if (!email && !phone) {
@@ -72,6 +97,45 @@ export default function AdminDashboard() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejectingCourse, setRejectingCourse] = useState<any | null>(null);
   const [rejectNotes, setRejectNotes] = useState("");
+  const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
+  const [inviteNotes, setInviteNotes] = useState("");
+
+  // Brand page: confirm the teacher's brand page goes live
+  const confirmBrandLive = async (row: PendingProfile) => {
+    setBusyId(row.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: true, brand_page_status: "published", brand_revision_notes: null })
+      .eq("id", row.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "品牌頁已正式上線！" });
+    refresh();
+  };
+
+  // Brand page: invite the teacher to enrich their brand page
+  const sendBrandInvite = async () => {
+    if (!invitingProfile) return;
+    const notes = inviteNotes.trim();
+    if (!notes) return;
+    setBusyId(invitingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false, brand_page_status: "needs_revision", brand_revision_notes: notes })
+      .eq("id", invitingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "完善邀請已送出。" });
+    setInvitingProfile(null);
+    setInviteNotes("");
+    refresh();
+  };
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/teacher/login", { replace: true });
@@ -94,7 +158,7 @@ export default function AdminDashboard() {
   const refresh = async () => {
     const { data } = await (supabase as any)
       .from("teacher_profiles")
-      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved")
+      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => !r.is_approved));
@@ -275,6 +339,9 @@ export default function AdminDashboard() {
                       <p className="text-xs text-muted-foreground/80 mt-1">
                         更新於 {new Date(row.updated_at).toLocaleString("zh-TW")}
                       </p>
+                      <div className="mt-2">
+                        <BrandStatusBadge status={row.brand_page_status} />
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -284,6 +351,28 @@ export default function AdminDashboard() {
                           <ExternalLink className="w-4 h-4" /> 預覽
                         </Link>
                       </Button>
+                    )}
+                    {row.brand_page_status === "pending_review" && (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          disabled={busyId === row.id}
+                          onClick={() => {
+                            setInvitingProfile(row);
+                            setInviteNotes("");
+                          }}
+                        >
+                          <FileText className="w-4 h-4" /> 邀請補充
+                        </Button>
+                        <Button
+                          size="sm"
+                          disabled={busyId === row.id}
+                          onClick={() => confirmBrandLive(row)}
+                        >
+                          <CheckCircle2 className="w-4 h-4" /> 確認上線
+                        </Button>
+                      </>
                     )}
                     <Button
                       variant="outline"
@@ -301,6 +390,7 @@ export default function AdminDashboard() {
                       <CheckCircle2 className="w-4 h-4" /> 通過審核
                     </Button>
                   </div>
+
                 </li>
               ))}
             </ul>
@@ -419,7 +509,11 @@ export default function AdminDashboard() {
                     <p className="text-xs text-muted-foreground truncate mt-1">
                       {[row.specialty, row.region].filter(Boolean).join(" · ")}
                     </p>
+                    <div className="mt-2">
+                      <BrandStatusBadge status={row.brand_page_status} />
+                    </div>
                   </div>
+
                   <Button
                     variant="ghost"
                     size="sm"
@@ -483,7 +577,51 @@ export default function AdminDashboard() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog
+        open={!!invitingProfile}
+        onOpenChange={(open) => {
+          if (!open) {
+            setInvitingProfile(null);
+            setInviteNotes("");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>邀請補充</DialogTitle>
+            <DialogDescription>
+              留下幾句建議，陪伴引導者把品牌頁呈現得更加完整。
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            autoFocus
+            rows={5}
+            placeholder="例如：可以再補充一段教學理念，並加入一張課堂現場照片。"
+            value={inviteNotes}
+            onChange={(e) => setInviteNotes(e.target.value)}
+          />
+          <DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setInvitingProfile(null);
+                setInviteNotes("");
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              disabled={!inviteNotes.trim() || busyId === invitingProfile?.id}
+              onClick={sendBrandInvite}
+            >
+              送出完善邀請
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
+
   );
 }
 
