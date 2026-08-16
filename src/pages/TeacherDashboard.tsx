@@ -535,7 +535,7 @@ export default function TeacherDashboard() {
                     disabled
                     title="品牌頁正在審核中，請耐心等候"
                   >
-                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁審核中</span>
+                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁確認中</span>
                   </Button>
                 );
               }
