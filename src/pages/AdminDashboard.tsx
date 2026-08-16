@@ -28,7 +28,32 @@ interface PendingProfile {
   contact_phone: string | null;
   updated_at: string;
   is_approved: boolean;
+  brand_page_status: string | null;
+  brand_revision_notes: string | null;
 }
+
+const BRAND_STATUS_LABEL: Record<string, string> = {
+  draft: "品牌頁準備中",
+  pending_review: "品牌頁確認中",
+  published: "品牌頁已上線",
+  needs_revision: "品牌頁待完善",
+};
+
+function BrandStatusBadge({ status }: { status?: string | null }) {
+  const key = status && BRAND_STATUS_LABEL[status] ? status : "draft";
+  const tone: Record<string, string> = {
+    draft: "bg-muted text-muted-foreground border-border",
+    pending_review: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40",
+    published: "bg-success/10 text-success border-success/30",
+    needs_revision: "bg-primary/10 text-primary border-primary/30",
+  };
+  return (
+    <span className={`inline-block text-[11px] px-2 py-0.5 rounded-full border ${tone[key]}`}>
+      {BRAND_STATUS_LABEL[key]}
+    </span>
+  );
+}
+
 
 function ContactLine({ email, phone }: { email?: string | null; phone?: string | null }) {
   if (!email && !phone) {
