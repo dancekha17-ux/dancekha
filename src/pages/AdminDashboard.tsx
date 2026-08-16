@@ -534,7 +534,51 @@ export default function AdminDashboard() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog
+        open={!!invitingProfile}
+        onOpenChange={(open) => {
+          if (!open) {
+            setInvitingProfile(null);
+            setInviteNotes("");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>邀請補充</DialogTitle>
+            <DialogDescription>
+              留下幾句建議，陪伴引導者把品牌頁呈現得更加完整。
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            autoFocus
+            rows={5}
+            placeholder="例如：可以再補充一段教學理念，並加入一張課堂現場照片。"
+            value={inviteNotes}
+            onChange={(e) => setInviteNotes(e.target.value)}
+          />
+          <DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setInvitingProfile(null);
+                setInviteNotes("");
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              disabled={!inviteNotes.trim() || busyId === invitingProfile?.id}
+              onClick={sendBrandInvite}
+            >
+              送出完善邀請
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
+
   );
 }
 
