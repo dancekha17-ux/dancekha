@@ -524,15 +524,55 @@ export default function TeacherDashboard() {
               </Link>
 
             </Button>
-            <Button
-              onClick={() => setShowBrandAgreement(true)}
-              size="sm"
-              variant="outline"
-              className="bg-white/70"
-              title="閱讀品牌頁刊登約定並送出品牌頁申請"
-            >
-              <Send className="w-4 h-4" /> <span className="hidden sm:inline">申請品牌頁上線</span>
-            </Button>
+            {(() => {
+              const status = profile.brand_page_status ?? "draft";
+              if (status === "pending_review") {
+                return (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="bg-white/70"
+                    disabled
+                    title="品牌頁正在審核中，請耐心等候"
+                  >
+                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁審核中</span>
+                  </Button>
+                );
+              }
+              if (status === "published") {
+                return (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="bg-white/70"
+                    disabled
+                    title="品牌頁已上線"
+                  >
+                    <CheckCircle2 className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁已上線</span>
+                  </Button>
+                );
+              }
+              const label =
+                status === "needs_revision" ? "重新送出品牌頁" : "申請品牌頁上線";
+              return (
+                <Button
+                  onClick={() => {
+                    setBrandAgreed(false);
+                    setShowBrandAgreement(true);
+                  }}
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/70"
+                  title={
+                    status === "needs_revision"
+                      ? "依據平台建議調整後，重新送出品牌頁申請"
+                      : "閱讀品牌頁刊登約定並送出品牌頁申請"
+                  }
+                >
+                  <Send className="w-4 h-4" /> <span className="hidden sm:inline">{label}</span>
+                </Button>
+              );
+            })()}
             <Button
               variant="ghost"
               size="sm"
