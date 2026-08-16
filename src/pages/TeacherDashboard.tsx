@@ -119,12 +119,19 @@ export default function TeacherDashboard() {
       } else if (data) {
         const d = data as any;
         skipDirty.current = true;
+        // Safely read brand_page_status; treat unknown/missing as draft
+        const rawStatus = d.brand_page_status as string | null | undefined;
+        const brandPageStatus: BrandPageStatus =
+          rawStatus === "draft" || rawStatus === "pending_review" || rawStatus === "published" || rawStatus === "needs_revision"
+            ? rawStatus
+            : "draft";
         setProfile({
           ...d,
           tagline: d.tagline ?? "",
           credentials: d.credentials ?? [],
           languages: (d.languages ?? []).length > 0 ? d.languages : ["中文"],
           hero_image_url: d.hero_image_url ?? null,
+          brand_page_status: brandPageStatus,
         });
         // Fetch any courses with admin revision feedback
         const { data: revRows } = await (supabase as any)
