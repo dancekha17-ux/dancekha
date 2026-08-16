@@ -53,6 +53,8 @@ const REQUIRED_FIELD_DOM_IDS: Record<string, string> = {
   dance_styles: "styles",
 };
 
+type BrandPageStatus = "draft" | "pending_review" | "published" | "needs_revision";
+
 interface Profile {
   id: string;
   user_id: string;
@@ -75,6 +77,7 @@ interface Profile {
   contact_phone: string | null;
   is_approved: boolean;
   agreement_signed_at: string | null;
+  brand_page_status: BrandPageStatus;
 }
 
 export default function TeacherDashboard() {
