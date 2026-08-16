@@ -394,6 +394,38 @@ export default function TeacherDashboard() {
     await performSubmit();
   };
 
+  // Submit brand page application: writes brand_page_status + agreement metadata
+  // to the current teacher's own row. On success updates local state and closes Dialog.
+  const handleBrandSubmit = async () => {
+    if (!profile || !user || !brandAgreed) return;
+    setBrandSubmitting(true);
+    const nowIso = new Date().toISOString();
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({
+        brand_page_status: "pending_review",
+        brand_agreement_signed_at: nowIso,
+        brand_agreement_version: "brand_listing_v1_2026",
+        brand_submitted_at: nowIso,
+      })
+      .eq("user_id", user.id);
+    setBrandSubmitting(false);
+    if (error) {
+      // Do NOT close Dialog; show a safe, generic error message.
+      toast({
+        title: "品牌頁申請送出失敗",
+        description: "請稍後再試。",
+        variant: "destructive",
+      });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, brand_page_status: "pending_review" } : p));
+    setShowBrandAgreement(false);
+    setBrandAgreed(false);
+    toast({ title: "品牌頁申請已送出！" });
+  };
+
+
 
   if (authLoading || loading || !profile) {
 
