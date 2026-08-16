@@ -53,6 +53,8 @@ const REQUIRED_FIELD_DOM_IDS: Record<string, string> = {
   dance_styles: "styles",
 };
 
+type BrandPageStatus = "draft" | "pending_review" | "published" | "needs_revision";
+
 interface Profile {
   id: string;
   user_id: string;
@@ -75,6 +77,7 @@ interface Profile {
   contact_phone: string | null;
   is_approved: boolean;
   agreement_signed_at: string | null;
+  brand_page_status: BrandPageStatus;
 }
 
 export default function TeacherDashboard() {
@@ -93,6 +96,7 @@ export default function TeacherDashboard() {
   const [publishAgreed, setPublishAgreed] = useState(false);
   const [showBrandAgreement, setShowBrandAgreement] = useState(false);
   const [brandAgreed, setBrandAgreed] = useState(false);
+  const [brandSubmitting, setBrandSubmitting] = useState(false);
 
 
   const skipDirty = useRef(true);
@@ -115,12 +119,19 @@ export default function TeacherDashboard() {
       } else if (data) {
         const d = data as any;
         skipDirty.current = true;
+        // Safely read brand_page_status; treat unknown/missing as draft
+        const rawStatus = d.brand_page_status as string | null | undefined;
+        const brandPageStatus: BrandPageStatus =
+          rawStatus === "draft" || rawStatus === "pending_review" || rawStatus === "published" || rawStatus === "needs_revision"
+            ? rawStatus
+            : "draft";
         setProfile({
           ...d,
           tagline: d.tagline ?? "",
           credentials: d.credentials ?? [],
           languages: (d.languages ?? []).length > 0 ? d.languages : ["中文"],
           hero_image_url: d.hero_image_url ?? null,
+          brand_page_status: brandPageStatus,
         });
         // Fetch any courses with admin revision feedback
         const { data: revRows } = await (supabase as any)
@@ -383,6 +394,38 @@ export default function TeacherDashboard() {
     await performSubmit();
   };
 
+  // Submit brand page application: writes brand_page_status + agreement metadata
+  // to the current teacher's own row. On success updates local state and closes Dialog.
+  const handleBrandSubmit = async () => {
+    if (!profile || !user || !brandAgreed) return;
+    setBrandSubmitting(true);
+    const nowIso = new Date().toISOString();
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({
+        brand_page_status: "pending_review",
+        brand_agreement_signed_at: nowIso,
+        brand_agreement_version: "brand_listing_v1_2026",
+        brand_submitted_at: nowIso,
+      })
+      .eq("user_id", user.id);
+    setBrandSubmitting(false);
+    if (error) {
+      // Do NOT close Dialog; show a safe, generic error message.
+      toast({
+        title: "品牌頁申請送出失敗",
+        description: "請稍後再試。",
+        variant: "destructive",
+      });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, brand_page_status: "pending_review" } : p));
+    setShowBrandAgreement(false);
+    setBrandAgreed(false);
+    toast({ title: "品牌頁申請已送出！" });
+  };
+
+
 
   if (authLoading || loading || !profile) {
 
@@ -481,15 +524,55 @@ export default function TeacherDashboard() {
               </Link>
 
             </Button>
-            <Button
-              onClick={() => setShowBrandAgreement(true)}
-              size="sm"
-              variant="outline"
-              className="bg-white/70"
-              title="閱讀品牌頁刊登約定並送出品牌頁申請"
-            >
-              <Send className="w-4 h-4" /> <span className="hidden sm:inline">申請品牌頁上線</span>
-            </Button>
+            {(() => {
+              const status = profile.brand_page_status ?? "draft";
+              if (status === "pending_review") {
+                return (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="bg-white/70"
+                    disabled
+                    title="品牌頁正在審核中，請耐心等候"
+                  >
+                    <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁審核中</span>
+                  </Button>
+                );
+              }
+              if (status === "published") {
+                return (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="bg-white/70"
+                    disabled
+                    title="品牌頁已上線"
+                  >
+                    <CheckCircle2 className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁已上線</span>
+                  </Button>
+                );
+              }
+              const label =
+                status === "needs_revision" ? "重新送出品牌頁" : "申請品牌頁上線";
+              return (
+                <Button
+                  onClick={() => {
+                    setBrandAgreed(false);
+                    setShowBrandAgreement(true);
+                  }}
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/70"
+                  title={
+                    status === "needs_revision"
+                      ? "依據平台建議調整後，重新送出品牌頁申請"
+                      : "閱讀品牌頁刊登約定並送出品牌頁申請"
+                  }
+                >
+                  <Send className="w-4 h-4" /> <span className="hidden sm:inline">{label}</span>
+                </Button>
+              );
+            })()}
             <Button
               variant="ghost"
               size="sm"
@@ -658,17 +741,13 @@ export default function TeacherDashboard() {
                     返回修改
                   </Button>
                   <Button
-                    disabled={!brandAgreed}
-                    onClick={() => {
-                      setShowBrandAgreement(false);
-                      setBrandAgreed(false);
-                      toast({ title: "品牌頁申請已送出！" });
-                    }}
+                    disabled={!brandAgreed || brandSubmitting}
+                    onClick={handleBrandSubmit}
                     className="text-white hover:opacity-95"
                     style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
                   >
                     <Send className="w-4 h-4" />
-                    同意並送出品牌頁申請
+                    {brandSubmitting ? "送出中…" : "同意並送出品牌頁申請"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
