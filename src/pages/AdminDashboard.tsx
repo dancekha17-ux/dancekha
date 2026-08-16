@@ -470,7 +470,11 @@ export default function AdminDashboard() {
                     <p className="text-xs text-muted-foreground truncate mt-1">
                       {[row.specialty, row.region].filter(Boolean).join(" · ")}
                     </p>
+                    <div className="mt-2">
+                      <BrandStatusBadge status={row.brand_page_status} />
+                    </div>
                   </div>
+
                   <Button
                     variant="ghost"
                     size="sm"
