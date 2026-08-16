@@ -422,8 +422,31 @@ export default function TeacherDashboard() {
     setProfile((p) => (p ? { ...p, brand_page_status: "pending_review" } : p));
     setShowBrandAgreement(false);
     setBrandAgreed(false);
-    toast({ title: "品牌頁申請已送出！" });
+    toast({ title: "您的品牌頁已送出，舞島咖將協助確認上線內容。" });
   };
+
+  // Re-application after an invitation to enrich the brand page.
+  // Agreement metadata is intentionally preserved (already signed once).
+  const handleBrandResubmit = async () => {
+    if (!profile || !user) return;
+    setBrandSubmitting(true);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({
+        brand_page_status: "pending_review",
+        brand_submitted_at: new Date().toISOString(),
+      })
+      .eq("user_id", user.id);
+    setBrandSubmitting(false);
+    if (error) {
+      toast({ title: "送出失敗", description: "請稍後再試。", variant: "destructive" });
+      return;
+    }
+    setProfile((p) => (p ? { ...p, brand_page_status: "pending_review", brand_revision_notes: null } : p));
+    setShowBrandResubmit(false);
+    toast({ title: "您的品牌頁已再次送出，舞島咖將協助確認上線內容。" });
+  };
+
 
 
 
