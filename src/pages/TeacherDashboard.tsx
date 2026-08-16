@@ -605,8 +605,47 @@ export default function TeacherDashboard() {
           <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
             完成品牌基本資料與精彩瞬間後，即可預覽並申請品牌頁上線。品牌頁目前免費提供，未來只有透過平台開課或收款時，才會啟用商業合作與分潤機制。
           </p>
+          {profile.brand_page_status === "needs_revision" && (
+            <div className="mt-3 rounded-2xl border border-[#E89B5C]/40 bg-white/80 p-4">
+              <p className="font-display text-base text-foreground">讓品牌頁更完整一些</p>
+              {profile.brand_revision_notes?.trim() && (
+                <p className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap leading-relaxed">
+                  {profile.brand_revision_notes}
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground/90 mt-2">完成補充後，即可再次申請上線。</p>
+              <Button
+                size="sm"
+                className="mt-3"
+                onClick={() => setShowBrandResubmit(true)}
+              >
+                <Send className="w-4 h-4" /> 完善後再次申請上線
+              </Button>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Simple re-application confirmation (agreement already signed) */}
+      <Dialog open={showBrandResubmit} onOpenChange={setShowBrandResubmit}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>準備再次申請上線嗎？</DialogTitle>
+            <DialogDescription>
+              確認內容已補充完成後，我們會再次協助您確認品牌頁的上線呈現。
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setShowBrandResubmit(false)}>
+              再檢查一下
+            </Button>
+            <Button disabled={brandSubmitting} onClick={handleBrandResubmit}>
+              {brandSubmitting ? "送出中…" : "確認並再次申請上線"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
 
 
       <main className="container-wide mx-auto py-10 md:py-16 px-4 max-w-4xl">
