@@ -300,6 +300,9 @@ export default function AdminDashboard() {
                       <p className="text-xs text-muted-foreground/80 mt-1">
                         更新於 {new Date(row.updated_at).toLocaleString("zh-TW")}
                       </p>
+                      <div className="mt-2">
+                        <BrandStatusBadge status={row.brand_page_status} />
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -309,6 +312,28 @@ export default function AdminDashboard() {
                           <ExternalLink className="w-4 h-4" /> 預覽
                         </Link>
                       </Button>
+                    )}
+                    {row.brand_page_status === "pending_review" && (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          disabled={busyId === row.id}
+                          onClick={() => {
+                            setInvitingProfile(row);
+                            setInviteNotes("");
+                          }}
+                        >
+                          <FileText className="w-4 h-4" /> 邀請補充
+                        </Button>
+                        <Button
+                          size="sm"
+                          disabled={busyId === row.id}
+                          onClick={() => confirmBrandLive(row)}
+                        >
+                          <CheckCircle2 className="w-4 h-4" /> 確認上線
+                        </Button>
+                      </>
                     )}
                     <Button
                       variant="outline"
@@ -326,6 +351,7 @@ export default function AdminDashboard() {
                       <CheckCircle2 className="w-4 h-4" /> 通過審核
                     </Button>
                   </div>
+
                 </li>
               ))}
             </ul>
