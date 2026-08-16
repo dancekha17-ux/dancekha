@@ -482,14 +482,13 @@ export default function TeacherDashboard() {
 
             </Button>
             <Button
-              onClick={handleSubmitForReview}
-              disabled={submitting || dirty}
+              onClick={() => setShowBrandAgreement(true)}
               size="sm"
               variant="outline"
               className="bg-white/70"
-              title="一鍵將草稿提交給舞島咖團隊審閱"
+              title="閱讀品牌頁刊登約定並送出品牌頁申請"
             >
-              <Send className="w-4 h-4" /> <span className="hidden sm:inline">{submitting ? "送出中…" : "申請品牌頁上線"}</span>
+              <Send className="w-4 h-4" /> <span className="hidden sm:inline">申請品牌頁上線</span>
             </Button>
             <Button
               variant="ghost"
