@@ -553,10 +553,14 @@ export default function TeacherDashboard() {
                 );
               }
               const label =
-                status === "needs_revision" ? "重新送出品牌頁" : "申請品牌頁上線";
+                status === "needs_revision" ? "完善後再次申請上線" : "申請品牌頁上線";
               return (
                 <Button
                   onClick={() => {
+                    if (status === "needs_revision") {
+                      setShowBrandResubmit(true);
+                      return;
+                    }
                     setBrandAgreed(false);
                     setShowBrandAgreement(true);
                   }}
@@ -565,7 +569,7 @@ export default function TeacherDashboard() {
                   className="bg-white/70"
                   title={
                     status === "needs_revision"
-                      ? "依據平台建議調整後，重新送出品牌頁申請"
+                      ? "補充完成後，再次申請品牌頁上線"
                       : "閱讀品牌頁刊登約定並送出品牌頁申請"
                   }
                 >
