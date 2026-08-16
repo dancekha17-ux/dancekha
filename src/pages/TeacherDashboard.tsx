@@ -741,17 +741,13 @@ export default function TeacherDashboard() {
                     返回修改
                   </Button>
                   <Button
-                    disabled={!brandAgreed}
-                    onClick={() => {
-                      setShowBrandAgreement(false);
-                      setBrandAgreed(false);
-                      toast({ title: "品牌頁申請已送出！" });
-                    }}
+                    disabled={!brandAgreed || brandSubmitting}
+                    onClick={handleBrandSubmit}
                     className="text-white hover:opacity-95"
                     style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
                   >
                     <Send className="w-4 h-4" />
-                    同意並送出品牌頁申請
+                    {brandSubmitting ? "送出中…" : "同意並送出品牌頁申請"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
