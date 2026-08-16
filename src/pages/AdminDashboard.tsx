@@ -158,7 +158,7 @@ export default function AdminDashboard() {
   const refresh = async () => {
     const { data } = await (supabase as any)
       .from("teacher_profiles")
-      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved")
+      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => !r.is_approved));
