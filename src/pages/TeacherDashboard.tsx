@@ -616,6 +616,64 @@ export default function TeacherDashboard() {
               </DialogContent>
             </Dialog>
 
+            {/* Brand page listing agreement — opened by the top「申請品牌頁上線」button */}
+            <Dialog open={showBrandAgreement} onOpenChange={setShowBrandAgreement}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col rounded-3xl">
+                <DialogHeader>
+                  <div className="mx-auto w-12 h-12 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mb-1">
+                    <FileSignature className="w-6 h-6" />
+                  </div>
+                  <DialogTitle className="text-center font-display text-xl">
+                    品牌頁刊登約定
+                  </DialogTitle>
+                  <DialogDescription className="text-center leading-relaxed">
+                    舞島咖免費提供引導者品牌頁面，協助您呈現教學特色、文化故事與專業經歷。為共同維護平台內容品質與彼此權益，請確認以下事項：
+                  </DialogDescription>
+                </DialogHeader>
+                <div
+                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 overflow-y-auto space-y-3"
+                  style={{ maxHeight: "46vh" }}
+                >
+                  <p>① 我提供的姓名、學經歷、教學經驗及其他專業資料均為真實內容。</p>
+                  <p>② 我上傳的文字、照片、影片及其他素材，均為本人所有或已取得合法使用授權。</p>
+                  <p>③ 我在平台上傳之原創內容，其著作權仍歸本人所有。</p>
+                  <p>④ 我同意舞島咖於官方網站、社群媒體及相關宣傳管道中，合理使用我的公開簡介、照片與教學演出片段，作為品牌頁展示及平台推廣用途。</p>
+                  <p>⑤ 我理解品牌頁須經平台確認後才會公開上線，舞島咖得為版面呈現、內容品質或平台規範提出調整建議。</p>
+                </div>
+                <label className="flex items-start gap-3 mt-2 cursor-pointer select-none px-1">
+                  <Checkbox
+                    checked={brandAgreed}
+                    onCheckedChange={(v) => setBrandAgreed(v === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-sm text-foreground/90 leading-relaxed">
+                    我已閱讀並同意《舞島咖品牌頁刊登約定》。
+                  </span>
+                </label>
+                <DialogFooter className="flex-col sm:flex-row gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowBrandAgreement(false)}
+                  >
+                    返回修改
+                  </Button>
+                  <Button
+                    disabled={!brandAgreed}
+                    onClick={() => {
+                      setShowBrandAgreement(false);
+                      setBrandAgreed(false);
+                      toast({ title: "品牌頁申請已送出！" });
+                    }}
+                    className="text-white hover:opacity-95"
+                    style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
+                  >
+                    <Send className="w-4 h-4" />
+                    同意並送出品牌頁申請
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
 
 
 
