@@ -331,6 +331,10 @@ export type Database = {
           agreement_signed_at: string | null
           avatar_url: string | null
           bio: string
+          brand_agreement_signed_at: string | null
+          brand_agreement_version: string | null
+          brand_page_status: string
+          brand_submitted_at: string | null
           contact_email: string | null
           contact_phone: string | null
           created_at: string
@@ -362,6 +366,10 @@ export type Database = {
           agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
+          brand_agreement_signed_at?: string | null
+          brand_agreement_version?: string | null
+          brand_page_status?: string
+          brand_submitted_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
@@ -393,6 +401,10 @@ export type Database = {
           agreement_signed_at?: string | null
           avatar_url?: string | null
           bio?: string
+          brand_agreement_signed_at?: string | null
+          brand_agreement_version?: string | null
+          brand_page_status?: string
+          brand_submitted_at?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
