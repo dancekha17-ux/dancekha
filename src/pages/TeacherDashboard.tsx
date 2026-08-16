@@ -96,6 +96,7 @@ export default function TeacherDashboard() {
   const [publishAgreed, setPublishAgreed] = useState(false);
   const [showBrandAgreement, setShowBrandAgreement] = useState(false);
   const [brandAgreed, setBrandAgreed] = useState(false);
+  const [brandSubmitting, setBrandSubmitting] = useState(false);
 
 
   const skipDirty = useRef(true);
