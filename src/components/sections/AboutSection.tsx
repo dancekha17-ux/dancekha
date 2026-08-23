@@ -33,6 +33,10 @@ const features = [
 export function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (index: number) =>
+    setOpenIndex((prev) => (prev === index ? null : index));
 
   return (
     <section id="about" className="section-padding bg-background" ref={ref}>
@@ -55,31 +59,73 @@ export function AboutSection() {
           </p>
         </motion.div>
 
-        {/* Features Grid — quieter editorial layout */}
-        <div className="grid md:grid-cols-2 gap-x-10 md:gap-x-12 gap-y-10 md:gap-y-14 max-w-5xl mx-auto">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.1 * (index + 1) }}
-              className="group"
-            >
-              <div className="flex items-start gap-5">
-                <div className="w-11 h-11 rounded-full border border-border flex items-center justify-center shrink-0 group-hover:border-primary/50 transition-colors">
-                  <feature.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-display font-medium text-foreground mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground font-body leading-relaxed text-[15px]">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+        {/* Accordion Grid — single open at a time */}
+        <div className="grid md:grid-cols-2 gap-x-8 md:gap-x-10 gap-y-5 md:gap-y-6 max-w-5xl mx-auto">
+          {features.map((feature, index) => {
+            const isOpen = openIndex === index;
+            const Icon = feature.icon;
+            return (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.1 * (index + 1) }}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggle(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`about-panel-${index}`}
+                  className={`w-full text-left rounded-2xl border border-border/70 bg-card/30 px-5 md:px-6 py-4 md:py-5 transition-all duration-300 hover:border-primary/40 hover:bg-card/50 ${
+                    isOpen ? "border-primary/40 bg-card/50" : ""
+                  }`}
+                >
+                  {/* Header row: icon + title + toggle */}
+                  <div className="flex items-center gap-4">
+                    <div className="w-11 h-11 rounded-full border border-border flex items-center justify-center shrink-0 transition-colors group-hover:border-primary/50">
+                      <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="flex-1 text-lg md:text-xl font-display font-medium text-foreground">
+                      {feature.title}
+                    </h3>
+                    <span
+                      className="w-7 h-7 rounded-full border border-border flex items-center justify-center shrink-0 text-muted-foreground transition-colors"
+                      aria-hidden
+                    >
+                      <motion.span
+                        key={isOpen ? "minus" : "plus"}
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-base leading-none"
+                      >
+                        {isOpen ? "−" : "+"}
+                      </motion.span>
+                    </span>
+                  </div>
+
+                  {/* Expandable body */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="panel"
+                        id={`about-panel-${index}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-muted-foreground font-body leading-relaxed text-[15px] pt-5 mt-2 border-t border-border/40">
+                          {feature.description}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
