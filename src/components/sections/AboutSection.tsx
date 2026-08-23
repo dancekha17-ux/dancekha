@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Sparkles, Globe2, Heart, Users } from "lucide-react";
 
 const features = [
