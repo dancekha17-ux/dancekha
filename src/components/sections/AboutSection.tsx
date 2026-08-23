@@ -13,7 +13,7 @@ const features = [
     icon: Globe2,
     title: "跳進全世界",
     description:
-      "從夏威夷 Hula 呼拉舞、保加利亞 Horo 鏈狀舞、印度 Odissi 奧迪西舞，到世界各地的舞蹈，舞步帶領我們跨越國界！",
+      "從夏威夷 Hula 呼拉舞、保加利亞 Horo 鏈狀舞、印度 Odissi 奧迪西舞，到世界各地的舞蹈，舞步帶領我們走進不同民族的生命風景！",
   },
   {
     icon: Heart,
