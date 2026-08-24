@@ -190,6 +190,7 @@ export function WorldMap() {
       .from("teacher_profiles")
       .select("slug,name,specialty,region,dance_styles")
       .eq("is_approved", true)
+      .eq("brand_page_status", "published")
       .not("slug", "is", null)
       .then(({ data }: any) => setAllInstructors((data as MapInstructor[]) ?? []));
   }, []);
