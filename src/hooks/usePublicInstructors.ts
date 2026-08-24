@@ -84,6 +84,8 @@ export function usePublicInstructors() {
       .from("teacher_profiles")
       .select("*")
       .eq("is_approved", true)
+      .eq("brand_page_status", "published")
+      .not("slug", "is", null)
       .order("updated_at", { ascending: false })
       .then(({ data }) => {
         const dbItems = (data ?? []).map((r) => dbToPublic(r));
@@ -103,6 +105,7 @@ export async function fetchInstructorBySlug(
     .select("*")
     .eq("slug", slug)
     .eq("is_approved", true)
+    .eq("brand_page_status", "published")
     .maybeSingle();
 
   let row: any = approved;

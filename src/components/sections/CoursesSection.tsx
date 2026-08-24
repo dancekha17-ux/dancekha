@@ -61,9 +61,10 @@ export function CoursesSection() {
     (async () => {
       const { data } = await (supabase as any)
         .from("instructor_courses")
-        .select("id,title,region,price,schedule,level,service_type,course_image_url,signup_url,teacher_id,teacher_profiles!inner(name,slug,is_approved)")
+        .select("id,title,region,price,schedule,level,service_type,course_image_url,signup_url,teacher_id,teacher_profiles!inner(name,slug,is_approved,brand_page_status)")
         .eq("status", "published")
         .eq("teacher_profiles.is_approved", true)
+        .eq("teacher_profiles.brand_page_status", "published")
         .order("updated_at", { ascending: false });
       const mapped: InstructorCourseCard[] = ((data as any[]) ?? []).map((r) => ({
         id: r.id,

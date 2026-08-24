@@ -123,8 +123,8 @@ export default function InstructorProfile() {
   if (!instructor) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
-        <p className="font-display text-2xl text-foreground">找不到這位舞蹈家</p>
-        <Button onClick={() => navigate("/")}>回首頁</Button>
+        <p className="font-display text-2xl text-foreground">此品牌頁尚未公開</p>
+        <Button onClick={() => navigate("/#instructors")}>返回引導者團隊</Button>
       </div>
     );
   }
