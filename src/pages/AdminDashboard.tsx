@@ -91,6 +91,7 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [pending, setPending] = useState<PendingProfile[]>([]);
+  const [preparing, setPreparing] = useState<PendingProfile[]>([]);
   const [approved, setApproved] = useState<PendingProfile[]>([]);
   const [pendingCourses, setPendingCourses] = useState<any[]>([]);
   const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
@@ -161,8 +162,9 @@ export default function AdminDashboard() {
       .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
-    setPending(rows.filter((r) => !r.is_approved));
-    setApproved(rows.filter((r) => r.is_approved));
+    setPending(rows.filter((r) => r.brand_page_status === "pending_review"));
+    setPreparing(rows.filter((r) => r.brand_page_status !== "pending_review" && !(r.is_approved === true && r.brand_page_status === "published")));
+    setApproved(rows.filter((r) => r.is_approved === true && r.brand_page_status === "published"));
 
     const { data: courses } = await (supabase as any)
       .from("instructor_courses")
@@ -170,26 +172,6 @@ export default function AdminDashboard() {
       .eq("status", "pending")
       .order("submitted_at", { ascending: true });
     setPendingCourses(courses ?? []);
-  };
-
-  const setApproval = async (row: PendingProfile, value: boolean) => {
-    setBusyId(row.id);
-    const { error } = await supabase
-      .from("teacher_profiles")
-      .update({ is_approved: value })
-      .eq("id", row.id);
-    setBusyId(null);
-    if (error) {
-      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
-      return;
-    }
-    toast({
-      title: value ? "已通過審核" : "已標記為待修改",
-      description: value
-        ? `${row.name ?? "該師資"} 現已公開於平台。`
-        : `${row.name ?? "該師資"} 已退回草稿狀態。`,
-    });
-    refresh();
   };
 
   const approveCourse = async (id: string) => {
@@ -200,7 +182,7 @@ export default function AdminDashboard() {
       .eq("id", id);
     setBusyId(null);
     if (error) return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
-    toast({ title: "已核准上架", description: "課程已同步至公開頁面。" });
+    toast({ title: "已確認上架", description: "課程已同步至公開頁面。" });
     refresh();
   };
 
@@ -208,7 +190,7 @@ export default function AdminDashboard() {
     if (!rejectingCourse) return;
     const notes = rejectNotes.trim();
     if (!notes) {
-      toast({ title: "請填寫修改建議", description: "退回時請說明需要老師調整的內容。", variant: "destructive" });
+      toast({ title: "請填寫補充建議", description: "請說明需要老師調整的內容。", variant: "destructive" });
       return;
     }
     const id = rejectingCourse.id;
@@ -240,7 +222,7 @@ export default function AdminDashboard() {
       /* email notify is non-blocking */
     }
     setBusyId(null);
-    toast({ title: "已退回老師修改", description: "建議已存入，系統將通知老師查看。" });
+    toast({ title: "已請老師補充資料", description: "建議已存入，系統將通知老師查看。" });
     setRejectingCourse(null);
     setRejectNotes("");
     refresh();
@@ -293,10 +275,10 @@ export default function AdminDashboard() {
         <div className="mb-10">
           <span className="eyebrow">Review Studio</span>
           <h1 className="font-display text-3xl md:text-4xl text-foreground mt-3">
-            師資<span className="text-accent-italic">審核控制台</span>
+            引導者<span className="text-accent-italic">品牌頁管理台</span>
           </h1>
           <p className="text-muted-foreground mt-3 leading-relaxed">
-            審核新加入的引導者，他們通過後即會出現在引導者團隊與世界地圖。
+            確認引導者的品牌頁內容，確認上線後即會出現在引導者團隊與世界地圖。
           </p>
         </div>
 
@@ -304,13 +286,13 @@ export default function AdminDashboard() {
           <div className="flex items-baseline justify-between mb-4">
             <h2 className="font-display text-xl text-foreground flex items-center gap-2">
               <Clock className="w-5 h-5 text-primary" />
-              待審核 <span className="text-muted-foreground text-sm">({pending.length})</span>
+              品牌頁確認中 <span className="text-muted-foreground text-sm">({pending.length})</span>
             </h2>
           </div>
 
           {pending.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-border bg-card/60 p-10 text-center text-muted-foreground">
-              目前沒有待審核的師資 🌿
+              目前沒有等待確認的品牌頁 🌿
             </div>
           ) : (
             <ul className="space-y-4">
@@ -363,7 +345,7 @@ export default function AdminDashboard() {
                             setInviteNotes("");
                           }}
                         >
-                          <FileText className="w-4 h-4" /> 邀請補充
+                          <FileText className="w-4 h-4" /> 請補充資料
                         </Button>
                         <Button
                           size="sm"
@@ -374,23 +356,33 @@ export default function AdminDashboard() {
                         </Button>
                       </>
                     )}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={busyId === row.id}
-                      onClick={() => setApproval(row, false)}
-                    >
-                      <XCircle className="w-4 h-4" /> 駁回修改
-                    </Button>
-                    <Button
-                      size="sm"
-                      disabled={busyId === row.id}
-                      onClick={() => setApproval(row, true)}
-                    >
-                      <CheckCircle2 className="w-4 h-4" /> 通過審核
-                    </Button>
                   </div>
 
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="mb-12">
+          <h2 className="font-display text-xl text-foreground flex items-center gap-2 mb-4">
+            <FileText className="w-5 h-5 text-muted-foreground" />
+            品牌頁準備中／待完善 <span className="text-muted-foreground text-sm">({preparing.length})</span>
+          </h2>
+          {preparing.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
+              目前沒有準備中或待完善的品牌頁。
+            </div>
+          ) : (
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {preparing.map((row) => (
+                <li key={row.id} className="rounded-2xl border border-border/60 bg-card p-4">
+                  <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
+                  <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                  <p className="text-xs text-muted-foreground truncate mt-1">
+                    {[row.specialty, row.region].filter(Boolean).join(" · ")}
+                  </p>
+                  <div className="mt-2"><BrandStatusBadge status={row.brand_page_status} /></div>
                 </li>
               ))}
             </ul>
@@ -402,12 +394,12 @@ export default function AdminDashboard() {
           <div className="flex items-baseline justify-between mb-4">
             <h2 className="font-display text-xl text-foreground flex items-center gap-2">
               <Send className="w-5 h-5 text-[#E89B5C]" />
-              課程送審清單 <span className="text-muted-foreground text-sm">({pendingCourses.length})</span>
+              課程刊登確認清單 <span className="text-muted-foreground text-sm">({pendingCourses.length})</span>
             </h2>
           </div>
           {pendingCourses.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
-              目前沒有等待審核的課程 ☕
+              目前沒有等待確認的課程 ☕
             </div>
           ) : (
             <ul className="space-y-4">
@@ -445,7 +437,7 @@ export default function AdminDashboard() {
                         </p>
                         {c.submitted_at && (
                           <p className="text-[11px] text-muted-foreground/80 mt-1">
-                            送審於 {new Date(c.submitted_at).toLocaleString("zh-TW")}
+                            申請於 {new Date(c.submitted_at).toLocaleString("zh-TW")}
                           </p>
                         )}
                       </div>
@@ -468,14 +460,14 @@ export default function AdminDashboard() {
                           setRejectNotes("");
                         }}
                       >
-                        <XCircle className="w-4 h-4" /> 退回老師修改
+                        <XCircle className="w-4 h-4" /> 請老師補充
                       </Button>
                       <Button
                         size="sm"
                         disabled={busyId === c.id}
                         onClick={() => approveCourse(c.id)}
                       >
-                        <CheckCircle2 className="w-4 h-4" /> 核准並發布
+                        <CheckCircle2 className="w-4 h-4" /> 確認並發布
                       </Button>
                     </div>
                   </li>
@@ -514,14 +506,6 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    disabled={busyId === row.id}
-                    onClick={() => setApproval(row, false)}
-                  >
-                    撤下
-                  </Button>
                 </li>
               ))}
             </ul>
@@ -540,7 +524,7 @@ export default function AdminDashboard() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>退回老師修改</DialogTitle>
+            <DialogTitle>請老師補充資料</DialogTitle>
             <DialogDescription>
               請填寫具體的修改建議。送出後課程將回到「草稿」狀態，並透過 Email 通知老師。
             </DialogDescription>
@@ -572,7 +556,7 @@ export default function AdminDashboard() {
               disabled={!rejectNotes.trim() || busyId === rejectingCourse?.id}
               onClick={confirmRejectCourse}
             >
-              <XCircle className="w-4 h-4" /> 確認退回並通知
+              <XCircle className="w-4 h-4" /> 確認並通知
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -57,7 +57,7 @@ export interface CourseRow {
 
 const STATUS_META: Record<CourseRow["status"], { label: string; cls: string }> = {
   draft: { label: "草稿", cls: "bg-muted text-muted-foreground border-border" },
-  pending: { label: "審核中", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
+  pending: { label: "確認中", cls: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40" },
   published: { label: "已發布", cls: "bg-success/10 text-success border-success/30" },
 };
 
@@ -141,7 +141,7 @@ export function CoursesEditor({ teacherId }: Props) {
       .eq("id", course.id);
     if (error) return toast({ title: "下架失敗", description: error.message, variant: "destructive" });
     updateLocal(course.id, { status: "draft", is_published: false });
-    toast({ title: "已下架", description: "課程已轉為草稿，隨時可重新編輯與送審。" });
+    toast({ title: "已下架", description: "課程已轉為草稿，隨時可重新編輯與申請刊登。" });
   };
 
   const buildPayload = (course: CourseRow) => ({
@@ -342,7 +342,7 @@ export function CoursesEditor({ teacherId }: Props) {
                   {editing.title?.trim() ? `編輯：${editing.title}` : "新增課程／活動"}
                 </DialogTitle>
                 <DialogDescription>
-                  完成編輯後關閉視窗即會自動儲存為草稿；最後請至上方「申請刊登」一次送審。
+                  完成編輯後關閉視窗即會自動儲存為草稿；最後請至上方「申請刊登」一次送出。
                 </DialogDescription>
               </DialogHeader>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { instructors as staticInstructors, Instructor } from "@/data/instructors";
+import type { Instructor } from "@/data/instructors";
 
 export interface PublicInstructor {
   slug: string;
@@ -69,14 +69,8 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
   };
 }
 
-function staticToPublic(i: Instructor): PublicInstructor {
-  return { ...i, tagline: (i as any).tagline || "", source: "static" };
-}
-
 export function usePublicInstructors() {
-  const [items, setItems] = useState<PublicInstructor[]>(
-    staticInstructors.map(staticToPublic),
-  );
+  const [items, setItems] = useState<PublicInstructor[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -89,7 +83,7 @@ export function usePublicInstructors() {
       .order("updated_at", { ascending: false })
       .then(({ data }) => {
         const dbItems = (data ?? []).map((r) => dbToPublic(r));
-        setItems([...dbItems, ...staticInstructors.map(staticToPublic)]);
+        setItems(dbItems);
         setLoading(false);
       });
   }, []);
@@ -147,6 +141,5 @@ export async function fetchInstructorBySlug(
     return { ...dbToPublic(row, master), isPreview };
   }
 
-  const fromStatic = staticInstructors.find((i) => i.slug === slug);
-  return fromStatic ? staticToPublic(fromStatic) : undefined;
+  return undefined;
 }

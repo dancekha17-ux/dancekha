@@ -329,7 +329,7 @@ export default function TeacherDashboard() {
     if (!drafts || drafts.length === 0) {
       setSubmitting(false);
       return toast({
-        title: "尚無可送審的課程／活動",
+        title: "尚無可申請刊登的課程／活動",
         description: "請先在下方「課程活動管理」新增至少一筆完整內容。",
         variant: "destructive",
       });
@@ -355,7 +355,7 @@ export default function TeacherDashboard() {
       .update({ status: "pending", submitted_at: new Date().toISOString(), revision_notes: null })
       .in("id", valid.map((c: any) => c.id));
     setSubmitting(false);
-    if (error) return toast({ title: "送審失敗", description: error.message, variant: "destructive" });
+    if (error) return toast({ title: "申請刊登失敗", description: error.message, variant: "destructive" });
     toast({
       title: "已申請刊登！",
       description: `已提交 ${valid.length} 筆服務，舞島咖團隊將於 2 個工作天內完成審閱與聯繫。`,
@@ -369,7 +369,7 @@ export default function TeacherDashboard() {
       return;
     }
     if (!profile.contact_email?.trim() || !profile.contact_phone?.trim()) {
-      toast({ title: "請先補齊聯絡資訊", description: "送審前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
+      toast({ title: "請先補齊聯絡資訊", description: "申請刊登前請至「聯絡與社群」填寫 Email 與電話。", variant: "destructive" });
       return;
     }
     if (!profile.agreement_signed_at) {
@@ -558,7 +558,7 @@ export default function TeacherDashboard() {
                     variant="outline"
                     className="bg-white/70"
                     disabled
-                    title="品牌頁正在審核中，請耐心等候"
+                    title="品牌頁確認中，請耐心等候"
                   >
                     <Clock className="w-4 h-4" /> <span className="hidden sm:inline">品牌頁確認中</span>
                   </Button>
@@ -835,7 +835,7 @@ export default function TeacherDashboard() {
                       舞島咖團隊的修改建議（{revisionAlerts.length}）
                     </h3>
                     <p className="text-xs text-destructive/80 mt-1">
-                      以下服務已退回為草稿狀態，請依建議完成調整後再次送出審核。
+                      以下服務已回到草稿狀態，請依建議完成調整後再次申請刊登。
                     </p>
                     <ul className="mt-4 space-y-3">
                       {revisionAlerts.map((r) => (
