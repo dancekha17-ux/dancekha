@@ -74,6 +74,8 @@ export default function EventDetail() {
           .from("teacher_profiles")
           .select("name, slug, avatar_url, bio, tagline")
           .eq("user_id", createdBy)
+           .eq("is_approved", true)
+           .eq("brand_page_status", "published")
           .maybeSingle();
         if (alive && t) setInstructor(t as InstructorMini);
       }
@@ -82,6 +84,8 @@ export default function EventDetail() {
           .from("teacher_profiles")
           .select("name, slug, avatar_url, bio, tagline")
           .ilike("name", data.instructor)
+           .eq("is_approved", true)
+           .eq("brand_page_status", "published")
           .maybeSingle();
         if (alive && t) setInstructor(t as InstructorMini);
       }
