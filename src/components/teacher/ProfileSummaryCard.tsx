@@ -397,7 +397,7 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
                     placeholder="you@example.com"
                     onChange={(e) => update({ contact_email: e.target.value })}
                   />
-                  <p className="text-xs text-muted-foreground">送審時必填，舞島咖團隊將以此聯繫您。</p>
+                  <p className="text-xs text-muted-foreground">申請刊登時必填，舞島咖團隊將以此聯繫您。</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="contact_phone">

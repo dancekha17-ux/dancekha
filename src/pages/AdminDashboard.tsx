@@ -182,7 +182,7 @@ export default function AdminDashboard() {
       .eq("id", id);
     setBusyId(null);
     if (error) return toast({ title: "操作失敗", description: error.message, variant: "destructive" });
-    toast({ title: "已核准上架", description: "課程已同步至公開頁面。" });
+    toast({ title: "已確認上架", description: "課程已同步至公開頁面。" });
     refresh();
   };
 
@@ -190,7 +190,7 @@ export default function AdminDashboard() {
     if (!rejectingCourse) return;
     const notes = rejectNotes.trim();
     if (!notes) {
-      toast({ title: "請填寫修改建議", description: "退回時請說明需要老師調整的內容。", variant: "destructive" });
+      toast({ title: "請填寫補充建議", description: "請說明需要老師調整的內容。", variant: "destructive" });
       return;
     }
     const id = rejectingCourse.id;
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
       /* email notify is non-blocking */
     }
     setBusyId(null);
-    toast({ title: "已退回老師修改", description: "建議已存入，系統將通知老師查看。" });
+    toast({ title: "已請老師補充資料", description: "建議已存入，系統將通知老師查看。" });
     setRejectingCourse(null);
     setRejectNotes("");
     refresh();
@@ -394,12 +394,12 @@ export default function AdminDashboard() {
           <div className="flex items-baseline justify-between mb-4">
             <h2 className="font-display text-xl text-foreground flex items-center gap-2">
               <Send className="w-5 h-5 text-[#E89B5C]" />
-              課程送審清單 <span className="text-muted-foreground text-sm">({pendingCourses.length})</span>
+              課程刊登確認清單 <span className="text-muted-foreground text-sm">({pendingCourses.length})</span>
             </h2>
           </div>
           {pendingCourses.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
-              目前沒有等待審核的課程 ☕
+              目前沒有等待確認的課程 ☕
             </div>
           ) : (
             <ul className="space-y-4">
@@ -437,7 +437,7 @@ export default function AdminDashboard() {
                         </p>
                         {c.submitted_at && (
                           <p className="text-[11px] text-muted-foreground/80 mt-1">
-                            送審於 {new Date(c.submitted_at).toLocaleString("zh-TW")}
+                            申請於 {new Date(c.submitted_at).toLocaleString("zh-TW")}
                           </p>
                         )}
                       </div>
@@ -460,14 +460,14 @@ export default function AdminDashboard() {
                           setRejectNotes("");
                         }}
                       >
-                        <XCircle className="w-4 h-4" /> 退回老師修改
+                        <XCircle className="w-4 h-4" /> 請老師補充
                       </Button>
                       <Button
                         size="sm"
                         disabled={busyId === c.id}
                         onClick={() => approveCourse(c.id)}
                       >
-                        <CheckCircle2 className="w-4 h-4" /> 核准並發布
+                        <CheckCircle2 className="w-4 h-4" /> 確認並發布
                       </Button>
                     </div>
                   </li>
@@ -524,7 +524,7 @@ export default function AdminDashboard() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>退回老師修改</DialogTitle>
+            <DialogTitle>請老師補充資料</DialogTitle>
             <DialogDescription>
               請填寫具體的修改建議。送出後課程將回到「草稿」狀態，並透過 Email 通知老師。
             </DialogDescription>
@@ -556,7 +556,7 @@ export default function AdminDashboard() {
               disabled={!rejectNotes.trim() || busyId === rejectingCourse?.id}
               onClick={confirmRejectCourse}
             >
-              <XCircle className="w-4 h-4" /> 確認退回並通知
+              <XCircle className="w-4 h-4" /> 確認並通知
             </Button>
           </DialogFooter>
         </DialogContent>
