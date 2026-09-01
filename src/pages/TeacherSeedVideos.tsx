@@ -357,13 +357,13 @@ export default function TeacherSeedVideos() {
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-foreground/85">
               {[
                 "一段入門教學",
-                "舞蹈文化小知識",
-                "核心技巧分享",
-                "暖身與收操",
                 "經典舞步解析",
-                "節奏與音樂掌握",
                 "常見錯誤與修正",
-                "希望初學者先理解的一件事",
+                "核心技巧練習",
+                "身體運用觀念",
+                "節奏與音樂掌握",
+                "舞蹈文化小知識",
+                "您最希望初學者先理解的一件事",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="text-[#2E8B57] mt-0.5">✅</span>
@@ -376,21 +376,20 @@ export default function TeacherSeedVideos() {
           <div className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-7 shadow-soft">
             <span className="eyebrow">BEFORE YOU SUBMIT</span>
             <h2 className="font-display text-lg md:text-xl text-foreground mt-2 flex items-center gap-2">
-              <span>✅</span> 投稿前請確認
+              <span>🌱</span> 拍攝檢查清單
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
               簡單自我檢查，讓典藏過程更順暢。
             </p>
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-sm text-foreground/85">
               {[
-                '影片格式為 MP4',
-                "拍攝為橫式 16:9",
-                "1080P 以上解析度",
-                "已取得出演者同意",
-                "影片長度 8 分鐘內",
-                "收音和畫面都清楚",
-                "無版權音樂問題",
-                '檔案命名："您或團隊大名_主題名稱"',
+                "已完成自我介紹",
+                "已說明舞蹈特色",
+                "已示範 1–2 個基礎動作",
+                "已安排跟跳練習",
+                "已確認收音清楚",
+                "已確認全身入鏡",
+                "已確認影片長度 5–8 分鐘",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="inline-block w-4 h-4 mt-0.5 rounded border border-[#E89B5C]/60 bg-white shrink-0" />
