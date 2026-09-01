@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Sprout,
-  Video,
-  UploadCloud,
-  Sparkles,
   Cloud,
   Film,
   ExternalLink,
