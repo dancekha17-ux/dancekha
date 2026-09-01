@@ -659,6 +659,37 @@ export default function AdminDashboard() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog
+        open={!!pausingProfile}
+        onOpenChange={(open) => {
+          if (!open) setPausingProfile(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>確定暫停此品牌頁？</DialogTitle>
+            <DialogDescription>
+              暫停後，品牌頁將暫時不在前台顯示，引導者的帳號與品牌資料仍會完整保留，之後可再次恢復上線。
+            </DialogDescription>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            品牌頁：<span className="text-foreground font-medium">{pausingProfile?.name ?? "未命名"}</span>
+          </p>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setPausingProfile(null)}>
+              取消
+            </Button>
+            <Button
+              variant="outline"
+              disabled={busyId === pausingProfile?.id}
+              onClick={pauseBrandLive}
+            >
+              <PauseCircle className="w-4 h-4" /> 確認暫停
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
 
   );
