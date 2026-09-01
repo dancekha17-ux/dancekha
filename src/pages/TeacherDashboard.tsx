@@ -821,6 +821,34 @@ export default function TeacherDashboard() {
               </DialogContent>
             </Dialog>
 
+            {/* Read-only 引導者合作約定 — opened from the discreet bottom-right link.
+                No checkbox, no submit, no DB writes. Purely for review. */}
+            <Dialog open={showViewAgreement} onOpenChange={setShowViewAgreement}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col rounded-3xl">
+                <DialogHeader>
+                  <DialogTitle className="text-center font-display text-xl">
+                    舞島咖 DanceKha｜引導者合作約定 · v2
+                  </DialogTitle>
+                  <DialogDescription className="text-center leading-relaxed">
+                    歡迎來到舞島咖的引導者聚落 Guides' Lounge。
+                  </DialogDescription>
+                </DialogHeader>
+                <div
+                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 overflow-y-auto"
+                  style={{ maxHeight: "60vh" }}
+                >
+                  <BrandAgreementContent />
+                </div>
+                <DialogFooter className="flex-col sm:flex-row sm:justify-center">
+                  <Button variant="ghost" onClick={() => setShowViewAgreement(false)}>
+                    關閉
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+
+
 
 
 
