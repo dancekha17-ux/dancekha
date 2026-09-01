@@ -827,7 +827,7 @@ export default function TeacherDashboard() {
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col rounded-3xl">
                 <DialogHeader>
                   <DialogTitle className="text-center font-display text-xl">
-                    舞島咖 DanceKha｜引導者合作約定 · v2
+                    舞島咖 DanceKha｜引導者合作約定
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
                     歡迎來到舞島咖的引導者聚落 Guides' Lounge。
@@ -968,7 +968,7 @@ export default function TeacherDashboard() {
           onClick={() => setShowViewAgreement(true)}
           className="text-[11px] text-muted-foreground/60 hover:text-muted-foreground hover:underline transition-colors"
         >
-          引導者合作約定 · v2
+          引導者合作約定
         </button>
       </div>
     </div>
