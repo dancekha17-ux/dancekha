@@ -407,7 +407,7 @@ export default function TeacherDashboard() {
       .update({
         brand_page_status: "pending_review",
         brand_agreement_signed_at: nowIso,
-        brand_agreement_version: "brand_listing_v1_2026",
+        brand_agreement_version: "brand_listing_v2_2026",
         brand_submitted_at: nowIso,
       })
       .eq("user_id", user.id);
