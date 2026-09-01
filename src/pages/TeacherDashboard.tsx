@@ -100,6 +100,8 @@ export default function TeacherDashboard() {
   const [brandAgreed, setBrandAgreed] = useState(false);
   const [brandSubmitting, setBrandSubmitting] = useState(false);
   const [showBrandResubmit, setShowBrandResubmit] = useState(false);
+  // Read-only viewing of the 引導者合作約定 (no writes, no submit)
+  const [showViewAgreement, setShowViewAgreement] = useState(false);
 
 
   const skipDirty = useRef(true);
