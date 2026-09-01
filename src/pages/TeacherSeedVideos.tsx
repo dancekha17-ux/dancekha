@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Sprout,
-  Video,
-  UploadCloud,
-  Sparkles,
   Cloud,
   Film,
   ExternalLink,
@@ -51,7 +48,6 @@ interface SeedVideo {
   video_url?: string;
 }
 
-const TARGET_COUNT = 5;
 
 // Google Drive submission folder (placeholder — replace with real folder link)
 const DRIVE_UPLOAD_URL = "https://drive.google.com/drive/folders/danceka-seed-videos";
@@ -170,12 +166,6 @@ export default function TeacherSeedVideos() {
     setVideos(loadVideos(user.id));
   }, [user]);
 
-  const sowedCount = useMemo(
-    () => videos.filter((v) => v.status !== "needs_revision").length,
-    [videos]
-  );
-  const remaining = Math.max(0, TARGET_COUNT - sowedCount);
-  const progressPct = Math.min(100, Math.round((sowedCount / TARGET_COUNT) * 100));
 
   const persist = (next: SeedVideo[]) => {
     setVideos(next);
@@ -232,116 +222,8 @@ export default function TeacherSeedVideos() {
             種子短片
           </h1>
           <p className="text-muted-foreground mt-4 leading-relaxed text-sm md:text-base max-w-2xl">
-            分享一段最能代表教學特色的內容，只要交給我們影片素材，
-            舞島咖將協助您整理，並收錄至導者典藏會員專區，讓更多人因您的舞步而受到啟發。
+            分享一段最能代表教學特色的內容，舞島咖將協助整理並收錄至典藏會員專區。
           </p>
-        </section>
-
-        {/* Progress card */}
-        <section
-          className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-8 mb-8 shadow-soft"
-        >
-          <div className="flex items-baseline justify-between flex-wrap gap-3 mb-4">
-            <div>
-              <span className="eyebrow">播種進度</span>
-              <p className="font-display text-2xl md:text-3xl text-foreground mt-1.5">
-                已播種 <span className="text-[#C9461E]">{sowedCount}</span>
-                <span className="text-muted-foreground text-lg"> / {TARGET_COUNT} 支短片</span>
-              </p>
-            </div>
-            <span className="text-xs md:text-sm text-muted-foreground">
-              {remaining > 0
-                ? `還可新增 ${remaining} 支種子短片`
-                : "🎉 已完成本階段種子短片"}
-            </span>
-          </div>
-          <div className="h-2 rounded-full bg-[#E89B5C]/15 overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{
-                width: `${progressPct}%`,
-                background:
-                  "linear-gradient(90deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
-              }}
-            />
-          </div>
-          <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
-            每位引導者／團隊最多可提供 5 支種子短片，建議每支影片格式為 MP4、1080P、16:9，影片長度 8 分鐘內。
-          </p>
-        </section>
-
-        {/* Teacher's part */}
-        <section className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-8 mb-8 shadow-soft">
-          <h2 className="font-display text-xl md:text-2xl text-foreground mb-6 flex items-center gap-2 whitespace-pre-line">
-            <span>👩‍🏫</span>
-            只需兩步驟
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
-                  }}
-                >
-                  1
-                </span>
-                <Video className="w-4 h-4 text-[#B25C2E]" />
-              </div>
-              <p className="font-display text-sm md:text-base text-foreground">錄製影片</p>
-              <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
-                MP4、1080P、16:9，影片長度 8 分鐘內。
-              </p>
-            </div>
-            <div className="rounded-2xl bg-[#FFF5E6]/60 border border-[#E89B5C]/20 p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
-                  }}
-                >
-                  2
-                </span>
-                <UploadCloud className="w-4 h-4 text-[#B25C2E]" />
-              </div>
-              <p className="font-display text-sm md:text-base text-foreground">上傳影片</p>
-              <p className="text-[11px] md:text-xs text-muted-foreground mt-1 leading-relaxed">
-                請將影片上傳至舞島咖指定的資料夾。
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Danceka takes it from here */}
-        <section
-          className="rounded-3xl p-8 md:p-10 mb-8 shadow-soft relative overflow-hidden"
-          style={{
-            background: "linear-gradient(135deg,#FDF6ED 0%,#F8E9D4 100%)",
-            border: "1px solid rgba(232,155,92,0.25)",
-          }}
-        >
-          <div className="flex flex-col md:flex-row md:items-start gap-5">
-            <div
-              className="w-14 h-14 rounded-2xl bg-white/70 backdrop-blur flex items-center justify-center shrink-0 shadow-sm"
-            >
-              <Sparkles className="w-7 h-7 text-[#C9461E]" />
-            </div>
-            <div className="flex-1">
-              <h2 className="font-display text-xl md:text-2xl text-foreground flex items-center gap-2">
-                <span>🤝</span> 接下來，就交給舞島咖
-              </h2>
-              <p className="text-sm md:text-base text-foreground/75 mt-3 leading-relaxed">
-                影片上傳完成後，我們將協助整理、優化與發布，讓您的作品能以最好的樣貌與更多人相遇。
-              </p>
-              <p className="text-sm md:text-base text-[#B25C2E] mt-2 leading-relaxed">
-                「您只需要專注分享，剩下的交給我們。」
-              </p>
-            </div>
-          </div>
         </section>
 
         {/* Two-column: suggested topics + checklist */}
