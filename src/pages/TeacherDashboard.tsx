@@ -549,9 +549,6 @@ export default function TeacherDashboard() {
               >
                 <MapPin className="w-4 h-4" /> 預覽地圖
               </Button>
-              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-dashed border-muted-foreground/30">
-                敬請期待
-              </span>
             </div>
             {(() => {
               const status = profile.brand_page_status ?? "draft";
