@@ -272,7 +272,7 @@ export default function TeacherSeedVideos() {
                 "動作完整入鏡",
                 "畫面適合跟跳練習",
                 "每支影片不超過8 分鐘",
-                "說明主題/學習目標",
+                "說明主題與學習目標",
                 "使用的音樂適合公開分享",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
