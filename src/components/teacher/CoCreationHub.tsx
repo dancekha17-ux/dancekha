@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { SectionCard } from "@/components/teacher/SectionCard";
@@ -12,27 +11,6 @@ interface SeedStats {
   published: number;
 }
 
-const SEED_TOPIC_SUGGESTIONS = [
-  "一段入門教學",
-  "經典舞步解析",
-  "常見錯誤與修正",
-  "核心技巧練習",
-  "身體運用觀念",
-  "節奏與音樂掌握",
-  "舞蹈文化小知識",
-  "您最希望初學者先理解的一件事",
-];
-
-const SEED_FILMING_CHECKLIST = [
-  "已完成自我介紹",
-  "已說明舞蹈特色",
-  "已示範 1–2 個基礎動作",
-  "已安排跟跳練習",
-  "已確認收音清楚",
-  "已確認全身入鏡",
-  "已確認影片長度 5–8 分鐘",
-];
-
 function ProgressBar({ pct, className = "" }: { pct: number; className?: string }) {
   return (
     <div className={`h-2 rounded-full bg-[#E89B5C]/15 overflow-hidden ${className}`}>
@@ -43,31 +21,6 @@ function ProgressBar({ pct, className = "" }: { pct: number; className?: string 
           background: "linear-gradient(90deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)",
         }}
       />
-    </div>
-  );
-}
-
-/** 低調的點擊展開／收合區塊，預設收合 */
-function Collapsible({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="inline-flex items-center gap-1.5 text-xs font-medium text-[#B25C2E] hover:text-[#C9461E] transition-colors"
-        aria-expanded={open}
-      >
-        <span className="text-[#E89B5C]">{open ? "−" : "＋"}</span>
-        <span>{label}</span>
-      </button>
-      {open && <div className="mt-2 pl-1">{children}</div>}
     </div>
   );
 }
@@ -151,38 +104,6 @@ export function CoCreationHub() {
                   </Button>
                 </div>
 
-                {/* 輔助說明：預設收合 */}
-                <div className="flex flex-col gap-2.5 mt-4">
-                  <Collapsible label="短片建議">
-                    <p className="text-xs text-muted-foreground mb-2 leading-relaxed">
-                      您可以自由選擇分享：
-                    </p>
-                    <ul className="grid grid-cols-1 gap-y-1.5 text-xs text-foreground/85">
-                      {SEED_TOPIC_SUGGESTIONS.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-1.5 leading-relaxed"
-                        >
-                          <span className="text-[#2E8B57] mt-px">✅</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapsible>
-                  <Collapsible label="拍攝檢查清單">
-                    <ul className="grid grid-cols-1 gap-y-1.5 text-xs text-foreground/85">
-                      {SEED_FILMING_CHECKLIST.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-1.5 leading-relaxed"
-                        >
-                          <span className="inline-block w-3.5 h-3.5 mt-px rounded border border-[#E89B5C]/60 bg-white shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapsible>
-                </div>
               </div>
             </div>
           </li>
