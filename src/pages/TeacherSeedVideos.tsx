@@ -319,9 +319,6 @@ export default function TeacherSeedVideos() {
             </Button>
           </div>
 
-          <p className="text-xs md:text-sm text-muted-foreground mt-5 max-w-lg mx-auto leading-relaxed">
-            上傳完成後，我們將協助後續整理、優化與發布。
-          </p>
         </section>
 
         {/* My seed videos */}
