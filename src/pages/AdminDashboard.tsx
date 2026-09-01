@@ -401,7 +401,26 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground truncate mt-1">
                     {[row.specialty, row.region].filter(Boolean).join(" · ")}
                   </p>
-                  <div className="mt-2"><BrandStatusBadge status={row.brand_page_status} /></div>
+                  <div className="mt-2 flex items-center gap-2 flex-wrap">
+                    <BrandStatusBadge status={row.brand_page_status} />
+                    {row.brand_page_status === "published" && !row.is_approved && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
+                        已暫停
+                      </span>
+                    )}
+                  </div>
+                  {row.brand_page_status === "published" && !row.is_approved && (
+                    <div className="mt-3">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={busyId === row.id}
+                        onClick={() => confirmBrandLive(row)}
+                      >
+                        <PlayCircle className="w-4 h-4" /> 恢復上線
+                      </Button>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -524,7 +543,24 @@ export default function AdminDashboard() {
                       <BrandStatusBadge status={row.brand_page_status} />
                     </div>
                   </div>
-
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    {row.slug && (
+                      <Button asChild variant="ghost" size="sm">
+                        <Link to={`/instructors/${row.slug}`} target="_blank">
+                          <ExternalLink className="w-4 h-4" /> 預覽
+                        </Link>
+                      </Button>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground"
+                      disabled={busyId === row.id}
+                      onClick={() => setPausingProfile(row)}
+                    >
+                      <PauseCircle className="w-4 h-4" /> 暫停上線
+                    </Button>
+                  </div>
                 </li>
               ))}
             </ul>
