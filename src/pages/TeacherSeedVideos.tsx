@@ -167,12 +167,6 @@ export default function TeacherSeedVideos() {
     setVideos(loadVideos(user.id));
   }, [user]);
 
-  const sowedCount = useMemo(
-    () => videos.filter((v) => v.status !== "needs_revision").length,
-    [videos]
-  );
-  const remaining = Math.max(0, TARGET_COUNT - sowedCount);
-  const progressPct = Math.min(100, Math.round((sowedCount / TARGET_COUNT) * 100));
 
   const persist = (next: SeedVideo[]) => {
     setVideos(next);
