@@ -15,6 +15,7 @@ import { CoursesEditor } from "@/components/teacher/CoursesEditor";
 import { ProfileSummaryCard } from "@/components/teacher/ProfileSummaryCard";
 import { StoryMomentsCard } from "@/components/teacher/StoryMomentsCard";
 import { CoCreationHub } from "@/components/teacher/CoCreationHub";
+import { BrandAgreementContent } from "@/components/teacher/BrandAgreementContent";
 import { DASHBOARD_MODULES } from "@/data/coCreationPrograms";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { AGREEMENT_TEXT } from "@/pages/AgreementPage";
