@@ -118,6 +118,24 @@ export default function AdminDashboard() {
     refresh();
   };
 
+  // Brand page: pause a live brand page (keeps all data; hides from public via is_approved = false)
+  const pauseBrandLive = async () => {
+    if (!pausingProfile) return;
+    setBusyId(pausingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false })
+      .eq("id", pausingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "品牌頁已暫停上線", description: "資料完整保留，之後可再次恢復上線。" });
+    setPausingProfile(null);
+    refresh();
+  };
+
   // Brand page: invite the teacher to enrich their brand page
   const sendBrandInvite = async () => {
     if (!invitingProfile) return;
@@ -346,7 +364,7 @@ export default function AdminDashboard() {
                             setInviteNotes("");
                           }}
                         >
-                          <FileText className="w-4 h-4" /> 請補充資料
+                          <FileText className="w-4 h-4" /> 需補充修改
                         </Button>
                         <Button
                           size="sm"
