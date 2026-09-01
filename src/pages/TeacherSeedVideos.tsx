@@ -376,7 +376,7 @@ export default function TeacherSeedVideos() {
           <div className="rounded-3xl bg-white/70 border border-[#E89B5C]/25 p-6 md:p-7 shadow-soft">
             <span className="eyebrow">BEFORE YOU SUBMIT</span>
             <h2 className="font-display text-lg md:text-xl text-foreground mt-2 flex items-center gap-2">
-              <span>✅</span> 投稿前請確認
+              <span>🌱</span> 拍攝檢查清單
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
               簡單自我檢查，讓典藏過程更順暢。
