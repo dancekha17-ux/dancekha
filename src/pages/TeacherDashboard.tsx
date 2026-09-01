@@ -636,7 +636,7 @@ export default function TeacherDashboard() {
       <div className="border-b border-[#E63946]/10 bg-[#FFF5E6]/70">
         <div className="container-wide mx-auto max-w-4xl px-4 py-3">
           <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-            完成品牌基本資料與精彩瞬間後，即可預覽並申請品牌頁上線。品牌頁目前免費提供，未來只有透過平台開課或收款時，才會啟用商業合作與分潤機制。
+            您完成「基本資訊」與「精彩瞬間」後，即可預覽並申請品牌頁上線喔！
           </p>
           {profile.brand_page_status === "needs_revision" && (
             <div className="mt-3 rounded-2xl border border-[#E89B5C]/40 bg-white/80 p-4">
