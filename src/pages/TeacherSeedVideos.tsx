@@ -344,7 +344,7 @@ export default function TeacherSeedVideos() {
                 尚未有種子短片
               </p>
               <p className="text-xs md:text-sm text-muted-foreground mt-2 max-w-sm mx-auto leading-relaxed whitespace-pre-line">
-                {"完成上傳後，您的作品將顯示於此。\n舞島咖團隊將協助後續整理與典藏。"}
+                {"完成上傳後，您的作品將顯示於此。\n"}
               </p>
             </div>
           ) : (
