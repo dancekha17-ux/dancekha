@@ -11,7 +11,8 @@ export function BrandAgreementContent() {
   return (
     <div className="space-y-4">
       <p className="text-center text-foreground/70 italic leading-relaxed px-2">
-        「我們像落在這座島嶼上的沙，不需要很大，但聚在一起，就能隨著音樂掀起最美麗的浪花。」
+        「我們像落在這座島嶼上的沙，不需要很大，但聚在一起，
+        就能隨著音樂掀起最美麗的浪花。」
       </p>
       <p className="text-foreground/75">
         希望能串聯不同舞種、文化與世代的舞蹈老師與團隊，一起建立一座讓更多人看見舞蹈的交流平台。加入前，邀請您簡單了解以下合作約定：
