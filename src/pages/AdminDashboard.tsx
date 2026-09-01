@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone } from "lucide-react";
+import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -100,6 +100,7 @@ export default function AdminDashboard() {
   const [rejectNotes, setRejectNotes] = useState("");
   const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
   const [inviteNotes, setInviteNotes] = useState("");
+  const [pausingProfile, setPausingProfile] = useState<PendingProfile | null>(null);
 
   // Brand page: confirm the teacher's brand page goes live
   const confirmBrandLive = async (row: PendingProfile) => {
@@ -114,6 +115,24 @@ export default function AdminDashboard() {
       return;
     }
     toast({ title: "品牌頁已正式上線！" });
+    refresh();
+  };
+
+  // Brand page: pause a live brand page (keeps all data; hides from public via is_approved = false)
+  const pauseBrandLive = async () => {
+    if (!pausingProfile) return;
+    setBusyId(pausingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false })
+      .eq("id", pausingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "品牌頁已暫停上線", description: "資料完整保留，之後可再次恢復上線。" });
+    setPausingProfile(null);
     refresh();
   };
 
@@ -345,7 +364,7 @@ export default function AdminDashboard() {
                             setInviteNotes("");
                           }}
                         >
-                          <FileText className="w-4 h-4" /> 請補充資料
+                          <FileText className="w-4 h-4" /> 需補充修改
                         </Button>
                         <Button
                           size="sm"
@@ -382,7 +401,26 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground truncate mt-1">
                     {[row.specialty, row.region].filter(Boolean).join(" · ")}
                   </p>
-                  <div className="mt-2"><BrandStatusBadge status={row.brand_page_status} /></div>
+                  <div className="mt-2 flex items-center gap-2 flex-wrap">
+                    <BrandStatusBadge status={row.brand_page_status} />
+                    {row.brand_page_status === "published" && !row.is_approved && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
+                        已暫停
+                      </span>
+                    )}
+                  </div>
+                  {row.brand_page_status === "published" && !row.is_approved && (
+                    <div className="mt-3">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={busyId === row.id}
+                        onClick={() => confirmBrandLive(row)}
+                      >
+                        <PlayCircle className="w-4 h-4" /> 恢復上線
+                      </Button>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -505,7 +543,24 @@ export default function AdminDashboard() {
                       <BrandStatusBadge status={row.brand_page_status} />
                     </div>
                   </div>
-
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    {row.slug && (
+                      <Button asChild variant="ghost" size="sm">
+                        <Link to={`/instructors/${row.slug}`} target="_blank">
+                          <ExternalLink className="w-4 h-4" /> 預覽
+                        </Link>
+                      </Button>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-foreground"
+                      disabled={busyId === row.id}
+                      onClick={() => setPausingProfile(row)}
+                    >
+                      <PauseCircle className="w-4 h-4" /> 暫停上線
+                    </Button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -600,6 +655,37 @@ export default function AdminDashboard() {
               onClick={sendBrandInvite}
             >
               送出完善邀請
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={!!pausingProfile}
+        onOpenChange={(open) => {
+          if (!open) setPausingProfile(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>確定暫停此品牌頁？</DialogTitle>
+            <DialogDescription>
+              暫停後，品牌頁將暫時不在前台顯示，引導者的帳號與品牌資料仍會完整保留，之後可再次恢復上線。
+            </DialogDescription>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            品牌頁：<span className="text-foreground font-medium">{pausingProfile?.name ?? "未命名"}</span>
+          </p>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setPausingProfile(null)}>
+              取消
+            </Button>
+            <Button
+              variant="outline"
+              disabled={busyId === pausingProfile?.id}
+              onClick={pauseBrandLive}
+            >
+              <PauseCircle className="w-4 h-4" /> 確認暫停
             </Button>
           </DialogFooter>
         </DialogContent>
