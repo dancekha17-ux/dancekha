@@ -959,6 +959,18 @@ export default function TeacherDashboard() {
           舞島咖 DanceKha · 引導者專區
         </p>
       </div>
+
+      {/* Discreet read-only entry to review the 引導者合作約定.
+          No writes, no submit — just opens the agreement for viewing. */}
+      <div className="container-wide mx-auto px-4 pb-6 flex justify-end">
+        <button
+          type="button"
+          onClick={() => setShowViewAgreement(true)}
+          className="text-[11px] text-muted-foreground/60 hover:text-muted-foreground hover:underline transition-colors"
+        >
+          引導者合作約定 · v2
+        </button>
+      </div>
     </div>
   );
 }
