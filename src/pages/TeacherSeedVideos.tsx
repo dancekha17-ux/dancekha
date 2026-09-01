@@ -261,17 +261,19 @@ export default function TeacherSeedVideos() {
               <span>🌱</span> 拍攝檢查清單
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground mt-1.5 leading-relaxed">
-              簡單自我檢查，讓典藏過程更順暢。
+              拍攝前後簡單確認，讓您的分享更清楚、更好學。
             </p>
             <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-sm text-foreground/85">
               {[
-                "已完成自我介紹",
-                "已說明舞蹈特色",
-                "已示範 1–2 個基礎動作",
-                "已安排跟跳練習",
-                "已確認收音清楚",
-                "已確認全身入鏡",
-                "已確認影片長度 5–8 分鐘",
+                "橫式拍攝（16:9），建議 1080P 以上",
+                "手機／相機固定，保持畫面穩定",
+                "光線充足、背景簡潔，預留動作空間",
+                "收音清楚，說話與音樂音量適中",
+                "主要動作完整入鏡，避免手腳被裁切",
+                "示範與講解節奏清楚，方便理解與跟練",
+                "每支影片約 5–8 分鐘",
+                "完整播放一次，確認畫面與聲音正常",
+                "使用的音樂、影像等素材適合公開分享",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2 leading-relaxed">
                   <span className="inline-block w-4 h-4 mt-0.5 rounded border border-[#E89B5C]/60 bg-white shrink-0" />
