@@ -538,17 +538,21 @@ export default function TeacherDashboard() {
                 <Eye className="w-4 h-4" /> 預覽專頁
               </Link>
             </Button>
-            <Button
-              asChild
-              size="sm"
-              className="hidden md:inline-flex text-white shadow-glow hover:opacity-95 ring-1 ring-[#E89B5C]/30 hover:ring-[#E89B5C]/60"
-              style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
-            >
-              <Link to="/#world-folk">
+            <div className="hidden md:inline-flex items-center gap-1.5">
+              <Button
+                size="sm"
+                variant="outline"
+                disabled
+                aria-disabled="true"
+                className="cursor-not-allowed opacity-60 bg-muted/40 border-dashed text-muted-foreground"
+                title="此功能即將開放，敬請期待"
+              >
                 <MapPin className="w-4 h-4" /> 預覽地圖
-              </Link>
-
-            </Button>
+              </Button>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground border border-dashed border-muted-foreground/30">
+                敬請期待
+              </span>
+            </div>
             {(() => {
               const status = profile.brand_page_status ?? "draft";
               if (status === "pending_review") {
