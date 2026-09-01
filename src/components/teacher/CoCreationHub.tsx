@@ -104,38 +104,6 @@ export function CoCreationHub() {
                   </Button>
                 </div>
 
-                {/* 輔助說明：預設收合 */}
-                <div className="flex flex-col gap-2.5 mt-4">
-                  <Collapsible label="短片建議">
-                    <p className="text-xs text-muted-foreground mb-2 leading-relaxed">
-                      您可以自由選擇分享：
-                    </p>
-                    <ul className="grid grid-cols-1 gap-y-1.5 text-xs text-foreground/85">
-                      {SEED_TOPIC_SUGGESTIONS.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-1.5 leading-relaxed"
-                        >
-                          <span className="text-[#2E8B57] mt-px">✅</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapsible>
-                  <Collapsible label="拍攝檢查清單">
-                    <ul className="grid grid-cols-1 gap-y-1.5 text-xs text-foreground/85">
-                      {SEED_FILMING_CHECKLIST.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-1.5 leading-relaxed"
-                        >
-                          <span className="inline-block w-3.5 h-3.5 mt-px rounded border border-[#E89B5C]/60 bg-white shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapsible>
-                </div>
               </div>
             </div>
           </li>
