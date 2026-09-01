@@ -174,8 +174,8 @@ export function CoCreationHub() {
                           </div>
                         </div>
                         {!isActive && (
-                          <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-full bg-[#FFF5E6]/80 text-[#B25C2E] border border-[#E89B5C]/25 shrink-0">
-                            🔒 尚未解鎖
+                          <span className="inline-flex items-center gap-1 text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-full bg-[#FFF5E6]/80 text-[#B25C2E] border border-[#E89B5C]/25 shrink-0 whitespace-pre-line">
+                            {idx === 1 ? "🔒 敬請期待" : "🔒 \n敬請期待"}
                           </span>
                         )}
                       </div>
