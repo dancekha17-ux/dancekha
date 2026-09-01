@@ -48,7 +48,6 @@ interface SeedVideo {
   video_url?: string;
 }
 
-const TARGET_COUNT = 5;
 
 // Google Drive submission folder (placeholder — replace with real folder link)
 const DRIVE_UPLOAD_URL = "https://drive.google.com/drive/folders/danceka-seed-videos";
