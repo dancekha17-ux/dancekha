@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { DanceDnaQuiz } from "@/components/quiz/DanceDnaQuiz";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
@@ -12,6 +14,7 @@ import heroWebp1600 from "@/assets/hero/hero-dance-1600.webp";
 import heroWebp1920 from "@/assets/hero/hero-dance-1920.webp";
 
 export function HeroSection() {
+  const [quizOpen, setQuizOpen] = useState(false);
   const webpSrcSet = `${heroWebp640} 640w, ${heroWebp1024} 1024w, ${heroWebp1600} 1600w, ${heroWebp1920} 1920w`;
   const jpgSrcSet = `${heroJpg640} 640w, ${heroJpg1024} 1024w, ${heroJpg1600} 1600w, ${heroJpg1920} 1920w`;
 
@@ -96,19 +99,25 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.75 }}
             className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5"
           >
-            <Button
-              variant="hero"
-              size="lg"
-              className="group w-full sm:w-auto"
-              onClick={() =>
-                document
-                  .getElementById("courses")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" })
-              }
+            <motion.div
+              animate={{ scale: [1, 1.025, 1] }}
+              transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full sm:w-auto rounded-md"
             >
-              探索舞蹈課程
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -inset-1 rounded-lg bg-gradient-to-r from-primary/50 via-accent/50 to-primary/50 blur-md opacity-70 animate-pulse"
+              />
+              <Button
+                variant="hero"
+                size="lg"
+                className="group relative w-full sm:w-auto shadow-lg"
+                onClick={() => setQuizOpen(true)}
+              >
+                🧬 測測你的舞蹈 DNA
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
             <Button
               asChild
               variant="outline"
@@ -136,6 +145,8 @@ export function HeroSection() {
         </span>
         <div className="w-px h-10 bg-primary-foreground/40" />
       </motion.div>
+
+      <DanceDnaQuiz open={quizOpen} onOpenChange={setQuizOpen} />
     </section>
   );
 }
