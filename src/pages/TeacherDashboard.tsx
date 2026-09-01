@@ -407,7 +407,7 @@ export default function TeacherDashboard() {
       .update({
         brand_page_status: "pending_review",
         brand_agreement_signed_at: nowIso,
-        brand_agreement_version: "brand_listing_v1_2026",
+        brand_agreement_version: "brand_listing_v2_2026",
         brand_submitted_at: nowIso,
       })
       .eq("user_id", user.id);
@@ -776,21 +776,59 @@ export default function TeacherDashboard() {
                     <FileSignature className="w-6 h-6" />
                   </div>
                   <DialogTitle className="text-center font-display text-xl">
-                    品牌頁刊登約定
+                    舞島咖 DanceKha｜引導者合作約定
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
-                    舞島咖免費提供引導者品牌頁面，協助您呈現教學特色、文化故事與專業經歷。為共同維護平台內容品質與彼此權益，請確認以下事項：
+                    歡迎來到舞島咖的引導者聚落 Guides' Lounge。
                   </DialogDescription>
                 </DialogHeader>
                 <div
-                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 overflow-y-auto space-y-3"
-                  style={{ maxHeight: "46vh" }}
+                  className="rounded-2xl border border-border bg-[#FFF9F0] p-5 text-sm leading-relaxed text-foreground/85 overflow-y-auto space-y-4"
+                  style={{ maxHeight: "48vh" }}
                 >
-                  <p>① 我提供的姓名、學經歷、教學經驗及其他專業資料均為真實內容。</p>
-                  <p>② 我上傳的文字、照片、影片及其他素材，均為本人所有或已取得合法使用授權。</p>
-                  <p>③ 我在平台上傳之原創內容，其著作權仍歸本人所有。</p>
-                  <p>④ 我同意舞島咖於官方網站、社群媒體及相關宣傳管道中，合理使用我的公開簡介、照片與教學演出片段，作為品牌頁展示及平台推廣用途。</p>
-                  <p>⑤ 我理解品牌頁須經平台確認後才會公開上線，舞島咖得為版面呈現、內容品質或平台規範提出調整建議。</p>
+                  <p className="text-center text-foreground/70 italic leading-relaxed px-2">
+                    「我們像落在這座島嶼上的沙，不需要很大，但聚在一起，就能隨著音樂掀起最美麗的浪花。」
+                  </p>
+                  <p className="text-foreground/75">
+                    希望能串聯不同舞種、文化與世代的舞蹈老師與團隊，一起建立一座讓更多人看見舞蹈的交流平台。加入前，邀請您簡單了解以下合作約定：
+                  </p>
+
+                  <div className="space-y-3">
+                    <p className="leading-relaxed">
+                      <span className="mr-1.5">🏝️</span>
+                      <span className="font-semibold text-foreground">1｜品牌進駐</span>
+                      <br />
+                      舞島咖提供您專屬品牌頁與管理後台，協助展示您的教學特色、文化背景與專業內容；您可自主維護品牌資料，一起累積品牌影響力與舞蹈文化價值。
+                    </p>
+                    <p className="leading-relaxed">
+                      <span className="mr-1.5">🌱</span>
+                      <span className="font-semibold text-foreground">2｜島嶼種子計畫</span>
+                      <br />
+                      進駐後三個月內，邀請您提供 3～5 支教學短片（每支約 5–8 分鐘），作為平台行銷推廣與會員學習內容，一起共創聚落的舞蹈文化資源。
+                    </p>
+                    <p className="leading-relaxed">
+                      <span className="mr-1.5">📝</span>
+                      <span className="font-semibold text-foreground">3｜您的創作，屬於您</span>
+                      <br />
+                      您上傳的照片、影片、編舞、講義等原創內容，智慧財產權皆歸您所有；您同意舞島咖合理使用公開品牌資料與精彩片段，作為平台及社群推廣之用。
+                    </p>
+                    <p className="leading-relaxed">
+                      <span className="mr-1.5">🤝</span>
+                      <span className="font-semibold text-foreground">4｜真實專業・彼此尊重</span>
+                      <br />
+                      您提供的專業資料應真實完整，並尊重著作權、個資及參與者權益；如有重大不實或違法情形，舞島咖得暫停相關內容或合作。
+                    </p>
+                    <p className="leading-relaxed">
+                      <span className="mr-1.5">⚙️</span>
+                      <span className="font-semibold text-foreground">5｜平台持續成長</span>
+                      <br />
+                      舞島咖目前為試營運階段，功能與服務將持續優化；未來若開放課程交易、金流或其他付費服務，涉及雙方權益的重要規範將另行說明。
+                    </p>
+                  </div>
+
+                  <p className="text-center text-foreground/70 italic leading-relaxed px-2 pt-1">
+                    「我們相信，讓專業彼此連結，就能擴大影響力，讓舞蹈的美好走得更遠。」
+                  </p>
                 </div>
                 <label className="flex items-start gap-3 mt-2 cursor-pointer select-none px-1">
                   <Checkbox
@@ -799,7 +837,7 @@ export default function TeacherDashboard() {
                     className="mt-0.5"
                   />
                   <span className="text-sm text-foreground/90 leading-relaxed">
-                    我已閱讀並同意《舞島咖品牌頁刊登約定》。
+                    ▢ 我已閱讀並同意以上引導者合作約定。
                   </span>
                 </label>
                 <DialogFooter className="flex-col sm:flex-row gap-2">
