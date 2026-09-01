@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone } from "lucide-react";
+import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -100,6 +100,7 @@ export default function AdminDashboard() {
   const [rejectNotes, setRejectNotes] = useState("");
   const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
   const [inviteNotes, setInviteNotes] = useState("");
+  const [pausingProfile, setPausingProfile] = useState<PendingProfile | null>(null);
 
   // Brand page: confirm the teacher's brand page goes live
   const confirmBrandLive = async (row: PendingProfile) => {
