@@ -301,7 +301,7 @@ export default function TeacherSeedVideos() {
             <span>☁️</span> 上傳影片
           </h2>
           <p className="text-sm md:text-base text-foreground/75 mt-3 max-w-xl mx-auto leading-relaxed whitespace-pre-line">
-            {"請點擊下方按鈕，上傳您的種子短片。\n上傳完成後，我們將協助後續整理、優化與發布。"}
+            {"請點擊下方按鈕，上傳您的種子短片。\n完成後，我們將協助後續整理、優化與發布。"}
           </p>
 
           <div className="mt-6">
