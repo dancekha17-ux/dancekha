@@ -55,7 +55,7 @@ export const CO_CREATION_PROGRAMS: CoCreationProgram[] = [
     emoji: "🎤",
     title: "品牌專訪",
     subtitle: "分享您的故事，放大品牌影響力。",
-    description: "完成種子短片並持續經營品牌，將有機會接受舞島咖品牌專訪。",
+    description: "邀約品牌專訪。",
     status: "locked",
     lockedMessage: "完成種子短片並持續經營品牌，\n將有機會接受舞島咖品牌專訪。",
   },
