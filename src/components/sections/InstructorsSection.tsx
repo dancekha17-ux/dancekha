@@ -165,27 +165,23 @@ export function InstructorsSection() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-10"
         >
-          <Link
-            to="/register"
-            className="group inline-block max-w-xl mx-auto px-8 py-8 rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-sm"
-          >
-            <p className="eyebrow !mb-3">Join Us · 歡迎加入引導者聚落</p>
-            <p className="text-base font-body text-foreground/80 mb-5 leading-relaxed">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-4 rounded-2xl bg-[#FBF1EA] border border-[#E8DCC4]">
+            <p className="text-sm md:text-base font-body text-[#6B4A2E] leading-relaxed">
               讓世界看見你的文化舞步，也啟發更多學員舞動人生！
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-              <span className="inline-flex items-center gap-2 text-primary font-medium flow-line group-hover:gap-3 transition-all">
-                成為舞島咖引導者
-                <span>→</span>
-              </span>
-            </div>
-          </Link>
-
+            <Link
+              to="/register"
+              className="group inline-flex items-center gap-2 shrink-0 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+            >
+              成為舞島咖引導者
+              <span className="transition-transform group-hover:translate-x-1">➔</span>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
