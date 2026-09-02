@@ -116,9 +116,13 @@ export function Header() {
             </Button>
             <Button
               asChild
-              variant="heroOutline"
+              variant="ghost"
               size="sm"
-              className="bg-primary-foreground text-foreground border-transparent hover:bg-primary-foreground/85 hover:text-foreground"
+              className={`bg-transparent border ${
+                isScrolled || isLightHero
+                  ? "border-border/60 text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                  : "border-primary-foreground/30 text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
+              }`}
             >
               <Link to="/teacher/login">{lang === "zh" ? "引導者登入" : "Master Login"}</Link>
             </Button>
