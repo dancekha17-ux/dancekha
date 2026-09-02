@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, X } from "lucide-react";
-import worldMapAsset from "@/assets/world-map.jpg.asset.json";
+import worldMap from "@/assets/world-dance/world-map.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -218,7 +218,7 @@ export function WorldMap() {
     <div className="w-full max-w-[1200px] mx-auto">
       <div className="relative w-full overflow-visible">
         <img
-          src={worldMapAsset.url}
+          src={worldMap}
           alt="世界舞蹈地圖"
           className="w-full h-auto block select-none rounded-lg"
           draggable={false}

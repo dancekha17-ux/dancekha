@@ -118,7 +118,7 @@ export default function WorldDance() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, delay: index * 0.08 }}
-                  className="group overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-elevated"
+                  className="group min-h-[30rem] overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-elevated"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden">
                     <img
