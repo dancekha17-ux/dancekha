@@ -107,7 +107,7 @@ export default function WorldDance() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground md:text-right">
-                從裙襬飛揚的瞬間，走進一方土地的記憶；每張卡片都是一段文化與課程的入口。
+                走進一方土地的記憶，感受舞動的瞬間與文化的脈絡。
               </p>
             </div>
 
