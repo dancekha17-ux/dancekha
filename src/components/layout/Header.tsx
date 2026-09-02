@@ -111,10 +111,15 @@ export function Header() {
               <Globe className="w-4 h-4" />
               {lang === "zh" ? "EN" : "中"}
             </button>
-            <Button asChild variant={isScrolled || isLightHero ? "outline" : "heroOutline"} size="sm">
+            <Button asChild variant="hero" size="sm" className="shadow-glow">
               <Link to="/dashboard?role=student">{lang === "zh" ? "學員登入" : "Student Login"}</Link>
             </Button>
-            <Button asChild variant="hero" size="sm">
+            <Button
+              asChild
+              variant="heroOutline"
+              size="sm"
+              className="bg-primary-foreground text-foreground border-transparent hover:bg-primary-foreground/85 hover:text-foreground"
+            >
               <Link to="/teacher/login">{lang === "zh" ? "引導者登入" : "Master Login"}</Link>
             </Button>
           </div>
