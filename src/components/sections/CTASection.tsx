@@ -65,7 +65,7 @@ export function CTASection() {
               size="lg"
               className="w-full sm:w-auto border-2 border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground backdrop-blur-sm bg-transparent transition-all duration-300"
             >
-              <Link to="/world-dance">🌍 舞遍世界～文化小百科</Link>
+              <Link to="/world-dance">🌍 探索世界舞蹈</Link>
             </Button>
           </div>
 
