@@ -172,8 +172,8 @@ export function Header() {
                 </Button>
                 <Button
                   asChild
-                  variant="heroOutline"
-                  className="flex-1 bg-primary-foreground text-foreground border-transparent hover:bg-primary-foreground/85 hover:text-foreground"
+                  variant="ghost"
+                  className="flex-1 bg-transparent border border-border/60 text-muted-foreground hover:text-foreground hover:bg-muted/40"
                 >
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
                     {lang === "zh" ? "引導者登入" : "Master Login"}
