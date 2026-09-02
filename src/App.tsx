@@ -21,6 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AgreementPage from "./pages/AgreementPage";
+import WorldDance from "./pages/WorldDance";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/instructors/:slug" element={<InstructorProfile />} />
-            <Route path="/styles" element={<GlobalStyles />} />
+            <Route path="/world-dance" element={<WorldDance />} />
+            <Route path="/styles" element={<WorldDance />} />
             <Route path="/course-detail/:id" element={<CourseDetail />} />
             <Route path="/teacher/login" element={<TeacherAuth />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

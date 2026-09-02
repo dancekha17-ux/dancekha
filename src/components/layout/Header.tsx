@@ -8,12 +8,12 @@ const navItems = [
    { label: "關於我們", labelEn: "About", href: "#about", to: "/#about" },
    { label: "課程探索", labelEn: "Courses", href: "#courses", to: "/#courses" },
    { label: "引導者團隊", labelEn: "Instructors", href: "#instructors", to: "/#instructors" },
-   { label: "舞遍世界", labelEn: "Global Styles", href: "#world-folk", to: "/#world-folk" },
+   { label: "舞遍世界", labelEn: "Global Styles", href: "/world-dance", to: "/world-dance" },
    { label: "社群日常", labelEn: "Community", href: "#community", to: "/#community" },
    { label: "行事曆總覽", labelEn: "Events", href: "#events", to: "/#events" },
 ];
 
-const lightHeroPaths = ["/register"];
+const lightHeroPaths = ["/register", "/world-dance", "/styles"];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,6 +25,10 @@ export function Header() {
   const isLightHero = lightHeroPaths.includes(location.pathname);
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith("/")) {
+      setIsMobileMenuOpen(false);
+      return;
+    }
     e.preventDefault();
     setIsMobileMenuOpen(false);
     if (location.pathname !== "/") {
