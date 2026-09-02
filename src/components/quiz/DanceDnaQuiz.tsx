@@ -274,7 +274,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 </div>
 
                 <Button size="lg" className="w-full group" onClick={goCourses}>
-                  👉 預約我的第一堂課
+                  👉 探索課程  立即GO
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <div className="mt-3 flex flex-col sm:flex-row gap-2">
