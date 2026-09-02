@@ -112,7 +112,7 @@ export default function AgreementPage() {
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm">返回後台</span>
           </Link>
-          <span className="font-display text-base text-gradient">舞島咖 DanceKha</span>
+          <Link to="/" aria-label="舞島咖 DanceKha — 返回首頁" className="font-display text-base text-gradient cursor-pointer transition-opacity duration-300 hover:opacity-80">舞島咖 DanceKha</Link>
           <span className="w-20" />
         </div>
       </header>
