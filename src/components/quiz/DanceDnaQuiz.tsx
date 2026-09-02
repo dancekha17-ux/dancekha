@@ -14,7 +14,7 @@ const QUESTIONS: {
   options: { label: string; key: DnaKey }[];
 }[] = [
   {
-    eyebrow: "情緒與壓力釋放",
+    eyebrow: "》》》》",
     title: "結束疲憊的一天，你直覺最想怎麼紓壓？",
     options: [
       { label: "聽大聲音樂、大步走路，把情緒甩出去", key: "stage" },
