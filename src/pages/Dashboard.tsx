@@ -24,6 +24,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { DanceDnaQuiz } from "@/components/quiz/DanceDnaQuiz";
+import { DnaReportModal } from "@/components/quiz/DnaReportModal";
+import { DNA_PROFILES, loadDnaResult, type DnaResult } from "@/lib/danceDna";
 
 type Role = "student" | "master";
 
@@ -70,10 +73,25 @@ export default function Dashboard() {
 /* ---------------- Student Dashboard ---------------- */
 
 function StudentDashboard() {
-  const dnaTraits = [
-    { label: "節奏感", value: 82 },
-    { label: "即興力", value: 64 },
-    { label: "文化共鳴", value: 91 },
+  const [dna, setDna] = useState<DnaResult | null>(() => loadDnaResult());
+  const [reportOpen, setReportOpen] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setDna(loadDnaResult());
+    window.addEventListener("danceka:dna-updated", handler);
+    window.addEventListener("focus", handler);
+    return () => {
+      window.removeEventListener("danceka:dna-updated", handler);
+      window.removeEventListener("focus", handler);
+    };
+  }, []);
+
+  const profile = dna ? DNA_PROFILES[dna.key] : null;
+  const dnaTraits = profile?.traits ?? [
+    { label: "節奏感", value: 0 },
+    { label: "即興力", value: 0 },
+    { label: "文化共鳴", value: 0 },
   ];
 
   const exploration = [
@@ -126,16 +144,26 @@ function StudentDashboard() {
                   我的舞蹈 DNA
                 </div>
                 <h2 className="font-display italic text-4xl md:text-5xl text-foreground mt-4 leading-[1.05]">
-                  曠野靈魂
+                  {profile ? profile.title : "尚未解鎖"}
                 </h2>
-                <p className="font-display italic text-base text-foreground/60 mt-1">Wildland Soul · 火光型舞者</p>
+                <p className="font-display italic text-base text-foreground/60 mt-1">
+                  {profile ? profile.personaLine : "Unlock your Dance DNA"}
+                </p>
                 <p className="text-foreground/75 mt-4 leading-relaxed">
-                  熱愛節奏與即興，在群體裡自然成為氣氛中心。下一步，試著走進更靜的身體語言。
+                  {profile
+                    ? profile.subtitle
+                    : "花 60 秒完成四題情境測驗，我們就能為你的身體開一張專屬處方籤。"}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-5">
-                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">熱情 Passionate</Badge>
-                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">直覺 Intuitive</Badge>
-                  <Badge variant="secondary" className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85">社交 Social</Badge>
+                  {(profile?.tags ?? []).map((tag) => (
+                    <Badge
+                      key={tag}
+                      variant="secondary"
+                      className="font-display italic bg-background/40 backdrop-blur-md border border-background/50 text-foreground/85"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
               </div>
 
@@ -154,8 +182,13 @@ function StudentDashboard() {
                     </div>
                   </div>
                 ))}
-                <Button variant="outline" size="sm" className="mt-2 border-foreground/30 bg-background/40 backdrop-blur text-foreground hover:bg-foreground hover:text-background">
-                  查看完整分析
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 border-foreground/30 bg-background/40 backdrop-blur text-foreground hover:bg-foreground hover:text-background"
+                  onClick={() => (profile ? setReportOpen(true) : setQuizOpen(true))}
+                >
+                  {profile ? "查看完整分析" : "立即解鎖我的舞蹈 DNA"}
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
@@ -245,12 +278,37 @@ function StudentDashboard() {
             </div>
             <div>
               <h3 className="font-display text-lg text-foreground">下一段旅程</h3>
-              <p className="text-sm text-muted-foreground">根據你的 DNA，推薦：西非 Sabar 入門工作坊</p>
+              <p className="text-sm text-muted-foreground">
+                {profile
+                  ? `根據你的 DNA，推薦：${profile.recommendation.title}`
+                  : "完成舞蹈 DNA 測驗，讓我們為你推薦第一堂課"}
+              </p>
+              {profile && (
+                <p className="text-xs text-muted-foreground/80 mt-1">{profile.recommendation.reason}</p>
+              )}
             </div>
           </div>
-          <Button variant="hero">查看推薦</Button>
+          {profile ? (
+            <Button asChild variant="hero">
+              <Link to={`/?dna=${profile.key}#courses`}>查看推薦</Link>
+            </Button>
+          ) : (
+            <Button variant="hero" onClick={() => setQuizOpen(true)}>
+              開始檢測
+            </Button>
+          )}
         </CardContent>
       </Card>
+
+      <DanceDnaQuiz open={quizOpen} onOpenChange={setQuizOpen} />
+      {profile && (
+        <DnaReportModal
+          open={reportOpen}
+          onOpenChange={setReportOpen}
+          dnaKey={profile.key}
+          onRetake={() => setTimeout(() => setQuizOpen(true), 250)}
+        />
+      )}
     </div>
   );
 }
