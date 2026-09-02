@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { DanceDnaQuiz } from "@/components/quiz/DanceDnaQuiz";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroJpg640 from "@/assets/hero/hero-dance-640.jpg";
 import heroJpg1024 from "@/assets/hero/hero-dance-1024.jpg";
@@ -92,7 +91,7 @@ export function HeroSection() {
             在這裡不只是學舞，還能透過社群舞出友誼的節奏。
           </motion.p>
 
-          {/* CTAs — clear primary / secondary hierarchy */}
+          {/* CTAs — single primary student CTA */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,18 +113,10 @@ export function HeroSection() {
                 className="group relative w-full sm:w-auto shadow-lg"
                 onClick={() => setQuizOpen(true)}
               >
-                🧬 解鎖你的舞蹈DNA
+                🧬 解鎖你的舞蹈 DNA
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-            >
-              <Link to="/register">成為舞島咖引導者</Link>
-            </Button>
           </motion.div>
         </div>
       </div>
