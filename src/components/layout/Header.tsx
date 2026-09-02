@@ -70,7 +70,11 @@ export function Header() {
         <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <motion.div whileHover={{ scale: 1.02 }}>
-            <Link to="/" className="flex items-center gap-2">
+            <Link
+              to="/"
+              aria-label="舞島咖 DanceKha — 返回首頁"
+              className="flex items-center gap-2 cursor-pointer transition-opacity duration-300 hover:opacity-80"
+            >
               <span className="text-2xl font-display font-semibold text-gradient">
                 舞島咖
               </span>
