@@ -427,7 +427,10 @@ export default function TeacherDashboard() {
     setProfile((p) => (p ? { ...p, brand_page_status: "pending_review" } : p));
     setShowBrandAgreement(false);
     setBrandAgreed(false);
-    toast({ title: "您的品牌頁已送出，舞島咖將協助確認上線內容。" });
+    toast({
+      title: "資料已送出！",
+      description: "舞島咖團隊將於 1-2 個工作天內完成內容確認，並為您刊登專屬品牌頁。",
+    });
   };
 
   // Re-application after an invitation to enrich the brand page.
@@ -635,9 +638,18 @@ export default function TeacherDashboard() {
       {/* Brand page publish helper text */}
       <div className="border-b border-[#E63946]/10 bg-[#FFF5E6]/70">
         <div className="container-wide mx-auto max-w-4xl px-4 py-3">
-          <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-            您完成「基本資訊」與「精彩瞬間」後，即可預覽並申請品牌頁上線喔！
-          </p>
+          {profile.brand_page_status === "pending_review" ? (
+            <div className="flex items-start gap-2.5 rounded-2xl border border-[#E89B5C]/40 bg-white/80 p-4">
+              <Clock className="w-4 h-4 mt-0.5 shrink-0 text-[#B25C2E]" />
+              <p className="text-sm leading-relaxed text-foreground/85">
+                資料已送出！舞島咖團隊將於 1-2 個工作天內完成內容確認，並為您刊登專屬品牌頁。
+              </p>
+            </div>
+          ) : (
+            <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
+              您完成「基本資訊」與「精彩瞬間」後，即可預覽並申請品牌頁上線喔！
+            </p>
+          )}
           {profile.brand_page_status === "needs_revision" && (
             <div className="mt-3 rounded-2xl border border-[#E89B5C]/40 bg-white/80 p-4">
               <p className="font-display text-base text-foreground">讓品牌頁更完整一些</p>
@@ -798,7 +810,7 @@ export default function TeacherDashboard() {
                     className="mt-0.5"
                   />
                   <span className="text-sm text-foreground/90 leading-relaxed">
-                    ▢ 我已閱讀並同意以上引導者合作約定。
+                    我已閱讀並同意以上引導者合作約定
                   </span>
                 </label>
                 <DialogFooter className="flex-col sm:flex-row gap-2">
@@ -815,7 +827,7 @@ export default function TeacherDashboard() {
                     style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
                   >
                     <Send className="w-4 h-4" />
-                    {brandSubmitting ? "送出中…" : "同意並送出品牌頁申請"}
+                    {brandSubmitting ? "送出中…" : "同意並送出申請"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
