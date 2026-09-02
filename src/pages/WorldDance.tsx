@@ -64,12 +64,12 @@ export default function WorldDance() {
               </span>
               <div className="hairline mb-8 mt-6" />
               <h1 className="text-fluid-hero mb-6 font-display font-medium text-foreground">
-                循著舞步，讀懂
-                <span className="text-accent-italic">世界的身體語言</span>
+                用舞步走遍
+                <span className="text-accent-italic">大地的記憶</span>
               </h1>
               <p className="text-fluid-lead mx-auto max-w-2xl text-muted-foreground">
-                點亮地圖上的島嶼，從節拍、祭典與日常相遇一種文化，
-                帶你走進世界舞蹈的美好。
+                從烏克蘭草原到安達魯西亞夜晚，從巴爾幹的不對稱節拍到地中海岸邊的圓圈——
+                我們收藏每個民族用身體寫下的歷史。
               </p>
             </motion.div>
 

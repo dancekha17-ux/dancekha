@@ -13,7 +13,7 @@ const navItems = [
    { label: "行事曆總覽", labelEn: "Events", href: "#events", to: "/#events" },
 ];
 
-const lightHeroPaths = ["/register", "/world-dance", "/styles"];
+const lightHeroPaths = ["/register", "/world-dance"];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
