@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
-type DnaKey = "posture" | "burn" | "partner" | "group" | "culture";
+type DnaKey = "ritual" | "ocean" | "stage" | "flow";
 
 const QUESTIONS: {
   title: string;
@@ -14,71 +14,88 @@ const QUESTIONS: {
   options: { label: string; key: DnaKey }[];
 }[] = [
   {
-    eyebrow: "機能與生活痛點",
-    title: "你今天下班／放假後，最希望透過肢體活動獲得什麼？",
+    eyebrow: "情緒與壓力釋放",
+    title: "結束疲憊的一天，你直覺最想怎麼紓壓？",
     options: [
-      { label: "舒緩久坐肩頸僵硬，改善體態與姿勢", key: "posture" },
-      { label: "大汗淋漓甩掉壓力，爽快宣洩情緒", key: "burn" },
-      { label: "認識新朋友，體驗有互動感的雙人律動", key: "partner" },
-      { label: "享受一群人牽手、無壓力的歡樂氛圍", key: "group" },
-      { label: "暫時脫離日常，沉浸在異國美學與故事中", key: "culture" },
+      { label: "聽大聲音樂、大步走路，把情緒甩出去", key: "stage" },
+      { label: "安靜發呆、伸展身體，讓自己慢下來", key: "ritual" },
+      { label: "約朋友熱鬧聊天，笑一笑就好了", key: "ocean" },
+      { label: "幻想飛去異國，隨意探索陌生街角", key: "flow" },
     ],
   },
   {
-    eyebrow: "門檻與心理",
-    title: "你對「開始學舞蹈」最大的顧慮或期待是什麼？",
+    eyebrow: "社交邊界與氣場",
+    title: "在不熟悉的聚會，你習慣待在哪個位置？",
     options: [
-      { label: "我肢體很僵硬，希望從基礎發力與呼吸開始", key: "posture" },
-      { label: "我希望看到明顯的運動消耗，節奏感要強", key: "burn" },
-      { label: "我是一個人來，不想有孤單感，但也不想自己找舞伴", key: "partner" },
-      { label: "我怕跟不上大家，希望就算踩錯腳也不會尷尬", key: "group" },
+      { label: "站在邊緣觀察，隨時可以融入大圈圈", key: "ocean" },
+      { label: "喜歡找一個人一對一深度聊天", key: "flow" },
+      { label: "享受站在專屬舞台上的焦點時刻", key: "stage" },
+      { label: "喜歡安靜、流暢、不用多說話的互動", key: "ritual" },
     ],
   },
   {
-    eyebrow: "氛圍偏好",
-    title: "你最喜歡哪一種音樂與風格？",
+    eyebrow: "身體與空間感知",
+    title: "哪一種場景最能帶給你平靜？",
     options: [
-      { label: "優雅流暢的古典樂、手鼓聲或深層放鬆的音樂", key: "culture" },
-      { label: "重低音節奏強烈的 K-POP、Hip-Hop 或熱情鼓點", key: "burn" },
-      { label: "充滿爵士風情、復古爵士樂或拉丁節奏", key: "partner" },
-      { label: "熱鬧的民族手風琴、笛聲、圍著營火般的歡樂節奏", key: "group" },
+      { label: "古老山林與寺廟，帶著儀式感的靜謐", key: "ritual" },
+      { label: "陽光海邊與手鼓，赤腳踩在沙上", key: "ocean" },
+      { label: "復古老街與爵士樂，微醺的燈光", key: "flow" },
+      { label: "霓虹都市與重低音，心跳跟著節拍", key: "stage" },
+    ],
+  },
+  {
+    eyebrow: "肢體渴望與機能",
+    title: "若能擁有一個身體超能力，你最想要什麼？",
+    options: [
+      { label: "像橡皮筋般柔軟，舒緩久坐痠痛", key: "ritual" },
+      { label: "像羽毛般輕盈，不費力地律動一整晚", key: "ocean" },
+      { label: "充滿爆發力與核心氣場，站上台不怯場", key: "stage" },
+      { label: "像水一樣流暢，用身體說出內心情緒", key: "flow" },
     ],
   },
 ];
 
 const RESULTS: Record<
   DnaKey,
-  { title: string; subtitle: string; benefit: string; genres: string[] }
+  {
+    title: string;
+    subtitle: string;
+    prescription: string;
+    genres: string[];
+    category: string;
+  }
 > = {
-  posture: {
-    title: "溫柔覺察型｜體態修復舞者",
-    subtitle: "你的身體正在請你慢下來，用呼吸重新找回線條。",
-    benefit: "慢速拆解、零衝擊、久坐族友善，一堂課就能感受肩頸鬆開的舒服。",
-    genres: ["夏威夷 Hula 呼拉舞", "印度 Odissi 奧迪西舞", "身體開發／律動基礎"],
+  ritual: {
+    title: "山林儀式舞者",
+    subtitle: "你的身體渴望安靜、緩慢、有呼吸節奏的儀式感。",
+    prescription:
+      "巴爾幹圓圈舞——手牽著手、腳踩著大地的重複節奏，能安撫過度運轉的神經，同時鬆開久坐的肩頸與髖關節。",
+    genres: ["巴爾幹圓圈舞 Horo", "印度 Odissi 奧迪西舞", "身體開發／律動基礎"],
+    category: "balkans",
   },
-  burn: {
-    title: "熱力全開型｜高燃脂紓壓舞者",
-    subtitle: "你需要的是把情緒交給節拍，跳到大汗淋漓的痛快。",
-    benefit: "節奏強、消耗高，不用記複雜舞步也能盡情釋放壓力。",
-    genres: ["K-POP 舞蹈", "Hip-Hop 街舞", "非洲鼓舞 Afro Dance"],
+  ocean: {
+    title: "海洋輕盈舞者",
+    subtitle: "你需要的是陽光、笑聲，和一群人一起輕鬆擺動的自在。",
+    prescription:
+      "夏威夷 Hula 與手鼓律動——柔軟的腰臀波浪與呼吸同步，零基礎、免舞伴，跳完整個人像被海風吹過。",
+    genres: ["夏威夷 Hula 呼拉舞", "希臘／以色列民俗舞", "零基礎律動入門"],
+    category: "beginner",
   },
-  partner: {
-    title: "默契流動型｜社交對舞者",
-    subtitle: "你享受與人共舞時，那份即時回應的默契與火花。",
-    benefit: "課堂輪換舞伴、免自備搭檔，邊跳邊自然認識新朋友。",
-    genres: ["Salsa 莎莎舞", "Bachata 巴恰塔", "Swing 搖擺舞"],
+  stage: {
+    title: "烈焰氣場舞者",
+    subtitle: "你的身體在等一個舞台，把壓抑的能量全部燒出來。",
+    prescription:
+      "佛朗明哥與拉丁節奏——強烈的踏步、核心與眼神訓練，一堂課就能把情緒轉成氣場與核心力量。",
+    genres: ["西班牙佛朗明哥", "Salsa 莎莎舞", "K-POP／街舞"],
+    category: "latin",
   },
-  group: {
-    title: "熱情陽光型｜歡樂社群舞者",
-    subtitle: "你喜歡牽起手、跟著一群人一起笑著跳完一首歌。",
-    benefit: "免自備舞伴、零基礎友善、隨到隨跳零負擔！",
-    genres: ["保加利亞 Horo 鏈狀舞", "希臘民俗舞", "以色列舞"],
-  },
-  culture: {
-    title: "沉浸儀式型｜文化故事舞者",
-    subtitle: "你跳的不只是舞步，更是一段來自遠方的生命故事。",
-    benefit: "每堂課都像一次小旅行，從服裝、音樂到手勢都有文化脈絡。",
-    genres: ["印度 Odissi 奧迪西舞", "西班牙佛朗明哥", "中東 Raqs Sharqi"],
+  flow: {
+    title: "流動敘事舞者",
+    subtitle: "你想用身體說話，把說不出口的情緒交給動作。",
+    prescription:
+      "現代舞與中東 Raqs Sharqi——連續、綿延的軀幹流動，讓情緒有出口，也讓身體重新找回柔軟。",
+    genres: ["現代舞 Contemporary", "中東 Raqs Sharqi", "Swing 搖擺舞"],
+    category: "contemporary",
   },
 };
 
@@ -99,7 +116,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
       acc[k] = (acc[k] ?? 0) + 1;
       return acc;
     }, {});
-    let best: DnaKey = answers[0] ?? "group";
+    let best: DnaKey = answers[0] ?? "ocean";
     let bestCount = 0;
     for (const k of answers) {
       if (tally[k] > bestCount) {
@@ -125,18 +142,22 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   const goCourses = () => {
     onOpenChange(false);
     setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent("danceka:filter-category", { detail: result.category })
+      );
       document.getElementById("courses")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 200);
   };
 
   const share = async () => {
     const text = `我的舞蹈 DNA：${result.title}｜舞島咖 DanceKha`;
+    const url = `${window.location.origin}/?dna=${resultKey}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "我的舞蹈 DNA", text, url: window.location.origin });
+        await navigator.share({ title: "我的舞蹈 DNA", text, url });
       } else {
-        await navigator.clipboard.writeText(`${text} ${window.location.origin}`);
-        toast.success("已複製你的舞蹈 DNA，快分享給朋友！");
+        await navigator.clipboard.writeText(`${text} ${url}`);
+        toast.success("已複製你的檢測結果連結，邀請好友一起玩！");
       }
     } catch {
       /* user cancelled */
@@ -151,11 +172,11 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
         if (!v) setTimeout(reset, 250);
       }}
     >
-      <DialogContent className="max-w-lg w-[calc(100%-2rem)] rounded-3xl bg-card p-0 overflow-hidden border-border/60">
+      <DialogContent className="max-w-lg w-[calc(100%-2rem)] rounded-3xl bg-card p-0 overflow-hidden border-border/60 max-h-[88vh] overflow-y-auto">
         <div className="p-6 sm:p-8">
           <DialogTitle className="sr-only">舞蹈 DNA 測驗</DialogTitle>
           <DialogDescription className="sr-only">
-            透過三個問題，找到最適合你的舞蹈風格
+            透過四個生活情境問題，找到最適合你的舞蹈處方
           </DialogDescription>
 
           {!done && (
@@ -232,9 +253,9 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 </p>
 
                 <div className="rounded-2xl bg-primary/5 border border-primary/15 px-5 py-4 text-left mb-4">
-                  <p className="text-[11px] font-body text-primary mb-1.5">為什麼適合你</p>
+                  <p className="text-[11px] font-body text-primary mb-1.5">你的潛意識身體處方</p>
                   <p className="font-body text-sm text-foreground leading-relaxed">
-                    {result.benefit}
+                    {result.prescription}
                   </p>
                 </div>
 
@@ -253,17 +274,17 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 </div>
 
                 <Button size="lg" className="w-full group" onClick={goCourses}>
-                  👉 查看適合我的體驗課程
+                  👉 預約我的第一堂課
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <div className="mt-3 flex flex-col sm:flex-row gap-2">
+                  <Button variant="outline" className="flex-1" onClick={share}>
+                    <Share2 className="w-4 h-4" />
+                    🔗 分享我的檢測結果
+                  </Button>
                   <Button variant="ghost" className="flex-1" onClick={reset}>
                     <RotateCcw className="w-4 h-4" />
                     重新檢測
-                  </Button>
-                  <Button variant="ghost" className="flex-1" onClick={share}>
-                    <Share2 className="w-4 h-4" />
-                    分享我的結果
                   </Button>
                 </div>
               </motion.div>
