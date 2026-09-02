@@ -90,9 +90,19 @@ export function CoursesSection() {
       setRegionFilter(region);
       setActiveCategory("all");
     };
+    const catHandler = (e: Event) => {
+      const category = (e as CustomEvent<string>).detail;
+      setRegionFilter(null);
+      setActiveCategory(category || "all");
+    };
     window.addEventListener("danceka:filter-region", handler);
-    return () => window.removeEventListener("danceka:filter-region", handler);
+    window.addEventListener("danceka:filter-category", catHandler);
+    return () => {
+      window.removeEventListener("danceka:filter-region", handler);
+      window.removeEventListener("danceka:filter-category", catHandler);
+    };
   }, []);
+
 
   const filtered = useMemo(
     () => courses.filter((c) => {
