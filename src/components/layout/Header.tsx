@@ -161,12 +161,16 @@ export function Header() {
                 </Link>
               ))}
               <div className="flex gap-3 pt-4">
-                <Button asChild variant="outline" className="flex-1">
+                <Button asChild variant="hero" className="flex-1 shadow-glow">
                   <Link to="/dashboard?role=student" onClick={() => setIsMobileMenuOpen(false)}>
                     {lang === "zh" ? "學員登入" : "Student Login"}
                   </Link>
                 </Button>
-                <Button asChild variant="hero" className="flex-1">
+                <Button
+                  asChild
+                  variant="heroOutline"
+                  className="flex-1 bg-primary-foreground text-foreground border-transparent hover:bg-primary-foreground/85 hover:text-foreground"
+                >
                   <Link to="/teacher/login" onClick={() => setIsMobileMenuOpen(false)}>
                     {lang === "zh" ? "引導者登入" : "Master Login"}
                   </Link>
