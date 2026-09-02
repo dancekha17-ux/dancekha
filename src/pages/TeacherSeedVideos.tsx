@@ -209,6 +209,9 @@ export default function TeacherSeedVideos() {
               <ArrowLeft className="w-4 h-4" /> 返回引導者專區
             </Link>
           </Button>
+          <Link to="/" aria-label="舞島咖 DanceKha — 返回首頁" className="flex items-baseline gap-2 cursor-pointer transition-opacity duration-300 hover:opacity-80">
+            <span className="font-display text-base text-gradient">舞島咖 DanceKha</span>
+          </Link>
           <span className="eyebrow hidden sm:inline">CO-CREATION · SEED VIDEOS</span>
         </div>
       </header>

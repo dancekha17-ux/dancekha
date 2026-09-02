@@ -41,7 +41,7 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex flex-col font-body" style={{ backgroundColor: "#FFF5E6" }}>
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md">
-          <Link to="/" className="block text-center mb-10">
+          <Link to="/" aria-label="舞島咖 DanceKha — 返回首頁" className="block text-center mb-10 cursor-pointer transition-opacity duration-300 hover:opacity-80">
             <span className="font-display text-3xl text-gradient">舞島咖 DanceKha</span>
             <p className="eyebrow mt-2">GUIDES' LOUNGE</p>
           </Link>
