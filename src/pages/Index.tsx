@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
@@ -13,6 +13,24 @@ import { Footer } from "@/components/layout/Footer";
 
 const Index = () => {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const dna = searchParams.get("dna");
+  useEffect(() => {
+    if (!dna) return;
+    const map: Record<string, string> = {
+      ritual: "balkans",
+      ocean: "beginner",
+      stage: "latin",
+      flow: "contemporary",
+    };
+    const category = map[dna];
+    if (!category) return;
+    const t = setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("danceka:filter-category", { detail: category }));
+      document.getElementById("courses")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300);
+    return () => clearTimeout(t);
+  }, [dna]);
   useEffect(() => {
     if (!location.hash) return;
     const id = location.hash.slice(1);
