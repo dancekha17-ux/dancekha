@@ -50,7 +50,7 @@ export default function WorldDance() {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <section className="overflow-hidden px-5 pb-16 pt-28 md:px-8 md:pb-24 md:pt-36">
+        <section className="overflow-hidden bg-gradient-to-b from-background to-secondary/45 px-5 pb-6 pt-28 md:px-8 md:pb-8 md:pt-36">
           <div className="container-wide mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -82,20 +82,21 @@ export default function WorldDance() {
               <div className="overflow-hidden rounded-lg border border-border/70 bg-card p-2 shadow-elevated md:p-5">
                 <WorldMap />
               </div>
-              <a
-                href="#popular-folk"
-                aria-label="前往熱門民俗探索"
-                className="mx-auto mt-8 flex w-fit items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                探索本期精選
-                <ArrowDown className="h-4 w-4" />
-              </a>
             </motion.div>
           </div>
         </section>
 
-        <section id="popular-folk" className="scroll-mt-24 bg-secondary/45 px-5 py-16 md:px-8 md:py-24">
+        <section id="popular-folk" className="scroll-mt-24 bg-secondary/45 px-5 pb-16 pt-6 md:px-8 md:pb-24 md:pt-8">
           <div className="container-wide mx-auto">
+            <a
+              href="#popular-folk"
+              aria-label="前往熱門民俗探索"
+              className="mx-auto mb-8 flex w-fit items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary md:mb-10"
+            >
+              探索本期精選
+              <ArrowDown className="h-4 w-4 animate-bounce" />
+            </a>
+
             <div className="mb-10 flex flex-col justify-between gap-5 md:mb-14 md:flex-row md:items-end">
               <div className="max-w-2xl">
                 <span className="eyebrow inline-flex items-center gap-2">
@@ -110,6 +111,7 @@ export default function WorldDance() {
                 走進一方土地的記憶，感受舞動的瞬間與文化的脈絡。
               </p>
             </div>
+
 
             <div className="grid gap-6 md:grid-cols-3">
               {featuredDances.map((dance, index) => (
