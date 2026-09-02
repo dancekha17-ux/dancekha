@@ -207,7 +207,7 @@ function StudentDashboard() {
             </h2>
           </div>
           <Button asChild variant="ghost" size="sm">
-            <Link to="/styles">
+            <Link to="/world-dance">
               <Globe2 className="w-4 h-4" /> 全球地圖
             </Link>
           </Button>

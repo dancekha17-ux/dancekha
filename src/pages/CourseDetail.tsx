@@ -264,7 +264,7 @@ export default function CourseDetail() {
                 </motion.div>
 
                 <Link
-                  to="/styles"
+                  to="/world-dance"
                   className="block mt-4 text-center text-sm text-primary hover:underline"
                 >
                   探索更多世界舞種 →
