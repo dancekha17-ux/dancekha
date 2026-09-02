@@ -34,7 +34,7 @@ const QUESTIONS: {
     ],
   },
   {
-    eyebrow: "身體與空間感知",
+    eyebrow: "》》",
     title: "哪一種場景最能帶給你平靜？",
     options: [
       { label: "古老山林與寺廟，帶著儀式感的靜謐", key: "ritual" },
