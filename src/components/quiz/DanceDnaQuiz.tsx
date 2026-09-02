@@ -44,7 +44,7 @@ const QUESTIONS: {
     ],
   },
   {
-    eyebrow: "肢體渴望與機能",
+    eyebrow: "》",
     title: "若能擁有一個身體超能力，你最想要什麼？",
     options: [
       { label: "像橡皮筋般柔軟，舒緩久坐痠痛", key: "ritual" },
