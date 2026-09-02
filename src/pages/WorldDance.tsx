@@ -68,7 +68,8 @@ export default function WorldDance() {
                 <span className="text-accent-italic">世界的身體語言</span>
               </h1>
               <p className="text-fluid-lead mx-auto max-w-2xl text-muted-foreground">
-                點亮地圖上的島嶼，從節拍、祭典與日常相遇一種文化，也找到願意帶你走進其中的引導者。
+                點亮地圖上的島嶼，從節拍、祭典與日常相遇一種文化，
+                帶你走進世界舞蹈的美好。
               </p>
             </motion.div>
 
