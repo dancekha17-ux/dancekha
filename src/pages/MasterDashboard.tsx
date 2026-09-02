@@ -237,7 +237,7 @@ export default function MasterDashboard() {
     <div className="min-h-screen bg-gradient-to-b from-[hsl(32_45%_97%)] via-background to-secondary/40">
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-40">
         <div className="container-wide mx-auto h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-baseline gap-2">
+          <Link to="/" aria-label="舞島咖 DanceKha — 返回首頁" className="flex items-baseline gap-2 cursor-pointer transition-opacity duration-300 hover:opacity-80">
             <span className="font-display text-xl text-gradient">舞島咖</span>
             <span className="eyebrow">Master Studio</span>
           </Link>
