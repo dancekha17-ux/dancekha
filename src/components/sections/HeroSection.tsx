@@ -114,7 +114,7 @@ export function HeroSection() {
                 className="group relative w-full sm:w-auto shadow-lg"
                 onClick={() => setQuizOpen(true)}
               >
-                🧬 測測你的舞蹈 DNA
+                🧬 檢測舞蹈 DNA
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
