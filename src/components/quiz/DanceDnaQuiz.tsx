@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
-type DnaKey = "ritual" | "ocean" | "stage" | "flow";
+import { DNA_PROFILES, saveDnaResult, type DnaKey } from "@/lib/danceDna";
 
 const QUESTIONS: {
   title: string;
@@ -55,50 +55,6 @@ const QUESTIONS: {
   },
 ];
 
-const RESULTS: Record<
-  DnaKey,
-  {
-    title: string;
-    subtitle: string;
-    prescription: string;
-    genres: string[];
-    category: string;
-  }
-> = {
-  ritual: {
-    title: "山林儀式舞者",
-    subtitle: "你的身體渴望安靜、緩慢、有呼吸節奏的儀式感。",
-    prescription:
-      "巴爾幹圓圈舞——手牽著手、腳踩著大地的重複節奏，能安撫過度運轉的神經，同時鬆開久坐的肩頸與髖關節。",
-    genres: ["巴爾幹圓圈舞 Horo", "印度 Odissi 奧迪西舞", "身體開發／律動基礎"],
-    category: "balkans",
-  },
-  ocean: {
-    title: "海洋輕盈舞者",
-    subtitle: "你需要的是陽光、笑聲，和一群人一起輕鬆擺動的自在。",
-    prescription:
-      "夏威夷 Hula 與手鼓律動——柔軟的腰臀波浪與呼吸同步，零基礎、免舞伴，跳完整個人像被海風吹過。",
-    genres: ["夏威夷 Hula 呼拉舞", "希臘／以色列民俗舞", "零基礎律動入門"],
-    category: "beginner",
-  },
-  stage: {
-    title: "烈焰氣場舞者",
-    subtitle: "你的身體在等一個舞台，把壓抑的能量全部燒出來。",
-    prescription:
-      "佛朗明哥與拉丁節奏——強烈的踏步、核心與眼神訓練，一堂課就能把情緒轉成氣場與核心力量。",
-    genres: ["西班牙佛朗明哥", "Salsa 莎莎舞", "K-POP／街舞"],
-    category: "latin",
-  },
-  flow: {
-    title: "流動敘事舞者",
-    subtitle: "你想用身體說話，把說不出口的情緒交給動作。",
-    prescription:
-      "現代舞與中東 Raqs Sharqi——連續、綿延的軀幹流動，讓情緒有出口，也讓身體重新找回柔軟。",
-    genres: ["現代舞 Contemporary", "中東 Raqs Sharqi", "Swing 搖擺舞"],
-    category: "contemporary",
-  },
-};
-
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -127,7 +83,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
     return best;
   })();
 
-  const result = RESULTS[resultKey];
+  const result = DNA_PROFILES[resultKey];
 
   const reset = () => {
     setStep(0);
@@ -135,8 +91,24 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   };
 
   const pick = (key: DnaKey) => {
-    setAnswers((prev) => [...prev.slice(0, step), key]);
+    const next = [...answers.slice(0, step), key];
+    setAnswers(next);
     setStep((s) => s + 1);
+    if (next.length >= total) {
+      const tally = next.reduce<Record<string, number>>((acc, k) => {
+        acc[k] = (acc[k] ?? 0) + 1;
+        return acc;
+      }, {});
+      let best: DnaKey = next[0];
+      let bestCount = 0;
+      for (const k of next) {
+        if (tally[k] > bestCount) {
+          best = k;
+          bestCount = tally[k];
+        }
+      }
+      saveDnaResult({ key: best, answers: next, completedAt: new Date().toISOString() });
+    }
   };
 
   const goCourses = () => {
