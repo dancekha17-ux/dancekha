@@ -172,7 +172,7 @@ export function InstructorsSection() {
         >
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-4 rounded-2xl bg-[#FBF1EA] border border-[#E8DCC4]">
             <p className="text-sm md:text-base font-body text-[#6B4A2E] leading-relaxed">
-              讓世界看見你的文化舞步，也啟發更多學員舞動人生！
+              Join Us ·讓世界看見你的文化舞步，也啟發更多學員舞動人生！
             </p>
             <Link
               to="/register"
