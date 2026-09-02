@@ -24,7 +24,7 @@ const QUESTIONS: {
     ],
   },
   {
-    eyebrow: "社交邊界與氣場",
+    eyebrow: "》》》",
     title: "在不熟悉的聚會，你習慣待在哪個位置？",
     options: [
       { label: "站在邊緣觀察，隨時可以融入大圈圈", key: "ocean" },
