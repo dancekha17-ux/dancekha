@@ -492,7 +492,7 @@ export default function TeacherDashboard() {
     <div className="min-h-screen" style={{ backgroundColor: "#FFF5E6" }}>
       <header className="border-b border-[#E63946]/10 bg-[#FFF5E6]/90 backdrop-blur sticky top-0 z-40">
         <div className="container-wide mx-auto h-16 flex items-center justify-between gap-3">
-          <Link to="/" className="flex items-baseline gap-2 min-w-0">
+          <Link to="/" aria-label="舞島咖 DanceKha — 返回首頁" className="flex items-baseline gap-2 min-w-0 cursor-pointer transition-opacity duration-300 hover:opacity-80">
             <span className="font-display text-xl text-gradient truncate">舞島咖 DanceKha</span>
             <span className="eyebrow hidden sm:inline">GUIDES' LOUNGE</span>
           </Link>
