@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, Compass, Globe2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import balkanCircle from "@/assets/world-dance/balkan-circle.jpg";
 import flamenco from "@/assets/world-dance/flamenco.jpg";
 import israeliCircle from "@/assets/world-dance/israeli-circle.jpg";
@@ -46,6 +47,18 @@ const featuredDances = [
 ];
 
 export default function WorldDance() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const timer = window.setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
