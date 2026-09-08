@@ -47,6 +47,18 @@ const featuredDances = [
 ];
 
 export default function WorldDance() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const timer = window.setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
