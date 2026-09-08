@@ -104,7 +104,7 @@ export default function WorldDance() {
                   Featured Folk Stories
                 </span>
                 <h2 className="text-fluid-h1 mt-4 font-display font-medium text-foreground">
-                  熱門民俗探索
+                  探索舞蹈
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground md:text-right">
