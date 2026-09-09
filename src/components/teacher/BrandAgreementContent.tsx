@@ -23,7 +23,7 @@ export function BrandAgreementContent() {
           <span className="mr-1.5">🏝️</span>
           <span className="font-semibold text-foreground">1｜品牌進駐</span>
           <br />
-          舞島咖提供您與團隊專屬的品牌頁面，您可展示教學特色、團隊願景與專業內容，也可自主維護管理後台；讓我們共同打造舞蹈的文化數位聚落。
+          舞島咖提供您與團隊專屬的品牌頁面，您可展示教學特色、團隊願景與專業內容等，也可自主維護管理後台；讓我們共同打造舞蹈的文化數位聚落。
         </p>
         <p className="leading-relaxed">
           <span className="mr-1.5">📝</span>
@@ -47,7 +47,7 @@ export function BrandAgreementContent() {
           <span className="mr-1.5">⚙️</span>
           <span className="font-semibold text-foreground">5｜平台持續成長</span>
           <br />
-            舞島咖目前為試營運階段，功能與服務將持續優化；未來您可在平台推廣線上或實體等多元活動，其金流或付費服務，涉及雙方權益的重要規範將另行說明。
+            舞島咖目前為測試階段，功能與服務將持續優化；未來您可在平台推廣線上或實體等多元活動，其金流或付費服務，涉及雙方權益的重要規範將另行說明。
         </p>
       </div>
 
