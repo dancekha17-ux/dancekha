@@ -166,6 +166,11 @@ export default function TeacherSeedVideos() {
     setVideos(loadVideos(user.id));
   }, [user]);
 
+  // 進入種子短片頁時，每次都從頁首開始顯示（SPA 預設會保留前一頁捲動位置）
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   const persist = (next: SeedVideo[]) => {
     setVideos(next);
