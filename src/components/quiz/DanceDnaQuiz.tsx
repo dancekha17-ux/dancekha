@@ -122,13 +122,17 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   };
 
   const share = async () => {
-    const text = `我的舞蹈 DNA：${result.title}｜舞島咖 DanceKha`;
     const url = `${window.location.origin}/?dna=${resultKey}`;
+    const text =
+      `剛測完我的舞蹈DNA，原來我是「${result.title}」！💃\n` +
+      `點進來測測看你是哪種舞蹈基因，看看我們適不適合一起組隊跳舞？👇\n` +
+      `${url}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "我的舞蹈 DNA", text, url });
+        // 文字內已含連結，避免部分瀏覽器 text/url 欄位重複貼上
+        await navigator.share({ text });
       } else {
-        await navigator.clipboard.writeText(`${text} ${url}`);
+        await navigator.clipboard.writeText(text);
         toast.success("已複製你的檢測結果連結，邀請好友一起玩！");
       }
     } catch {
@@ -168,13 +172,13 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
             </div>
           )}
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {!done ? (
               <motion.div
                 key={step}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.28, ease: "easeOut" }}
               >
                 <h2 className="font-display text-xl sm:text-2xl leading-snug text-foreground mb-6">
