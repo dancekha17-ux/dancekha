@@ -698,20 +698,19 @@ export default function TeacherDashboard() {
           {/* Form column */}
           <div className="min-w-0">
 
-            {/* One-time agreement intro dialog (first login only) */}
+            {/* One-time welcome dialog (first login only) */}
             <Dialog open={showIntroAgreement} onOpenChange={(o) => { if (!o) dismissIntroAgreement(); }}>
               <DialogContent className="max-w-md">
                 <DialogHeader>
                   <div className="mx-auto w-14 h-14 rounded-full bg-[#E89B5C]/15 text-[#B25C2E] flex items-center justify-center mb-2">
-                    <FileSignature className="w-7 h-7" />
+                    <UserCircle2 className="w-7 h-7" />
                   </div>
                   <DialogTitle className="text-center font-display text-xl">
                     歡迎加入舞島咖引導者專區
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
-                    您可立即開始編輯「基本資訊」、「精彩瞬間」與「課程活動」。<br />
-                    當您點擊上方「申請刊登」時，系統會邀請您完成
-                    <span className="text-[#B25C2E] font-medium">師資合作夥伴協議書</span> 簽署，即可送出審閱。
+                    從這裡開始建立您的專屬品牌頁吧！<br />
+                    完成「基本資訊」與「精彩瞬間」後，即可預覽您的品牌頁；準備好時，再申請品牌頁上線。
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex-col sm:flex-row gap-2 sm:justify-center">
@@ -719,14 +718,18 @@ export default function TeacherDashboard() {
                     稍後再說
                   </Button>
                   <Button
-                    asChild
                     className="text-white"
                     style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
-                    onClick={dismissIntroAgreement}
+                    onClick={() => {
+                      dismissIntroAgreement();
+                      setTimeout(() => {
+                        document
+                          .getElementById("identity")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }, 60);
+                    }}
                   >
-                    <Link to="/teacher/agreement">
-                      <FileSignature className="w-4 h-4" /> 前往閱讀並簽署
-                    </Link>
+                    開始建立品牌頁
                   </Button>
                 </DialogFooter>
               </DialogContent>
