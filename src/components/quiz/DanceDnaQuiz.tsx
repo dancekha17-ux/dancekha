@@ -224,10 +224,10 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 >
                   Your Dance DNA
                 </p>
-                <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3">
+                <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3 w-full break-words whitespace-normal">
                   【{result.title}】
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6 w-full break-words whitespace-normal">
                   {result.subtitle}
                 </p>
 
