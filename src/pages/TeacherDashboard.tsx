@@ -706,7 +706,7 @@ export default function TeacherDashboard() {
                     <UserCircle2 className="w-7 h-7" />
                   </div>
                   <DialogTitle className="text-center font-display text-xl">
-                    歡迎加入舞島咖引導者專區
+                    歡迎加入舞島咖．引導者聚落
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
                     從這裡開始建立您的專屬品牌頁吧！<br />
