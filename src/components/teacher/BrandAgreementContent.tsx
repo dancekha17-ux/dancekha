@@ -23,19 +23,19 @@ export function BrandAgreementContent() {
           <span className="mr-1.5">🏝️</span>
           <span className="font-semibold text-foreground">1｜品牌進駐</span>
           <br />
-          舞島咖提供您專屬品牌頁與管理後台，協助展示您的教學特色、文化背景與專業內容；您可自主維護品牌資料，一起累積品牌影響力與舞蹈文化價值。
-        </p>
-        <p className="leading-relaxed">
-          <span className="mr-1.5">🌱</span>
-          <span className="font-semibold text-foreground">2｜島嶼種子計畫</span>
-          <br />
-          進駐後三個月內，邀請您提供 3～5 支教學短片（每支約 5–8 分鐘），作為平台行銷推廣與會員學習內容，一起共創聚落的舞蹈文化資源。
+          舞島咖提供您與團隊專屬的品牌頁面，您可展示教學特色、團隊願景與專業內容，也可自主維護管理後台；讓我們共同打造舞蹈的文化數位聚落。
         </p>
         <p className="leading-relaxed">
           <span className="mr-1.5">📝</span>
-          <span className="font-semibold text-foreground">3｜您的創作，屬於您</span>
+          <span className="font-semibold text-foreground">2｜您的創作，屬於您</span>
           <br />
           您上傳的照片、影片、編舞、講義等原創內容，智慧財產權皆歸您所有；您同意舞島咖合理使用公開品牌資料與精彩片段，作為平台及社群推廣之用。
+        </p>
+        <p className="leading-relaxed">
+          <span className="mr-1.5">🌱</span>
+          <span className="font-semibold text-foreground">3｜島嶼種子計畫</span>
+          <br />
+          進駐後三個月內，邀請您提供 3～5 支教學短片（每支約 5–8 分鐘），作為平台行銷推廣與會員學習內容，一起共創聚落的舞蹈文化資源。
         </p>
         <p className="leading-relaxed">
           <span className="mr-1.5">🤝</span>
