@@ -238,13 +238,13 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7">
-                  <p className="text-[11px] font-body text-muted-foreground mb-2.5">推薦舞種</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7 box-border">
+                  <p className="text-[11px] font-body text-muted-foreground mb-2.5 w-full break-words whitespace-normal">推薦舞種</p>
+                  <div className="flex flex-wrap gap-2 w-full">
                     {result.genres.map((g) => (
                       <span
                         key={g}
-                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground"
+                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground whitespace-normal break-words"
                       >
                         {g}
                       </span>
