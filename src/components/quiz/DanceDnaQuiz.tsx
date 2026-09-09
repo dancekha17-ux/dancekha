@@ -122,18 +122,21 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   };
 
   const share = async () => {
-    const url = `${window.location.origin}/?dna=${resultKey}`;
-    const text =
-      `剛測完我的舞蹈DNA，原來我是「${result.title}」！💃\n` +
-      `點進來測測看你是哪種舞蹈基因，看看我們適不適合一起組隊跳舞？👇\n` +
-      `${url}`;
+    const shareUrl = `${window.location.origin}/?dna=${resultKey}`;
+    const shareData = {
+      title: "解鎖你的舞蹈DNA",
+      text:
+        `剛測完我的舞蹈DNA，原來我是「${result.title}」！💃\n` +
+        `點進來測測看你是哪種舞蹈基因，看看我們適不適合一起組隊跳舞？👇\n` +
+        `${shareUrl}`,
+    };
     try {
       if (navigator.share) {
-        // 文字內已含連結，避免部分瀏覽器 text/url 欄位重複貼上
-        await navigator.share({ text });
+        // 僅傳 text（含網址），不另傳 url 欄位，避免 LINE/Messenger 拆成兩則訊息
+        await navigator.share(shareData);
       } else {
-        await navigator.clipboard.writeText(text);
-        toast.success("已複製你的檢測結果連結，邀請好友一起玩！");
+        await navigator.clipboard.writeText(shareData.text);
+        toast.success("已複製分享連結與文案");
       }
     } catch {
       /* user cancelled */
@@ -210,7 +213,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="text-center"
+                className="text-center w-full max-w-md mx-auto box-border"
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                   <Sparkles className="h-5 w-5 text-primary" />
@@ -221,27 +224,27 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 >
                   Your Dance DNA
                 </p>
-                <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3">
+                <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3 w-full break-words whitespace-normal">
                   【{result.title}】
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6 w-full break-words whitespace-normal">
                   {result.subtitle}
                 </p>
 
-                <div className="rounded-2xl bg-primary/5 border border-primary/15 px-5 py-4 text-left mb-4">
-                  <p className="text-[11px] font-body text-primary mb-1.5">你的潛意識身體處方</p>
-                  <p className="font-body text-sm text-foreground leading-relaxed">
+                <div className="rounded-2xl bg-primary/5 border border-primary/15 px-5 py-4 text-left mb-4 box-border">
+                  <p className="text-[11px] font-body text-primary mb-1.5 w-full break-words whitespace-normal">你的潛意識身體處方</p>
+                  <p className="font-body text-sm text-foreground leading-relaxed w-full break-words whitespace-normal">
                     {result.prescription}
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7">
-                  <p className="text-[11px] font-body text-muted-foreground mb-2.5">推薦舞種</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7 box-border">
+                  <p className="text-[11px] font-body text-muted-foreground mb-2.5 w-full break-words whitespace-normal">推薦舞種</p>
+                  <div className="flex flex-wrap gap-2 w-full">
                     {result.genres.map((g) => (
                       <span
                         key={g}
-                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground"
+                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground whitespace-normal break-words"
                       >
                         {g}
                       </span>
