@@ -710,7 +710,8 @@ export default function TeacherDashboard() {
                   </DialogTitle>
                   <DialogDescription className="text-center leading-relaxed">
                     從這裡開始建立您的專屬品牌頁吧！<br />
-                    完成「基本資訊」與「精彩瞬間」後，即可預覽您的品牌頁；準備好時，再申請品牌頁上線。
+                    完成「基本資訊」與「精彩瞬間」後，即可申請品牌頁上線。<br />
+                    也歡迎先閱讀「引導者合作約定」，一起認識我們的共創方式。
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex-col sm:flex-row gap-2 sm:justify-center">
@@ -722,14 +723,10 @@ export default function TeacherDashboard() {
                     style={{ background: "linear-gradient(135deg,#E89B5C 0%,#E36435 60%,#C9461E 100%)" }}
                     onClick={() => {
                       dismissIntroAgreement();
-                      setTimeout(() => {
-                        document
-                          .getElementById("identity")
-                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }, 60);
+                      setShowViewAgreement(true);
                     }}
                   >
-                    開始建立品牌頁
+                    前往引導者合作約定
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -856,7 +853,7 @@ export default function TeacherDashboard() {
                 </div>
                 <DialogFooter className="flex-col sm:flex-row sm:justify-center">
                   <Button variant="ghost" onClick={() => setShowViewAgreement(false)}>
-                    關閉
+                    返回建立品牌頁
                   </Button>
                 </DialogFooter>
               </DialogContent>
