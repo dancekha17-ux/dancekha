@@ -213,7 +213,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="text-center"
+                className="text-center w-full max-w-md mx-auto box-border"
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                   <Sparkles className="h-5 w-5 text-primary" />
