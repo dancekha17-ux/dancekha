@@ -122,18 +122,21 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   };
 
   const share = async () => {
-    const url = `${window.location.origin}/?dna=${resultKey}`;
-    const text =
-      `剛測完我的舞蹈DNA，原來我是「${result.title}」！💃\n` +
-      `點進來測測看你是哪種舞蹈基因，看看我們適不適合一起組隊跳舞？👇\n` +
-      `${url}`;
+    const shareUrl = `${window.location.origin}/?dna=${resultKey}`;
+    const shareData = {
+      title: "解鎖你的舞蹈DNA",
+      text:
+        `剛測完我的舞蹈DNA，原來我是「${result.title}」！💃\n` +
+        `點進來測測看你是哪種舞蹈基因，看看我們適不適合一起組隊跳舞？👇\n` +
+        `${shareUrl}`,
+    };
     try {
       if (navigator.share) {
-        // 文字內已含連結，避免部分瀏覽器 text/url 欄位重複貼上
-        await navigator.share({ text });
+        // 僅傳 text（含網址），不另傳 url 欄位，避免 LINE/Messenger 拆成兩則訊息
+        await navigator.share(shareData);
       } else {
-        await navigator.clipboard.writeText(text);
-        toast.success("已複製你的檢測結果連結，邀請好友一起玩！");
+        await navigator.clipboard.writeText(shareData.text);
+        toast.success("已複製分享連結與文案");
       }
     } catch {
       /* user cancelled */
