@@ -231,9 +231,9 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                   {result.subtitle}
                 </p>
 
-                <div className="rounded-2xl bg-primary/5 border border-primary/15 px-5 py-4 text-left mb-4">
-                  <p className="text-[11px] font-body text-primary mb-1.5">你的潛意識身體處方</p>
-                  <p className="font-body text-sm text-foreground leading-relaxed">
+                <div className="rounded-2xl bg-primary/5 border border-primary/15 px-5 py-4 text-left mb-4 box-border">
+                  <p className="text-[11px] font-body text-primary mb-1.5 w-full break-words whitespace-normal">你的潛意識身體處方</p>
+                  <p className="font-body text-sm text-foreground leading-relaxed w-full break-words whitespace-normal">
                     {result.prescription}
                   </p>
                 </div>
