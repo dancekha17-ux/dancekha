@@ -108,11 +108,20 @@ export async function fetchInstructorBySlug(
   let isPreview = false;
 
   if (!row) {
-    const { data: anyRow } = await supabase
+    let { data: anyRow } = await supabase
       .from("teacher_profiles")
       .select("*")
       .eq("slug", slug)
       .maybeSingle();
+    // Profiles without a slug yet can still be previewed by their id
+    if (!anyRow && /^[0-9a-f-]{36}$/i.test(slug)) {
+      const { data: byId } = await supabase
+        .from("teacher_profiles")
+        .select("*")
+        .eq("id", slug)
+        .maybeSingle();
+      anyRow = byId;
+    }
     if (anyRow) {
       const { data: auth } = await supabase.auth.getUser();
       const uid = auth.user?.id;
