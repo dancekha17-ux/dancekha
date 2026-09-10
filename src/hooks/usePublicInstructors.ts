@@ -8,6 +8,7 @@ export interface PublicInstructor {
   nameEn: string;
   specialty: string;
   region: string;
+  danceStyles: string[];
   functionTags: string[];
   cover: string;
   avatar: string;
