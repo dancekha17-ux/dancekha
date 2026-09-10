@@ -128,14 +128,17 @@ export function ProfileSummaryCard({ userId, profile, update, onSave, autoSaveSt
             </h2>
           </div>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setOpen(true)}
-          className="shrink-0"
-        >
-          <Pencil className="w-3.5 h-3.5" /> 編輯資料
-        </Button>
+        <div className="flex items-center gap-3 shrink-0">
+          <AutoSaveHint state={autoSaveState} />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setOpen(true)}
+            className="shrink-0"
+          >
+            <Pencil className="w-3.5 h-3.5" /> 編輯資料
+          </Button>
+        </div>
       </header>
 
       {/* Preview */}
