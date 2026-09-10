@@ -241,8 +241,6 @@ export default function TeacherDashboard() {
   }, [autoSaveDraft]);
 
   // Warn on tab/refresh only when a draft really is still unsaved
-  const dirtyRef = useRef(false);
-  dirtyRef.current = dirty;
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
       if (!dirtyRef.current) return;
