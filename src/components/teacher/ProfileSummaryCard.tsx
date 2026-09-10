@@ -352,8 +352,8 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
                   </>
                 }
                 values={profile.dance_styles}
-                placeholder="現代舞, 即興, Contact Improv"
-                hint="以逗號分隔"
+                placeholder="請輸入舞種或專長風格（如：日本俑舞、佛朗明哥），輸入逗號即可新增標籤"
+                hint="輸入逗號或按 Enter 即可新增標籤，點標籤上的 × 可移除"
                 onChange={(v) => update({ dance_styles: v })}
               />
               <ExperienceEditor
