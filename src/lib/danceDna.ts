@@ -32,8 +32,8 @@ export const DNA_PROFILES: Record<DnaKey, DnaProfile> = {
       { label: "文化共鳴", value: 94 },
     ],
     prescription:
-      "巴爾幹圓圈舞——手牽著手、腳踩著大地的重複節奏，能安撫過度運轉的神經，同時鬆開久坐的肩頸與髖關節。",
-    genres: ["巴爾幹圓圈舞 Horo", "印度 Odissi 奧迪西舞", "身體開發／律動基礎"],
+      "巴爾幹圈舞與古典儀式——手牽著手、腳踩著大地的重複節奏與優雅肢體，能安撫過度運轉的神經。",
+    genres: ["巴爾幹圈舞 Horo", "中國古典舞", "芭蕾舞", "印度 Odissi 奧迪西舞", "身體開發／律動基礎"],
     category: "balkans",
     diagnosis: [
       {
@@ -71,8 +71,8 @@ export const DNA_PROFILES: Record<DnaKey, DnaProfile> = {
       { label: "文化共鳴", value: 84 },
     ],
     prescription:
-      "夏威夷 Hula 與手鼓律動——柔軟的腰臀波浪與呼吸同步，零基礎、免舞伴，跳完整個人像被海風吹過。",
-    genres: ["夏威夷 Hula 呼拉舞", "希臘／以色列民俗舞", "零基礎律動入門"],
+      "夏威夷 Hula 與大溪地律動——柔軟的腰臀波浪、腳步擺動與呼吸同步，零基礎、免舞伴，跳完整個人像被海風吹過。",
+    genres: ["夏威夷 Hula 呼拉舞", "大溪地舞", "美國方舞", "蘇格蘭舞", "希臘／以色列民俗舞", "零基礎律動入門"],
     category: "beginner",
     diagnosis: [
       {
@@ -111,7 +111,7 @@ export const DNA_PROFILES: Record<DnaKey, DnaProfile> = {
     ],
     prescription:
       "佛朗明哥與拉丁節奏——強烈的踏步、核心與眼神訓練，一堂課就能把情緒轉成氣場與核心力量。",
-    genres: ["西班牙佛朗明哥", "Salsa 莎莎舞", "K-POP／街舞"],
+    genres: ["西班牙佛朗明哥", "Salsa 莎莎舞", "K-POP／街舞", "中國民族民間舞"],
     category: "latin",
     diagnosis: [
       {
@@ -149,8 +149,8 @@ export const DNA_PROFILES: Record<DnaKey, DnaProfile> = {
       { label: "文化共鳴", value: 78 },
     ],
     prescription:
-      "現代舞與中東 Raqs Sharqi——連續、綿延的軀幹流動，讓情緒有出口，也讓身體重新找回柔軟。",
-    genres: ["現代舞 Contemporary", "中東 Raqs Sharqi", "Swing 搖擺舞"],
+      "現代舞與中東肚皮舞——連續、綿延的軀幹流動，讓情緒有出口，也讓身體重新找回柔軟。",
+    genres: ["現代舞 Contemporary", "中東肚皮舞", "Swing 搖擺舞"],
     category: "contemporary",
     diagnosis: [
       {
