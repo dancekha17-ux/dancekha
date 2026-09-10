@@ -48,14 +48,28 @@ interface ProfileLike {
   contact_phone: string | null;
 }
 
+type AutoSaveState = "idle" | "saving" | "saved" | "error";
+
 interface Props {
   userId: string;
   profile: ProfileLike;
   update: (patch: Partial<ProfileLike>) => void;
   onSave?: () => Promise<void> | void;
+  autoSaveState?: AutoSaveState;
 }
 
-export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
+function AutoSaveHint({ state }: { state: AutoSaveState }) {
+  if (state === "idle") return null;
+  const map: Record<Exclude<AutoSaveState, "idle">, { text: string; cls: string }> = {
+    saving: { text: "正在儲存…", cls: "text-muted-foreground" },
+    saved: { text: "已自動儲存", cls: "text-muted-foreground" },
+    error: { text: "儲存失敗，請再試一次", cls: "text-destructive" },
+  };
+  const { text, cls } = map[state];
+  return <span className={`text-xs ${cls}`}>{text}</span>;
+}
+
+export function ProfileSummaryCard({ userId, profile, update, onSave, autoSaveState = "idle" }: Props) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
