@@ -380,6 +380,7 @@ export default function TeacherDashboard() {
     } else {
       setProfile((p) => (p ? { ...p, languages } : p));
       setDirty(false);
+      setAutoSaveState("saved");
       toast({ title: "已儲存", description: "你的舞蹈故事已更新" });
     }
   };
