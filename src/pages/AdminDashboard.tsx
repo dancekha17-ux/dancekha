@@ -370,13 +370,11 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    {row.slug && (
-                      <Button asChild variant="ghost" size="sm">
-                        <Link to={`/instructors/${row.slug}`} target="_blank">
-                          <ExternalLink className="w-4 h-4" /> 預覽
-                        </Link>
-                      </Button>
-                    )}
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to={`/instructors/${row.slug?.trim() || row.id}`} target="_blank">
+                        <ExternalLink className="w-4 h-4" /> 預覽
+                      </Link>
+                    </Button>
                     {row.brand_page_status === "pending_review" && (
                       <>
                         <Button
