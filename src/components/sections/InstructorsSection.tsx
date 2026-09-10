@@ -28,7 +28,7 @@ export function InstructorsSection() {
     const matches = publishedInstructors.filter((i) => {
       const hay = [
         i.region,
-        i.specialty,
+        ...(i.danceStyles || []),
         i.name,
         i.nameEn,
         ...(i.functionTags || []),
@@ -148,9 +148,14 @@ export function InstructorsSection() {
                 {/* Content */}
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3 flex-wrap">
-                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
-                      {instructor.specialty}
-                    </span>
+                    {(instructor.danceStyles || []).slice(0, 4).map((s) => (
+                      <span
+                        key={s}
+                        className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                      >
+                        {s}
+                      </span>
+                    ))}
                     <span className="inline-block px-3 py-1 bg-soul/10 text-soul text-xs font-medium rounded-full">
                       {instructor.region}
                     </span>

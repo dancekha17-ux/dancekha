@@ -316,29 +316,17 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="specialty">專長</Label>
-                <Input
-                  id="specialty"
-                  value={profile.specialty}
-                  maxLength={120}
-                  placeholder="現代舞 / 即興"
-                  onChange={(e) => update({ specialty: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="region">
-                  地區 <span className="text-[#E89B5C]">*</span>
-                </Label>
-                <Input
-                  id="region"
-                  value={profile.region}
-                  maxLength={80}
-                  placeholder="亞洲・台灣"
-                  onChange={(e) => update({ region: e.target.value })}
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="region">
+                地區 <span className="text-[#E89B5C]">*</span>
+              </Label>
+              <Input
+                id="region"
+                value={profile.region}
+                maxLength={80}
+                placeholder="亞洲・台灣"
+                onChange={(e) => update({ region: e.target.value })}
+              />
             </div>
 
             <div className="space-y-2">
@@ -364,8 +352,8 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
                   </>
                 }
                 values={profile.dance_styles}
-                placeholder="現代舞, 即興, Contact Improv"
-                hint="以逗號分隔"
+                placeholder="請輸入舞種或專長風格（如：日本俑舞、佛朗明哥），輸入逗號即可新增標籤"
+                hint="輸入逗號或按 Enter 即可新增標籤，點標籤上的 × 可移除"
                 onChange={(v) => update({ dance_styles: v })}
               />
               <ExperienceEditor

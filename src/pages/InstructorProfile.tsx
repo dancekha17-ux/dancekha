@@ -193,15 +193,19 @@ export default function InstructorProfile() {
               <h1 className="text-3xl md:text-5xl font-display font-semibold text-foreground mb-1">
                 {instructor.name}
               </h1>
-              <p className="text-lg font-body text-muted-foreground mb-4">
-                {instructor.nameEn} · {instructor.specialty}
-              </p>
+              {instructor.nameEn && (
+                <p className="text-lg font-body text-muted-foreground mb-4">
+                  {instructor.nameEn}
+                </p>
+              )}
               <div className="flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-soul/10 text-soul text-xs font-medium border border-soul/20">
                   <MapPin className="w-3.5 h-3.5" />
                   {instructor.region}
                 </span>
-                {instructor.functionTags.map((t) => (
+                {Array.from(
+                  new Set([...(instructor.danceStyles || []), ...(instructor.functionTags || [])]),
+                ).map((t) => (
                   <span
                     key={t}
                     className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium"

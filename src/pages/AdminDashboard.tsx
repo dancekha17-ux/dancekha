@@ -21,6 +21,7 @@ interface PendingProfile {
   name: string | null;
   slug: string | null;
   specialty: string | null;
+  dance_styles: string[] | null;
   region: string | null;
   avatar_url: string | null;
   bio: string | null;
@@ -178,7 +179,7 @@ export default function AdminDashboard() {
   const refresh = async () => {
     const { data } = await (supabase as any)
       .from("teacher_profiles")
-      .select("id,user_id,name,slug,specialty,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
+      .select("id,user_id,name,slug,specialty,dance_styles,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
     const rows = (data ?? []) as PendingProfile[];
     setPending(rows.filter((r) => r.brand_page_status === "pending_review"));
@@ -335,7 +336,7 @@ export default function AdminDashboard() {
                       </p>
                       <ContactLine email={row.contact_email} phone={row.contact_phone} />
                       <p className="text-sm text-muted-foreground truncate mt-1">
-                        {[row.specialty, row.region].filter(Boolean).join(" · ") || "尚未填寫專長"}
+                        {[(row.dance_styles ?? []).filter(Boolean).join(" / "), row.region].filter(Boolean).join(" · ") || "尚未填寫專長"}
                       </p>
                       <p className="text-xs text-muted-foreground/80 mt-1">
                         更新於 {new Date(row.updated_at).toLocaleString("zh-TW")}
@@ -399,7 +400,7 @@ export default function AdminDashboard() {
                   <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
                   <ContactLine email={row.contact_email} phone={row.contact_phone} />
                   <p className="text-xs text-muted-foreground truncate mt-1">
-                    {[row.specialty, row.region].filter(Boolean).join(" · ")}
+                    {[(row.dance_styles ?? []).filter(Boolean).join(" / "), row.region].filter(Boolean).join(" · ")}
                   </p>
                   <div className="mt-2 flex items-center gap-2 flex-wrap">
                     <BrandStatusBadge status={row.brand_page_status} />
@@ -537,7 +538,7 @@ export default function AdminDashboard() {
                     <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
                     <ContactLine email={row.contact_email} phone={row.contact_phone} />
                     <p className="text-xs text-muted-foreground truncate mt-1">
-                      {[row.specialty, row.region].filter(Boolean).join(" · ")}
+                      {[(row.dance_styles ?? []).filter(Boolean).join(" / "), row.region].filter(Boolean).join(" · ")}
                     </p>
                     <div className="mt-2">
                       <BrandStatusBadge status={row.brand_page_status} />
