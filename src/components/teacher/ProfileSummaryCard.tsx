@@ -455,7 +455,10 @@ export function ProfileSummaryCard({ userId, profile, update, onSave, autoSaveSt
             </div>
           </div>
 
-          <DialogFooter className="pt-4">
+          <DialogFooter className="pt-4 sm:items-center gap-2">
+            <div className="mr-auto">
+              <AutoSaveHint state={autoSaveState} />
+            </div>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={savingModal}>
               取消
             </Button>
