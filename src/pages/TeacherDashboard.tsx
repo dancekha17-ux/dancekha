@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Camera, Eye, LogOut, CheckCircle2, Clock, Circle, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
@@ -92,6 +92,9 @@ export default function TeacherDashboard() {
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const dirtyRef = useRef(false);
+  dirtyRef.current = dirty;
+  const [autoSaveState, setAutoSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
   const [showIntroAgreement, setShowIntroAgreement] = useState(false);
   const [showPublishAgreement, setShowPublishAgreement] = useState(false);
@@ -173,16 +176,80 @@ export default function TeacherDashboard() {
     setDirty(true);
   };
 
-  // Warn on tab/refresh when there are unsaved changes
+  // ---- Auto-draft-save (debounced) for 基本資訊 fields ----
+  const profileRef = useRef<Profile | null>(null);
+  profileRef.current = profile;
+  const autoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoSaving = useRef(false);
+
+  const buildProfilePayload = (p: Profile) => ({
+    name: p.name?.trim() ?? "",
+    name_en: p.name_en?.trim() ?? "",
+    slug: p.slug?.trim() || null,
+    specialty: p.specialty?.trim() ?? "",
+    region: p.region?.trim() ?? "",
+    tagline: p.tagline?.trim() ?? "",
+    bio: p.bio?.trim() ?? "",
+    credentials: (p.credentials ?? []).map((s) => s.trim()).filter(Boolean),
+    languages: (p.languages ?? []).filter(Boolean),
+    dance_styles: (p.dance_styles ?? []).filter(Boolean),
+    instagram_url: p.instagram_url?.trim() || null,
+    youtube_url: p.youtube_url?.trim() || null,
+    website_url: p.website_url?.trim() || null,
+    contact_email: p.contact_email?.trim() || null,
+    contact_phone: p.contact_phone?.trim() || null,
+  });
+
+  // Saves whatever is currently filled in, without required-field validation.
+  const autoSaveDraft = useCallback(async (): Promise<boolean> => {
+    const p = profileRef.current;
+    if (!p || !user || autoSaving.current) return false;
+    autoSaving.current = true;
+    setAutoSaveState("saving");
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update(buildProfilePayload(p))
+      .eq("user_id", user.id);
+    autoSaving.current = false;
+    if (error) {
+      setAutoSaveState("error");
+      return false;
+    }
+    setDirty(false);
+    setAutoSaveState("saved");
+    return true;
+  }, [user]);
+
+  // Debounce: fire ~1.5s after the teacher stops typing
+  useEffect(() => {
+    if (!dirty || !profile || !user) return;
+    if (autoTimer.current) clearTimeout(autoTimer.current);
+    autoTimer.current = setTimeout(() => {
+      void autoSaveDraft();
+    }, 1500);
+    return () => {
+      if (autoTimer.current) clearTimeout(autoTimer.current);
+    };
+  }, [profile, dirty, user, autoSaveDraft]);
+
+  // Flush pending draft when leaving the dashboard (route change / unmount)
+  useEffect(() => {
+    return () => {
+      if (autoTimer.current) clearTimeout(autoTimer.current);
+      if (dirtyRef.current) void autoSaveDraft();
+    };
+  }, [autoSaveDraft]);
+
+  // Warn on tab/refresh only when a draft really is still unsaved
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
-      if (!dirty) return;
+      if (!dirtyRef.current) return;
       e.preventDefault();
-      e.returnValue = "";
+      e.returnValue = "您有尚未儲存的內容，確定要離開嗎？";
     };
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
-  }, [dirty]);
+  }, []);
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -313,6 +380,7 @@ export default function TeacherDashboard() {
     } else {
       setProfile((p) => (p ? { ...p, languages } : p));
       setDirty(false);
+      setAutoSaveState("saved");
       toast({ title: "已儲存", description: "你的舞蹈故事已更新" });
     }
   };
@@ -904,7 +972,13 @@ export default function TeacherDashboard() {
 
 
             {/* Card A — Identity + Tags + Connect */}
-            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} onSave={handleSave} />
+            <ProfileSummaryCard
+              userId={user!.id}
+              profile={profile}
+              update={update}
+              onSave={handleSave}
+              autoSaveState={autoSaveState}
+            />
 
             {/* Card B — Story + Cover + Moments */}
             <div id="media" className="scroll-mt-24">

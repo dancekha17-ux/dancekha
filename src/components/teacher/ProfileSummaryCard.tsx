@@ -48,14 +48,28 @@ interface ProfileLike {
   contact_phone: string | null;
 }
 
+type AutoSaveState = "idle" | "saving" | "saved" | "error";
+
 interface Props {
   userId: string;
   profile: ProfileLike;
   update: (patch: Partial<ProfileLike>) => void;
   onSave?: () => Promise<void> | void;
+  autoSaveState?: AutoSaveState;
 }
 
-export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
+function AutoSaveHint({ state }: { state: AutoSaveState }) {
+  if (state === "idle") return null;
+  const map: Record<Exclude<AutoSaveState, "idle">, { text: string; cls: string }> = {
+    saving: { text: "正在儲存…", cls: "text-muted-foreground" },
+    saved: { text: "已自動儲存", cls: "text-muted-foreground" },
+    error: { text: "儲存失敗，請再試一次", cls: "text-destructive" },
+  };
+  const { text, cls } = map[state];
+  return <span className={`text-xs ${cls}`}>{text}</span>;
+}
+
+export function ProfileSummaryCard({ userId, profile, update, onSave, autoSaveState = "idle" }: Props) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -114,14 +128,17 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
             </h2>
           </div>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setOpen(true)}
-          className="shrink-0"
-        >
-          <Pencil className="w-3.5 h-3.5" /> 編輯資料
-        </Button>
+        <div className="flex items-center gap-3 shrink-0">
+          <AutoSaveHint state={autoSaveState} />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setOpen(true)}
+            className="shrink-0"
+          >
+            <Pencil className="w-3.5 h-3.5" /> 編輯資料
+          </Button>
+        </div>
       </header>
 
       {/* Preview */}
@@ -438,7 +455,10 @@ export function ProfileSummaryCard({ userId, profile, update, onSave }: Props) {
             </div>
           </div>
 
-          <DialogFooter className="pt-4">
+          <DialogFooter className="pt-4 sm:items-center gap-2">
+            <div className="mr-auto">
+              <AutoSaveHint state={autoSaveState} />
+            </div>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={savingModal}>
               取消
             </Button>
