@@ -49,6 +49,7 @@ function dbToPublic(row: any, master?: any): PublicInstructor {
     nameEn: row.name_en || "",
     specialty: row.specialty || "",
     region: row.region || "",
+    danceStyles: (row.dance_styles || []).filter(Boolean),
     functionTags: master?.cultural_tags?.length ? master.cultural_tags : (row.dance_styles || []),
     cover: profileImg || row.hero_image_url || row.avatar_url || fallbackCover,
     avatar: master?.logo_url || row.avatar_url || "/placeholder.svg",
