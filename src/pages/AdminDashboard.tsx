@@ -103,12 +103,34 @@ export default function AdminDashboard() {
   const [inviteNotes, setInviteNotes] = useState("");
   const [pausingProfile, setPausingProfile] = useState<PendingProfile | null>(null);
 
+  // Every public brand page is reached by its slug, so make sure one exists before going live
+  const ensureSlug = async (row: PendingProfile): Promise<string | null> => {
+    if (row.slug && row.slug.trim()) return row.slug.trim();
+    const base =
+      (row as any).name_en?.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "";
+    const fallback = `guide-${row.id.slice(0, 8)}`;
+    let candidate = base && /^[a-z0-9-]{2,}$/.test(base) ? base : fallback;
+    const { data: taken } = await (supabase as any)
+      .from("teacher_profiles")
+      .select("id")
+      .eq("slug", candidate)
+      .maybeSingle();
+    if (taken && taken.id !== row.id) candidate = fallback;
+    return candidate;
+  };
+
   // Brand page: confirm the teacher's brand page goes live
   const confirmBrandLive = async (row: PendingProfile) => {
     setBusyId(row.id);
+    const slug = await ensureSlug(row);
     const { error } = await (supabase as any)
       .from("teacher_profiles")
-      .update({ is_approved: true, brand_page_status: "published", brand_revision_notes: null })
+      .update({
+        is_approved: true,
+        brand_page_status: "published",
+        brand_revision_notes: null,
+        slug,
+      })
       .eq("id", row.id);
     setBusyId(null);
     if (error) {
@@ -118,6 +140,7 @@ export default function AdminDashboard() {
     toast({ title: "品牌頁已正式上線！" });
     refresh();
   };
+
 
   // Brand page: pause a live brand page (keeps all data; hides from public via is_approved = false)
   const pauseBrandLive = async () => {
