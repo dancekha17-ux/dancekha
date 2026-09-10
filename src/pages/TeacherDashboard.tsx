@@ -92,6 +92,9 @@ export default function TeacherDashboard() {
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const dirtyRef = useRef(false);
+  dirtyRef.current = dirty;
+  const [autoSaveState, setAutoSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [revisionAlerts, setRevisionAlerts] = useState<Array<{ id: string; title: string; revision_notes: string }>>([]);
   const [showIntroAgreement, setShowIntroAgreement] = useState(false);
   const [showPublishAgreement, setShowPublishAgreement] = useState(false);
