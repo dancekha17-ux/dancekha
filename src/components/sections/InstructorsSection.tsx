@@ -28,7 +28,7 @@ export function InstructorsSection() {
     const matches = publishedInstructors.filter((i) => {
       const hay = [
         i.region,
-        i.specialty,
+        ...(i.danceStyles || []),
         i.name,
         i.nameEn,
         ...(i.functionTags || []),
