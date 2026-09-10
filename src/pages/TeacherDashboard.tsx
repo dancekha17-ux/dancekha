@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Camera, Eye, LogOut, CheckCircle2, Clock, Circle, UserCircle2, FileSignature, CalendarRange, MapPin, Send } from "lucide-react";
