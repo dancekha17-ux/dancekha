@@ -972,7 +972,13 @@ export default function TeacherDashboard() {
 
 
             {/* Card A — Identity + Tags + Connect */}
-            <ProfileSummaryCard userId={user!.id} profile={profile} update={update} onSave={handleSave} />
+            <ProfileSummaryCard
+              userId={user!.id}
+              profile={profile}
+              update={update}
+              onSave={handleSave}
+              autoSaveState={autoSaveState}
+            />
 
             {/* Card B — Story + Cover + Moments */}
             <div id="media" className="scroll-mt-24">
