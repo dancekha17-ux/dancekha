@@ -203,7 +203,9 @@ export default function InstructorProfile() {
                   <MapPin className="w-3.5 h-3.5" />
                   {instructor.region}
                 </span>
-                {instructor.functionTags.map((t) => (
+                {Array.from(
+                  new Set([...(instructor.danceStyles || []), ...(instructor.functionTags || [])]),
+                ).map((t) => (
                   <span
                     key={t}
                     className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium"
