@@ -29,6 +29,23 @@ export default function TeacherAuth() {
     if (session) navigate("/teacher/dashboard", { replace: true });
   }, [session, navigate]);
 
+  const handleGoogle = async () => {
+    setBusy(true);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
+      if (result.error) {
+        toast({ title: "無法使用 Google 登入", description: "請稍後再試，或改用 Email 註冊。", variant: "destructive" });
+        return;
+      }
+      if (result.redirected) return;
+      navigate("/teacher/dashboard", { replace: true });
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = credentialsSchema.safeParse({ email, password });
