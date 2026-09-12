@@ -526,7 +526,7 @@ export default function TeacherDashboard() {
 
 
 
-  if (authLoading || loading || !profile) {
+  if (authLoading || loading || !user || !profile) {
 
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
