@@ -40,9 +40,8 @@ export interface PasswordStrengthRule {
 }
 
 export const defaultPasswordRules: PasswordStrengthRule[] = [
-  { label: "至少 8 個字元，避免使用姓名、生日或常見密碼", test: (v) => v.length >= 8 },
-  { label: "包含至少一個大寫英文字母", test: (v) => /[A-Z]/.test(v) },
-  { label: "包含至少一個數字或特殊符號", test: (v) => /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(v) },
+  { label: "至少 8 個字元", test: (v) => v.length >= 8 },
+  { label: "包含英文字母與數字", test: (v) => /[A-Za-z]/.test(v) && /[0-9]/.test(v) },
 ];
 
 export function isPasswordStrong(v: string, rules: PasswordStrengthRule[] = defaultPasswordRules) {
@@ -67,9 +66,8 @@ export function PasswordStrengthMeter({
 
   const level =
     passed === 0 ? { label: "請輸入密碼", color: "bg-muted-foreground/30", text: "text-muted-foreground" } :
-    passed === 1 ? { label: "弱", color: "bg-[#E8A87C]", text: "text-[#C97B5C]" } :
-    passed === 2 ? { label: "中", color: "bg-[#D4A574]", text: "text-[#A8763E]" } :
-                   { label: "強", color: "bg-[#7FA988]", text: "text-[#5C8268]" };
+    passed < total ? { label: "尚可", color: "bg-[#D4A574]", text: "text-[#A8763E]" } :
+                     { label: "可以使用", color: "bg-[#7FA988]", text: "text-[#5C8268]" };
 
   return (
     <div className={cn("space-y-2 pt-1", className)}>
