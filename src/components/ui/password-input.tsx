@@ -40,9 +40,8 @@ export interface PasswordStrengthRule {
 }
 
 export const defaultPasswordRules: PasswordStrengthRule[] = [
-  { label: "至少 8 個字元，避免使用姓名、生日或常見密碼", test: (v) => v.length >= 8 },
-  { label: "包含至少一個大寫英文字母", test: (v) => /[A-Z]/.test(v) },
-  { label: "包含至少一個數字或特殊符號", test: (v) => /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(v) },
+  { label: "至少 8 個字元", test: (v) => v.length >= 8 },
+  { label: "包含英文字母與數字", test: (v) => /[A-Za-z]/.test(v) && /[0-9]/.test(v) },
 ];
 
 export function isPasswordStrong(v: string, rules: PasswordStrengthRule[] = defaultPasswordRules) {
