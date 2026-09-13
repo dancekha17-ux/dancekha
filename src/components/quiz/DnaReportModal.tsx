@@ -117,6 +117,33 @@ export function DnaReportModal({ open, onOpenChange, dnaKey, onRetake }: Props) 
             </div>
           </section>
 
+          {indigenous.length > 0 && (
+            <section>
+              <span className="eyebrow">Taiwan Indigenous · 台灣原住民族舞蹈延伸推薦</span>
+              <div className="mt-4 space-y-3">
+                {indigenous.map(({ dance }) => (
+                  <div
+                    key={dance.id}
+                    className="rounded-2xl border border-border/60 bg-secondary/30 px-5 py-4"
+                  >
+                    <p className="font-display text-sm text-foreground mb-1.5">{dance.name}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{dance.blurb}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {dance.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full bg-primary/10 px-3 py-1 text-xs text-foreground"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* CTA */}
           <div>
             <Button size="lg" className="w-full group" onClick={goCourses}>
