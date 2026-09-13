@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import {
   ArrowRight,
   Globe2,
@@ -151,9 +152,21 @@ export default function TeacherRecruit() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openCardIndex, setOpenCardIndex] = useState<number | null>(null);
 
+  const navigate = useNavigate();
+  const { session, loading: authLoading } = useAuth();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleApplyClick = () => {
+    if (authLoading) return;
+    if (session) {
+      navigate("/teacher/dashboard");
+    } else {
+      navigate("/signup");
+    }
+  };
 
 
   return (
@@ -244,15 +257,13 @@ export default function TeacherRecruit() {
               className="flex flex-wrap items-center justify-center gap-3"
             >
               <Button
-                asChild
                 size="lg"
+                onClick={handleApplyClick}
                 className="group rounded-full px-10 py-6 text-base font-medium transition-all duration-300 hover:shadow-lg"
                 style={{ backgroundColor: PALETTE.cta, color: "#FFFFFF" }}
               >
-                <Link to="/teacher/login">
-                  立即申請成為引導者
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                立即申請成為引導者
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <a
                 href="#why-join"
@@ -738,15 +749,13 @@ export default function TeacherRecruit() {
               className="flex flex-wrap items-center justify-center gap-3"
             >
               <Button
-                asChild
                 size="lg"
+                onClick={handleApplyClick}
                 className="group rounded-full px-10 py-6 text-base font-medium transition-all duration-300 hover:shadow-lg"
                 style={{ backgroundColor: PALETTE.cta, color: "#FFFFFF" }}
               >
-                <Link to="/teacher/login">
-                  立即申請成為引導者
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                立即申請成為引導者
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
                 asChild

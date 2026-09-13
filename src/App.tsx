@@ -38,6 +38,7 @@ const App = () => (
             <Route path="/styles" element={<Navigate to="/world-dance" replace />} />
             <Route path="/course-detail/:id" element={<CourseDetail />} />
             <Route path="/teacher/login" element={<TeacherAuth />} />
+            <Route path="/signup" element={<TeacherAuth defaultMode="signup" />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
