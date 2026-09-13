@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle } from "lucide-react";
+import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle, Trash2, Archive, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ const BRAND_STATUS_LABEL: Record<string, string> = {
   pending_review: "品牌頁確認中",
   published: "品牌頁已上線",
   needs_revision: "品牌頁待完善",
+  archived: "已封存",
 };
 
 function BrandStatusBadge({ status }: { status?: string | null }) {
@@ -47,6 +48,7 @@ function BrandStatusBadge({ status }: { status?: string | null }) {
     pending_review: "bg-[#E89B5C]/15 text-[#B25C2E] border-[#E89B5C]/40",
     published: "bg-success/10 text-success border-success/30",
     needs_revision: "bg-primary/10 text-primary border-primary/30",
+    archived: "bg-muted text-muted-foreground border-dashed border-muted-foreground/40",
   };
   return (
     <span className={`inline-block text-[11px] px-2 py-0.5 rounded-full border ${tone[key]}`}>
@@ -102,6 +104,41 @@ export default function AdminDashboard() {
   const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
   const [inviteNotes, setInviteNotes] = useState("");
   const [pausingProfile, setPausingProfile] = useState<PendingProfile | null>(null);
+  const [archived, setArchived] = useState<PendingProfile[]>([]);
+  const [archivingProfile, setArchivingProfile] = useState<PendingProfile | null>(null);
+
+  // Soft delete: hide the brand page from every working list while keeping all data
+  const archiveProfile = async () => {
+    if (!archivingProfile) return;
+    setBusyId(archivingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false, brand_page_status: "archived" })
+      .eq("id", archivingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "已順利將該引導者移至封存區" });
+    setArchivingProfile(null);
+    refresh();
+  };
+
+  const restoreProfile = async (row: PendingProfile) => {
+    setBusyId(row.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ brand_page_status: "draft" })
+      .eq("id", row.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "已恢復此引導者", description: "已移回「品牌頁準備中／待完善」。" });
+    refresh();
+  };
 
   // Every public brand page is reached by its slug, so make sure one exists before going live
   const ensureSlug = async (row: PendingProfile): Promise<string | null> => {
@@ -204,7 +241,9 @@ export default function AdminDashboard() {
       .from("teacher_profiles")
       .select("id,user_id,name,slug,specialty,dance_styles,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
-    const rows = (data ?? []) as PendingProfile[];
+    const all = (data ?? []) as PendingProfile[];
+    const rows = all.filter((r) => r.brand_page_status !== "archived");
+    setArchived(all.filter((r) => r.brand_page_status === "archived"));
     setPending(rows.filter((r) => r.brand_page_status === "pending_review"));
     setPreparing(rows.filter((r) => r.brand_page_status !== "pending_review" && !(r.is_approved === true && r.brand_page_status === "published")));
     setApproved(rows.filter((r) => r.is_approved === true && r.brand_page_status === "published"));
@@ -397,6 +436,17 @@ export default function AdminDashboard() {
                         </Button>
                       </>
                     )}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="封存此引導者"
+                      title="封存"
+                      className="h-8 w-8 text-muted-foreground/70 hover:text-destructive"
+                      disabled={busyId === row.id}
+                      onClick={() => setArchivingProfile(row)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
 
                 </li>
@@ -418,7 +468,20 @@ export default function AdminDashboard() {
             <ul className="grid sm:grid-cols-2 gap-3">
               {preparing.map((row) => (
                 <li key={row.id} className="rounded-2xl border border-border/60 bg-card p-4">
-                  <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="封存此引導者"
+                      title="封存"
+                      className="h-7 w-7 shrink-0 text-muted-foreground/70 hover:text-destructive"
+                      disabled={busyId === row.id}
+                      onClick={() => setArchivingProfile(row)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
                   <ContactLine email={row.contact_email} phone={row.contact_phone} />
                   <p className="text-xs text-muted-foreground truncate mt-1">
                     {[(row.dance_styles ?? []).filter(Boolean).join(" / "), row.region].filter(Boolean).join(" · ")}
@@ -582,13 +645,94 @@ export default function AdminDashboard() {
                     >
                       <PauseCircle className="w-4 h-4" /> 暫停上線
                     </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="封存此引導者"
+                      title="封存"
+                      className="h-7 w-7 text-muted-foreground/70 hover:text-destructive"
+                      disabled={busyId === row.id}
+                      onClick={() => setArchivingProfile(row)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </li>
               ))}
             </ul>
           )}
         </section>
+
+        <section className="mt-12">
+          <h2 className="font-display text-xl text-foreground flex items-center gap-2 mb-4">
+            <Archive className="w-5 h-5 text-muted-foreground" />
+            已封存 <span className="text-muted-foreground text-sm">({archived.length})</span>
+          </h2>
+          {archived.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
+              目前沒有已封存的引導者。
+            </div>
+          ) : (
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {archived.map((row) => (
+                <li
+                  key={row.id}
+                  className="rounded-2xl border border-dashed border-border/60 bg-card/60 p-4 flex items-center justify-between gap-3"
+                >
+                  <div className="min-w-0">
+                    <p className="font-medium text-muted-foreground truncate">{row.name ?? "未命名"}</p>
+                    <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                    <div className="mt-2">
+                      <BrandStatusBadge status="archived" />
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0"
+                    disabled={busyId === row.id}
+                    onClick={() => restoreProfile(row)}
+                  >
+                    <RotateCcw className="w-4 h-4" /> 恢復
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </main>
+
+      <Dialog
+        open={!!archivingProfile}
+        onOpenChange={(open) => {
+          if (!open) setArchivingProfile(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>確定要封存此引導者專頁嗎？</DialogTitle>
+            <DialogDescription>
+              封存後該專頁將從列表中隱藏，但歷史資料將完整保留。
+            </DialogDescription>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            引導者：<span className="text-foreground font-medium">{archivingProfile?.name ?? "未命名"}</span>
+          </p>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setArchivingProfile(null)}>
+              取消
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={busyId === archivingProfile?.id}
+              onClick={archiveProfile}
+            >
+              <Trash2 className="w-4 h-4" /> 確認封存
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
 
       <Dialog
         open={!!rejectingCourse}
