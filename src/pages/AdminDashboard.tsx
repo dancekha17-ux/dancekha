@@ -104,6 +104,41 @@ export default function AdminDashboard() {
   const [invitingProfile, setInvitingProfile] = useState<PendingProfile | null>(null);
   const [inviteNotes, setInviteNotes] = useState("");
   const [pausingProfile, setPausingProfile] = useState<PendingProfile | null>(null);
+  const [archived, setArchived] = useState<PendingProfile[]>([]);
+  const [archivingProfile, setArchivingProfile] = useState<PendingProfile | null>(null);
+
+  // Soft delete: hide the brand page from every working list while keeping all data
+  const archiveProfile = async () => {
+    if (!archivingProfile) return;
+    setBusyId(archivingProfile.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ is_approved: false, brand_page_status: "archived" })
+      .eq("id", archivingProfile.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "已順利將該引導者移至封存區" });
+    setArchivingProfile(null);
+    refresh();
+  };
+
+  const restoreProfile = async (row: PendingProfile) => {
+    setBusyId(row.id);
+    const { error } = await (supabase as any)
+      .from("teacher_profiles")
+      .update({ brand_page_status: "draft" })
+      .eq("id", row.id);
+    setBusyId(null);
+    if (error) {
+      toast({ title: "操作失敗", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "已恢復此引導者", description: "已移回「品牌頁準備中／待完善」。" });
+    refresh();
+  };
 
   // Every public brand page is reached by its slug, so make sure one exists before going live
   const ensureSlug = async (row: PendingProfile): Promise<string | null> => {
