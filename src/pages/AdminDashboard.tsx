@@ -662,7 +662,77 @@ export default function AdminDashboard() {
             </ul>
           )}
         </section>
+
+        <section className="mt-12">
+          <h2 className="font-display text-xl text-foreground flex items-center gap-2 mb-4">
+            <Archive className="w-5 h-5 text-muted-foreground" />
+            已封存 <span className="text-muted-foreground text-sm">({archived.length})</span>
+          </h2>
+          {archived.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground text-sm">
+              目前沒有已封存的引導者。
+            </div>
+          ) : (
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {archived.map((row) => (
+                <li
+                  key={row.id}
+                  className="rounded-2xl border border-dashed border-border/60 bg-card/60 p-4 flex items-center justify-between gap-3"
+                >
+                  <div className="min-w-0">
+                    <p className="font-medium text-muted-foreground truncate">{row.name ?? "未命名"}</p>
+                    <ContactLine email={row.contact_email} phone={row.contact_phone} />
+                    <div className="mt-2">
+                      <BrandStatusBadge status="archived" />
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0"
+                    disabled={busyId === row.id}
+                    onClick={() => restoreProfile(row)}
+                  >
+                    <RotateCcw className="w-4 h-4" /> 恢復
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </main>
+
+      <Dialog
+        open={!!archivingProfile}
+        onOpenChange={(open) => {
+          if (!open) setArchivingProfile(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>確定要封存此引導者專頁嗎？</DialogTitle>
+            <DialogDescription>
+              封存後該專頁將從列表中隱藏，但歷史資料將完整保留。
+            </DialogDescription>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            引導者：<span className="text-foreground font-medium">{archivingProfile?.name ?? "未命名"}</span>
+          </p>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setArchivingProfile(null)}>
+              取消
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={busyId === archivingProfile?.id}
+              onClick={archiveProfile}
+            >
+              <Trash2 className="w-4 h-4" /> 確認封存
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
 
       <Dialog
         open={!!rejectingCourse}
