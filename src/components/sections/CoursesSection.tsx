@@ -125,9 +125,17 @@ export function CoursesSection() {
     () => courses.filter((c) => {
       const catOk = activeCategory === "all" || c.category === activeCategory;
       const regOk = !regionFilter || (c as unknown as { region?: string }).region === regionFilter;
-      return catOk && regOk;
+      const searchOk = !searchQuery || matchesSearch(c.title ?? "", searchQuery);
+      return catOk && regOk && searchOk;
     }),
-    [courses, activeCategory, regionFilter]
+    [courses, activeCategory, regionFilter, searchQuery]
+  );
+
+  const filteredInstructorCourses = useMemo(
+    () => instructorCourses.filter(
+      (c) => !searchQuery || matchesSearch(c.title ?? "", searchQuery)
+    ),
+    [instructorCourses, searchQuery]
   );
 
   return (
