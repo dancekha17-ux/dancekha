@@ -52,6 +52,7 @@ export function CoursesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState("all");
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const { data: courses, loading } = useEvents("course");
   const [instructorCourses, setInstructorCourses] = useState<InstructorCourseCard[]>([]);
   const [icLoading, setIcLoading] = useState(true);
@@ -88,20 +89,36 @@ export function CoursesSection() {
     const handler = (e: Event) => {
       const region = (e as CustomEvent<string>).detail;
       setRegionFilter(region);
+      setSearchQuery(null);
       setActiveCategory("all");
     };
     const catHandler = (e: Event) => {
       const category = (e as CustomEvent<string>).detail;
       setRegionFilter(null);
+      setSearchQuery(null);
       setActiveCategory(category || "all");
+    };
+    const searchHandler = (e: Event) => {
+      const query = (e as CustomEvent<string>).detail;
+      setRegionFilter(null);
+      setActiveCategory("all");
+      setSearchQuery(query || null);
     };
     window.addEventListener("danceka:filter-region", handler);
     window.addEventListener("danceka:filter-category", catHandler);
+    window.addEventListener("danceka:filter-search", searchHandler);
     return () => {
       window.removeEventListener("danceka:filter-region", handler);
       window.removeEventListener("danceka:filter-category", catHandler);
+      window.removeEventListener("danceka:filter-search", searchHandler);
     };
   }, []);
+
+  const matchesSearch = (title: string, query: string) => {
+    const tokens = query.toLowerCase().split(/[\s／\/·、]+/).filter(Boolean);
+    const t = title.toLowerCase();
+    return tokens.some((tok) => t.includes(tok));
+  };
 
 
   const filtered = useMemo(
