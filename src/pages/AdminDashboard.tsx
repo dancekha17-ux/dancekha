@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle } from "lucide-react";
+import { CheckCircle2, XCircle, ShieldCheck, LogOut, ExternalLink, Clock, FileText, Send, Mail, Phone, PauseCircle, PlayCircle, Trash2, Archive, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
