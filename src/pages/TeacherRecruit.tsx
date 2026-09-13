@@ -257,15 +257,13 @@ export default function TeacherRecruit() {
               className="flex flex-wrap items-center justify-center gap-3"
             >
               <Button
-                asChild
                 size="lg"
+                onClick={handleApplyClick}
                 className="group rounded-full px-10 py-6 text-base font-medium transition-all duration-300 hover:shadow-lg"
                 style={{ backgroundColor: PALETTE.cta, color: "#FFFFFF" }}
               >
-                <Link to="/teacher/login">
-                  立即申請成為引導者
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                立即申請成為引導者
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <a
                 href="#why-join"
@@ -751,15 +749,13 @@ export default function TeacherRecruit() {
               className="flex flex-wrap items-center justify-center gap-3"
             >
               <Button
-                asChild
                 size="lg"
+                onClick={handleApplyClick}
                 className="group rounded-full px-10 py-6 text-base font-medium transition-all duration-300 hover:shadow-lg"
                 style={{ backgroundColor: PALETTE.cta, color: "#FFFFFF" }}
               >
-                <Link to="/teacher/login">
-                  立即申請成為引導者
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                立即申請成為引導者
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
                 asChild
