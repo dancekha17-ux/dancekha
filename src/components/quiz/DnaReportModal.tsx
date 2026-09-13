@@ -4,7 +4,7 @@ import { ArrowRight, RotateCcw, Share2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { DNA_PROFILES, type DnaKey } from "@/lib/danceDna";
+import { DNA_PROFILES, loadDnaResult, recommendIndigenous, type DnaKey } from "@/lib/danceDna";
 
 interface Props {
   open: boolean;
