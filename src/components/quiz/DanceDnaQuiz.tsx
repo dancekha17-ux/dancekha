@@ -84,6 +84,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   })();
 
   const result = DNA_PROFILES[resultKey];
+  const indigenous = done ? recommendIndigenous(answers) : [];
 
   const reset = () => {
     setStep(0);
