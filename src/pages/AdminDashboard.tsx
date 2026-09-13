@@ -241,7 +241,9 @@ export default function AdminDashboard() {
       .from("teacher_profiles")
       .select("id,user_id,name,slug,specialty,dance_styles,region,avatar_url,bio,contact_email,contact_phone,updated_at,is_approved,brand_page_status,brand_revision_notes")
       .order("updated_at", { ascending: false });
-    const rows = (data ?? []) as PendingProfile[];
+    const all = (data ?? []) as PendingProfile[];
+    const rows = all.filter((r) => r.brand_page_status !== "archived");
+    setArchived(all.filter((r) => r.brand_page_status === "archived"));
     setPending(rows.filter((r) => r.brand_page_status === "pending_review"));
     setPreparing(rows.filter((r) => r.brand_page_status !== "pending_review" && !(r.is_approved === true && r.brand_page_status === "published")));
     setApproved(rows.filter((r) => r.is_approved === true && r.brand_page_status === "published"));
