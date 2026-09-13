@@ -468,7 +468,20 @@ export default function AdminDashboard() {
             <ul className="grid sm:grid-cols-2 gap-3">
               {preparing.map((row) => (
                 <li key={row.id} className="rounded-2xl border border-border/60 bg-card p-4">
-                  <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-medium text-foreground truncate">{row.name ?? "未命名"}</p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="封存此引導者"
+                      title="封存"
+                      className="h-7 w-7 shrink-0 text-muted-foreground/70 hover:text-destructive"
+                      disabled={busyId === row.id}
+                      onClick={() => setArchivingProfile(row)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
                   <ContactLine email={row.contact_email} phone={row.contact_phone} />
                   <p className="text-xs text-muted-foreground truncate mt-1">
                     {[(row.dance_styles ?? []).filter(Boolean).join(" / "), row.region].filter(Boolean).join(" · ")}
