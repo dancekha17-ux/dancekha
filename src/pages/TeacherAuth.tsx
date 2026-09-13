@@ -15,11 +15,11 @@ const credentialsSchema = z.object({
   password: z.string().min(8, { message: "密碼至少 8 個字元" }).max(72),
 });
 
-export default function TeacherAuth() {
+export default function TeacherAuth({ defaultMode = "signin" }: { defaultMode?: "signin" | "signup" }) {
   const navigate = useNavigate();
   const { session } = useAuth();
   const { toast } = useToast();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(defaultMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
