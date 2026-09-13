@@ -38,6 +38,7 @@ const BRAND_STATUS_LABEL: Record<string, string> = {
   pending_review: "品牌頁確認中",
   published: "品牌頁已上線",
   needs_revision: "品牌頁待完善",
+  archived: "已封存",
 };
 
 function BrandStatusBadge({ status }: { status?: string | null }) {
