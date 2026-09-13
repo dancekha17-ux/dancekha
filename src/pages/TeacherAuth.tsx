@@ -187,7 +187,7 @@ export default function TeacherAuth() {
                 onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
                 className="text-primary hover:underline font-medium"
               >
-                {mode === "signin" ? "註冊成為舞島的引導者" : "前往登入"}
+                {mode === "signin" ? "註冊成為舞島咖的引導者" : "前往登入"}
               </button>
             </div>
           </div>
