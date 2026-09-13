@@ -166,7 +166,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
       }}
     >
       <DialogContent className="max-w-lg w-[calc(100%-2rem)] rounded-3xl bg-card p-0 overflow-hidden border-border/60 max-h-[88vh] overflow-y-auto">
-        <div className="p-6 sm:p-8">
+        <div className="p-6 sm:p-7">
           <DialogTitle className="sr-only">舞蹈 DNA 測驗</DialogTitle>
           <DialogDescription className="sr-only">
             透過四個生活情境問題，找到最適合你的舞蹈處方
@@ -241,7 +241,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3 w-full break-words whitespace-normal">
                   【{result.title}】
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6 w-full break-words whitespace-normal">
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5 w-full break-words whitespace-normal">
                   {result.subtitle}
                 </p>
 
