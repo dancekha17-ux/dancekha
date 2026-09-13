@@ -170,6 +170,18 @@ export function CoursesSection() {
           </div>
         )}
 
+        {searchQuery && (
+          <div className="flex justify-center mb-6">
+            <button
+              onClick={() => setSearchQuery(null)}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coral/15 text-coral-foreground border border-coral/40 text-sm font-body hover:bg-coral/25 transition-colors"
+            >
+              舞種：{searchQuery}
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -193,14 +205,14 @@ export function CoursesSection() {
 
         {loading || icLoading ? (
           <p className="text-center text-muted-foreground py-16">載入課程中…</p>
-        ) : filtered.length === 0 && instructorCourses.length === 0 ? (
+        ) : filtered.length === 0 && filteredInstructorCourses.length === 0 ? (
           <p className="text-center text-muted-foreground py-16">
             目前沒有符合篩選條件的課程，試試其他組合。
           </p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12">
             {/* Instructor-published courses first (fresh from guides) */}
-            {instructorCourses.map((c, index) => (
+            {filteredInstructorCourses.map((c, index) => (
               <motion.div
                 key={`ic-${c.id}`}
                 initial={{ opacity: 0, y: 30 }}
