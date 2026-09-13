@@ -645,6 +645,17 @@ export default function AdminDashboard() {
                     >
                       <PauseCircle className="w-4 h-4" /> 暫停上線
                     </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="封存此引導者"
+                      title="封存"
+                      className="h-7 w-7 text-muted-foreground/70 hover:text-destructive"
+                      disabled={busyId === row.id}
+                      onClick={() => setArchivingProfile(row)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </li>
               ))}
