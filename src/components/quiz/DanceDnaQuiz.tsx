@@ -122,6 +122,21 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
     }, 200);
   };
 
+  const goGenre = (genre: string) => {
+    onOpenChange(false);
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent("danceka:filter-search", { detail: genre })
+      );
+      document.getElementById("courses")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
+  };
+
+  const allGenres = [
+    ...result.genres,
+    ...indigenous.map(({ dance }) => dance.name),
+  ];
+
   const share = async () => {
     const shareUrl = `${window.location.origin}/?dna=${resultKey}`;
     const text = [
