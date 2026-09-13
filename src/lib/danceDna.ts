@@ -198,7 +198,7 @@ export interface IndigenousDance {
 export const INDIGENOUS_DANCES: IndigenousDance[] = [
   {
     id: "amis",
-    name: "阿美族",
+    name: "阿美族舞蹈",
     category: "indigenous",
     tags: ["熱情", "群體互動", "歡聚", "律動感", "自然戶外", "情緒釋放"],
     blurb: "牽手成圈、踏地為鼓的豐年歡聚，用集體律動把情緒放出來。",
@@ -211,7 +211,7 @@ export const INDIGENOUS_DANCES: IndigenousDance[] = [
   },
   {
     id: "puyuma",
-    name: "卑南族",
+    name: "卑南族舞蹈",
     category: "indigenous",
     tags: ["活力", "群體互動", "節奏感", "儀式感", "土地文化", "熱情"],
     blurb: "年祭的踏歌與步伐，兼具儀式的莊重與少年般的活力。",
@@ -224,7 +224,7 @@ export const INDIGENOUS_DANCES: IndigenousDance[] = [
   },
   {
     id: "tao",
-    name: "達悟族",
+    name: "達悟族舞蹈",
     category: "indigenous",
     tags: ["海洋", "自然", "流動", "自在", "群體", "文化探索"],
     blurb: "與海浪同頻的擺盪與長髮舞，身體順著自然的呼吸流動。",

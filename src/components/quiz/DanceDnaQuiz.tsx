@@ -122,6 +122,21 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
     }, 200);
   };
 
+  const goGenre = (genre: string) => {
+    onOpenChange(false);
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent("danceka:filter-search", { detail: genre })
+      );
+      document.getElementById("courses")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
+  };
+
+  const allGenres = [
+    ...result.genres,
+    ...indigenous.map(({ dance }) => dance.name),
+  ];
+
   const share = async () => {
     const shareUrl = `${window.location.origin}/?dna=${resultKey}`;
     const text = [
@@ -151,7 +166,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
       }}
     >
       <DialogContent className="max-w-lg w-[calc(100%-2rem)] rounded-3xl bg-card p-0 overflow-hidden border-border/60 max-h-[88vh] overflow-y-auto">
-        <div className="p-6 sm:p-8">
+        <div className="p-6 sm:p-7">
           <DialogTitle className="sr-only">舞蹈 DNA 測驗</DialogTitle>
           <DialogDescription className="sr-only">
             透過四個生活情境問題，找到最適合你的舞蹈處方
@@ -226,7 +241,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                 <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-3 w-full break-words whitespace-normal">
                   【{result.title}】
                 </h2>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6 w-full break-words whitespace-normal">
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5 w-full break-words whitespace-normal">
                   {result.subtitle}
                 </p>
 
@@ -237,41 +252,20 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7 box-border">
+                <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-6 box-border">
                   <p className="text-[11px] font-body text-muted-foreground mb-2.5 w-full break-words whitespace-normal">推薦舞種</p>
                   <div className="flex flex-wrap gap-2 w-full">
-                    {result.genres.map((g) => (
-                      <span
+                    {allGenres.map((g) => (
+                      <button
                         key={g}
-                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground whitespace-normal break-words"
+                        onClick={() => goGenre(g)}
+                        className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs text-secondary-foreground whitespace-normal break-words transition-colors hover:bg-primary/15 hover:text-foreground"
                       >
                         {g}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </div>
-
-                {indigenous.length > 0 && (
-                  <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7 box-border">
-                    <p className="text-[11px] font-body text-muted-foreground mb-2.5 w-full break-words whitespace-normal">
-                      台灣原住民族舞蹈延伸推薦
-                    </p>
-                    <div className="space-y-2 w-full">
-                      {indigenous.map(({ dance }) => (
-                        <div key={dance.id} className="w-full">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="rounded-full bg-primary/10 px-3 py-1.5 font-body text-xs text-foreground whitespace-normal break-words">
-                              {dance.name}
-                            </span>
-                          </div>
-                          <p className="mt-1.5 font-body text-xs text-muted-foreground leading-relaxed w-full break-words whitespace-normal">
-                            {dance.blurb}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 <Button size="lg" className="w-full group" onClick={goCourses}>
                   👉 探索課程  立即GO
