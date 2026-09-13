@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
-import { DNA_PROFILES, saveDnaResult, type DnaKey } from "@/lib/danceDna";
+import { DNA_PROFILES, recommendIndigenous, saveDnaResult, type DnaKey } from "@/lib/danceDna";
 
 const QUESTIONS: {
   title: string;
