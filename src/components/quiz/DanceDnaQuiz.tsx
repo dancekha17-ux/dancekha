@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
-import { DNA_PROFILES, saveDnaResult, type DnaKey } from "@/lib/danceDna";
+import { DNA_PROFILES, recommendIndigenous, saveDnaResult, type DnaKey } from "@/lib/danceDna";
 
 const QUESTIONS: {
   title: string;
@@ -84,6 +84,7 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
   })();
 
   const result = DNA_PROFILES[resultKey];
+  const indigenous = done ? recommendIndigenous(answers) : [];
 
   const reset = () => {
     setStep(0);
@@ -249,6 +250,28 @@ export function DanceDnaQuiz({ open, onOpenChange }: Props) {
                     ))}
                   </div>
                 </div>
+
+                {indigenous.length > 0 && (
+                  <div className="rounded-2xl border border-border/70 px-5 py-4 text-left mb-7 box-border">
+                    <p className="text-[11px] font-body text-muted-foreground mb-2.5 w-full break-words whitespace-normal">
+                      台灣原住民族舞蹈延伸推薦
+                    </p>
+                    <div className="space-y-2 w-full">
+                      {indigenous.map(({ dance }) => (
+                        <div key={dance.id} className="w-full">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="rounded-full bg-primary/10 px-3 py-1.5 font-body text-xs text-foreground whitespace-normal break-words">
+                              {dance.name}
+                            </span>
+                          </div>
+                          <p className="mt-1.5 font-body text-xs text-muted-foreground leading-relaxed w-full break-words whitespace-normal">
+                            {dance.blurb}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <Button size="lg" className="w-full group" onClick={goCourses}>
                   👉 探索課程  立即GO

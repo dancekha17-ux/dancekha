@@ -177,6 +177,91 @@ export const DNA_PROFILES: Record<DnaKey, DnaProfile> = {
   },
 };
 
+/* ------------------------------------------------------------------
+ * 台灣原住民族舞蹈｜文化延伸推薦
+ * 各族為獨立的文化／舞蹈分類，未來可直接在此陣列追加新的族群。
+ * 計分方式：不更動原本四大原型的計算，僅額外依「第幾題選了哪個特質」
+ * 累加各族的親和分數，取分數最高且達門檻者作為延伸推薦。
+ * ---------------------------------------------------------------- */
+export interface IndigenousDance {
+  id: string;
+  /** 前台顯示名稱 */
+  name: string;
+  /** 沿用課程分類欄位 */
+  category: string;
+  tags: string[];
+  blurb: string;
+  /** questionIndex(0-3) -> DnaKey -> 分數 */
+  signals: Record<number, Partial<Record<DnaKey, number>>>;
+}
+
+export const INDIGENOUS_DANCES: IndigenousDance[] = [
+  {
+    id: "amis",
+    name: "阿美族",
+    category: "indigenous",
+    tags: ["熱情", "群體互動", "歡聚", "律動感", "自然戶外", "情緒釋放"],
+    blurb: "牽手成圈、踏地為鼓的豐年歡聚，用集體律動把情緒放出來。",
+    signals: {
+      0: { stage: 3, ocean: 3 },
+      1: { ocean: 2, stage: 2 },
+      2: { ocean: 1, stage: 1 },
+      3: { stage: 2, ocean: 1 },
+    },
+  },
+  {
+    id: "puyuma",
+    name: "卑南族",
+    category: "indigenous",
+    tags: ["活力", "群體互動", "節奏感", "儀式感", "土地文化", "熱情"],
+    blurb: "年祭的踏歌與步伐，兼具儀式的莊重與少年般的活力。",
+    signals: {
+      0: { stage: 2, ritual: 2 },
+      1: { ocean: 2, stage: 2 },
+      2: { ritual: 3, stage: 1 },
+      3: { stage: 2, ritual: 2 },
+    },
+  },
+  {
+    id: "tao",
+    name: "達悟族",
+    category: "indigenous",
+    tags: ["海洋", "自然", "流動", "自在", "群體", "文化探索"],
+    blurb: "與海浪同頻的擺盪與長髮舞，身體順著自然的呼吸流動。",
+    signals: {
+      0: { flow: 3, ritual: 1 },
+      1: { flow: 2, ritual: 2, ocean: 1 },
+      2: { ocean: 4 },
+      3: { flow: 3, ocean: 2 },
+    },
+  },
+];
+
+export interface IndigenousMatch {
+  dance: IndigenousDance;
+  score: number;
+}
+
+const INDIGENOUS_THRESHOLD = 5;
+
+/** 依四題答案計算台灣原住民族舞蹈的延伸推薦（不影響原有原型排序） */
+export function recommendIndigenous(
+  answers: DnaKey[],
+  limit = 2
+): IndigenousMatch[] {
+  if (!answers?.length) return [];
+  return INDIGENOUS_DANCES.map((dance) => ({
+    dance,
+    score: answers.reduce(
+      (sum, key, i) => sum + (dance.signals[i]?.[key] ?? 0),
+      0
+    ),
+  }))
+    .filter((m) => m.score >= INDIGENOUS_THRESHOLD)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit);
+}
+
 export interface DnaResult {
   key: DnaKey;
   answers: DnaKey[];

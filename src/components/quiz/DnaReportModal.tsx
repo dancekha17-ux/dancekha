@@ -4,7 +4,7 @@ import { ArrowRight, RotateCcw, Share2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { DNA_PROFILES, type DnaKey } from "@/lib/danceDna";
+import { DNA_PROFILES, loadDnaResult, recommendIndigenous, type DnaKey } from "@/lib/danceDna";
 
 interface Props {
   open: boolean;
@@ -16,6 +16,7 @@ interface Props {
 export function DnaReportModal({ open, onOpenChange, dnaKey, onRetake }: Props) {
   const navigate = useNavigate();
   const profile = DNA_PROFILES[dnaKey];
+  const indigenous = recommendIndigenous(loadDnaResult()?.answers ?? []);
 
   const goCourses = () => {
     onOpenChange(false);
@@ -115,6 +116,33 @@ export function DnaReportModal({ open, onOpenChange, dnaKey, onRetake }: Props) 
               </div>
             </div>
           </section>
+
+          {indigenous.length > 0 && (
+            <section>
+              <span className="eyebrow">Taiwan Indigenous · 台灣原住民族舞蹈延伸推薦</span>
+              <div className="mt-4 space-y-3">
+                {indigenous.map(({ dance }) => (
+                  <div
+                    key={dance.id}
+                    className="rounded-2xl border border-border/60 bg-secondary/30 px-5 py-4"
+                  >
+                    <p className="font-display text-sm text-foreground mb-1.5">{dance.name}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{dance.blurb}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {dance.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full bg-primary/10 px-3 py-1 text-xs text-foreground"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* CTA */}
           <div>
