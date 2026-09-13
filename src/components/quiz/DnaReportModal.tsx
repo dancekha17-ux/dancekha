@@ -16,6 +16,7 @@ interface Props {
 export function DnaReportModal({ open, onOpenChange, dnaKey, onRetake }: Props) {
   const navigate = useNavigate();
   const profile = DNA_PROFILES[dnaKey];
+  const indigenous = recommendIndigenous(loadDnaResult()?.answers ?? []);
 
   const goCourses = () => {
     onOpenChange(false);
