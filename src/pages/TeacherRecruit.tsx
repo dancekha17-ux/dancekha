@@ -152,9 +152,21 @@ export default function TeacherRecruit() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openCardIndex, setOpenCardIndex] = useState<number | null>(null);
 
+  const navigate = useNavigate();
+  const { session, loading: authLoading } = useAuth();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleApplyClick = () => {
+    if (authLoading) return;
+    if (session) {
+      navigate("/teacher/dashboard");
+    } else {
+      navigate("/signup");
+    }
+  };
 
 
   return (
